@@ -51,6 +51,8 @@ public class TitleState extends GameState {
                         Log.info("Client successfully set");
                         Packets.PacketReadyToPlay r2p = new Packets.PacketReadyToPlay();
                         client.client.sendTCP(r2p);
+                        
+//                        gsm.addState(State.PLAY, TitleState.class);
 			        }
 			    });
 				playOption.setScale(0.5f);

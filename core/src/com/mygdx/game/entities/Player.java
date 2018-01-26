@@ -47,7 +47,9 @@ public class Player extends Schmuck implements InputProcessor {
 	//user data
 	public PlayerData playerData;
 	public Event currentEvent;
-		
+	
+	public Player2Dummy dummy;
+	
 	/**
 	 * This constructor is called by the player spawn event that must be located in each map
 	 * @param state: current gameState
@@ -60,6 +62,8 @@ public class Player extends Schmuck implements InputProcessor {
 	public Player(KryoClient client, PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 250, 161, 161, 250);
 		this.client = client;
+		
+		dummy = new Player2Dummy(state, world, camera, rays, 250, 161, x, y, this);
 	}
 	
 	/**
@@ -74,6 +78,9 @@ public class Player extends Schmuck implements InputProcessor {
 				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_ENEMY),
 				Constants.PLAYER_HITBOX, false, playerData);
         
+		dummy.body = this.body;
+		dummy.bodyData = this.bodyData;
+		
 		FixtureDef fixtureDef = new FixtureDef();
         FixtureDef fixtureDef2 = new FixtureDef();
 		

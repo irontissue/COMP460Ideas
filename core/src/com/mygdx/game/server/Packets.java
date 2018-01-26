@@ -20,8 +20,8 @@ import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.equipment.ranged.Gun;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.states.PlayState;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
-import javafx.stage.Stage;
+//import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
+//import javafx.stage.Stage;
 
 public class Packets {
 	

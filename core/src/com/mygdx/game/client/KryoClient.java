@@ -87,7 +87,7 @@ public class KryoClient {
                 else if (o instanceof Packets.Packet03Click) {
                     Packets.Packet03Click p = (Packets.Packet03Click) o;
                     PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                    ps.player.useToolStart(p.delta, ps.player.playerData.currentTool, Constants.PLAYER_HITBOX, (int) p.location.x , (int)(Gdx.graphics.getHeight() - p.location.y), true);
+                    ps.player.dummy.useToolStart(p.delta, ps.player.dummy.dummyWeapon, Constants.PLAYER_HITBOX, (int) p.location.x , (int)(Gdx.graphics.getHeight() - p.location.y), true);
                 }
 
                 else if (o instanceof Packets.Packet02Input) {
