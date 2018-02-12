@@ -180,6 +180,7 @@ public class comp460game extends ApplicationAdapter {
 
     public KryoClient getClient() {
         Log.info("Client: " + client);
+        //argh
         return client;
     }
 
