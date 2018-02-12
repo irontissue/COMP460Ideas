@@ -68,7 +68,7 @@ public class KryoServer {
 					PlayState ps = (PlayState) gsm.states.peek();
                     if (gsm.states.peek() instanceof PlayState) {
                         if (p.message == Input.Keys.W) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.wPressed = true;
                                 } else {
@@ -85,7 +85,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.A) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.aPressed = true;
                                 } else {
@@ -99,7 +99,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.S) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.sPressed = true;
                                 } else {
@@ -113,7 +113,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.D) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.dPressed = true;
                                 } else {
@@ -127,7 +127,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.Q) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.qPressed = true;
                                 } else {
@@ -141,7 +141,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.E) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.ePressed = true;
                                 } else {
@@ -155,7 +155,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.SPACE) {
-                            if (p.playerID == c.getID()) {
+                            if (p.playerID == myID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.spacePressed = true;
                                 } else {

@@ -11,6 +11,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.event.*;
 import com.mygdx.game.states.PlayState;
 
@@ -66,7 +67,7 @@ public class TiledObjectUtil {
     		RectangleMapObject current = (RectangleMapObject)object;
 			Rectangle rect = current.getRectangle();
 			
-			if (object.getName().equals("Spawn")) {
+			if (object.getName().equals("Spawn") && comp460game.serverMode) {
     			new EntitySpawner(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), object.getProperties().get("id", int.class), 
     					object.getProperties().get("interval", float.class), object.getProperties().get("limit", int.class));
@@ -114,7 +115,7 @@ public class TiledObjectUtil {
     			triggeredEvents.put(object.getProperties().get("triggeredId", String.class), counter);
     		}
     		
-    		if (object.getName().equals("TriggerSpawn")) {
+    		if (object.getName().equals("TriggerSpawn") && comp460game.serverMode) {
     			
     			Event spawn = new TriggerSpawn(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), object.getProperties().get("id", int.class), 
