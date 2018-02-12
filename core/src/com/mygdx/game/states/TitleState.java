@@ -1,7 +1,5 @@
 package com.mygdx.game.states;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -10,9 +8,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.manager.GameStateManager;
-import com.mygdx.game.manager.GameStateManager.State;
-import com.mygdx.game.networking.ChatClient;
-import com.mygdx.game.networking.ChatServer;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.Text;
 import com.mygdx.game.server.KryoServer;
@@ -21,14 +16,12 @@ import com.mygdx.game.server.Packets;
 public class TitleState extends GameState {
 
 	private Stage stage;
-	private KryoClient client;
 
     //Temporary links to other modules for testing.
 	private Actor playOption, exitOption, joinServerOption, startServerOption;
 	
-	public TitleState(KryoClient client, GameStateManager gsm) {
+	public TitleState(GameStateManager gsm) {
 		super(gsm);
-		this.client = client;
 	}
 
 	public void startGame() {
@@ -47,10 +40,13 @@ public class TitleState extends GameState {
 				playOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
 			            Log.info("Clicked play button...");
-			            if (client == null) return;
+			            if (comp460game.client == null) return;
                         Log.info("Client successfully set");
-                        Packets.PacketReadyToPlay r2p = new Packets.PacketReadyToPlay();
-                        client.client.sendTCP(r2p);
+                        Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
+
+                        if (!comp460game.serverMode) {
+                            comp460game.client.client.sendTCP(r2p);
+                        }
                         
 //                        gsm.addState(State.PLAY, TitleState.class);
 			        }
@@ -59,15 +55,17 @@ public class TitleState extends GameState {
 				
 				joinServerOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
-                        client.init();
+                        comp460game.client.init();
 			        }
 			    });
 				joinServerOption.setScale(0.5f);
 				
 				startServerOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
-			        	//TODO: start a server
-						new KryoServer(gsm);
+
+						/*if (client.myGame.server == null) {
+						    client.myGame.server = new KryoServer(gsm);
+                        }*/
 //			        	try {
 //							new KryoServer();
 //						} catch (IOException e1) {

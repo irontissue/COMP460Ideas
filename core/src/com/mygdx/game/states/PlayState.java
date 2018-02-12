@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.Event;
@@ -198,7 +199,7 @@ public class PlayState extends GameState {
 //						gsm.addState(State.GAMEOVER, TitleState.class);
 					}
 				} else {
-					player = new Player(gsm.application().getClient(), this, world, camera, rays, 
+					player = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
 							(int)(lastSave.getBody().getPosition().y * PPM));
 					
