@@ -1,24 +1,12 @@
 package com.mygdx.game.server;
 
-import box2dLight.RayHandler;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.kryo.Kryo;
 import com.mygdx.game.entities.Entity;
-import com.mygdx.game.entities.Player;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.equipment.ranged.Gun;
-import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.states.PlayState;
 //import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 //import javafx.stage.Stage;
@@ -28,19 +16,19 @@ import java.util.UUID;
 
 public class Packets {
 	
-	public static class Packet01Message {
-		public Packet01Message() {}
-		public Packet01Message(String m) {
+	public static class PlayerConnect {
+		public PlayerConnect() {}
+		public PlayerConnect(String m) {
 			message = m;
 		}
 		public String message;
 	}
 	
-	public static class Packet02Input {
+	public static class KeyPressOrRelease {
 	    public static final int PRESSED = 0;
         public static final int RELEASED = 1;
-	    public Packet02Input() {}
-	    public Packet02Input(int m, int pOrR, int playerID) {
+	    public KeyPressOrRelease() {}
+	    public KeyPressOrRelease(int m, int pOrR, int playerID) {
 	        message = m;
 	        pressOrRelease = pOrR;
 	        this.playerID = playerID;
@@ -49,37 +37,57 @@ public class Packets {
 		public int message;
 	    public int pressOrRelease; //0 = pressed, 1 = released.
 	}
-	
-	public static class Packet03Click {
-		public Packet03Click() {}
-		public Packet03Click(Vector2 loc, Equipment tool, int id, float d) {
-		    location = loc;
-		    usedTool = tool;
-		    playerID = id;
-		    delta = d;
-        }
-        public int playerID;
-        public Vector2 location;
-		public Equipment usedTool;
-		public float delta;
-	}
 
-	public static class PacketReadyToPlay {
-	    public PacketReadyToPlay() {}
+	//Client to server
+	public static class Shoot {
+	    public static UUID userID;
+	    public static int weaponID;
+	    public static Vector2 startingVelocity;
+	    public static float x, y;
+	    public static short filter;
+
+	    public Shoot(UUID userID, int weaponID, Vector2 startingVelocity, float x, float y, short filter) {
+	        this.userID = userID;
+	        this.weaponID = weaponID;
+	        this.startingVelocity = startingVelocity;
+	        this.x = x;
+	        this.y = y;
+	        this.filter = filter;
+        }
     }
 
-	public static class Packet04EnterPlayState {
-        public Packet04EnterPlayState() {}
+    //Server to client
+    /*public static class ShootSToC {
+        public static UUID userID;
+        public static int weaponID;
+        public static Vector2 startingVelocity;
+        public static float x, y;
+        public static short filter;
+
+        public Shoot(UUID userID, int weaponID, Vector2 startingVelocity, float x, float y, short filter) {
+            this.userID = userID;
+            this.weaponID = weaponID;
+            this.startingVelocity = startingVelocity;
+            this.x = x;
+            this.y = y;
+            this.filter = filter;
+        }
+    }*/
+
+	public static class ReadyToPlay {
+	    public ReadyToPlay() {}
+    }
+
+	public static class EnterPlayState {
+        public EnterPlayState() {}
 	}
 
 	public static class IDMessage {
         public IDMessage() {}
-        public IDMessage(int ID, boolean mas) {
+        public IDMessage(int ID) {
             this.ID = ID;
-            master = mas;
         }
         public int ID;
-        public boolean master;
     }
 
     public static class SyncPlayState {
@@ -140,7 +148,7 @@ public class Packets {
 
     public static class SyncCreateSchmuck {
 	    public SyncCreateSchmuck() {}
-	    public SyncCreateSchmuck(float w, float h, float startX, float startY, UUID id) {
+	    public SyncCreateSchmuck(UUID id, float w, float h, float startX, float startY) {
 	        this.w = w;
 	        this.h = h;
 	        this.startX = startX;
@@ -151,11 +159,11 @@ public class Packets {
 	    public UUID id;
     }
     public static void allPackets(Kryo kryo) {
-        kryo.register(Packets.Packet01Message.class);
-        kryo.register(Packets.Packet02Input.class);
-        kryo.register(Packets.Packet03Click.class);
-        kryo.register(Packets.Packet04EnterPlayState.class);
-        kryo.register(Packets.PacketReadyToPlay.class);
+        kryo.register(PlayerConnect.class);
+        kryo.register(KeyPressOrRelease.class);
+        kryo.register(Packets.Shoot.class);
+        kryo.register(EnterPlayState.class);
+        kryo.register(ReadyToPlay.class);
         kryo.register(Packets.IDMessage.class);
         kryo.register(Vector2.class);
         kryo.register(Gun.class);

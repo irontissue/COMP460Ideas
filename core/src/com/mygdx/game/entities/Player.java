@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.event.Event;
@@ -38,11 +39,6 @@ public class Player extends Schmuck implements InputProcessor {
 	protected Fixture viewWedge;
     protected Fixture viewWedge2;
 
-    public KryoClient getClient() {
-        return client;
-    }
-
-    private KryoClient client;
 	private float lastDelta;
 	public boolean spacePressed;
 	//is the player currently in the process of holding their currently used tool?
@@ -50,7 +46,6 @@ public class Player extends Schmuck implements InputProcessor {
 		
 	protected float interactCd = 0.15f;
 	protected float interactCdCount = 0;
-	protected float syncTimer = 0;
 
 	//is the button for that respective movement pressed currently?
     public boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false, qPressed = false, ePressed = false;
@@ -79,12 +74,14 @@ public class Player extends Schmuck implements InputProcessor {
 	 */
 	public Player(KryoClient client, PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
-		this.client = client;
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
-//		dummy = new Player2Dummy(state, world, camera, rays, 250, 161, x, y, this);
+	}
+	
+		public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
+		super(state, world, camera, rays, x, y, "torpedofish_swim", 250, 161, 161, 250);
 	}
 	
 	/**
@@ -208,13 +205,6 @@ public class Player extends Schmuck implements InputProcessor {
 
 		super.controller(delta);
 
-        syncTimer += delta;
-        if (syncTimer > 1) {
-            if (client.master)
-                Log.info("Number of entities: " + this.state.getEntities().size());
-                client.client.sendTCP(new Packets.SyncPlayState(this.getBody().getPosition(), this.getBody().getAngle()));
-            syncTimer = 0;
-        }
 	}
 	
 	@Override
@@ -263,74 +253,78 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.W) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.W, Packets.Packet02Input.PRESSED, client.myID));
-        }
-        if (keycode == Input.Keys.A) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.A, Packets.Packet02Input.PRESSED, client.myID));
-        }
-        if (keycode == Input.Keys.S) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.S, Packets.Packet02Input.PRESSED, client.myID));
-        }
-        if (keycode == Input.Keys.D) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.D, Packets.Packet02Input.PRESSED, client.myID));
-        }
-        if (keycode == Input.Keys.Q) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.Q, Packets.Packet02Input.PRESSED, client.myID));
-        }
-        if (keycode == Input.Keys.E) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.E, Packets.Packet02Input.PRESSED, client.myID));
-        }
-        if (keycode == Input.Keys.SPACE) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.SPACE, Packets.Packet02Input.PRESSED, client.myID));
-        }
+	    if (!comp460game.serverMode) {
+            if (keycode == Input.Keys.W) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.A) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.S) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.D) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.Q) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.E) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.SPACE) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+            }
 
-        //Pressing 'R' = reload current weapon.
-        if(keycode == Input.Keys.R) {
-            playerData.currentTool.reloading = true;
-        }
+            //Pressing 'R' = reload current weapon.
+            if (keycode == Input.Keys.R) {
+                playerData.currentTool.reloading = true;
+            }
 
-        //Pressing '1' ... '0' = switch to weapon slot.
-        if(keycode == Input.Keys.NUM_1) {
-            playerData.switchWeapon(1);
-        }
+            //Pressing '1' ... '0' = switch to weapon slot.
+            if (keycode == Input.Keys.NUM_1) {
+                playerData.switchWeapon(1);
+            }
 
-        if(keycode == Input.Keys.NUM_2) {
-            playerData.switchWeapon(2);
-        }
+            if (keycode == Input.Keys.NUM_2) {
+                playerData.switchWeapon(2);
+            }
 
-        if(keycode == Input.Keys.NUM_3) {
-            playerData.switchWeapon(3);
-        }
+            if (keycode == Input.Keys.NUM_3) {
+                playerData.switchWeapon(3);
+            }
 
-        if(keycode == Input.Keys.NUM_4) {
-            playerData.switchWeapon(4);
+            if (keycode == Input.Keys.NUM_4) {
+                playerData.switchWeapon(4);
+            }
         }
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.W) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.W, Packets.Packet02Input.RELEASED, client.myID));
-        }
-        if (keycode == Input.Keys.A) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.A, Packets.Packet02Input.RELEASED, client.myID));
-        }
-        if (keycode == Input.Keys.S) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.S, Packets.Packet02Input.RELEASED, client.myID));
-        }
-        if (keycode == Input.Keys.D) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.D, Packets.Packet02Input.RELEASED, client.myID));
-        }
-        if (keycode == Input.Keys.Q) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.Q, Packets.Packet02Input.RELEASED, client.myID));
-        }
-        if (keycode == Input.Keys.E) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.E, Packets.Packet02Input.RELEASED, client.myID));
-        }
-        if (keycode == Input.Keys.SPACE) {
-            client.client.sendTCP(new Packets.Packet02Input(Input.Keys.SPACE, Packets.Packet02Input.RELEASED, client.myID));
+        if (!comp460game.serverMode) {
+            if (keycode == Input.Keys.W) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.A) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.S) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.D) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.Q) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.E) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
+            if (keycode == Input.Keys.SPACE) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+            }
         }
         return false;
     }
@@ -343,7 +337,7 @@ public class Player extends Schmuck implements InputProcessor {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-//        client.client.sendTCP(new Packets.Packet03Click(new Vector2(screenX,screenY), null, client.myID, lastDelta));
+//       comp460game.client.client.sendTCP(new Packets.Packet03Click(new Vector2(screenX,screenY), null,comp460game.client.myID, lastDelta));
 
         return false;
     }

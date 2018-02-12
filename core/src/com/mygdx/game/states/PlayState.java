@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.Event;
@@ -107,7 +108,7 @@ public class PlayState extends GameState {
 		rays = new RayHandler(world);
         rays.setAmbientLight(0.1f);
         rays.setCulling(false);
-        rays.useDiffuseLight(true);
+        RayHandler.useDiffuseLight(true);
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
 		
@@ -119,6 +120,7 @@ public class PlayState extends GameState {
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
 		//map = new TmxMapLoader().load("maps/map_1_460.tmx");
 		map = new TmxMapLoader().load("maps/argh.tmx");
+//		map = new TmxMapLoader().load("maps/map_2_460.tmx");
 		
 		tmr = new OrthogonalTiledMapRenderer(map);
 		
@@ -198,7 +200,7 @@ public class PlayState extends GameState {
 //						gsm.addState(State.GAMEOVER, TitleState.class);
 					}
 				} else {
-					player = new Player(gsm.application().getClient(), this, world, camera, rays, 
+					player = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
 							(int)(lastSave.getBody().getPosition().y * PPM));
 					
