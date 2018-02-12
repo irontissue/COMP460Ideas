@@ -1,6 +1,7 @@
 package com.mygdx.game.server;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -18,6 +19,7 @@ public class KryoServer {
 
 	int serverPort = 25565;
 	int players = 0;
+	int p1ID = -1, p2ID = -1;
 	public Server server;
 	GameStateManager gsm;
 	boolean setMaster = true;
@@ -57,6 +59,11 @@ public class KryoServer {
 					Log.info(name + " has joined the game.");
 					server.sendToAllExceptTCP(c.getID(), newPlayer);
 					server.sendToTCP(c.getID(), new Packets.IDMessage(c.getID()));
+					if (p1ID == -1) {
+					    p1ID = c.getID();
+                    } else {
+					    p2ID = c.getID();
+                    }
 					setMaster = false;
 
 				}
@@ -65,10 +72,10 @@ public class KryoServer {
 					// We have received a player movement message.
 					Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
 					server.sendToAllTCP(p);
-					PlayState ps = (PlayState) gsm.states.peek();
                     if (gsm.states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) gsm.states.peek();
                         if (p.message == Input.Keys.W) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.wPressed = true;
                                 } else {
@@ -85,7 +92,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.A) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.aPressed = true;
                                 } else {
@@ -99,7 +106,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.S) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.sPressed = true;
                                 } else {
@@ -113,7 +120,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.D) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.dPressed = true;
                                 } else {
@@ -127,7 +134,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.Q) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.qPressed = true;
                                 } else {
@@ -141,7 +148,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.E) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.ePressed = true;
                                 } else {
@@ -155,7 +162,7 @@ public class KryoServer {
                                 }
                             }
                         } else if (p.message == Input.Keys.SPACE) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == p1ID) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.spacePressed = true;
                                 } else {
