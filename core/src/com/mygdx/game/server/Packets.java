@@ -229,6 +229,10 @@ public class Packets {
         public String id;
     }
 
+    public static class DisconnectMessage {
+	    public DisconnectMessage() {}
+    }
+
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
         kryo.register(KeyPressOrRelease.class);

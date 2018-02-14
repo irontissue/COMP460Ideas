@@ -35,7 +35,14 @@ public class KryoServer {
 		server.addListener(new Listener() {
 			public void disconnected(Connection c) {
 				// This message should be sent when a player disconnects from the game
-
+                players = 0;
+                server.sendToAllExceptTCP(c.getID(), new Packets.DisconnectMessage());
+                Gdx.app.postRunnable(new Runnable() {
+                     @Override
+                     public void run() {
+                         gsm.addState(GameStateManager.State.TITLE, PlayState.class);
+                     }
+                 });
 			}
 
 			public void received(Connection c, Object o) {

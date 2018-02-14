@@ -2,6 +2,7 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.StandardEnemy;
@@ -62,21 +63,25 @@ public class EntitySpawner extends Event {
                     break;
                 case 1:
                     Enemy e = new Enemy(state, world, camera, rays, 32, 32, spawnX, spawnY);
+                    Log.info("Created enemy on server.");
                     if (comp460game.serverMode) {
                         comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(e.entityID.toString(), 32,32, spawnX, spawnY, Constants.ENEMY));
                     }
                     break;
                 case 2:
                     StandardEnemy s = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
+                    Log.info("Created standard enemy on server.");
                     if (comp460game.serverMode) {
                         comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(s.entityID.toString(), 24, 24, spawnX, spawnY, Constants.STANDARD_ENEMY));
                     }
                     break;
                 case 3:
                     SteeringEnemy q = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
+                    Log.info("Created steering enemy on server.");
                     if (comp460game.serverMode) {
                         comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(q.entityID.toString(), 24, 24, spawnX, spawnY, Constants.STEERING_ENEMY));
                     }
+                    break;
             }
 		}
 	}

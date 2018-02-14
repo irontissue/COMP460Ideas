@@ -58,7 +58,11 @@ public class KryoClient {
             }
 
             public void disconnected(Connection c) {
-
+                JOptionPane.showConfirmDialog(null, "You have been disconnected from the server.");
+                /*myGame.getGsm().removeState(PlayState.class);
+                myGame.getGsm().removeState(TitleState.class);
+                myGame.getGsm().addState(State.TITLE, null);
+                myGame.resetClient();*/
             }
 
             public void received(Connection c, Object o) {
@@ -83,7 +87,7 @@ public class KryoClient {
                 else if (o instanceof Packets.SyncPlayState) {
                     //Log.info("Received Player Entity sync message...");
                     Packets.SyncPlayState p = (Packets.SyncPlayState) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         //ps.player.body.setTransform(p.body,p.angle);
                         ps.desiredPlayerAngle = p.angle;
@@ -97,10 +101,12 @@ public class KryoClient {
                 else if (o instanceof Packets.SyncEntity) {
 //                    Log.info("Received Player Entity sync message...");
                     Packets.SyncEntity p = (Packets.SyncEntity) o;
-                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
-                    ps.updateEntity(p.entityID,p.pos,p.velocity,p.angularVelocity,p.angle);
+                        ps.updateEntity(p.entityID, p.pos, p.velocity, p.angularVelocity, p.angle);
 //                    Log.info("Processed Player Entity sync message!");
+                    }
                 }
 
 //                else if (o instanceof Packets.SyncHitbox) {
@@ -131,11 +137,9 @@ public class KryoClient {
                 else if (o instanceof Packets.SyncCreateSchmuck) {
                     Log.info("Received Schmuck creation sync message...");
                     Packets.SyncCreateSchmuck p = (Packets.SyncCreateSchmuck) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         Log.info("PlayState ready when message received...");
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        World world = ps.getWorld();
-                        RayHandler rays = ps.getRays();
 //                    while (ps.updating) {}
                         ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType);
                     }
@@ -255,7 +259,7 @@ public class KryoClient {
                 else if (o instanceof Packets.SetEntityAim) {
                     //Log.info("Received SetEntityAim message");
                     Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         ps.setEntityAim(UUID.fromString(sea.uuid), sea.delta, sea.x, sea.y);
                     }
@@ -264,7 +268,7 @@ public class KryoClient {
                 else if (o instanceof Packets.EntityShoot) {
                     //Log.info("Received EntityShoot message");
                     Packets.EntityShoot sea = (Packets.EntityShoot) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         ps.entityShoot(UUID.fromString(sea.uuid));
                     }
@@ -273,10 +277,21 @@ public class KryoClient {
                 else if (o instanceof Packets.RemoveSchmuck) {
                     //Log.info("Received RemoveSchmuck message");
                     Packets.RemoveSchmuck sea = (Packets.RemoveSchmuck) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         ps.destroy(ps.getEntity(UUID.fromString(sea.id)));
                     }
+                }
+
+                else if (o instanceof Packets.DisconnectMessage) {
+                    //Log.info("Received DisconnectMessage message");
+                    JOptionPane.showConfirmDialog(null, "You have been kicked by the server.");
+                    Gdx.app.postRunnable(new Runnable() {
+                        public void run() {
+                            myGame.getGsm().addState(State.TITLE, PlayState.class);
+                            myGame.resetClient();
+                        }
+                    });
                 }
             }
         });

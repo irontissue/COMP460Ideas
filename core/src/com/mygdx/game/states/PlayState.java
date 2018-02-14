@@ -173,26 +173,23 @@ public class PlayState extends GameState {
 		world.step(delta, 6, 2);
 
 		//All entities that are set to be removed are removed.
-        synchronized (removeList) {
-            for (Entity entity : removeList) {
-                if (entities.contains(entity)) {
-                    entities.remove(entity);
-                    if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
-                    }
-                    entity.dispose();
+        for (Entity entity : removeList) {
+            if (entities.contains(entity)) {
+                entities.remove(entity);
+                if (comp460game.serverMode) {
+                    comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
                 }
+                entity.dispose();
             }
-            removeList.clear();
         }
+        removeList.clear();
+
 		//All entities that are set to be added are added.
-        synchronized (createList) {
-            for (Entity entity : createList) {
-                entities.add(entity);
-                entity.create();
-            }
-            createList.clear();
+        for (Entity entity : createList) {
+            entities.add(entity);
+            entity.create();
         }
+        createList.clear();
 		
 		
 /*		controllerCounter += delta;
