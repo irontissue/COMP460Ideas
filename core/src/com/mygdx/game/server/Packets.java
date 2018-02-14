@@ -3,6 +3,7 @@ package com.mygdx.game.server;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.esotericsoftware.kryo.Kryo;
+import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.RangedWeapon;
@@ -38,14 +39,53 @@ public class Packets {
 	    public int pressOrRelease; //0 = pressed, 1 = released.
 	}
 
+    public static class MousePressOrRelease {
+        public static final int PRESSED = 0;
+        public static final int RELEASED = 1;
+        public MousePressOrRelease() {}
+        public MousePressOrRelease(int m, int x, int y, int pOrR, int playerID) {
+            message = m;
+            pressOrRelease = pOrR;
+            this.playerID = playerID;
+            this.x = x;
+            this.y = y;
+        }
+        public int playerID;
+        public int message;
+        public int pressOrRelease; //0 = pressed, 1 = released.
+        public int x, y;
+    }
+
+    public static class SetEntityAim {
+	    public SetEntityAim() {}
+	    public SetEntityAim(UUID uuid, float delta, int x, int y) {
+	        this.uuid = uuid;
+	        this.delta = delta;
+	        this.x = x;
+	        this.y = y;
+        }
+        public UUID uuid;
+	    public float delta;
+	    public int x, y;
+    }
+
+    public static class EntityShoot {
+	    public EntityShoot() {}
+	    public EntityShoot(UUID uuid) {
+	        this.uuid = uuid;
+        }
+        public UUID uuid;
+    }
+
 	//Client to server
-	public static class Shoot {
+	/*public static class Shoot {
 	    public static UUID userID;
 	    public static int weaponID;
 	    public static Vector2 startingVelocity;
 	    public static float x, y;
 	    public static short filter;
 
+        public Shoot() {}
 	    public Shoot(UUID userID, int weaponID, Vector2 startingVelocity, float x, float y, short filter) {
 	        this.userID = userID;
 	        this.weaponID = weaponID;
@@ -54,7 +94,7 @@ public class Packets {
 	        this.y = y;
 	        this.filter = filter;
         }
-    }
+    }*/
 
     //Server to client
     /*public static class ShootSToC {
@@ -177,7 +217,7 @@ public class Packets {
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
         kryo.register(KeyPressOrRelease.class);
-        kryo.register(Packets.Shoot.class);
+        //kryo.register(Shoot.class);
         kryo.register(EnterPlayState.class);
         kryo.register(ReadyToPlay.class);
         kryo.register(Packets.IDMessage.class);

@@ -16,13 +16,16 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.client.KryoClient;
+import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.util.CameraStyles;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.TiledObjectUtil;
 import static com.mygdx.game.util.Constants.PPM;
 
@@ -127,8 +130,8 @@ public class PlayState extends GameState {
 		entities = new HashSet<Entity>();
 		
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
-		//map = new TmxMapLoader().load("maps/map_1_460.tmx");
-		map = new TmxMapLoader().load("maps/argh.tmx");
+		map = new TmxMapLoader().load("maps/map_1_460.tmx");
+		//map = new TmxMapLoader().load("maps/argh.tmx");
 
 		
 		tmr = new OrthogonalTiledMapRenderer(map);
@@ -376,6 +379,43 @@ public class PlayState extends GameState {
         target.getBody().setTransform(pos,a);
 	    target.getBody().setLinearVelocity(vel);
 	    target.getBody().setAngularVelocity(aVel);
+    }
+
+    /**
+     * Makes the given entity set its shooting direction by calling mouseClicked(). Only to be used on client side,
+     * when the client receives a message from the server telling it to shoot.
+     *
+     * @param entityID ID of entity
+     * @param delta time since last engine tick
+     * @param x X aim direction
+     * @param y Y aim direction
+     */
+    public void setEntityAim(UUID entityID, float delta, int x, int y) {
+        Entity target = getEntity(entityID);
+        if (target == null) { return; }
+        if (target instanceof Player) {
+            ((Player) target).playerData.currentTool.mouseClicked(delta, this, ((Player) target).getBodyData(),
+                    Constants.PLAYER_HITBOX, x, y, world, camera, rays);
+        } else if (target instanceof Enemy) {
+            ((Enemy) target).weapon.mouseClicked(delta, this, ((Enemy) target).getBodyData(),
+                    Constants.ENEMY_HITBOX, x, y, world, camera, rays);
+        }
+    }
+
+    /**
+     * Makes the given entity shoot its weapon by calling execute(). Only to be used on client side, when the client
+     * receives a message from the server telling it to shoot.
+     *
+     * @param entityID ID of entity
+     */
+    public void entityShoot(UUID entityID) {
+        Entity target = getEntity(entityID);
+        if (target == null) { return; }
+        if (target instanceof Player) {
+            ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays);
+        } else if (target instanceof Enemy) {
+            ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays);
+        }
     }
 
 }

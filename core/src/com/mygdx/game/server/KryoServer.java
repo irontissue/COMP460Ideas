@@ -13,6 +13,7 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.TitleState;
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 
 public class KryoServer {
 
@@ -66,9 +67,9 @@ public class KryoServer {
 					// We have received a player movement message.
 					Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
 					server.sendToAllTCP(p);
-					PlayState ps = (PlayState) gsm.states.peek();
 //                    Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
                     if (gsm.states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) gsm.states.peek();
                         if (p.message == Input.Keys.W) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
@@ -173,6 +174,32 @@ public class KryoServer {
                         }
                     }
 				}
+
+				else if (o instanceof Packets.MousePressOrRelease) {
+                    Packets.MousePressOrRelease p = (Packets.MousePressOrRelease) o;
+                    if (gsm.states.peek() instanceof  PlayState) {
+                        PlayState ps = (PlayState) gsm.states.peek();
+                        if (p.message == Input.Buttons.LEFT) {
+                            if (p.playerID == playerIDs[0]) {
+                                if (p.pressOrRelease == Packets.MousePressOrRelease.PRESSED) {
+                                    ps.player.mousePressed = true;
+                                } else {
+                                    ps.player.mousePressed = false;
+                                }
+                                ps.player.mousePosX = p.x;
+                                ps.player.mousePosY = p.y;
+                            } else {
+                                if (p.pressOrRelease == Packets.MousePressOrRelease.PRESSED) {
+                                    ps.player.mousePressed2 = true;
+                                } else {
+                                    ps.player.mousePressed2 = false;
+                                }
+                                ps.player.mousePos2X = p.x;
+                                ps.player.mousePos2Y = p.y;
+                            }
+                        }
+                    }
+                }
 
 				else if (o instanceof Packets.Shoot) {
 					// We have received a mouse click.

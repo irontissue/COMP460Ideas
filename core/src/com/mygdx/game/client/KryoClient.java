@@ -247,6 +247,22 @@ public class KryoClient {
                         }
                     }*/
                 }
+
+                else if (o instanceof Packets.SetEntityAim) {
+                    Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        ps.setEntityAim(sea.uuid, sea.delta, sea.x, sea.y);
+                    }
+                }
+
+                else if (o instanceof Packets.EntityShoot) {
+                    Packets.EntityShoot sea = (Packets.EntityShoot) o;
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        ps.entityShoot(sea.uuid);
+                    }
+                }
             }
         });
 
