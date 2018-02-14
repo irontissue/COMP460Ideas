@@ -22,7 +22,7 @@ import static com.mygdx.game.util.Constants.PPM;
  *
  */
 public class Hitbox extends Entity {
-
+    public static final int ENTITY_TYPE = Constants.HITBOX;
 	//Initial velocity of the hitbox
 	public Vector2 startVelo;
 		
@@ -57,17 +57,36 @@ public class Hitbox extends Entity {
 		this.lifeSpan = lifespan;
 		this.filter = filter;
 		this.sensor = sensor;
-		this.dura = dura;		
+		this.dura = dura;
 		this.rest = rest;
 		this.creator = creator;
 		
 		//Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
 		this.startVelo = new Vector2(startVelo);
 
-		if (!comp460game.serverMode) {
+//		if (!comp460game.serverMode) {
+//            comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
+//        }
+	}
+
+    public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
+                  Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays,
+                  Schmuck creator, String id) {
+        super(state, world, camera, rays, width, height, x, y, id);
+        this.lifeSpan = lifespan;
+        this.filter = filter;
+        this.sensor = sensor;
+        this.dura = dura;
+        this.rest = rest;
+        this.creator = creator;
+
+        //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
+        this.startVelo = new Vector2(startVelo);
+
+        if (!comp460game.serverMode) {
             comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
         }
-	}
+    }
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
                   Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays) {
@@ -82,6 +101,21 @@ public class Hitbox extends Entity {
         //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
         this.startVelo = new Vector2(startVelo);
 	}
+
+    public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
+                  Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera,
+                  RayHandler rays, String id) {
+        super(state, world, camera, rays, width, height, x, y, id);
+        this.lifeSpan = lifespan;
+        this.filter = filter;
+        this.sensor = sensor;
+        this.dura = dura;
+        this.rest = rest;
+        this.creator = creator;
+
+        //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
+        this.startVelo = new Vector2(startVelo);
+    }
 
 	/**
 	 * Create the hitbox body. User data is initialized separately.

@@ -15,7 +15,7 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import box2dLight.RayHandler;
 
 public class SteeringEnemy extends Enemy implements Steerable<Vector2> {
-
+    public static final int ENTITY_TYPE = Constants.STEERING_ENEMY;
 	boolean tagged;
 	float boundingRadius;
 	float maxLinearSpeed, maxLinearAcceleration;
@@ -42,6 +42,24 @@ public class SteeringEnemy extends Enemy implements Steerable<Vector2> {
 		
 		this.steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
 		
+	}
+
+	public SteeringEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
+						 float startX, float startY, String id) {
+		super(state, world, camera, rays, w, h, startX, startY, id);
+
+		this.maxLinearSpeed = 10;
+		this.maxLinearAcceleration = 75;
+		this.maxAngularSpeed = 6;
+		this.maxAngularAcceleration = 3;
+
+		this.boundingRadius = 75;
+		this.decelerationRad = 50;
+
+		this.tagged = false;
+
+		this.steeringOutput = new SteeringAcceleration<Vector2>(new Vector2());
+
 	}
 	
 	public void create() {

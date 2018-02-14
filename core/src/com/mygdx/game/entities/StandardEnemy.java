@@ -13,7 +13,7 @@ import com.mygdx.game.util.Constants;
 import box2dLight.RayHandler;
 
 public class StandardEnemy extends SteeringEnemy {
-
+    public static final int ENTITY_TYPE = Constants.STANDARD_ENEMY;
     public Vector2 direction;
     
     public static final float moveCd = 0.25f;
@@ -33,6 +33,14 @@ public class StandardEnemy extends SteeringEnemy {
 			float startX, float startY) {
 		super(state, world, camera, rays, w, h, startX, startY);
 		
+		this.aiState = enemyState.ROAMING;
+
+	}
+
+	public StandardEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
+						 float startX, float startY, String id) {
+		super(state, world, camera, rays, w, h, startX, startY, id);
+
 		this.aiState = enemyState.ROAMING;
 
 	}

@@ -19,7 +19,7 @@ import com.mygdx.game.entities.userdata.CharacterData;
 /**
  * Ranged Weapons are weapons used by clicking somewhere on the screen to probably fire a projcetile or whatever in that direction.
  * Ranged weapons have a clip size and can be reloaded.
- * @author Zachary Tu
+ * @author Za chary Tu
  *
  */
 public class RangedWeapon extends Equipment {

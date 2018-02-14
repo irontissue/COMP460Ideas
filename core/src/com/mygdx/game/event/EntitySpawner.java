@@ -2,10 +2,12 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.StandardEnemy;
 import com.mygdx.game.entities.SteeringEnemy;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -46,6 +48,7 @@ public class EntitySpawner extends Event {
 	}
 	
 	public void controller(float delta) {
+
 		spawnCount += delta;
 		if (spawnCount >= interval && (limit == 0 || amountCount < limit)) {
 			spawnCount = 0;
@@ -58,13 +61,22 @@ public class EntitySpawner extends Event {
                             spawnY / PPM + state.getPlayer().height / PPM / 2, 0);
                     break;
                 case 1:
-                    new Enemy(state, world, camera, rays, 32, 32, spawnX, spawnY);
+                    Enemy e = new Enemy(state, world, camera, rays, 32, 32, spawnX, spawnY);
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(e.entityID.toString(), 32,32, spawnX, spawnY, Constants.ENEMY));
+                    }
                     break;
                 case 2:
-                    new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
+                    StandardEnemy s = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(s.entityID.toString(), 24, 24, spawnX, spawnY, Constants.STANDARD_ENEMY));
+                    }
                     break;
                 case 3:
-                    new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
+                    SteeringEnemy q = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(q.entityID.toString(), 24, 24, spawnX, spawnY, Constants.STEERING_ENEMY));
+                    }
             }
 		}
 	}
