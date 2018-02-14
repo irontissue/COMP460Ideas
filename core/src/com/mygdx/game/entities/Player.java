@@ -242,42 +242,6 @@ public class Player extends Schmuck implements InputProcessor {
 				(float) Math.toDegrees(body.getAngle()));*/
 	}
 	
-	@Override
-	public void render(SpriteBatch batch) {
-		vision.setPosition(body.getPosition());
-		vision.setDirection(body.getAngle());
-		
-		batch.setProjectionMatrix(state.sprite.combined);
-
-		batch.draw(combined, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-/*		batch.draw(groom, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.draw(dress, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.draw(bride, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));*/
-	}
-	
 	public void dispose() {
 		super.dispose();
 	}

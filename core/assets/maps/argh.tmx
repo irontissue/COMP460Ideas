@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="100" tilewidth="256" tileheight="256" nextobjectid="8">
+ <tileset firstgid="1" source="temp.tsx"/>
+ <layer name="Tile Layer 1" width="150" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt0jEOQEAAAEEFLf//rVYlTiyFmWR/sNMEAAAAAAAAAAAA8L3loeDIVxR8RcFXFHxFwVcUfEXBVxR8xVvmQ+tJMMJXFHxFwVcUfEXBVxR8RcFXFHzFXdtJvuIuX1HwFYWrX8EIXwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf7IDsaUKeA==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="150" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2tEKgjAYhmEriKC6/9vNQxkaG9tnZc8DOxBBPHjxh81pAgAAAAAAAAAAAPi807zOneuy+1vz7a4DnnEb8AyORVck6IoEXZGgKxJ0RYKuSLjP61GspfLe2nru9bL8rPLbs7Vvai+UFmVXW3PS7KOFrkjQFQm1veiKFroiwRwkQVckmIP06N3v1BVrauebOUiL2vPmtfNDZ4Jsqe1qxP8O/I9336Hlta4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCN4AbzTAwU=
+  </data>
+ </layer>
+ <objectgroup name="collision-layer">
+  <object id="2" x="16128" y="4352">
+   <polyline points="0,0 4608,0 4608,2304 2048,2304 2048,3328"/>
+  </object>
+  <object id="3" x="19968" y="6656">
+   <polyline points="0,0 0,3072 -1792,3072 -1792,2560"/>
+  </object>
+  <object id="4" x="18176" y="8704">
+   <polyline points="0,0 0,-512"/>
+  </object>
+  <object id="5" x="16128" y="4352">
+   <polyline points="0,0 0,2304 1280,2304 1280,5120"/>
+  </object>
+  <object id="6" x="17408" y="8960">
+   <polyline points="0,0 -1792,0 -1792,1280 0,1280 0,1024"/>
+  </object>
+  <object id="7" x="17408" y="10240">
+   <polyline points="0,0 768,0 768,-1024"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="event-layer">
+  <object id="1" name="Spawn" type="Spawn" x="15872" y="9728" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="0"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>
