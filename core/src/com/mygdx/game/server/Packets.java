@@ -220,6 +220,15 @@ public class Packets {
 	    public String id;
 	    public int entityType;
     }
+
+    public static class RemoveSchmuck {
+	    public RemoveSchmuck() {}
+	    public RemoveSchmuck(String id) {
+	        this.id = id;
+        }
+        public String id;
+    }
+
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
         kryo.register(KeyPressOrRelease.class);

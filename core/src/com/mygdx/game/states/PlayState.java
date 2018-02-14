@@ -130,7 +130,8 @@ public class PlayState extends GameState {
 		entities = new HashSet<Entity>();
 		
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
-		map = new TmxMapLoader().load("maps/map_1_460.tmx");
+//		map = new TmxMapLoader().load("maps/map_1_460.tmx");
+        map = new TmxMapLoader().load("maps/map_2_460.tmx");
 		//map = new TmxMapLoader().load("maps/argh.tmx");
 
 		
@@ -172,18 +173,26 @@ public class PlayState extends GameState {
 		world.step(delta, 6, 2);
 
 		//All entities that are set to be removed are removed.
-		for (Entity entity : removeList) {
-			entities.remove(entity);
-			entity.dispose();
-		}
-		removeList.clear();
-		
+        synchronized (removeList) {
+            for (Entity entity : removeList) {
+                if (entities.contains(entity)) {
+                    entities.remove(entity);
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
+                    }
+                    entity.dispose();
+                }
+            }
+            removeList.clear();
+        }
 		//All entities that are set to be added are added.
-		for (Entity entity : createList) {
-			entities.add(entity);
-			entity.create();
-		}
-		createList.clear();
+        synchronized (createList) {
+            for (Entity entity : createList) {
+                entities.add(entity);
+                entity.create();
+            }
+            createList.clear();
+        }
 		
 		
 /*		controllerCounter += delta;
@@ -319,7 +328,9 @@ public class PlayState extends GameState {
 	 * @param entity: delet this
 	 */
 	public void destroy(Entity entity) {
-		removeList.add(entity);
+	    if (!removeList.contains(entity)) {
+            removeList.add(entity);
+        }
 	}
 	
 	/**

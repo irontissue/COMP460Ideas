@@ -253,7 +253,7 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.SetEntityAim) {
-                    Log.info("Received SetEntityAim message");
+                    //Log.info("Received SetEntityAim message");
                     Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
                     if (myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
@@ -262,11 +262,20 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EntityShoot) {
-                    Log.info("Received EntityShoot message");
+                    //Log.info("Received EntityShoot message");
                     Packets.EntityShoot sea = (Packets.EntityShoot) o;
                     if (myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         ps.entityShoot(UUID.fromString(sea.uuid));
+                    }
+                }
+
+                else if (o instanceof Packets.RemoveSchmuck) {
+                    //Log.info("Received RemoveSchmuck message");
+                    Packets.RemoveSchmuck sea = (Packets.RemoveSchmuck) o;
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        ps.destroy(ps.getEntity(UUID.fromString(sea.id)));
                     }
                 }
             }
