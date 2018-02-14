@@ -18,12 +18,12 @@ public class ServerNetworkListener extends Listener {
 	
 	public void received(Connection c, Object o) {
 		
-		if (o instanceof Packets.Packet01Message) {
+		if (o instanceof PlayerConnect) {
 			// We have received a player connection message.
-			Packet01Message p = (Packet01Message) o;
+			PlayerConnect p = (PlayerConnect) o;
 
 			// Ignore the object if the name is invalid.
-			String name = ((Packet01Message)o).message;
+			String name = ((PlayerConnect)o).message;
 //			if (name == null) return server.s ;
 			name = name.trim();
 			if (name.length() == 0) return;
@@ -31,14 +31,14 @@ public class ServerNetworkListener extends Listener {
 
 		}
 		
-		if (o instanceof Packets.Packet02Input) {
+		if (o instanceof KeyPressOrRelease) {
 			// We have received a player movement message.
-			Packet02Input p = (Packet02Input) o;
+			KeyPressOrRelease p = (KeyPressOrRelease) o;
 		}
 
-		if (o instanceof Packets.Packet03Click) {
+		if (o instanceof Packets.Shoot) {
 			// We have received a mouse click.
-			Packet03Click p = (Packet03Click) o;
+			Shoot p = (Shoot) o;
 		}
 	}
 }

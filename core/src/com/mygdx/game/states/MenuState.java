@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.Text;
