@@ -1,9 +1,13 @@
 package com.mygdx.game.manager;
 
+import java.util.Set;
 import java.util.Stack;
 
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.comp460game;
+import com.mygdx.game.entities.Entity;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.*;
 
 /**
@@ -15,9 +19,9 @@ public class GameStateManager {
 	
 	//An instance of the current game
 	private comp460game app;
-	private KryoClient gameClient;
 	//Stack of GameStates. These are all the states that the player has opened in that order.
 	public Stack<GameState> states;
+    private float syncTimer = 0;
 	
 	//This enum lists all the different types of gamestates.
 	public enum State {
@@ -53,6 +57,26 @@ public class GameStateManager {
 	 */
 	public void update(float delta) {
 		states.peek().update(delta);
+
+		//Any world sync things, even if we wanted to implement something syncing in the title screen, should ideally
+        //be done here.
+		if (states.peek() instanceof PlayState) {
+            //syncTimer += delta;
+            if (/*syncTimer > 0.5 && */comp460game.serverMode) {
+                PlayState ps = (PlayState) states.peek();
+//                Log.info("Number of entities: " + ps.getEntities().size());
+                comp460game.server.server.sendToAllTCP(new Packets.SyncPlayState(ps.player.getBody().getPosition(),
+                        ps.player.getBody().getAngle()));
+//                Entity[] entities = ps.getEntities().toArray(new Entity[0]);
+//                Entity x;
+//                for (int i = 0; i < entities.length; i++) {
+//                    x = entities[i];
+//                    comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(x.entityID, x.getBody().getPosition(),
+//                            x.getBody().getLinearVelocity(), x.getBody().getAngularVelocity(), x.getBody().getAngle()));
+//				}
+                syncTimer = 0;
+            }
+        }
 	}
 	
 	/**
@@ -116,7 +140,7 @@ public class GameStateManager {
 	public GameState getState(State state) {
 		switch(state) {
 			case SPLASH: return null;
-			case TITLE: return new TitleState(app.getClient(), this);
+			case TITLE: return new TitleState(this);
 			case MENU: return new MenuState(this);
 			case PLAY: return new PlayState(this);
 		}
