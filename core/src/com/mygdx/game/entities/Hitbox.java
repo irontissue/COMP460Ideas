@@ -57,7 +57,7 @@ public class Hitbox extends Entity {
 		this.lifeSpan = lifespan;
 		this.filter = filter;
 		this.sensor = sensor;
-		this.dura = dura;		
+		this.dura = dura;
 		this.rest = rest;
 		this.creator = creator;
 		

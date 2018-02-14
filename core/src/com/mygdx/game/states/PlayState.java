@@ -136,7 +136,7 @@ public class PlayState extends GameState {
 		rays.setCombinedMatrix(camera);
 		//rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		player = new Player(gsm.application().getClient(), this, world, camera, rays, 100, 100);
+		player = new Player(this, world, camera, rays, 100, 100);
 		
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
 		
