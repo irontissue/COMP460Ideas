@@ -135,7 +135,8 @@ public class KryoClient {
                     RayHandler rays = ps.getRays();
 //                    while (ps.updating) {}
                     new Schmuck(ps, world, ps.camera, rays, p.w, p.h, p.startX, p.startY, p.id);
-//                    Log.info("Processed Schmuck creation sync message!");
+                    Log.info("Processed Schmuck creation sync message!");
+
                 }
 
                 else if (o instanceof Packets.KeyPressOrRelease) {

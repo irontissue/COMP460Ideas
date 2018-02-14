@@ -197,4 +197,8 @@ public class comp460game extends ApplicationAdapter {
     public GameStateManager getGsm() {
 	    return gsm;
     }
+
+	public KryoClient getClient() {
+		return client;
+	}
 }
