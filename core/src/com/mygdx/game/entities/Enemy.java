@@ -12,12 +12,18 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import box2dLight.RayHandler;
 
 public class Enemy extends Schmuck {
-
+    public static final int ENTITY_TYPE = Constants.ENEMY;
 	public Equipment weapon;
 	
 	public Enemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
 			float startX, float startY) {
 		super(state, world, camera, rays, w, h, startX, startY);
+		weapon = new BadGun(this);
+	}
+
+	public Enemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
+				 float startX, float startY, String id) {
+		super(state, world, camera, rays, w, h, startX, startY, id);
 		weapon = new BadGun(this);
 	}
 

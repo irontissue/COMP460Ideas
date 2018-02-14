@@ -13,6 +13,7 @@ import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
 
 public class RangedEnemy extends Schmuck {
+    public static final int ENTITY_TYPE = Constants.RANGED_ENEMY;
     public float maxSpeed = 4.0f;
 
     public float randSpeed;
@@ -27,6 +28,13 @@ public class RangedEnemy extends Schmuck {
     public RangedEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
                  float startX, float startY) {
         super(state, world, camera, rays, w, h, startX, startY);
+        weapon = new BadGun(this);
+        randSpeed = maxSpeed;
+    }
+
+    public RangedEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
+                       float startX, float startY, String id) {
+        super(state, world, camera, rays, w, h, startX, startY, id);
         weapon = new BadGun(this);
         randSpeed = maxSpeed;
     }
