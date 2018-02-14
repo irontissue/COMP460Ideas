@@ -118,7 +118,11 @@ public class Packets {
 	    public ReadyToPlay() {}
     }
 
-	public static class EnterPlayState {
+    public static class ClientCreatedPlayState {
+        public ClientCreatedPlayState() {}
+    }
+
+    public static class EnterPlayState {
         public EnterPlayState() {}
 	}
 
@@ -204,15 +208,17 @@ public class Packets {
 
     public static class SyncCreateSchmuck {
 	    public SyncCreateSchmuck() {}
-	    public SyncCreateSchmuck(UUID id, float w, float h, float startX, float startY) {
+	    public SyncCreateSchmuck(String id, float w, float h, float startX, float startY, int entityType) {
 	        this.w = w;
 	        this.h = h;
 	        this.startX = startX;
 	        this.startY = startY;
 	        this.id = id;
+	        this.entityType = entityType;
         }
 	    public float w, h, startX, startY;
-	    public UUID id;
+	    public String id;
+	    public int entityType;
     }
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
@@ -235,6 +241,7 @@ public class Packets {
         kryo.register(MousePressOrRelease.class);
         kryo.register(SetEntityAim.class);
         kryo.register(EntityShoot.class);
+        kryo.register(ClientCreatedPlayState.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

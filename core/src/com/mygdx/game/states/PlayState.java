@@ -17,14 +17,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
-import com.mygdx.game.entities.Enemy;
-import com.mygdx.game.entities.Entity;
-import com.mygdx.game.entities.Player;
-import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.comp460game;
+import com.mygdx.game.entities.*;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.manager.GameStateManager.State;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.util.CameraStyles;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.TiledObjectUtil;
@@ -141,12 +140,18 @@ public class PlayState extends GameState {
 		//rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
 		player = new Player(this, world, camera, rays, 100, 100);
-		
+        if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.PLAYER));
+        }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
 		
 		TiledObjectUtil.parseTiledEventLayer(this, world, camera, rays, map.getLayers().get("event-layer").getObjects());	
 		
 		TiledObjectUtil.parseTiledTriggerLayer(this, world, camera, rays);
+
+		if (!comp460game.serverMode) {
+		    comp460game.client.client.sendTCP(new Packets.ClientCreatedPlayState());
+        }
 	}
 
 	@Override
@@ -367,7 +372,7 @@ public class PlayState extends GameState {
 	}
 	public Entity getEntity(UUID entityID) {
         for (Entity e : entities) {
-            if (e.entityID == entityID) {
+            if (e.entityID.equals(entityID)) {
                 return e;
             }
         }
@@ -410,7 +415,10 @@ public class PlayState extends GameState {
      */
     public void entityShoot(UUID entityID) {
         Entity target = getEntity(entityID);
-        if (target == null) { return; }
+        Log.info("ShootID = " + entityID.toString());
+        if (target == null) {
+            Log.info("NULL Target!!!!");
+            return; }
         if (target instanceof Player) {
             Log.info("Player shoots (instruction from server)!");
             ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays);
@@ -418,5 +426,34 @@ public class PlayState extends GameState {
             ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays);
         }
     }
+
+    public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type) {
+        UUID entityID = UUID.fromString(id);
+        switch(type) {
+            case Constants.PLAYER : {
+                Log.info("PLAYER entityID assigned as: " + id);
+                player.entityID = entityID;
+                break;
+            }
+            case Constants.ENEMY : {
+                new Enemy(this, world, camera, rays, w, h, startX, startY, id);
+                break;
+            }
+            case Constants.RANGED_ENEMY : {
+                new RangedEnemy(this, world, camera, rays, w, h, startX, startY, id);
+                break;
+            }
+            case Constants.STANDARD_ENEMY : {
+                new StandardEnemy(this, world, camera, rays, w, h, startX, startY, id);
+                break;
+            }
+            case Constants.STEERING_ENEMY : {
+                new SteeringEnemy(this, world, camera, rays, w, h, startX, startY, id);
+                break;
+            }
+            default : break;
+        }
+    }
+
 
 }

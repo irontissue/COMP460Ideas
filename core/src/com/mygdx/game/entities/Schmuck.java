@@ -13,6 +13,7 @@ import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.SteeringUtil;
 import com.badlogic.gdx.ai.utils.Location;
 
@@ -24,7 +25,7 @@ import box2dLight.RayHandler;
 import java.util.UUID;
 
 public class Schmuck extends Entity implements Location<Vector2> {
-
+    public static final int ENTITY_TYPE = Constants.SCHMUCK;
 	//user data.
 	protected CharacterData bodyData;
 	
@@ -78,7 +79,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	}
 
     public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-                   float startX, float startY, UUID id) {
+                   float startX, float startY, String id) {
         super(state, world, camera, rays, w * scale, h * scale, startX, startY, id);
         atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
         schmuckSprite = atlas.findRegion("spittlefish_swim");
@@ -87,6 +88,18 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 			float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight) {
 		super(state, world, camera, rays, width * scale, height * scale, startX, startY);
+		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
+		this.schmuckSprite = atlas.findRegion(spriteId);
+		this.schmuckSprite = new TextureRegion(new Texture(AssetList.GROOM.toString()));
+		this.hbWidth = hbWidth;
+		this.hbHeight = hbHeight;
+		this.spriteWidth = width;
+		this.spriteHeight = height;
+	}
+
+	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+				   float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight, String id) {
+		super(state, world, camera, rays, width * scale, height * scale, startX, startY, id);
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		this.schmuckSprite = atlas.findRegion(spriteId);
 		this.schmuckSprite = new TextureRegion(new Texture(AssetList.GROOM.toString()));

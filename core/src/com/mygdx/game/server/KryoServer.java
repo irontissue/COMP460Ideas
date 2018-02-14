@@ -216,11 +216,25 @@ public class KryoServer {
 					Log.info("Player " + c.getID() + " ready.");
 				    if (players == 2) {
 				        server.sendToAllTCP(new Packets.EnterPlayState());
-						Gdx.app.postRunnable(new Runnable() {
-							public void run() {
-								gsm.addState(GameStateManager.State.PLAY, TitleState.class);
-							}
-						});
+				        players = 0;
+//						Gdx.app.postRunnable(new Runnable() {
+//							public void run() {
+//								gsm.addState(GameStateManager.State.PLAY, TitleState.class);
+//							}
+//						});
+                    }
+                }
+
+                else if (o instanceof Packets.ClientCreatedPlayState) {
+                    //Log.info("Server received ReadyToPlay");
+                    Packets.ClientCreatedPlayState p = (Packets.ClientCreatedPlayState) o;
+                    players += 1;
+                    if (players == 2) {
+                        Gdx.app.postRunnable(new Runnable() {
+                            public void run() {
+                                gsm.addState(GameStateManager.State.PLAY, TitleState.class);
+                            }
+                        });
                     }
                 }
 

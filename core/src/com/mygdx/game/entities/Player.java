@@ -33,7 +33,7 @@ import box2dLight.RayHandler;
 import static com.mygdx.game.util.Constants.PPM;
 
 public class Player extends Schmuck implements InputProcessor {
-
+    public static final int ENTITY_TYPE = Constants.PLAYER;
 	protected MoveStates moveState1, moveState2;
 
 	//Fixtures and user data
@@ -83,6 +83,14 @@ public class Player extends Schmuck implements InputProcessor {
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
 	}
+
+    public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, String id) {
+        super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384, id);
+        this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
+        this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
+        this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
+        this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
+    }
 	
 	/**
 	 * Create the player's body and initialize player's user data.

@@ -6,10 +6,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.states.PlayState;
 
 import box2dLight.RayHandler;
+import com.mygdx.game.util.Constants;
 
 import java.util.UUID;
 
@@ -37,9 +39,9 @@ public abstract class Entity {
 	protected float startX, startY;
 	public UUID entityID;
 	boolean alive = true;
-
+    public static final int ENTITY_TYPE = Constants.ENTITY;
 	/**
-	 * Constructor is called when an entity is created.
+	 * Constructor is called when an entity is created. USE THIS FOR SERVER
 	 * @param state: Current playstate
 	 * @param world: Current game world
 	 * @param camera: Current game camera
@@ -50,28 +52,42 @@ public abstract class Entity {
 	 * @param startY: Starting y position
 	 */
 	public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY) {
-	    entityID = UUID.randomUUID();
 
-		this.state = state;
-		this.world = world;
-		this.camera = camera;
-		this.rays = rays;
-		
-		this.width = w;
-		this.height = h;
-		this.startX = startX;
-		this.startY = startY;
-		
-		//Queue this entity up for creating in the world next engine tick
+        entityID = UUID.randomUUID();
+
+        this.state = state;
+        this.world = world;
+        this.camera = camera;
+        this.rays = rays;
+
+        this.width = w;
+        this.height = h;
+        this.startX = startX;
+        this.startY = startY;
+
+        //Queue this entity up for creating in the world next engine tick
         state.create(this);
+
+
 //        if (state.player == null || state.player.getClient().allowedToCreate || state.player.getClient().master) {
 //            state.create(this);
 //        }
 
 	}
-
-    public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY, UUID id) {
-        entityID = id;
+	/**
+	 * Constructor is called when an entity is created. USE THIS FOR CLIENT
+	 * @param state: Current playstate
+	 * @param world: Current game world
+	 * @param camera: Current game camera
+	 * @param rays: Current rayhandler
+	 * @param w: Width
+	 * @param h: Height
+	 * @param startX: Starting x position
+	 * @param startY: Starting y position
+	 * @param id: UUID of entity you are creating
+	 */
+    public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY, String id) {
+        entityID = UUID.fromString(id);
 
         this.state = state;
         this.world = world;
