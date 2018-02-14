@@ -30,64 +30,56 @@ public class TitleState extends GameState {
 
 	@Override
 	public void show() {
-		stage = new Stage() {
-			{
-				playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
-				startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
-				joinServerOption = new Text(comp460game.assetManager, "JOIN SERVER?", 150, comp460game.CONFIG_HEIGHT - 300);
-				exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 360);
-				
-				playOption.addListener(new ClickListener() {
-			        public void clicked(InputEvent e, float x, float y) {
-			            Log.info("Clicked play button...");
-			            if (comp460game.client == null) return;
-                        Log.info("Client successfully set");
-                        Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
+		if (!app.serverMode) {
+			stage = new Stage() {
+				{
+					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
+					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
+					joinServerOption = new Text(comp460game.assetManager, "JOIN SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
+					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 300);
 
-                        if (!comp460game.serverMode) {
-                            comp460game.client.client.sendTCP(r2p);
-                        }
-                        
-//                        gsm.addState(State.PLAY, TitleState.class);
-			        }
-			    });
-				playOption.setScale(0.5f);
-				
-				joinServerOption.addListener(new ClickListener() {
-			        public void clicked(InputEvent e, float x, float y) {
-                        comp460game.client.init();
-			        }
-			    });
-				joinServerOption.setScale(0.5f);
-				
-				startServerOption.addListener(new ClickListener() {
-			        public void clicked(InputEvent e, float x, float y) {
+					playOption.addListener(new ClickListener() {
+						public void clicked(InputEvent e, float x, float y) {
+							Log.info("Clicked play button...");
+							if (comp460game.client == null) return;
+							Log.info("Client successfully set");
+							Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
 
-						/*if (client.myGame.server == null) {
-						    client.myGame.server = new KryoServer(gsm);
-                        }*/
-//			        	try {
-//							new KryoServer();
-//						} catch (IOException e1) {
-//							e1.printStackTrace();
-//						}
-			        }
-			    });
-				startServerOption.setScale(0.5f);
-				
-				exitOption.addListener(new ClickListener() {
-			        public void clicked(InputEvent e, float x, float y) {
-			        	Gdx.app.exit();
-			        }
-			    });
-				exitOption.setScale(0.5f);
-				
-				addActor(playOption);
-				addActor(startServerOption);
-				addActor(joinServerOption);
-				addActor(exitOption);
-			}
-		};
+							comp460game.client.client.sendTCP(r2p);
+
+						}
+					});
+					playOption.setScale(0.5f);
+
+					joinServerOption.addListener(new ClickListener() {
+						public void clicked(InputEvent e, float x, float y) {
+							comp460game.client.init();
+						}
+					});
+					joinServerOption.setScale(0.5f);
+
+
+					exitOption.addListener(new ClickListener() {
+						public void clicked(InputEvent e, float x, float y) {
+							Gdx.app.exit();
+						}
+					});
+					exitOption.setScale(0.5f);
+
+					addActor(playOption);
+					addActor(joinServerOption);
+					addActor(exitOption);
+				}
+			};
+		} else {
+			stage = new Stage() {
+				{
+					playOption = new Text(comp460game.assetManager, "Server Mode: Waiting for players...", 150, comp460game.CONFIG_HEIGHT - 180);
+					playOption.setScale(0.5f);
+					addActor(playOption);
+				}
+			};
+		}
 		app.newMenu(stage);
 	}
 	

@@ -2,6 +2,7 @@ package com.mygdx.game.states;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -82,6 +83,10 @@ public class PlayState extends GameState {
 	public boolean won = false;
 	public static final float gameoverCd = 2.5f;
 	public float gameoverCdCount;
+
+	public float desiredPlayerAngle = Float.NEGATIVE_INFINITY;
+	public Vector2 desiredPlayerPosition = new Vector2(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
+	public boolean needToSetPlayerPos = false;
 	
 //	public Set<Zone> zones;
 	
@@ -108,7 +113,11 @@ public class PlayState extends GameState {
 		rays = new RayHandler(world);
         rays.setAmbientLight(0.1f);
         rays.setCulling(false);
+
         RayHandler.useDiffuseLight(true);
+
+        rays.useDiffuseLight(true);
+
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
 		
@@ -120,7 +129,7 @@ public class PlayState extends GameState {
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
 		//map = new TmxMapLoader().load("maps/map_1_460.tmx");
 		map = new TmxMapLoader().load("maps/argh.tmx");
-//		map = new TmxMapLoader().load("maps/map_2_460.tmx");
+
 		
 		tmr = new OrthogonalTiledMapRenderer(map);
 		
@@ -181,7 +190,10 @@ public class PlayState extends GameState {
 		for (Entity entity : entities) {
 			entity.controller(delta);
 		}
-		
+        if (needToSetPlayerPos) {
+            player.body.setTransform(desiredPlayerPosition, desiredPlayerAngle);
+            needToSetPlayerPos = false;
+        }
 		//Update the game camera and batch.
 		cameraUpdate();
 		tmr.setView(camera);
@@ -349,5 +361,21 @@ public class PlayState extends GameState {
 		gameover = true;
 		gameoverCdCount = gameoverCd;
 	}
-	
+	public Entity getEntity(UUID entityID) {
+	    Entity[] e = (Entity[]) entities.toArray();
+	    for (int i = 0; i < e.length; i++) {
+	        if (e[i].entityID == entityID) {
+	            return e[i];
+            }
+        }
+        return null;
+    }
+	public void updateEntity(UUID entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
+	    Entity target = getEntity(entityID);
+	    if (target == null) { return; }
+        target.getBody().setTransform(pos,a);
+	    target.getBody().setLinearVelocity(vel);
+	    target.getBody().setAngularVelocity(aVel);
+    }
+
 }

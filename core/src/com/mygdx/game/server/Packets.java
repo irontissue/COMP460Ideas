@@ -100,6 +100,22 @@ public class Packets {
 	    public float angle;
     }
 
+    public static class SyncEntity {
+        public SyncEntity() {}
+        public SyncEntity(UUID entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
+            this.entityID = entityID;
+            this.pos = pos;
+            this.velocity = vel;
+            this.angularVelocity = aVel;
+            this.angle = a;
+        }
+        public UUID entityID;
+        public Vector2 pos;
+        public Vector2 velocity;
+        public float angularVelocity;
+        public float angle;
+    }
+
     public static class SyncHitbox {
 	    public SyncHitbox() {}
         public SyncHitbox(float x, float y, int width, int height, float lifespan, int dura, float rest,
@@ -176,6 +192,7 @@ public class Packets {
         kryo.register(SyncHitbox.class);
         kryo.register(SyncCreateSchmuck.class);
         kryo.register(SyncHitboxImage.class);
+        kryo.register(SyncEntity.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);
