@@ -71,16 +71,9 @@ public class Player extends Schmuck implements InputProcessor {
 	 * @param x: player starting x position.
 	 * @param y: player starting x position.
 	 */
-
-	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
-		super(state, world, camera, rays, x, y, "torpedofish_swim", 250, 161, 161, 250);
-		
-		dummy = new Player2Dummy(state, world, camera, rays, 250, 161, x, y, this);
-  }
   
-	public Player(KryoClient client, PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
+	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
-		this.client = client;
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
