@@ -365,10 +365,9 @@ public class PlayState extends GameState {
 		gameoverCdCount = gameoverCd;
 	}
 	public Entity getEntity(UUID entityID) {
-	    Entity[] e = (Entity[]) entities.toArray();
-	    for (int i = 0; i < e.length; i++) {
-	        if (e[i].entityID == entityID) {
-	            return e[i];
+        for (Entity e : entities) {
+            if (e.entityID == entityID) {
+                return e;
             }
         }
         return null;

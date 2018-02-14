@@ -250,6 +250,7 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.SetEntityAim) {
+                    Log.info("Received SetEntityAim message");
                     Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
                     if (myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
@@ -258,6 +259,7 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EntityShoot) {
+                    Log.info("Received EntityShoot message");
                     Packets.EntityShoot sea = (Packets.EntityShoot) o;
                     if (myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
