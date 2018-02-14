@@ -194,8 +194,9 @@ public class KryoServer {
                                 } else {
                                     ps.player.mousePressed2 = false;
                                 }
-                                ps.player.mousePos2X = p.x;
-                                ps.player.mousePos2Y = p.y;
+                                //TODO: THIS SHOULD BE MOUSEPOS2 (for player 2).
+                                ps.player.mousePosX = p.x;
+                                ps.player.mousePosY = p.y;
                             }
                         }
                     }

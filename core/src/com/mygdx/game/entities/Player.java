@@ -173,12 +173,12 @@ public class Player extends Schmuck implements InputProcessor {
             }
 
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
-            if (mousePressed) {
+            if (mousePressed || mousePressed2) {
                 //charging = true;
                 useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
             }
             if (mousePressed2) {
-                useToolStart(delta, player2Data.currentTool, Constants.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
+                useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
             } else {
                 /*if (charging) {
                     useToolRelease(playerData.currentTool, Constants.PLAYER_HITBOX, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());

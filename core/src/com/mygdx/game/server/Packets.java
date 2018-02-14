@@ -228,7 +228,6 @@ public class Packets {
         kryo.register(PlayState.class);
         kryo.register(SyncPlayState.class);
         kryo.register(Body.class);
-        kryo.register(UUID.class);
         kryo.register(SyncHitbox.class);
         kryo.register(SyncCreateSchmuck.class);
         kryo.register(SyncHitboxImage.class);

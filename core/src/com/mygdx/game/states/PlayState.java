@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.Entity;
@@ -411,6 +412,7 @@ public class PlayState extends GameState {
         Entity target = getEntity(entityID);
         if (target == null) { return; }
         if (target instanceof Player) {
+            Log.info("Player shoots (instruction from server)!");
             ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays);
         } else if (target instanceof Enemy) {
             ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays);
