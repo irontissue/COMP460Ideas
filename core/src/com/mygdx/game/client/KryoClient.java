@@ -58,7 +58,7 @@ public class KryoClient {
             }
 
             public void disconnected(Connection c) {
-                JOptionPane.showConfirmDialog(null, "You have been disconnected from the server.");
+                //JOptionPane.showConfirmDialog(null, "You have been disconnected from the server.");
                 /*myGame.getGsm().removeState(PlayState.class);
                 myGame.getGsm().removeState(TitleState.class);
                 myGame.getGsm().addState(State.TITLE, null);
@@ -279,7 +279,7 @@ public class KryoClient {
                     Packets.RemoveSchmuck sea = (Packets.RemoveSchmuck) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.destroy(ps.getEntity(UUID.fromString(sea.id)));
+                        ps.getEntity(UUID.fromString(sea.id)).queueDeletion();
                     }
                 }
 

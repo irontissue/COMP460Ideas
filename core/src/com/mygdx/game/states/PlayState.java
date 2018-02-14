@@ -1,5 +1,6 @@
 package com.mygdx.game.states;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -56,25 +57,25 @@ public class PlayState extends GameState {
 
     private World world;
 
-    public Set<Entity> getRemoveList() {
+    public ArrayList<Entity> getRemoveList() {
         return removeList;
     }
 
-    public void setRemoveList(Set<Entity> removeList) {
+    public void setRemoveList(ArrayList<Entity> removeList) {
         this.removeList = removeList;
     }
 
-    public Set<Entity> getCreateList() {
+    public ArrayList<Entity> getCreateList() {
         return createList;
     }
 
-    public void setCreateList(Set<Entity> createList) {
+    public void setCreateList(ArrayList<Entity> createList) {
         this.createList = createList;
     }
 
     //These represent the set of entities to be added to/removed from the world. This is necessary to ensure we do this between world steps.
-	private Set<Entity> removeList;
-	private Set<Entity> createList;
+	private ArrayList<Entity> removeList;
+	private ArrayList<Entity> createList;
 	
 	//This is a set of all entities in the world
 	private Set<Entity> entities;
@@ -125,8 +126,8 @@ public class PlayState extends GameState {
 		b2dr = new Box2DDebugRenderer();
 		
 		//Initialize sets to keep track of active entities
-		removeList = new HashSet<Entity>();
-		createList = new HashSet<Entity>();
+		removeList = new ArrayList<Entity>();
+		createList = new ArrayList<Entity>();
 		entities = new HashSet<Entity>();
 		
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
@@ -173,23 +174,38 @@ public class PlayState extends GameState {
 		world.step(delta, 6, 2);
 
 		//All entities that are set to be removed are removed.
-        for (Entity entity : removeList) {
+        while (!removeList.isEmpty()) {
+            Entity entity = removeList.remove(0);
             if (entities.contains(entity)) {
                 entities.remove(entity);
-                if (comp460game.serverMode) {
+                if (comp460game.serverMode && entity instanceof Schmuck) {
                     comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
                 }
                 entity.dispose();
             }
         }
-        removeList.clear();
+        /*for (Entity entity : removeList) {
+            if (entities.contains(entity)) {
+                entities.remove(entity);
+                if (comp460game.serverMode && entity instanceof Schmuck) {
+                    comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
+                }
+                entity.dispose();
+            }
+        }
+        removeList.clear();*/
 
 		//All entities that are set to be added are added.
-        for (Entity entity : createList) {
+        while (!createList.isEmpty()) {
+            Entity entity = createList.remove(0);
             entities.add(entity);
             entity.create();
         }
-        createList.clear();
+        /*for (Entity entity : createList) {
+            entities.add(entity);
+            entity.create();
+        }
+        createList.clear();*/
 		
 		
 /*		controllerCounter += delta;
