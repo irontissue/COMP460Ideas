@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
@@ -63,7 +64,9 @@ public class Hitbox extends Entity {
 		//Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
 		this.startVelo = new Vector2(startVelo);
 
-		state.player.getClient().client.sendTCP(new Packets.SyncHitbox(x,y,width,height,lifespan,dura,rest,startVelo,filter,sensor));
+		if (!comp460game.serverMode) {
+            comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
+        }
 	}
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,

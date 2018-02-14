@@ -147,7 +147,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		shootCdCount-=delta;
 		shootDelayCount-=delta;
 		
-		//If the delay on using a tool just ended, use thte tool.
+		//If the delay on using a tool just ended, use the tool.
 		if (shootDelayCount <= 0 && usedTool != null) {
 			useToolEnd();
 		}

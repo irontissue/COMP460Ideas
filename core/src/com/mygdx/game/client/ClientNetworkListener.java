@@ -3,8 +3,7 @@ package com.mygdx.game.client;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-import com.mygdx.game.server.Packets;
-import com.mygdx.game.server.Packets.Packet01Message;
+import com.mygdx.game.server.Packets.PlayerConnect;
 
 public class ClientNetworkListener extends Listener {
 
@@ -24,8 +23,8 @@ public class ClientNetworkListener extends Listener {
 	
 	public void received(Connection c, Object o) {
 		
-		if (o instanceof Packets.Packet01Message) {
-			Packet01Message p = (Packet01Message) o;
+		if (o instanceof PlayerConnect) {
+			PlayerConnect p = (PlayerConnect) o;
 		}
 	}
 }

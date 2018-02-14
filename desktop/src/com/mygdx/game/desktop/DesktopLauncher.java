@@ -3,9 +3,8 @@ package com.mygdx.game.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.mygdx.game.comp460game;
-import testNetworking.ChatClient;
-import testNetworking.ChatServer;
 
+import javax.swing.*;
 import java.io.IOException;
 
 
@@ -26,7 +25,16 @@ public class DesktopLauncher {
 		}
     	new ChatClient();*/
 
-		new LwjglApplication(new comp460game(), config);
+        int serverMode = JOptionPane.showConfirmDialog(null, "Launch in server mode?", "Select launch mode",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+
+        if (serverMode == 0) {
+            new LwjglApplication(new comp460game(true), config);
+        } else if (serverMode == 1) {
+            new LwjglApplication(new comp460game(false), config);
+        } else {
+            System.exit(0);
+        }
 
 	}
 }
