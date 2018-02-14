@@ -58,23 +58,23 @@ public class Packets {
 
     public static class SetEntityAim {
 	    public SetEntityAim() {}
-	    public SetEntityAim(UUID uuid, float delta, int x, int y) {
+	    public SetEntityAim(String uuid, float delta, int x, int y) {
 	        this.uuid = uuid;
 	        this.delta = delta;
 	        this.x = x;
 	        this.y = y;
         }
-        public UUID uuid;
+        public String uuid;
 	    public float delta;
 	    public int x, y;
     }
 
     public static class EntityShoot {
 	    public EntityShoot() {}
-	    public EntityShoot(UUID uuid) {
+	    public EntityShoot(String uuid) {
 	        this.uuid = uuid;
         }
-        public UUID uuid;
+        public String uuid;
     }
 
 	//Client to server
@@ -233,6 +233,9 @@ public class Packets {
         kryo.register(SyncCreateSchmuck.class);
         kryo.register(SyncHitboxImage.class);
         kryo.register(SyncEntity.class);
+        kryo.register(MousePressOrRelease.class);
+        kryo.register(SetEntityAim.class);
+        kryo.register(EntityShoot.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

@@ -1,6 +1,7 @@
 package com.mygdx.game.client;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
@@ -135,7 +136,7 @@ public class KryoClient {
                     RayHandler rays = ps.getRays();
 //                    while (ps.updating) {}
                     new Schmuck(ps, world, ps.camera, rays, p.w, p.h, p.startX, p.startY, p.id);
-                    Log.info("Processed Schmuck creation sync message!");
+//                    Log.info("Processed Schmuck creation sync message!");
 
                 }
 
@@ -252,7 +253,7 @@ public class KryoClient {
                     Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
                     if (myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.setEntityAim(sea.uuid, sea.delta, sea.x, sea.y);
+                        ps.setEntityAim(UUID.fromString(sea.uuid), sea.delta, sea.x, sea.y);
                     }
                 }
 
@@ -260,7 +261,7 @@ public class KryoClient {
                     Packets.EntityShoot sea = (Packets.EntityShoot) o;
                     if (myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.entityShoot(sea.uuid);
+                        ps.entityShoot(UUID.fromString(sea.uuid));
                     }
                 }
             }

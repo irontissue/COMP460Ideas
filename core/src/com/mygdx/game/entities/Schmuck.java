@@ -189,7 +189,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 			
 			//Register the tool targeting the input coordinates.
 			if (comp460game.serverMode) {
-			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID, delta, x, y));
+			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
             }
 			tool.mouseClicked(delta, state, bodyData, filter, x, y, world, camera, rays);
 			
@@ -208,7 +208,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		
 		//execute the tool.
         if (comp460game.serverMode) {
-            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID));
+            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID.toString()));
         }
 		usedTool.execute(state, bodyData, world, camera, rays);
 		

@@ -201,11 +201,11 @@ public class KryoServer {
                     }
                 }
 
-				else if (o instanceof Packets.Shoot) {
-					// We have received a mouse click.
-					Packets.Shoot p = (Packets.Shoot) o;
-					server.sendToAllTCP(p);
-				}
+//				else if (o instanceof Packets.Shoot) {
+//					// We have received a mouse click.
+//					Packets.Shoot p = (Packets.Shoot) o;
+//					server.sendToAllTCP(p);
+//				}
 
 				else if (o instanceof Packets.ReadyToPlay) {
 					//Log.info("Server received ReadyToPlay");
