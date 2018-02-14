@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
+import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.manager.AssetList;
@@ -72,20 +73,19 @@ public class Player extends Schmuck implements InputProcessor {
 	 * @param y: player starting x position.
 	 */
 
-	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
-		super(state, world, camera, rays, x, y, "torpedofish_swim", 250, 161, 161, 250);
-		
-		dummy = new Player2Dummy(state, world, camera, rays, 250, 161, x, y, this);
-  }
-  
 	public Player(KryoClient client, PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
-		this.client = client;
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
-//		dummy = new Player2Dummy(state, world, camera, rays, 250, 161, x, y, this);
+	}
+	
+		public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
+		super(state, world, camera, rays, x, y, "torpedofish_swim", 250, 161, 161, 250);
+
+
+
 	}
 	
 	/**
@@ -210,6 +210,43 @@ public class Player extends Schmuck implements InputProcessor {
 		interactCdCount-=delta;
 
 		super.controller(delta);
+
+	}
+	
+	@Override
+	public void render(SpriteBatch batch) {
+		vision.setPosition(body.getPosition());
+		vision.setDirection(body.getAngle());
+		
+		batch.setProjectionMatrix(state.sprite.combined);
+
+		batch.draw(combined, 
+				body.getPosition().x * PPM - hbHeight * scale / 2, 
+				body.getPosition().y * PPM - hbWidth * scale / 2, 
+				hbHeight * scale / 2, hbWidth * scale / 2,
+				spriteWidth * scale, spriteHeight * scale, 1, 1, 
+				(float) Math.toDegrees(body.getAngle()));
+		
+/*		batch.draw(groom, 
+				body.getPosition().x * PPM - hbHeight * scale / 2, 
+				body.getPosition().y * PPM - hbWidth * scale / 2, 
+				hbHeight * scale / 2, hbWidth * scale / 2,
+				spriteWidth * scale, spriteHeight * scale, 1, 1, 
+				(float) Math.toDegrees(body.getAngle()));
+		
+		batch.draw(dress, 
+				body.getPosition().x * PPM - hbHeight * scale / 2, 
+				body.getPosition().y * PPM - hbWidth * scale / 2, 
+				hbHeight * scale / 2, hbWidth * scale / 2,
+				spriteWidth * scale, spriteHeight * scale, 1, 1, 
+				(float) Math.toDegrees(body.getAngle()));
+		
+		batch.draw(bride, 
+				body.getPosition().x * PPM - hbHeight * scale / 2, 
+				body.getPosition().y * PPM - hbWidth * scale / 2, 
+				hbHeight * scale / 2, hbWidth * scale / 2,
+				spriteWidth * scale, spriteHeight * scale, 1, 1, 
+				(float) Math.toDegrees(body.getAngle()));*/
 	}
 	
 	@Override
