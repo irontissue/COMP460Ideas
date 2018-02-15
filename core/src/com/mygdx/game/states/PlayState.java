@@ -448,14 +448,15 @@ public class PlayState extends GameState {
      */
     public void entityShoot(UUID entityID, String[] bulletIDs) {
         Entity target = getEntity(entityID);
-        Log.info("ShootID = " + entityID.toString());
+//        Log.info("ShootID = " + entityID.toString());
         if (target == null) {
             Log.info("NULL Target!!!!");
             return; }
         if (target instanceof Player) {
-            Log.info("Player shoots (instruction from server)!");
+//            Log.info("Player shoots (instruction from server)!");
             ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays, bulletIDs);
         } else if (target instanceof Enemy) {
+//            Log.info("Player shoots (instruction from server)!");
             ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays, bulletIDs);
         }
     }

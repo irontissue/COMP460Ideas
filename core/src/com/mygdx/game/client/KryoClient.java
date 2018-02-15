@@ -27,7 +27,7 @@ public class KryoClient {
 	
 	public Client client;
     public comp460game myGame;
-    public int myID;
+    public int IDOnServer;
 
     public static final int timeout = 5000;
     String name;
@@ -67,17 +67,20 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EnterPlayState) {
+                    final int PNUMBER = ((Packets.EnterPlayState) o).playerNumber;
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
-                        	myGame.getGsm().player = 1;
+                        	myGame.getGsm().player = PNUMBER;
+                        	Log.info("Set player number to: " + myGame.getGsm().player);
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });
                 }
 
-                else if (o instanceof Packets.IDMessage) {
-                    Packets.IDMessage p = (Packets.IDMessage) o;
-                    myID = p.ID;
+                else if (o instanceof Packets.ServerIDMessage) {
+                    Packets.ServerIDMessage p = (Packets.ServerIDMessage) o;
+                    IDOnServer = p.IDOnServer;
+                    myGame.getGsm().player = p.IDOnServer;
                 }
 
                 else if (o instanceof Packets.SyncPlayState) {
@@ -131,10 +134,10 @@ public class KryoClient {
 
 
                 else if (o instanceof Packets.SyncCreateSchmuck) {
-                    Log.info("Received Schmuck creation sync message...");
+                    //Log.info("Received Schmuck creation sync message...");
                     Packets.SyncCreateSchmuck p = (Packets.SyncCreateSchmuck) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        Log.info("PlayState ready when message received...");
+                        //Log.info("PlayState ready when message received...");
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
                         ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType);
@@ -148,7 +151,7 @@ public class KryoClient {
                     PlayState ps = (PlayState) myGame.getGsm().states.peek();
                     /*if (myGame.getGsm().states.peek() instanceof PlayState) {
                         if (p.message == Input.Keys.W) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.wPressed = true;
                                 } else {
@@ -165,7 +168,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.A) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.aPressed = true;
                                 } else {
@@ -179,7 +182,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.S) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.sPressed = true;
                                 } else {
@@ -193,7 +196,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.D) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.dPressed = true;
                                 } else {
@@ -207,7 +210,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.Q) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.qPressed = true;
                                 } else {
@@ -221,7 +224,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.E) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.ePressed = true;
                                 } else {
@@ -235,7 +238,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.SPACE) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.spacePressed = true;
                                 } else {
