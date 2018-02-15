@@ -125,9 +125,15 @@ public class Player extends Schmuck implements InputProcessor {
 		player1Fixture.setUserData(playerData);
 		
 		
-		vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 90, 60);
+		
+		vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
 		vision.setIgnoreAttachedBody(true);
-		vision.attachToBody(body);
+		
+		if (state.gsm.player == 1) {
+			vision.attachToBody(body,0 ,0, 180);
+		} else {
+			vision.attachToBody(body,0 ,0, 180);
+		}
 		
 		PointLight light = new PointLight(rays, 32, Color.WHITE, 10, 0, 0);
 		light.setIgnoreAttachedBody(true);
@@ -231,12 +237,6 @@ public class Player extends Schmuck implements InputProcessor {
 	@Override
 	public void render(SpriteBatch batch) {
 		vision.setPosition(body.getPosition());
-		
-		if (state.gsm.player == 1) {
-			vision.setDirection(body.getAngle());
-		} else {
-			vision.setDirection(body.getAngle() + 180);
-		}
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 
