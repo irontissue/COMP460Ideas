@@ -120,16 +120,26 @@ public class Player extends Schmuck implements InputProcessor {
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
 		player1Fixture.setUserData(playerData);
 		
-		
-		
-		vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
-		vision.setIgnoreAttachedBody(true);
-		
-		if (state.gsm.player == 1) {
-			vision.attachToBody(body,0 ,0, 180);
+		if (!comp460game.serverMode) {
+			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
+			vision.setIgnoreAttachedBody(true);
+			
+			if (state.gsm.player == 1) {
+				vision.attachToBody(body,0 ,0, 180);
+			} else {
+				vision.attachToBody(body,0 ,0, 0);
+			}
 		} else {
+			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
+			vision.setIgnoreAttachedBody(true);
 			vision.attachToBody(body,0 ,0, 180);
+			
+			ConeLight extraVision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
+			extraVision.setIgnoreAttachedBody(true);
+			extraVision.attachToBody(body,0 ,0, 0);
 		}
+		
+		
 		
 		PointLight light = new PointLight(rays, 32, Color.WHITE, 10, 0, 0);
 		light.setIgnoreAttachedBody(true);
