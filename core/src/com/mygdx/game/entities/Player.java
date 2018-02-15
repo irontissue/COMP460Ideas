@@ -98,24 +98,32 @@ public class Player extends Schmuck implements InputProcessor {
 	public void create() {
 	    Gdx.input.setInputProcessor(this);
 		this.playerData = new PlayerData(world, this);
-		player2Data = new PlayerData(world, this);
+//		player2Data = new PlayerData(world, this);
 		
 		this.bodyData = playerData;
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, false, Constants.BIT_PLAYER, 
 				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_ENEMY),
 				Constants.PLAYER_HITBOX, false, playerData);
+
+		if (state.gsm.player == 1) {
+			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
+					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+			player1Fixture.setUserData(playerData);
+		} else {
+			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
+					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+			player1Fixture.setUserData(playerData);
+		}
 		
-		player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
+/*		player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-		player2Fixture.setUserData(player2Data);
+		player2Fixture.setUserData(player2Data);*/
 		
 		player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
 		player1Fixture.setUserData(playerData);
 		
-//		dummy.body = this.body;
-//		dummy.bodyData = this.bodyData;
 		
 		vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 90, 60);
 		vision.setIgnoreAttachedBody(true);
@@ -223,7 +231,12 @@ public class Player extends Schmuck implements InputProcessor {
 	@Override
 	public void render(SpriteBatch batch) {
 		vision.setPosition(body.getPosition());
-		vision.setDirection(body.getAngle());
+		
+		if (state.gsm.player == 1) {
+			vision.setDirection(body.getAngle());
+		} else {
+			vision.setDirection(body.getAngle() + 180);
+		}
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 

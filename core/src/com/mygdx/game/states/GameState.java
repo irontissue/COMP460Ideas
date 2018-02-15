@@ -15,7 +15,7 @@ import com.mygdx.game.manager.GameStateManager;
 public abstract class GameState {
 	
 	//References to the Game, StateManager and their relevant fields.
-	protected GameStateManager gsm;
+	public GameStateManager gsm;
 	protected comp460game app;
 	protected SpriteBatch batch;
 	public OrthographicCamera camera, sprite, hud;

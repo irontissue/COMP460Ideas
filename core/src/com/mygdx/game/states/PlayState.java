@@ -119,8 +119,6 @@ public class PlayState extends GameState {
 
         RayHandler.useDiffuseLight(true);
 
-        rays.useDiffuseLight(true);
-
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
 		
