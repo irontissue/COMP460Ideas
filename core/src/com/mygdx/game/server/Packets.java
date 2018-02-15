@@ -3,6 +3,7 @@ package com.mygdx.game.server;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.esotericsoftware.kryo.Kryo;
+import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.RangedWeapon;
@@ -38,14 +39,53 @@ public class Packets {
 	    public int pressOrRelease; //0 = pressed, 1 = released.
 	}
 
+    public static class MousePressOrRelease {
+        public static final int PRESSED = 0;
+        public static final int RELEASED = 1;
+        public MousePressOrRelease() {}
+        public MousePressOrRelease(int m, int x, int y, int pOrR, int playerID) {
+            message = m;
+            pressOrRelease = pOrR;
+            this.playerID = playerID;
+            this.x = x;
+            this.y = y;
+        }
+        public int playerID;
+        public int message;
+        public int pressOrRelease; //0 = pressed, 1 = released.
+        public int x, y;
+    }
+
+    public static class SetEntityAim {
+	    public SetEntityAim() {}
+	    public SetEntityAim(String uuid, float delta, int x, int y) {
+	        this.uuid = uuid;
+	        this.delta = delta;
+	        this.x = x;
+	        this.y = y;
+        }
+        public String uuid;
+	    public float delta;
+	    public int x, y;
+    }
+
+    public static class EntityShoot {
+	    public EntityShoot() {}
+	    public EntityShoot(String uuid) {
+	        this.uuid = uuid;
+        }
+        public String uuid;
+    }
+
 	//Client to server
-	public static class Shoot {
+	/*public static class Shoot {
 	    public static UUID userID;
 	    public static int weaponID;
 	    public static Vector2 startingVelocity;
 	    public static float x, y;
 	    public static short filter;
 
+        public Shoot() {}
 	    public Shoot(UUID userID, int weaponID, Vector2 startingVelocity, float x, float y, short filter) {
 	        this.userID = userID;
 	        this.weaponID = weaponID;
@@ -54,7 +94,7 @@ public class Packets {
 	        this.y = y;
 	        this.filter = filter;
         }
-    }
+    }*/
 
     //Server to client
     /*public static class ShootSToC {
@@ -78,7 +118,11 @@ public class Packets {
 	    public ReadyToPlay() {}
     }
 
-	public static class EnterPlayState {
+    public static class ClientCreatedPlayState {
+        public ClientCreatedPlayState() {}
+    }
+
+    public static class EnterPlayState {
         public EnterPlayState() {}
 	}
 
@@ -164,20 +208,31 @@ public class Packets {
 
     public static class SyncCreateSchmuck {
 	    public SyncCreateSchmuck() {}
-	    public SyncCreateSchmuck(UUID id, float w, float h, float startX, float startY) {
+	    public SyncCreateSchmuck(String id, float w, float h, float startX, float startY, int entityType) {
 	        this.w = w;
 	        this.h = h;
 	        this.startX = startX;
 	        this.startY = startY;
 	        this.id = id;
+	        this.entityType = entityType;
         }
 	    public float w, h, startX, startY;
-	    public UUID id;
+	    public String id;
+	    public int entityType;
     }
+
+    public static class RemoveSchmuck {
+	    public RemoveSchmuck() {}
+	    public RemoveSchmuck(String id) {
+	        this.id = id;
+        }
+        public String id;
+    }
+
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
         kryo.register(KeyPressOrRelease.class);
-        kryo.register(Packets.Shoot.class);
+        //kryo.register(Shoot.class);
         kryo.register(EnterPlayState.class);
         kryo.register(ReadyToPlay.class);
         kryo.register(Packets.IDMessage.class);
@@ -188,11 +243,14 @@ public class Packets {
         kryo.register(PlayState.class);
         kryo.register(SyncPlayState.class);
         kryo.register(Body.class);
-        kryo.register(UUID.class);
         kryo.register(SyncHitbox.class);
         kryo.register(SyncCreateSchmuck.class);
         kryo.register(SyncHitboxImage.class);
         kryo.register(SyncEntity.class);
+        kryo.register(MousePressOrRelease.class);
+        kryo.register(SetEntityAim.class);
+        kryo.register(EntityShoot.class);
+        kryo.register(ClientCreatedPlayState.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

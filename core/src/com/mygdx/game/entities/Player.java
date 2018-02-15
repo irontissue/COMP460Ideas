@@ -17,6 +17,7 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.userdata.PlayerData;
+import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.server.Packets;
@@ -32,7 +33,7 @@ import box2dLight.RayHandler;
 import static com.mygdx.game.util.Constants.PPM;
 
 public class Player extends Schmuck implements InputProcessor {
-
+    public static final int ENTITY_TYPE = Constants.PLAYER;
 	protected MoveStates moveState1, moveState2;
 
 	//Fixtures and user data
@@ -50,6 +51,8 @@ public class Player extends Schmuck implements InputProcessor {
 	//is the button for that respective movement pressed currently?
     public boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false, qPressed = false, ePressed = false;
     public boolean wPressed2 = false, aPressed2 = false, sPressed2 = false, dPressed2 = false, qPressed2 = false, ePressed2 = false;
+    public boolean mousePressed = false, mousePressed2 = false;
+    public int mousePosX = -1, mousePosY = -1, mousePos2X = -1, mousePos2Y = -1;
 		
 	//user data
 	public PlayerData playerData;
@@ -72,21 +75,22 @@ public class Player extends Schmuck implements InputProcessor {
 	 * @param x: player starting x position.
 	 * @param y: player starting x position.
 	 */
-
-	public Player(KryoClient client, PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
+  
+	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
 	}
-	
-		public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
-		super(state, world, camera, rays, x, y, "torpedofish_swim", 250, 161, 161, 250);
 
-
-
-	}
+    public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, String id) {
+        super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384, id);
+        this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
+        this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
+        this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
+        this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
+    }
 	
 	/**
 	 * Create the player's body and initialize player's user data.
@@ -94,24 +98,32 @@ public class Player extends Schmuck implements InputProcessor {
 	public void create() {
 	    Gdx.input.setInputProcessor(this);
 		this.playerData = new PlayerData(world, this);
-		player2Data = new PlayerData(world, this);
+//		player2Data = new PlayerData(world, this);
 		
 		this.bodyData = playerData;
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, false, Constants.BIT_PLAYER, 
 				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_ENEMY),
 				Constants.PLAYER_HITBOX, false, playerData);
+
+		if (state.gsm.player == 1) {
+			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
+					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+			player1Fixture.setUserData(playerData);
+		} else {
+			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
+					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+			player1Fixture.setUserData(playerData);
+		}
 		
-		player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
+/*		player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-		player2Fixture.setUserData(player2Data);
+		player2Fixture.setUserData(player2Data);*/
 		
 		player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
 		player1Fixture.setUserData(playerData);
 		
-//		dummy.body = this.body;
-//		dummy.bodyData = this.bodyData;
 		
 		vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 90, 60);
 		vision.setIgnoreAttachedBody(true);
@@ -175,18 +187,21 @@ public class Player extends Schmuck implements InputProcessor {
             if (qPressed2) {
                 desiredAngleVel += playerData.maxAngularSpeed;
             }
+
+            //Clicking left mouse = use tool. charging keeps track of whether button is held.
+            if (mousePressed || mousePressed2) {
+                //charging = true;
+                useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
+            }
+            if (mousePressed2) {
+                useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
+            } else {
+                /*if (charging) {
+                    useToolRelease(playerData.currentTool, Constants.PLAYER_HITBOX, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                }
+                charging = false;*/
+            }
         }
-		
-		//Clicking left mouse = use tool. charging keeps track of whether button is held.
-		if(Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
-			charging = true;
-			useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, Gdx.input.getX() , Gdx.graphics.getHeight() - Gdx.input.getY(), true);
-		} else {
-			if (charging) {
-				useToolRelease(playerData.currentTool, Constants.PLAYER_HITBOX, Gdx.input.getX() , Gdx.graphics.getHeight() - Gdx.input.getY());
-			}
-			charging = false;
-		}
 		
 		//Pressing 'SPACE' = interact with an event
 //		if(Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
@@ -216,43 +231,12 @@ public class Player extends Schmuck implements InputProcessor {
 	@Override
 	public void render(SpriteBatch batch) {
 		vision.setPosition(body.getPosition());
-		vision.setDirection(body.getAngle());
 		
-		batch.setProjectionMatrix(state.sprite.combined);
-
-		batch.draw(combined, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-/*		batch.draw(groom, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.draw(dress, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.draw(bride, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));*/
-	}
-	
-	@Override
-	public void render(SpriteBatch batch) {
-		vision.setPosition(body.getPosition());
-		vision.setDirection(body.getAngle());
+		if (state.gsm.player == 1) {
+			vision.setDirection(body.getAngle());
+		} else {
+			vision.setDirection(body.getAngle() + 180);
+		}
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 
@@ -378,14 +362,21 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-
-//       comp460game.client.client.sendTCP(new Packets.Packet03Click(new Vector2(screenX,screenY), null,comp460game.client.myID, lastDelta));
-
+        if (!comp460game.serverMode) {
+            RangedWeapon rw = (RangedWeapon) playerData.currentTool;
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
+                    Packets.MousePressOrRelease.PRESSED, comp460game.client.myID));
+        }
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	    if (!comp460game.serverMode) {
+            RangedWeapon rw = (RangedWeapon) playerData.currentTool;
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
+                    Packets.MousePressOrRelease.RELEASED, comp460game.client.myID));
+        }
         return false;
     }
 

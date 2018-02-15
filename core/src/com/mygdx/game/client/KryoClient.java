@@ -1,6 +1,7 @@
 package com.mygdx.game.client;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
@@ -69,6 +70,7 @@ public class KryoClient {
                 else if (o instanceof Packets.EnterPlayState) {
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
+                        	myGame.getGsm().player = 1;
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });
@@ -102,40 +104,43 @@ public class KryoClient {
 //                    Log.info("Processed Player Entity sync message!");
                 }
 
-                else if (o instanceof Packets.SyncHitbox) {
-//                    Log.info("Received Hitbox sync message...");
-                    Packets.SyncHitbox p = (Packets.SyncHitbox) o;
-                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                    World world = ps.getWorld();
-                    RayHandler rays = ps.getRays();
-//                    while (ps.updating) {}
-                    new Hitbox(ps,p.x,p.y,p.width,p.height,p.lifespan,p.dura,p.rest,p.startVelo,p.filter,p.sensor,world, ps.camera, rays);
-//                    Log.info("Processed Hitbox sync message!");
+//                else if (o instanceof Packets.SyncHitbox) {
+////                    Log.info("Received Hitbox sync message...");
+//                    Packets.SyncHitbox p = (Packets.SyncHitbox) o;
+//                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
+//                    World world = ps.getWorld();
+//                    RayHandler rays = ps.getRays();
+////                    while (ps.updating) {}
+//                    new Hitbox(ps,p.x,p.y,p.width,p.height,p.lifespan,p.dura,p.rest,p.startVelo,p.filter,p.sensor,world, ps.camera, rays);
+////                    Log.info("Processed Hitbox sync message!");
+//
+//                }
 
-                }
-
-                else if (o instanceof Packets.SyncHitboxImage) {
-//                    Log.info("Received HitboxImage sync message...");
-                    Packets.SyncHitboxImage p = (Packets.SyncHitboxImage) o;
-                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                    World world = ps.getWorld();
-                    RayHandler rays = ps.getRays();
-//                    while (ps.updating) {}
-                    new HitboxImage(ps,p.x,p.y,p.width,p.height,p.lifespan,p.dura,p.rest,p.startVelo,p.filter,p.sensor,world, ps.camera, rays, p.spriteID);
-//                    Log.info("Processed HitboxImage sync message!");
-
-                }
+//                else if (o instanceof Packets.SyncHitboxImage) {
+////                    Log.info("Received HitboxImage sync message...");
+//                    Packets.SyncHitboxImage p = (Packets.SyncHitboxImage) o;
+//                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
+//                    World world = ps.getWorld();
+//                    RayHandler rays = ps.getRays();
+////                    while (ps.updating) {}
+//                    new HitboxImage(ps,p.x,p.y,p.width,p.height,p.lifespan,p.dura,p.rest,p.startVelo,p.filter,p.sensor,world, ps.camera, rays, p.spriteID);
+////                    Log.info("Processed HitboxImage sync message!");
+//
+//                }
 
 
                 else if (o instanceof Packets.SyncCreateSchmuck) {
-//                    Log.info("Received Schmuck creation sync message...");
+                    Log.info("Received Schmuck creation sync message...");
                     Packets.SyncCreateSchmuck p = (Packets.SyncCreateSchmuck) o;
-                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                    World world = ps.getWorld();
-                    RayHandler rays = ps.getRays();
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        Log.info("PlayState ready when message received...");
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        World world = ps.getWorld();
+                        RayHandler rays = ps.getRays();
 //                    while (ps.updating) {}
-                    new Schmuck(ps, world, ps.camera, rays, p.w, p.h, p.startX, p.startY, p.id);
-                    Log.info("Processed Schmuck creation sync message!");
+                        ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType);
+                    }
+//                    Log.info("Processed Schmuck creation sync message!");
 
                 }
 
@@ -246,6 +251,33 @@ public class KryoClient {
                             }
                         }
                     }*/
+                }
+
+                else if (o instanceof Packets.SetEntityAim) {
+                    //Log.info("Received SetEntityAim message");
+                    Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        ps.setEntityAim(UUID.fromString(sea.uuid), sea.delta, sea.x, sea.y);
+                    }
+                }
+
+                else if (o instanceof Packets.EntityShoot) {
+                    //Log.info("Received EntityShoot message");
+                    Packets.EntityShoot sea = (Packets.EntityShoot) o;
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        ps.entityShoot(UUID.fromString(sea.uuid));
+                    }
+                }
+
+                else if (o instanceof Packets.RemoveSchmuck) {
+                    //Log.info("Received RemoveSchmuck message");
+                    Packets.RemoveSchmuck sea = (Packets.RemoveSchmuck) o;
+                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        ps.destroy(ps.getEntity(UUID.fromString(sea.id)));
+                    }
                 }
             }
         });

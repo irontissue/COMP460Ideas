@@ -16,7 +16,7 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import box2dLight.RayHandler;
 
 public class ParticleEntity extends Entity {
-
+    public static final int ENTITY_TYPE = Constants.PARTICLE_ENTITY;
 	private ParticleEffect effect;
 	private Entity attachedEntity;
 	private float lifespan;
@@ -31,10 +31,31 @@ public class ParticleEntity extends Entity {
 		
 		effect.start();
 	}
+
+	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+						  float startX, float startY, ParticleEffect effect, float lifespan, String id) {
+		super(state, world, camera, rays, 0, 0, startX, startY, id);
+		this.effect = effect;
+		this.despawn = false;
+		this.lifespan = lifespan;
+
+		effect.start();
+	}
 	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 			Entity entity, ParticleEffect effect, float lifespan) {
 		super(state, world, camera, rays, 0, 0, 0, 0);
+		this.attachedEntity = entity;
+		this.effect = effect;
+		this.despawn = false;
+		this.lifespan = lifespan;
+		effect.start();
+
+	}
+
+	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+						  Entity entity, ParticleEffect effect, float lifespan, String id) {
+		super(state, world, camera, rays, 0, 0, 0, 0, id);
 		this.attachedEntity = entity;
 		this.effect = effect;
 		this.despawn = false;
