@@ -69,6 +69,7 @@ public class KryoClient {
                 else if (o instanceof Packets.EnterPlayState) {
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
+                        	myGame.getGsm().player = 1;
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });

@@ -22,7 +22,8 @@ public class GameStateManager {
 	//Stack of GameStates. These are all the states that the player has opened in that order.
 	public Stack<GameState> states;
     private float syncTimer = 0;
-	
+	public int player = 1;
+    
 	//This enum lists all the different types of gamestates.
 	public enum State {
 		SPLASH,

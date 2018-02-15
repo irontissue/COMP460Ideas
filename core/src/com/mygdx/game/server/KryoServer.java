@@ -13,7 +13,6 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.TitleState;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 
 public class KryoServer {
 
