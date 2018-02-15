@@ -1,7 +1,9 @@
 package com.mygdx.game.entities.userdata;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.UserDataTypes;
 
@@ -43,7 +45,10 @@ public class HitboxData extends UserData {
 			hbox.dura--;
 		}
 		if (hbox.dura <= 0) {
-			hbox.queueDeletion();
+			if (comp460game.serverMode) {
+			    comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(hbox.entityID.toString()));
+                hbox.queueDeletion();
+            }
 		}
 	}
 }

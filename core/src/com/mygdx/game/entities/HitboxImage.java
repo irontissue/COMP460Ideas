@@ -41,9 +41,9 @@ public class HitboxImage extends Hitbox {
 	}
 
 	public HitboxImage(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
-					   Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays,
+					   Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays, Schmuck creator,
 					   String spriteId, String id) {
-		super(state, x, y, width / 2, height / 2, lifespan, dura, rest, startVelo, filter, sensor, world, camera, rays, id);
+		super(state, x, y, width / 2, height / 2, lifespan, dura, rest, startVelo, filter, sensor, world, camera, rays, creator, id);
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.PROJ_1_ATL.toString());
 		projectileSprite = atlas.findRegion(spriteId);
 //		if (!comp460game.serverMode) {

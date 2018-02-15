@@ -1,9 +1,6 @@
 package com.mygdx.game.states;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -17,7 +14,6 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.esotericsoftware.minlog.Log;
-import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.event.Event;
@@ -31,6 +27,9 @@ import com.mygdx.game.util.TiledObjectUtil;
 import static com.mygdx.game.util.Constants.PPM;
 
 import box2dLight.RayHandler;
+import javafx.util.Pair;
+
+import javax.sound.sampled.FloatControl;
 
 /**
  * The PlayState is the main state of the game and holds the Box2d world, all characters + gameplay.
@@ -76,6 +75,9 @@ public class PlayState extends GameState {
     //These represent the set of entities to be added to/removed from the world. This is necessary to ensure we do this between world steps.
 	private ArrayList<Entity> removeList;
 	private ArrayList<Entity> createList;
+	//This is the set of entities to be updated in the world. This is necessary to ensure we do this between world steps.
+    //The Object[] is a list of attributes that will be used to update the corresponding entity.
+	private ArrayList<Pair<UUID, Object[]>> updateList;
 	
 	//This is a set of all entities in the world
 	private Set<Entity> entities;
@@ -128,6 +130,7 @@ public class PlayState extends GameState {
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
 		createList = new ArrayList<Entity>();
+		updateList = new ArrayList<Pair<UUID, Object[]>>();
 		entities = new HashSet<Entity>();
 		
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
@@ -179,7 +182,7 @@ public class PlayState extends GameState {
             if (entities.contains(entity)) {
                 entities.remove(entity);
                 if (comp460game.serverMode && entity instanceof Schmuck) {
-                    comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
+                    comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
                 }
                 entity.dispose();
             }
@@ -188,7 +191,7 @@ public class PlayState extends GameState {
             if (entities.contains(entity)) {
                 entities.remove(entity);
                 if (comp460game.serverMode && entity instanceof Schmuck) {
-                    comp460game.server.server.sendToAllTCP(new Packets.RemoveSchmuck(entity.entityID.toString()));
+                    comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
                 }
                 entity.dispose();
             }
@@ -206,6 +209,17 @@ public class PlayState extends GameState {
             entity.create();
         }
         createList.clear();*/
+
+        //All entities that are set to be updated are updated.
+        while (!updateList.isEmpty()) {
+            Pair<UUID, Object[]> p = updateList.remove(0);
+            Entity e = getEntity(p.getKey());
+            if (entities.contains(e)) {
+                e.getBody().setTransform((Vector2) p.getValue()[0],(Float) p.getValue()[3]);
+                e.getBody().setLinearVelocity((Vector2) p.getValue()[1]);
+                e.getBody().setAngularVelocity((Float) p.getValue()[2]);
+            }
+        }
 		
 		
 /*		controllerCounter += delta;
@@ -403,11 +417,8 @@ public class PlayState extends GameState {
         return null;
     }
 	public void updateEntity(UUID entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
-	    Entity target = getEntity(entityID);
-	    if (target == null) { return; }
-        target.getBody().setTransform(pos,a);
-	    target.getBody().setLinearVelocity(vel);
-	    target.getBody().setAngularVelocity(aVel);
+        Object[] toUpdate = {pos, vel, aVel, a};
+	    updateList.add(new Pair<UUID, Object[]>(entityID, toUpdate));
     }
 
     /**
@@ -437,7 +448,7 @@ public class PlayState extends GameState {
      *
      * @param entityID ID of entity
      */
-    public void entityShoot(UUID entityID) {
+    public void entityShoot(UUID entityID, String[] bulletIDs) {
         Entity target = getEntity(entityID);
         Log.info("ShootID = " + entityID.toString());
         if (target == null) {
@@ -445,9 +456,9 @@ public class PlayState extends GameState {
             return; }
         if (target instanceof Player) {
             Log.info("Player shoots (instruction from server)!");
-            ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays);
+            ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays, bulletIDs);
         } else if (target instanceof Enemy) {
-            ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays);
+            ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays, bulletIDs);
         }
     }
 

@@ -75,7 +75,7 @@ public abstract class Entity {
 
 	}
 	/**
-	 * Constructor is called when an entity is created. USE THIS FOR CLIENT
+	 * Constructor is called when an entity is created. USE THIS FOR CLIENT.
 	 * @param state: Current playstate
 	 * @param world: Current game world
 	 * @param camera: Current game camera
@@ -84,10 +84,14 @@ public abstract class Entity {
 	 * @param h: Height
 	 * @param startX: Starting x position
 	 * @param startY: Starting y position
-	 * @param id: UUID of entity you are creating
+	 * @param id: UUID of entity you are creating, in String format
 	 */
     public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY, String id) {
-        entityID = UUID.fromString(id);
+        if (id == null) {
+            entityID = UUID.randomUUID();
+        } else {
+            entityID = UUID.fromString(id);
+        }
 
         this.state = state;
         this.world = world;

@@ -7,7 +7,9 @@ import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.CharacterData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -74,12 +76,20 @@ public class SteeringEnemy extends Enemy implements Steerable<Vector2> {
 		
 		this.setBehavior(arriveSB);
 	}
-	
+
+    /**
+     * Server mode: sends a message to the clients updating the position. This is here because super() isn't called,
+     * which normally would automatically send the message.
+     */
 	public void controller (float delta) {
-		if (behavior != null) {
-			behavior.calculateSteering(steeringOutput);
-			applySteering(delta);
-		}
+		if (comp460game.serverMode) {
+            if (behavior != null) {
+                behavior.calculateSteering(steeringOutput);
+                applySteering(delta);
+                comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+                        this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+            }
+        }
 	}
 	
 	public void applySteering(float delta) {

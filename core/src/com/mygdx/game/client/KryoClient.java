@@ -3,10 +3,7 @@ package com.mygdx.game.client;
 import java.io.IOException;
 import java.util.UUID;
 
-import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -14,9 +11,7 @@ import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
-import com.mygdx.game.entities.Hitbox;
-import com.mygdx.game.entities.HitboxImage;
-import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.entities.Entity;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
@@ -104,7 +99,7 @@ public class KryoClient {
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
-                        ps.updateEntity(p.entityID, p.pos, p.velocity, p.angularVelocity, p.angle);
+                        ps.updateEntity(UUID.fromString(p.entityID), p.pos, p.velocity, p.angularVelocity, p.angle);
 //                    Log.info("Processed Player Entity sync message!");
                     }
                 }
@@ -270,16 +265,19 @@ public class KryoClient {
                     Packets.EntityShoot sea = (Packets.EntityShoot) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.entityShoot(UUID.fromString(sea.uuid));
+                        ps.entityShoot(UUID.fromString(sea.uuid), sea.bulletUUIDs);
                     }
                 }
 
-                else if (o instanceof Packets.RemoveSchmuck) {
-                    //Log.info("Received RemoveSchmuck message");
-                    Packets.RemoveSchmuck sea = (Packets.RemoveSchmuck) o;
+                else if (o instanceof Packets.RemoveEntity) {
+                    //Log.info("Received RemoveEntity message");
+                    Packets.RemoveEntity sea = (Packets.RemoveEntity) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.getEntity(UUID.fromString(sea.id)).queueDeletion();
+                        Entity e = ps.getEntity(UUID.fromString(sea.id));
+                        if (e != null) {
+                            e.queueDeletion();
+                        }
                     }
                 }
 

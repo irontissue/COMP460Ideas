@@ -41,16 +41,16 @@ public class AnotherGun extends RangedWeapon {
 	private final static HitboxFactory onShoot = new HitboxFactory() {
 
 		@Override
-		public Hitbox makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-				World world, OrthographicCamera camera,
-				RayHandler rays) {
-			
+		public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
+				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs) {
+			Hitbox[] madeHitboxes = new Hitbox[numProj];
 			for (int i = 0; i < numProj; i++) {
 				
 				float newDegrees = (float) (startVelocity.angle() + (ThreadLocalRandom.current().nextInt(-spread, spread + 1)));
 				
 				Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity.setAngle(newDegrees),
-						filter, true, world, camera, rays, user, "orb_yellow");
+						filter, true, world, camera, rays, user, "orb_yellow", bulletIDs == null ? null : bulletIDs[i]);
+				madeHitboxes[i] = proj;
 				proj.setUserData(new HitboxData(state, world, proj) {
 					
 					public void onHit(UserData fixB) {
@@ -62,7 +62,7 @@ public class AnotherGun extends RangedWeapon {
 					}
 				});		
 			}
-			return null;
+			return madeHitboxes;
 		}
 		
 	};
