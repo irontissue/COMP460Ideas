@@ -16,9 +16,10 @@ import com.mygdx.game.server.Packets;
 public class TitleState extends GameState {
 
 	private Stage stage;
+	private boolean playPressed = false;
 
     //Temporary links to other modules for testing.
-	private Actor playOption, exitOption, joinServerOption, startServerOption;
+	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2;
 	
 	public TitleState(GameStateManager gsm) {
 		super(gsm);
@@ -34,18 +35,22 @@ public class TitleState extends GameState {
 			stage = new Stage() {
 				{
 					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
+                    waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180);
 					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
-					joinServerOption = new Text(comp460game.assetManager, "JOIN SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
-					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 300);
-
+					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT - 180);
+					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 240);
 					playOption.addListener(new ClickListener() {
 						public void clicked(InputEvent e, float x, float y) {
+							if (playPressed) return;
 							Log.info("Clicked play button...");
 							if (comp460game.client == null) return;
 							Log.info("Client successfully set");
 							Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
 
 							comp460game.client.client.sendTCP(r2p);
+							playOption.remove();
+							playPressed = true;
+							addActor(waitingOnPlayer2);
 
 						}
 					});
@@ -54,6 +59,8 @@ public class TitleState extends GameState {
 					joinServerOption.addListener(new ClickListener() {
 						public void clicked(InputEvent e, float x, float y) {
 							comp460game.client.init();
+							joinServerOption.remove();
+							addActor(playOption);
 						}
 					});
 					joinServerOption.setScale(0.5f);
@@ -66,7 +73,7 @@ public class TitleState extends GameState {
 					});
 					exitOption.setScale(0.5f);
 
-					addActor(playOption);
+
 					addActor(joinServerOption);
 					addActor(exitOption);
 				}
