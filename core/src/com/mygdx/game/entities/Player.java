@@ -92,7 +92,7 @@ public class Player extends Schmuck implements InputProcessor {
 	 * Create the player's body and initialize player's user data.
 	 */
 	public void create() {
-	    Gdx.input.setInputProcessor(this);
+	    setInput();
 		this.playerData = new PlayerData(world, this);
 //		player2Data = new PlayerData(world, this);
 		
@@ -148,6 +148,10 @@ public class Player extends Schmuck implements InputProcessor {
 		super.create();
 	}
 
+	public void setInput() {
+		Gdx.input.setInputProcessor(this);
+	}
+	
 	/**
 	 * The player's controller currently polls for input.
 	 */

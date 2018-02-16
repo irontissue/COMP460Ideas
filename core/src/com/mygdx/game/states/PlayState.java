@@ -159,7 +159,9 @@ public class PlayState extends GameState {
 
 	@Override
 	public void show() {
-
+		if (player != null) {
+			player.setInput();
+		}
 		this.stage = new Stage(); 
 		app.newMenu(stage);
 	}
