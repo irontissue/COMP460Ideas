@@ -23,11 +23,11 @@ import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.util.CameraStyles;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Pair;
 import com.mygdx.game.util.TiledObjectUtil;
 import static com.mygdx.game.util.Constants.PPM;
 
 import box2dLight.RayHandler;
-import javafx.util.Pair;
 
 import javax.sound.sampled.FloatControl;
 
