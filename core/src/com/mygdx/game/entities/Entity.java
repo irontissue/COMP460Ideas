@@ -174,4 +174,8 @@ public abstract class Entity {
 	public Body getBody() {
 		return body;
 	}
+	public PlayState getState() {
+		return state;
+	}
+	
 }

@@ -124,7 +124,7 @@ public class comp460game extends ApplicationAdapter {
 
             gsm.render();
 
-            batch.setProjectionMatrix(hud.combined);
+   //         batch.setProjectionMatrix(hud.combined);
             batch.begin();
             currentMenu.draw();
             batch.end();

@@ -64,4 +64,10 @@ public class PlayerData extends CharacterData {
 		
 		return old;
 	}
+	
+	@Override
+	public void die(CharacterData perp) {
+		schmuck.getState().gameOver(false);
+		super.die(perp);
+	}
 }

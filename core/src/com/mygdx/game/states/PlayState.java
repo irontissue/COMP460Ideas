@@ -23,11 +23,11 @@ import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.util.CameraStyles;
 import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.Pair;
 import com.mygdx.game.util.TiledObjectUtil;
 import static com.mygdx.game.util.Constants.PPM;
 
 import box2dLight.RayHandler;
-import javafx.util.Pair;
 
 import javax.sound.sampled.FloatControl;
 
@@ -159,9 +159,13 @@ public class PlayState extends GameState {
 
 	@Override
 	public void show() {
-
+		
 		this.stage = new Stage(); 
 		app.newMenu(stage);
+		
+		if (player != null) {
+			player.setInput();
+		}
 	}
 	
 	/**
@@ -252,14 +256,16 @@ public class PlayState extends GameState {
 		if (gameover) {
 			gameoverCdCount -= delta;
 			if (gameoverCdCount < 0) {
-				if (lastSave != null) {
+//				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
 					if (won) {
-//						gsm.addState(State.VICTORY, TitleState.class);
+						gsm.addState(State.VICTORY, TitleState.class);
+						comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
 					} else {
-//						gsm.addState(State.GAMEOVER, TitleState.class);
+						gsm.addState(State.GAMEOVER, TitleState.class);
+						comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
 					}
-				} else {
+/*				} else {
 					player = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
 							(int)(lastSave.getBody().getPosition().y * PPM));
@@ -267,7 +273,7 @@ public class PlayState extends GameState {
 //					controller.setPlayer(player);
 					
 					gameover = false;
-				}
+				}*/
 			}
 		}
         updating = false;
