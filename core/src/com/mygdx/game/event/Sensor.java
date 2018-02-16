@@ -2,6 +2,7 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.states.PlayState;
@@ -25,11 +26,13 @@ public class Sensor extends Event {
 	public void create() {
 		this.eventData = new EventData(world, this) {
 			public void onTouch(UserData fixB) {
-				super.onTouch(fixB);
-				event.getConnectedEvent().eventData.onActivate(this);
-				
-				if (oneTime) {
-					event.queueDeletion();
+				if (comp460game.serverMode) {
+					super.onTouch(fixB);
+					event.getConnectedEvent().eventData.onActivate(this);
+					
+					if (oneTime) {
+						event.queueDeletion();
+					}
 				}
 			}
 		};

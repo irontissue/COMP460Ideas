@@ -2,6 +2,7 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.states.PlayState;
@@ -24,10 +25,12 @@ public class Victory extends Event {
 
 		this.eventData = new EventData(world, this) {
 			public void onTouch(UserData fixB) {
-				if (!touched) {
-					touched = true;
-					state.gameOver(true);
-					event.queueDeletion();
+				if (comp460game.serverMode) {
+					if (!touched) {
+						touched = true;
+						state.gameOver(true);
+						event.queueDeletion();
+					}
 				}
 			}
 		};

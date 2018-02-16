@@ -28,10 +28,10 @@ public class Gun extends RangedWeapon {
 	private final static float baseDamage = 30.0f;
 	private final static float recoil = 1.5f;
 	private final static float knockback = 0.0f;
-	private final static float projectileSpeed = 60.0f;
-	private final static int projectileWidth = 20;
-	private final static int projectileHeight = 5;
-	private final static float lifespan = 0.6f;
+	private final static float projectileSpeed = 30.0f;
+	private final static int projectileWidth = 60;
+	private final static int projectileHeight = 15;
+	private final static float lifespan = 1.2f;
 	
 	private final static int projDura = 1;
 	

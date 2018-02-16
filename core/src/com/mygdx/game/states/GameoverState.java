@@ -14,7 +14,7 @@ public class GameoverState extends GameState {
 	private Stage stage;
 	
 	//Temporary links to other modules for testing.
-	private Actor playOption, title;
+	private Actor playOption;
 	
 	public GameoverState(GameStateManager gsm) {
 		super(gsm);
