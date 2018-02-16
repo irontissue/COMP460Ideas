@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="100" tilewidth="256" tileheight="256" nextobjectid="8">
- <tileset firstgid="1" source="temp.tsx"/>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="100" tilewidth="256" tileheight="256" nextobjectid="20">
+ <tileset firstgid="1" name="tile" tilewidth="256" tileheight="256" tilecount="15" columns="5">
+  <image source="../Images/tile.png" width="1280" height="768"/>
+ </tileset>
  <layer name="Tile Layer 1" width="150" height="100">
   <data encoding="base64" compression="zlib">
    eJzt0jEOQEAAAEEFLf//rVYlTiyFmWR/sNMEAAAAAAAAAAAA8L3loeDIVxR8RcFXFHxFwVcUfEXBVxR8xVvmQ+tJMMJXFHxFwVcUfEXBVxR8RcFXFHzFXdtJvuIuX1HwFYWrX8EIXwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf7IDsaUKeA==
@@ -8,27 +10,30 @@
  </layer>
  <layer name="Tile Layer 2" width="150" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2tEKgjAYhmEriKC6/9vNQxkaG9tnZc8DOxBBPHjxh81pAgAAAAAAAAAAAPi807zOneuy+1vz7a4DnnEb8AyORVck6IoEXZGgKxJ0RYKuSLjP61GspfLe2nru9bL8rPLbs7Vvai+UFmVXW3PS7KOFrkjQFQm1veiKFroiwRwkQVckmIP06N3v1BVrauebOUiL2vPmtfNDZ4Jsqe1qxP8O/I9336Hlta4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgCN4AbzTAwU=
+   eJzt2sGKwjAUQNGqUAbU//9dLSjEx0ub2omO4zmQRYmLLi5JGzsMAAAAAAAAAAAAAO+3u479xnF4+V3z143DY1uxkdhd1tBPzxvkI423cRcbGcN11pCuiHRFD1M3x+s43cY5zJdz2fxEV0RxPXqGrojKrqZn9KXn9uz5XVdEZVfTnre0D2b7oa6Ism5KWVNzjUEmrj0t+yAsWTpnqP0O5uiKHmpdxXdFXbFGrZcxzOmKNXRFD7V9UFdsoSt6qPUSz+J1RWbreaeuyLSeSzm/Yo3W72Na/neGu9aufuP7LL7H3DpUXusKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPgPLgvzBI0=
   </data>
  </layer>
  <objectgroup name="collision-layer">
-  <object id="2" x="16128" y="4352">
-   <polyline points="0,0 4608,0 4608,2304 2048,2304 2048,3328"/>
+  <object id="13" x="20704.9" y="6623.39">
+   <polyline points="0,0 -2530.18,0 -2528.92,1056.61 -2499.03,1056.73 -2499.03,63.6116 -768.532,64.9098 -769.83,3071.53 -2499.03,3071.53 -2499.03,2592.5 -2528.92,2592.61 -2528.88,3583.02 -3297.42,3583.02 -3296.92,3360.61 -3327.28,3361.03 -3327.28,3585.62 -5059.07,3585.62 -5057.77,2365.31 -3328.57,2366.61 -3328.57,2846.94 -3296.92,2848.61 -3297.42,1.2982 -4547.58,1.2982 -4546.28,-2241.98 -1.2982,-2240.69 0,0"/>
   </object>
-  <object id="3" x="19968" y="6656">
-   <polyline points="0,0 0,3072 -1792,3072 -1792,2560"/>
+  <object id="14" x="18176" y="5888">
+   <polyline points="0,0 1792,0 1792,512 0,512 0,0"/>
   </object>
-  <object id="4" x="18176" y="8704">
-   <polyline points="0,0 0,-512"/>
+  <object id="15" x="17408" y="6400">
+   <polyline points="0,0 0,-512 -512,-512 -512,0 0,0"/>
   </object>
-  <object id="5" x="16128" y="4352">
-   <polyline points="0,0 0,2304 1280,2304 1280,5120"/>
+  <object id="16" x="17408" y="4608">
+   <polyline points="0,0 0,1024 -1024,1024 -1024,0 0,0"/>
   </object>
-  <object id="6" x="17408" y="8960">
-   <polyline points="0,0 -1792,0 -1792,1280 0,1280 0,1024"/>
+  <object id="17" x="18176" y="4608">
+   <polyline points="0,0 0,1024 1280,1024 1280,0 0,0"/>
   </object>
-  <object id="7" x="17408" y="10240">
-   <polyline points="0,0 768,0 768,-1024"/>
+  <object id="18" x="18688" y="7424">
+   <polyline points="0,0 0,1536 512,1536 512,0 0,0"/>
+  </object>
+  <object id="19" x="18176" y="8192">
+   <polyline points="0,0 0,512 28.8317,511.418 30.1167,1.26651 0,0"/>
   </object>
  </objectgroup>
  <objectgroup name="event-layer">
@@ -39,5 +44,34 @@
     <property name="limit" type="int" value="1"/>
    </properties>
   </object>
+  <object id="8" name="Spawn" type="Spawn" x="19456" y="9216" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="9" name="Spawn" type="Spawn" x="19456" y="6912" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="10" name="Spawn" type="Spawn" x="20224" y="6144" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="11" name="Spawn" type="Spawn" x="16384" y="6144" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="12" name="Victory" type="Victory" x="19968" y="4864" width="256" height="256"/>
  </objectgroup>
 </map>
