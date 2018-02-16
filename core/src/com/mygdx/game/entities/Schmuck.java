@@ -123,47 +123,55 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	/**
 	 * The basic behaviour of a schmuck depends on its moveState.
 	 * This method contains some physics that constrains schmucks in addition to box2d stuff.
+     * This also sends a message to clients (if in server mode) what the position of this schmuck is. Therefore,
+     * be careful when overriding this method - make sure that only one position update is sent for this entity
+     * every server tick.
 	 */
 	@Override
 	public void controller(float delta) {
-		controllerCount+=delta;
-		if (controllerCount >= 1/60f) {
-			controllerCount -= 1/60f;
-			
-			Vector2 currentVel = body.getLinearVelocity();
-			
-			float newX = acceleration * desiredXVel + (1 - acceleration) * currentVel.x;
-			
-			float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
-			
-			Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
-			body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
-			
-			desiredXVel = 0.0f;
-			desiredYVel = 0.0f;
-			
-			float currentAngleVel = body.getAngularVelocity();
-			
-			float newAngleVel = acceleration * desiredAngleVel + (1 - acceleration) * currentAngleVel;
-			
-			
-			float angularForce = (newAngleVel - currentAngleVel) * (body.getMass());
-			body.applyAngularImpulse(angularForce * (1 + bodyData.getBonusAngSpeed()), true);
-			
-			desiredAngleVel = 0.0f;
-		}
-		
-		//Apply base hp regen
-		bodyData.regainHp(bodyData.getHpRegen() * delta);
-		
-		//process cooldowns
-		shootCdCount-=delta;
-		shootDelayCount-=delta;
-		
-		//If the delay on using a tool just ended, use the tool.
-		if (shootDelayCount <= 0 && usedTool != null) {
-			useToolEnd();
-		}
+	    if (comp460game.serverMode) {
+            controllerCount += delta;
+            if (controllerCount >= 1 / 60f) {
+                controllerCount -= 1 / 60f;
+
+                Vector2 currentVel = body.getLinearVelocity();
+
+                float newX = acceleration * desiredXVel + (1 - acceleration) * currentVel.x;
+
+                float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
+
+                Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
+                body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
+
+                desiredXVel = 0.0f;
+                desiredYVel = 0.0f;
+
+                float currentAngleVel = body.getAngularVelocity();
+
+                float newAngleVel = acceleration * desiredAngleVel + (1 - acceleration) * currentAngleVel;
+
+
+                float angularForce = (newAngleVel - currentAngleVel) * (body.getMass());
+                body.applyAngularImpulse(angularForce * (1 + bodyData.getBonusAngSpeed()), true);
+
+                desiredAngleVel = 0.0f;
+            }
+
+            //Apply base hp regen
+            bodyData.regainHp(bodyData.getHpRegen() * delta);
+
+            //process cooldowns
+            shootCdCount -= delta;
+            shootDelayCount -= delta;
+
+            //If the delay on using a tool just ended, use the tool.
+            if (shootDelayCount <= 0 && usedTool != null) {
+                useToolEnd();
+            }
+
+            comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+                    this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+        }
 	}
 
 
@@ -220,10 +228,10 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		shootCdCount = usedTool.useCd * (1 - bodyData.getToolCdReduc());
 		
 		//execute the tool.
+		String[] uuids = usedTool.execute(state, bodyData, world, camera, rays, null);
         if (comp460game.serverMode) {
-            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID.toString()));
+            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID.toString(), uuids));
         }
-		usedTool.execute(state, bodyData, world, camera, rays);
 		
 		//clear the used tool field.
 		usedTool = null;

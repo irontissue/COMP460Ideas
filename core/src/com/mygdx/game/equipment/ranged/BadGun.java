@@ -36,12 +36,11 @@ public class BadGun extends RangedWeapon {
     private final static HitboxFactory onShoot = new HitboxFactory() {
 
         @Override
-        public Hitbox makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-                                 World world, OrthographicCamera camera,
-                                 RayHandler rays) {
+        public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
+                                 World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs) {
 
             Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "orb_red");
+                    filter, true, world, camera, rays, user, "orb_red", bulletIDs == null ? null : bulletIDs[0]);
 
             proj.setUserData(new HitboxData(state, world, proj) {
 
@@ -54,7 +53,8 @@ public class BadGun extends RangedWeapon {
                 }
             });
 
-            return null;
+            Hitbox[] toReturn = {proj};
+            return toReturn;
         }
 
     };

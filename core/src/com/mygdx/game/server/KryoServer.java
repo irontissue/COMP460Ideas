@@ -18,7 +18,11 @@ public class KryoServer {
 
 	int serverPort = 25565;
 	int players = 0;
+
+	//The POSITION in this array is the player number (i.e. player 1 vs player 2). The actual value stored in the array
+    //is that player's connection ID.
 	public int[] playerIDs = {0,0};
+
 	public Server server;
 	GameStateManager gsm;
 	boolean setMaster = true;
@@ -34,7 +38,14 @@ public class KryoServer {
 		server.addListener(new Listener() {
 			public void disconnected(Connection c) {
 				// This message should be sent when a player disconnects from the game
-
+                players = 0;
+                server.sendToAllExceptTCP(c.getID(), new Packets.DisconnectMessage());
+                Gdx.app.postRunnable(new Runnable() {
+                     @Override
+                     public void run() {
+                         gsm.addState(GameStateManager.State.TITLE, PlayState.class);
+                     }
+                 });
 			}
 
 			public void received(Connection c, Object o) {
@@ -57,7 +68,7 @@ public class KryoServer {
 					Packets.PlayerConnect newPlayer = new Packets.PlayerConnect( name + " has joined the game server.");
 					Log.info(name + " has joined the game.");
 					server.sendToAllExceptTCP(c.getID(), newPlayer);
-					server.sendToTCP(c.getID(), new Packets.IDMessage(c.getID()));
+					server.sendToTCP(c.getID(), new Packets.ServerIDMessage(c.getID()));
 					setMaster = false;
 
 				}
@@ -214,7 +225,8 @@ public class KryoServer {
                     players += 1;
 					Log.info("Player " + c.getID() + " ready.");
 				    if (players == 2) {
-				        server.sendToAllTCP(new Packets.EnterPlayState());
+				        server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
+                        server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
 				        players = 0;
 //						Gdx.app.postRunnable(new Runnable() {
 //							public void run() {
@@ -234,6 +246,7 @@ public class KryoServer {
                                 gsm.addState(GameStateManager.State.PLAY, TitleState.class);
                             }
                         });
+                        players = 0;
                     }
                 }
 

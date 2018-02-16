@@ -35,12 +35,11 @@ public class EnemyGun extends RangedWeapon {
 	private final static HitboxFactory onShoot = new HitboxFactory() {
 
 		@Override
-		public Hitbox makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-				World world, OrthographicCamera camera,
-				RayHandler rays) {
+		public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
+				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs) {
 			
 			Hitbox proj = new Hitbox(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-					filter, true, world, camera, rays, user);
+					filter, true, world, camera, rays, user, bulletIDs == null ? null : bulletIDs[0]);
 			
 			proj.setUserData(new HitboxData(state, world, proj) {
 				
@@ -51,9 +50,10 @@ public class EnemyGun extends RangedWeapon {
 					}
 					super.onHit(fixB);
 				}
-			});		
-			
-			return null;
+			});
+
+			Hitbox[] toReturn = {proj};
+			return toReturn;
 		}
 		
 	};

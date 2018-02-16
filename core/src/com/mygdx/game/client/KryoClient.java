@@ -3,10 +3,7 @@ package com.mygdx.game.client;
 import java.io.IOException;
 import java.util.UUID;
 
-import box2dLight.RayHandler;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -14,9 +11,7 @@ import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
-import com.mygdx.game.entities.Hitbox;
-import com.mygdx.game.entities.HitboxImage;
-import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.entities.Entity;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
@@ -32,7 +27,7 @@ public class KryoClient {
 	
 	public Client client;
     public comp460game myGame;
-    public int myID;
+    public int IDOnServer;
 
     public static final int timeout = 5000;
     String name;
@@ -58,7 +53,11 @@ public class KryoClient {
             }
 
             public void disconnected(Connection c) {
-
+                //JOptionPane.showConfirmDialog(null, "You have been disconnected from the server.");
+                /*myGame.getGsm().removeState(PlayState.class);
+                myGame.getGsm().removeState(TitleState.class);
+                myGame.getGsm().addState(State.TITLE, null);
+                myGame.resetClient();*/
             }
 
             public void received(Connection c, Object o) {
@@ -68,23 +67,26 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EnterPlayState) {
+                    final int PNUMBER = ((Packets.EnterPlayState) o).playerNumber;
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
-                        	myGame.getGsm().player = 1;
+                        	myGame.getGsm().player = PNUMBER;
+                        	Log.info("Set player number to: " + myGame.getGsm().player);
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });
                 }
 
-                else if (o instanceof Packets.IDMessage) {
-                    Packets.IDMessage p = (Packets.IDMessage) o;
-                    myID = p.ID;
+                else if (o instanceof Packets.ServerIDMessage) {
+                    Packets.ServerIDMessage p = (Packets.ServerIDMessage) o;
+                    IDOnServer = p.IDOnServer;
+                    myGame.getGsm().player = p.IDOnServer;
                 }
 
                 else if (o instanceof Packets.SyncPlayState) {
                     //Log.info("Received Player Entity sync message...");
                     Packets.SyncPlayState p = (Packets.SyncPlayState) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         //ps.player.body.setTransform(p.body,p.angle);
                         ps.desiredPlayerAngle = p.angle;
@@ -98,10 +100,12 @@ public class KryoClient {
                 else if (o instanceof Packets.SyncEntity) {
 //                    Log.info("Received Player Entity sync message...");
                     Packets.SyncEntity p = (Packets.SyncEntity) o;
-                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
-                    ps.updateEntity(p.entityID,p.pos,p.velocity,p.angularVelocity,p.angle);
+                        ps.updateEntity(UUID.fromString(p.entityID), p.pos, p.velocity, p.angularVelocity, p.angle);
 //                    Log.info("Processed Player Entity sync message!");
+                    }
                 }
 
 //                else if (o instanceof Packets.SyncHitbox) {
@@ -130,13 +134,11 @@ public class KryoClient {
 
 
                 else if (o instanceof Packets.SyncCreateSchmuck) {
-                    Log.info("Received Schmuck creation sync message...");
+                    //Log.info("Received Schmuck creation sync message...");
                     Packets.SyncCreateSchmuck p = (Packets.SyncCreateSchmuck) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
-                        Log.info("PlayState ready when message received...");
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        //Log.info("PlayState ready when message received...");
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        World world = ps.getWorld();
-                        RayHandler rays = ps.getRays();
 //                    while (ps.updating) {}
                         ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType);
                     }
@@ -149,7 +151,7 @@ public class KryoClient {
                     PlayState ps = (PlayState) myGame.getGsm().states.peek();
                     /*if (myGame.getGsm().states.peek() instanceof PlayState) {
                         if (p.message == Input.Keys.W) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.wPressed = true;
                                 } else {
@@ -166,7 +168,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.A) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.aPressed = true;
                                 } else {
@@ -180,7 +182,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.S) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.sPressed = true;
                                 } else {
@@ -194,7 +196,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.D) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.dPressed = true;
                                 } else {
@@ -208,7 +210,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.Q) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.qPressed = true;
                                 } else {
@@ -222,7 +224,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.E) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.ePressed = true;
                                 } else {
@@ -236,7 +238,7 @@ public class KryoClient {
                                 }
                             }
                         } else if (p.message == Input.Keys.SPACE) {
-                            if (p.playerID == myID) {
+                            if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
                                     ps.player.spacePressed = true;
                                 } else {
@@ -256,7 +258,7 @@ public class KryoClient {
                 else if (o instanceof Packets.SetEntityAim) {
                     //Log.info("Received SetEntityAim message");
                     Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         ps.setEntityAim(UUID.fromString(sea.uuid), sea.delta, sea.x, sea.y);
                     }
@@ -265,19 +267,33 @@ public class KryoClient {
                 else if (o instanceof Packets.EntityShoot) {
                     //Log.info("Received EntityShoot message");
                     Packets.EntityShoot sea = (Packets.EntityShoot) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.entityShoot(UUID.fromString(sea.uuid));
+                        ps.entityShoot(UUID.fromString(sea.uuid), sea.bulletUUIDs);
                     }
                 }
 
-                else if (o instanceof Packets.RemoveSchmuck) {
-                    //Log.info("Received RemoveSchmuck message");
-                    Packets.RemoveSchmuck sea = (Packets.RemoveSchmuck) o;
-                    if (myGame.getGsm().states.peek() instanceof PlayState) {
+                else if (o instanceof Packets.RemoveEntity) {
+                    //Log.info("Received RemoveEntity message");
+                    Packets.RemoveEntity sea = (Packets.RemoveEntity) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        ps.destroy(ps.getEntity(UUID.fromString(sea.id)));
+                        Entity e = ps.getEntity(UUID.fromString(sea.id));
+                        if (e != null) {
+                            e.queueDeletion();
+                        }
                     }
+                }
+
+                else if (o instanceof Packets.DisconnectMessage) {
+                    //Log.info("Received DisconnectMessage message");
+                    JOptionPane.showConfirmDialog(null, "You have been kicked by the server.");
+                    Gdx.app.postRunnable(new Runnable() {
+                        public void run() {
+                            myGame.getGsm().addState(State.TITLE, PlayState.class);
+                            myGame.resetClient();
+                        }
+                    });
                 }
             }
         });

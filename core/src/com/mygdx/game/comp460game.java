@@ -152,6 +152,15 @@ public class comp460game extends ApplicationAdapter {
 		CONFIG_WIDTH = width;
 		CONFIG_HEIGHT = height;
 	}
+
+	/**
+     * If the client needs to be reset, i.e. in the case of a disconnect. Closes the client, then recreates it
+     * so it is ready to call client.init() again when the player attempts to reconnect.
+     */
+	public void resetClient() {
+	    client.client.close();
+		client = new KryoClient(this);
+	}
 	
 	public void newMenu(Stage menu) {
 		currentMenu = menu;

@@ -151,7 +151,10 @@ public class Hitbox extends Entity {
 	public void controller(float delta) {
 		lifeSpan -= delta;
 		if (lifeSpan <= 0) {
-			state.destroy(this);
+			if (comp460game.serverMode) {
+			    comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entityID.toString()));
+                state.destroy(this);
+            }
 		}
 	}
 

@@ -10,12 +10,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
-import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.Event;
@@ -291,25 +287,25 @@ public class Player extends Schmuck implements InputProcessor {
     public boolean keyDown(int keycode) {
 	    if (!comp460game.serverMode) {
             if (keycode == Input.Keys.W) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.A) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.S) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.D) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.Q) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.E) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.SPACE) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.PRESSED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
 
             //Pressing 'R' = reload current weapon.
@@ -341,25 +337,25 @@ public class Player extends Schmuck implements InputProcessor {
     public boolean keyUp(int keycode) {
         if (!comp460game.serverMode) {
             if (keycode == Input.Keys.W) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.A) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.S) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.D) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.Q) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.E) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
             if (keycode == Input.Keys.SPACE) {
-                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.RELEASED, comp460game.client.myID));
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
         }
         return false;
@@ -375,7 +371,7 @@ public class Player extends Schmuck implements InputProcessor {
         if (!comp460game.serverMode) {
             RangedWeapon rw = (RangedWeapon) playerData.currentTool;
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
-                    Packets.MousePressOrRelease.PRESSED, comp460game.client.myID));
+                    Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
         }
         return false;
     }
@@ -385,7 +381,7 @@ public class Player extends Schmuck implements InputProcessor {
 	    if (!comp460game.serverMode) {
             RangedWeapon rw = (RangedWeapon) playerData.currentTool;
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
-                    Packets.MousePressOrRelease.RELEASED, comp460game.client.myID));
+                    Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
         }
         return false;
     }
