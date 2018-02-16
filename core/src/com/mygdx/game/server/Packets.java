@@ -77,6 +77,14 @@ public class Packets {
         public String[] bulletUUIDs;
     }
 
+    public static class gameOver {
+	    public gameOver() {}
+	    public gameOver(boolean won) {
+	        this.won = won;
+        }
+        public boolean won;
+    }
+
 	//Client to server
 	/*public static class Shoot {
 	    public static UUID userID;
@@ -259,6 +267,7 @@ public class Packets {
         kryo.register(SetEntityAim.class);
         kryo.register(EntityShoot.class);
         kryo.register(ClientCreatedPlayState.class);
+        kryo.register(gameOver.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

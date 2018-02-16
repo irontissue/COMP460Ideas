@@ -260,8 +260,10 @@ public class PlayState extends GameState {
 					gsm.removeState(PlayState.class);
 					if (won) {
 						gsm.addState(State.VICTORY, TitleState.class);
+						comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
 					} else {
 						gsm.addState(State.GAMEOVER, TitleState.class);
+						comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
 					}
 /*				} else {
 					player = new Player(this, world, camera, rays,

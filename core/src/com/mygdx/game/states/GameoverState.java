@@ -25,19 +25,27 @@ public class GameoverState extends GameState {
 		stage = new Stage() {
 			{
 				playOption = new Text(comp460game.assetManager, "TITLE?", 150, comp460game.CONFIG_HEIGHT - 180);
-				
+
 				playOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
-			        	gsm.removeState(GameoverState.class);
+                        gsm.removeState(VictoryState.class);
+                        gsm.removeState(TitleState.class);
+                        gsm.addState(GameStateManager.State.TITLE, null);
 			        }
 			    });
 				playOption.setScale(0.5f);
-				
+
 				addActor(playOption);
 				addActor(new Text(comp460game.assetManager, "GAME OVER?", 150, comp460game.CONFIG_HEIGHT - 300));
 			}
 		};
 		app.newMenu(stage);
+
+		if (comp460game.serverMode) {
+			gsm.removeState(VictoryState.class);
+			gsm.removeState(TitleState.class);
+			gsm.addState(GameStateManager.State.TITLE, null);
+		}
 	}
 	
 	@Override
