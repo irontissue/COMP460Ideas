@@ -211,11 +211,16 @@ public class PlayState extends GameState {
         //All entities that are set to be updated are updated.
         while (!updateList.isEmpty()) {
             Pair<UUID, Object[]> p = updateList.remove(0);
-            Entity e = getEntity(p.getKey());
-            if (entities.contains(e)) {
-                e.getBody().setTransform((Vector2) p.getValue()[0],(Float) p.getValue()[3]);
-                e.getBody().setLinearVelocity((Vector2) p.getValue()[1]);
-                e.getBody().setAngularVelocity((Float) p.getValue()[2]);
+            //Log.info(p.getKey().toString());
+            //This null check is to prevent bugs - but, the root cause of p being null is unknown. Theoretically
+            //it shouldn't ever be null??
+            if (p != null) {
+                Entity e = getEntity(p.getKey());
+                if (e != null && entities.contains(e)) {
+                    e.getBody().setTransform((Vector2) p.getValue()[0], (Float) p.getValue()[3]);
+                    e.getBody().setLinearVelocity((Vector2) p.getValue()[1]);
+                    e.getBody().setAngularVelocity((Float) p.getValue()[2]);
+                }
             }
         }
 		
@@ -417,6 +422,7 @@ public class PlayState extends GameState {
 	public void updateEntity(UUID entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
         Object[] toUpdate = {pos, vel, aVel, a};
 	    updateList.add(new Pair<UUID, Object[]>(entityID, toUpdate));
+	    //Log.info("Added UUID to update list: " + entityID.toString() + ". To be updated with values: " + Arrays.toString(toUpdate));
     }
 
     /**
