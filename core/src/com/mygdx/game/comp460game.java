@@ -121,7 +121,8 @@ public class comp460game extends ApplicationAdapter {
         //} else {
             Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+            
+            
             gsm.render();
 
    //         batch.setProjectionMatrix(hud.combined);
