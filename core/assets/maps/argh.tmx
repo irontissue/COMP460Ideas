@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="100" tilewidth="256" tileheight="256" nextobjectid="8">
- <tileset firstgid="1" source="temp.tsx"/>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="150" height="100" tilewidth="256" tileheight="256" nextobjectid="13">
+ <tileset firstgid="1" name="tile" tilewidth="256" tileheight="256" tilecount="15" columns="5">
+  <image source="../Images/tile.png" width="1280" height="768"/>
+ </tileset>
  <layer name="Tile Layer 1" width="150" height="100">
   <data encoding="base64" compression="zlib">
    eJzt0jEOQEAAAEEFLf//rVYlTiyFmWR/sNMEAAAAAAAAAAAA8L3loeDIVxR8RcFXFHxFwVcUfEXBVxR8xVvmQ+tJMMJXFHxFwVcUfEXBVxR8RcFXFHzFXdtJvuIuX1HwFYWrX8EIXwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAf7IDsaUKeA==
@@ -39,5 +41,34 @@
     <property name="limit" type="int" value="1"/>
    </properties>
   </object>
+  <object id="8" name="Spawn" type="Spawn" x="19456" y="9216" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="9" name="Spawn" type="Spawn" x="19456" y="6912" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="10" name="Spawn" type="Spawn" x="20224" y="6144" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="11" name="Spawn" type="Spawn" x="16384" y="6144" width="256" height="256">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="50"/>
+   </properties>
+  </object>
+  <object id="12" name="Victory" type="Victory" x="20046.2" y="4770.4" width="256" height="256"/>
  </objectgroup>
 </map>

@@ -303,7 +303,7 @@ public class KryoClient {
 
                 else if (o instanceof Packets.DisconnectMessage) {
                     //Log.info("Received DisconnectMessage message");
-                    JOptionPane.showConfirmDialog(null, "You have been kicked by the server.");
+                    JOptionPane.showMessageDialog(null, "You have been kicked by the server.");
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
                             myGame.getGsm().addState(State.TITLE, PlayState.class);
