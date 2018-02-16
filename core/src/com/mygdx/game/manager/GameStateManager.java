@@ -117,6 +117,7 @@ public class GameStateManager {
 	 * @param state: The new state
 	 */
 	public void addState(State state, Class<? extends GameState> lastState) {
+		
 		if (states.empty()) {
 			states.push(getState(state));
 			states.peek().show();

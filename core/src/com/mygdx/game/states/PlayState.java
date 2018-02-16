@@ -256,14 +256,14 @@ public class PlayState extends GameState {
 		if (gameover) {
 			gameoverCdCount -= delta;
 			if (gameoverCdCount < 0) {
-				if (lastSave != null) {
+//				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
 					if (won) {
 						gsm.addState(State.VICTORY, TitleState.class);
 					} else {
 						gsm.addState(State.GAMEOVER, TitleState.class);
 					}
-				} else {
+/*				} else {
 					player = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
 							(int)(lastSave.getBody().getPosition().y * PPM));
@@ -271,7 +271,7 @@ public class PlayState extends GameState {
 //					controller.setPlayer(player);
 					
 					gameover = false;
-				}
+				}*/
 			}
 		}
         updating = false;

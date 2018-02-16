@@ -103,22 +103,22 @@ public class Player extends Schmuck implements InputProcessor {
 				Constants.PLAYER_HITBOX, false, playerData);
 
 		if (state.gsm.player == 1) {
-			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
+			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(-width / 2 / PPM, 0), true, 0,
 					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
 			player1Fixture.setUserData(playerData);
 		} else {
-			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
+			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
 					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
 			player1Fixture.setUserData(playerData);
 		}
 		
 /*		player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-		player2Fixture.setUserData(player2Data);*/
+		player2Fixture.setUserData(player2Data);
 		
 		player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
 				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-		player1Fixture.setUserData(playerData);
+		player1Fixture.setUserData(playerData);*/
 		
 		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
