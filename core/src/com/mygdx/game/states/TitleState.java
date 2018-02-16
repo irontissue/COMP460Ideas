@@ -18,11 +18,12 @@ public class TitleState extends GameState {
 	private Stage stage;
 
     //Temporary links to other modules for testing.
-	private Actor playOption, exitOption, joinServerOption, startServerOption;
-	
+	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2;
+
 	public TitleState(GameStateManager gsm) {
 		super(gsm);
 	}
+
 
 	public void startGame() {
 
@@ -34,26 +35,29 @@ public class TitleState extends GameState {
 			stage = new Stage() {
 				{
 					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
+                    waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180);
 					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
-					joinServerOption = new Text(comp460game.assetManager, "JOIN SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
+					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT - 240);
 					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 300);
 
-					playOption.addListener(new ClickListener() {
-						public void clicked(InputEvent e, float x, float y) {
-							Log.info("Clicked play button...");
-							if (comp460game.client == null) return;
-							Log.info("Client successfully set");
-							Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
-
-							comp460game.client.client.sendTCP(r2p);
-
-						}
-					});
 					playOption.setScale(0.5f);
+                    playOption.addListener(new ClickListener() {
+                        public void clicked(InputEvent e, float x, float y) {
+                            Log.info("Clicked play button...");
+                            if (comp460game.client.client == null) return;
+                            Log.info("Client successfully set");
+                            Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
 
+                            comp460game.client.client.sendTCP(r2p);
+                            playOption.remove();
+                            addActor(waitingOnPlayer2);
+
+                        }
+                    });
 					joinServerOption.addListener(new ClickListener() {
 						public void clicked(InputEvent e, float x, float y) {
 							comp460game.client.init();
+							joinServerOption.remove();
 						}
 					});
 					joinServerOption.setScale(0.5f);
@@ -67,7 +71,7 @@ public class TitleState extends GameState {
 					exitOption.setScale(0.5f);
 
 					addActor(playOption);
-					addActor(joinServerOption);
+                    addActor(joinServerOption);
 					addActor(exitOption);
 				}
 			};

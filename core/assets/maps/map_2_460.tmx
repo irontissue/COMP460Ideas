@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="300" height="100" tilewidth="32" tileheight="32" nextobjectid="88">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="300" height="100" tilewidth="32" tileheight="32" infinite="0" nextobjectid="91">
  <tileset firstgid="1" source="460.tsx"/>
  <tileset firstgid="25" name="dungeonBIG" tilewidth="32" tileheight="32" tilecount="247" columns="19">
   <image source="../Images/dungeonBIG.png" width="608" height="416"/>

@@ -127,11 +127,21 @@ public class GameStateManager {
 			states.peek().show();
 		}
 	}
-	
+
+    /**
+     * Adds initial title state after restarting from victory/gameover screens
+     * @param titleState
+     */
+	public void addNewTitleState(TitleState titleState) {
+	    this.dispose();
+	    states.push(titleState);
+    }
+
 	public void removeState(Class<? extends GameState> lastState) {
 		if (!states.empty()) {
 			if (states.peek().getClass().equals(lastState)) {
 				states.pop().dispose();
+				if (states.empty()) {return;}
 				states.peek().show();
 			}
 		}

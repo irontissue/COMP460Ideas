@@ -83,6 +83,22 @@ public class KryoClient {
                     myGame.getGsm().player = p.IDOnServer;
                 }
 
+                else if (o instanceof Packets.gameOver) {
+                    Packets.gameOver p = (Packets.gameOver) o;
+                    final boolean won = p.won;
+                    Log.info("Received gameover message");
+                    Gdx.app.postRunnable(new Runnable() {
+                        public void run() {
+                            myGame.getGsm().removeState(PlayState.class);
+                            if (won) {
+                                myGame.getGsm().addState(State.VICTORY, TitleState.class);
+                            } else {
+                                myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
+                            }
+                        }
+                    });
+                }
+
                 else if (o instanceof Packets.SyncPlayState) {
                     //Log.info("Received Player Entity sync message...");
                     Packets.SyncPlayState p = (Packets.SyncPlayState) o;
@@ -147,8 +163,8 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.KeyPressOrRelease) {
-                    Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
-                    PlayState ps = (PlayState) myGame.getGsm().states.peek();
+//                    Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
+//                    PlayState ps = (PlayState) myGame.getGsm().states.peek();
                     /*if (myGame.getGsm().states.peek() instanceof PlayState) {
                         if (p.message == Input.Keys.W) {
                             if (p.playerID == IDOnServer) {
