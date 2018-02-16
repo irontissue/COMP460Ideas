@@ -8,6 +8,8 @@ import com.mygdx.game.entities.userdata.CharacterData;
 
 import box2dLight.RayHandler;
 
+import java.util.UUID;
+
 public abstract class Equipment {	
 	
 	//The Schmuck that is using this tool
@@ -67,8 +69,11 @@ public abstract class Equipment {
 	 * @param world: box2d world
 	 * @param camera: game camera
 	 * @param rays: game rayhandler
+	 * @param bulletID: The ID of the bullet to be created, if on the client side
+	 * @return Returns a list of the UUIDs of the created projectiles or objects due to the execution.
+     *          Returns null if nothing is created.
 	 */
-	public abstract void execute(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays);
+	public abstract String[] execute(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS);
 	
 	/**
 	 * This method is called when the player releases the mouse button for using this tool.

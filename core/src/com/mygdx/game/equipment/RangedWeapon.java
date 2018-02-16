@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.HitboxFactory;
@@ -15,6 +16,8 @@ import static com.mygdx.game.util.Constants.PPM;
 import box2dLight.RayHandler;
 
 import com.mygdx.game.entities.userdata.CharacterData;
+
+import java.util.UUID;
 
 /**
  * Ranged Weapons are weapons used by clicking somewhere on the screen to probably fire a projcetile or whatever in that direction.
@@ -91,9 +94,10 @@ public class RangedWeapon extends Equipment {
 	 * Here, the stored velo, recoil, filter are used to generate a projectile
 	 */
 	@Override
-	public void execute(PlayState state, CharacterData shooter, World world, OrthographicCamera camera, RayHandler rays) {
-		
-		//Check ckip size. empty clip = reload instead. This makes reloading automatic.
+	public String[] execute(PlayState state, CharacterData shooter, World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS) {
+
+		String[] returnIDS = null;
+		//Check clip size. empty clip = reload instead. This makes reloading automatic.
 		if (clipLeft > 0) {
 			
 			float bodyAngle = shooter.getEntity().getBody().getAngle() * MathUtils.radiansToDegrees;
@@ -104,11 +108,14 @@ public class RangedWeapon extends Equipment {
 	        
 //			if (distance <= 60) {
 				//Generate the hitbox(s). This method's return is unused, so it may not return a hitbox or whatever at all.
-				onShoot.makeHitbox(user, state, velo, 
+				Hitbox[] h = onShoot.makeHitbox(user, state, velo,
 						shooter.getSchmuck().getBody().getPosition().x * PPM, 
 						shooter.getSchmuck().getBody().getPosition().y * PPM, 
-						faction, world, camera, rays);
-				
+						faction, world, camera, rays, bulletIDS);
+				returnIDS = new String[h.length];
+				for (int i = 0; i < h.length; i++) {
+				    returnIDS[i] = h[i].entityID.toString();
+                }
 				clipLeft--;
 				
 				//If player fires in the middle of reloading, reset reload progress
@@ -125,6 +132,8 @@ public class RangedWeapon extends Equipment {
 				reloadCd = reloadTime;
 			}
 		}
+
+		return returnIDS;
 	}
 
 	/**

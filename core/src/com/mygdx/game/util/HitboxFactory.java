@@ -9,6 +9,8 @@ import com.mygdx.game.states.PlayState;
 
 import box2dLight.RayHandler;
 
+import java.util.UUID;
+
 /**
  * The HitboxFactory is a thing that creates a hitbox when asked.
  * @author Zachary Tu
@@ -27,8 +29,9 @@ public abstract class HitboxFactory {
 	 * @param world: current world
 	 * @param camera: current camera
 	 * @param rays: current rays
-	 * @return: The Hitbox entity created.
+	 * @param bulletIDS: The IDS of the bullets to be created (probably used on client side. This will be null on server)
+	 * @return: All of the Hitbox entities created, in order, as a list
 	 */
-	public abstract Hitbox makeHitbox(Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-			World world, OrthographicCamera camera, RayHandler rays);
+	public abstract Hitbox[] makeHitbox(Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
+			World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS);
 }

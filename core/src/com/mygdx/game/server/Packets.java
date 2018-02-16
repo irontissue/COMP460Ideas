@@ -3,7 +3,6 @@ package com.mygdx.game.server;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.esotericsoftware.kryo.Kryo;
-import com.mygdx.game.entities.Enemy;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.RangedWeapon;
@@ -13,7 +12,6 @@ import com.mygdx.game.states.PlayState;
 //import javafx.stage.Stage;
 
 import java.util.Set;
-import java.util.UUID;
 
 public class Packets {
 	
@@ -71,10 +69,12 @@ public class Packets {
 
     public static class EntityShoot {
 	    public EntityShoot() {}
-	    public EntityShoot(String uuid) {
+	    public EntityShoot(String uuid, String[] bulletUUIDs) {
 	        this.uuid = uuid;
+	        this.bulletUUIDs = bulletUUIDs;
         }
         public String uuid;
+        public String[] bulletUUIDs;
     }
 
 	//Client to server
@@ -124,14 +124,18 @@ public class Packets {
 
     public static class EnterPlayState {
         public EnterPlayState() {}
+        public EnterPlayState(int playerNumber) {
+            this.playerNumber = playerNumber;
+        }
+        public int playerNumber;
 	}
 
-	public static class IDMessage {
-        public IDMessage() {}
-        public IDMessage(int ID) {
-            this.ID = ID;
+	public static class ServerIDMessage {
+        public ServerIDMessage() {}
+        public ServerIDMessage(int IDOnServer) {
+            this.IDOnServer = IDOnServer;
         }
-        public int ID;
+        public int IDOnServer;
     }
 
     public static class SyncPlayState {
@@ -146,14 +150,14 @@ public class Packets {
 
     public static class SyncEntity {
         public SyncEntity() {}
-        public SyncEntity(UUID entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
+        public SyncEntity(String entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
             this.entityID = entityID;
             this.pos = pos;
             this.velocity = vel;
             this.angularVelocity = aVel;
             this.angle = a;
         }
-        public UUID entityID;
+        public String entityID;
         public Vector2 pos;
         public Vector2 velocity;
         public float angularVelocity;
@@ -221,12 +225,16 @@ public class Packets {
 	    public int entityType;
     }
 
-    public static class RemoveSchmuck {
-	    public RemoveSchmuck() {}
-	    public RemoveSchmuck(String id) {
+    public static class RemoveEntity {
+	    public RemoveEntity() {}
+	    public RemoveEntity(String id) {
 	        this.id = id;
         }
         public String id;
+    }
+
+    public static class DisconnectMessage {
+	    public DisconnectMessage() {}
     }
 
     public static void allPackets(Kryo kryo) {
@@ -235,7 +243,7 @@ public class Packets {
         //kryo.register(Shoot.class);
         kryo.register(EnterPlayState.class);
         kryo.register(ReadyToPlay.class);
-        kryo.register(Packets.IDMessage.class);
+        kryo.register(ServerIDMessage.class);
         kryo.register(Vector2.class);
         kryo.register(Gun.class);
         kryo.register(RangedWeapon.class);
