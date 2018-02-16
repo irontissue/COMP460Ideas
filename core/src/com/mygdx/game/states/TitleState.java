@@ -16,7 +16,6 @@ import com.mygdx.game.server.Packets;
 public class TitleState extends GameState {
 
 	private Stage stage;
-	private boolean playPressed = false;
 
     //Temporary links to other modules for testing.
 	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2;
@@ -41,7 +40,6 @@ public class TitleState extends GameState {
 					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 240);
 					playOption.addListener(new ClickListener() {
 						public void clicked(InputEvent e, float x, float y) {
-							if (playPressed) return;
 							Log.info("Clicked play button...");
 							if (comp460game.client == null) return;
 							Log.info("Client successfully set");
@@ -49,7 +47,6 @@ public class TitleState extends GameState {
 
 							comp460game.client.client.sendTCP(r2p);
 							playOption.remove();
-							playPressed = true;
 							addActor(waitingOnPlayer2);
 
 						}
