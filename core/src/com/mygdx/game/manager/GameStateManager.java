@@ -29,7 +29,9 @@ public class GameStateManager {
 		SPLASH,
 		TITLE,
 		MENU,
-		PLAY
+		PLAY,
+		GAMEOVER,
+		VICTORY
 	}
 	
 	/**
@@ -144,6 +146,8 @@ public class GameStateManager {
 			case TITLE: return new TitleState(this);
 			case MENU: return new MenuState(this);
 			case PLAY: return new PlayState(this);
+			case GAMEOVER: return new GameoverState(this);
+			case VICTORY: return new VictoryState(this);
 		}
 		return null;
 	}
