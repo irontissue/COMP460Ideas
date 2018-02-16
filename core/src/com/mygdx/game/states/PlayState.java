@@ -258,11 +258,11 @@ public class PlayState extends GameState {
 			if (gameoverCdCount < 0) {
 				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
-			/*		if (won) {
-						gsm.addState(State.TITLE, TitleState.class);
+					if (won) {
+						gsm.addState(State.VICTORY, TitleState.class);
 					} else {
-						gsm.addState(State.TITLE, TitleState.class);
-					}*/
+						gsm.addState(State.GAMEOVER, TitleState.class);
+					}
 				} else {
 					player = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),

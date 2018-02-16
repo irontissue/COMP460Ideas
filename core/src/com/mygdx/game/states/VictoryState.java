@@ -9,14 +9,14 @@ import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.Text;
 
-public class GameoverState extends GameState {
+public class VictoryState extends GameState {
 
 	private Stage stage;
 	
 	//Temporary links to other modules for testing.
 	private Actor playOption, title;
 	
-	public GameoverState(GameStateManager gsm) {
+	public VictoryState(GameStateManager gsm) {
 		super(gsm);
 	}
 
@@ -28,13 +28,13 @@ public class GameoverState extends GameState {
 				
 				playOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
-			        	gsm.removeState(GameoverState.class);
+			        	gsm.removeState(VictoryState.class);
 			        }
 			    });
 				playOption.setScale(0.5f);
 				
 				addActor(playOption);
-				addActor(new Text(comp460game.assetManager, "GAME OVER?", 150, comp460game.CONFIG_HEIGHT - 300));
+				addActor(new Text(comp460game.assetManager, "VICTORY?", 150, comp460game.CONFIG_HEIGHT - 300));
 			}
 		};
 		app.newMenu(stage);
