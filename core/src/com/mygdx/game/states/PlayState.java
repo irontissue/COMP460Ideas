@@ -159,11 +159,13 @@ public class PlayState extends GameState {
 
 	@Override
 	public void show() {
+		
+		this.stage = new Stage(); 
+		app.newMenu(stage);
+		
 		if (player != null) {
 			player.setInput();
 		}
-		this.stage = new Stage(); 
-		app.newMenu(stage);
 	}
 	
 	/**
@@ -256,11 +258,11 @@ public class PlayState extends GameState {
 			if (gameoverCdCount < 0) {
 				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
-					if (won) {
-//						gsm.addState(State.VICTORY, TitleState.class);
+			/*		if (won) {
+						gsm.addState(State.TITLE, TitleState.class);
 					} else {
-//						gsm.addState(State.GAMEOVER, TitleState.class);
-					}
+						gsm.addState(State.TITLE, TitleState.class);
+					}*/
 				} else {
 					player = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
