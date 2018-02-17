@@ -525,6 +525,6 @@
     <property name="limit" type="int" value="1"/>
    </properties>
   </object>
-  <object id="89" name="Victory" type="Victory" x="62" y="962" width="30" height="28"/>
+  <object id="87" name="Victory" type="Victory" x="64" y="960" width="32" height="32"/>
  </objectgroup>
 </map>

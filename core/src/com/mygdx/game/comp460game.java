@@ -24,7 +24,7 @@ public class comp460game extends ApplicationAdapter {
 	
 	//The main camera scales to the viewport size scaled to this. Useful for zoom-in/out testing.
 	//TODO: replace this with a constant aspect ratio?
-	private final float SCALE = 1.0f;
+	private final float SCALE = 4.0f;
 	
 	//Camera and Spritebatch. This is pretty standard stuff.
 	private OrthographicCamera camera, sprite, hud;
@@ -79,8 +79,8 @@ public class comp460game extends ApplicationAdapter {
 		viewportSprite = new FitViewport(CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE, sprite);
 		viewportSprite.apply();
 		    
-		hud = new OrthographicCamera(CONFIG_WIDTH, CONFIG_HEIGHT);
-	    hud.setToOrtho(false, CONFIG_WIDTH, CONFIG_HEIGHT);
+		hud = new OrthographicCamera(CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE);
+	    hud.setToOrtho(false, CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE);
 		
 	    assetManager = new AssetManager(new InternalFileHandleResolver());
 	    loadAssets();
@@ -121,7 +121,8 @@ public class comp460game extends ApplicationAdapter {
         //} else {
             Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+            
+            
             gsm.render();
 
    //         batch.setProjectionMatrix(hud.combined);
