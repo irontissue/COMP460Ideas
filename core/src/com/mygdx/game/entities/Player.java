@@ -55,7 +55,7 @@ public class Player extends Schmuck implements InputProcessor {
 	public Event currentEvent;
 	
 //	public Player2Dummy dummy;
-	public PlayerData player2Data;
+	public PlayerData player1Data, player2Data;
 	protected Fixture player1Fixture, player2Fixture;
 
 	private ConeLight vision;
@@ -93,8 +93,19 @@ public class Player extends Schmuck implements InputProcessor {
 	 */
 	public void create() {
 	    setInput();
+	    
+	    //Clients will have a single data attached to the half of the body they represent
 		this.playerData = new PlayerData(world, this);
-//		player2Data = new PlayerData(world, this);
+		
+		//server's has 2 datas that represent player1 and player2
+		if (comp460game.serverMode) {
+			player1Data = new PlayerData(world, this) {
+				//inside these, we should overload onhit, die to send messages to corresponding clients
+			};
+			player2Data = new PlayerData(world, this) {
+				
+			};
+		}
 		
 		this.bodyData = playerData;
 		
@@ -102,24 +113,26 @@ public class Player extends Schmuck implements InputProcessor {
 				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_ENEMY),
 				Constants.PLAYER_HITBOX, false, playerData);
 
-		if (state.gsm.player == 1) {
-			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(-width / 2 / PPM, 0), true, 0,
-					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-			player1Fixture.setUserData(playerData);
+		if (!comp460game.serverMode) {
+			if (state.gsm.player == 1) {
+				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(-width / 2 / PPM, 0), true, 0,
+						Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+				player1Fixture.setUserData(playerData);
+			} else {
+				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
+						Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+				player1Fixture.setUserData(playerData);
+			}
 		} else {
+			player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
+					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+			player2Fixture.setUserData(player2Data);
+			
 			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
 					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-			player1Fixture.setUserData(playerData);
+			player1Fixture.setUserData(player1Data);
 		}
-		
-/*		player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
-				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-		player2Fixture.setUserData(player2Data);
-		
-		player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(height / 2 / PPM, 0), true, 0,
-				Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
-		player1Fixture.setUserData(playerData);*/
-		
+				
 		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
 			vision.setIgnoreAttachedBody(true);
@@ -130,11 +143,11 @@ public class Player extends Schmuck implements InputProcessor {
 				vision.attachToBody(body,0 ,0, 0);
 			}
 		} else {
-			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
+			vision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			vision.setIgnoreAttachedBody(true);
 			vision.attachToBody(body,0 ,0, 180);
-			
-			ConeLight extraVision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
+
+			ConeLight extraVision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			extraVision.setIgnoreAttachedBody(true);
 			extraVision.attachToBody(body,0 ,0, 0);
 		}

@@ -52,7 +52,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public int hbWidth = 76;
 	public int hbHeight = 197;
 	
-	public static float scale = 0.25f;
+	public static float scale = 1.0f;
 	
 	private TextureAtlas atlas;
 	private TextureRegion schmuckSprite;

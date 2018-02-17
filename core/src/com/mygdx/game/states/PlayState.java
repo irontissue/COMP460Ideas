@@ -15,6 +15,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
+import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
@@ -119,9 +120,9 @@ public class PlayState extends GameState {
 		rays = new RayHandler(world);
         rays.setAmbientLight(0.1f);
         rays.setCulling(false);
-
+        
         RayHandler.useDiffuseLight(true);
-
+        
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
 		
@@ -160,7 +161,8 @@ public class PlayState extends GameState {
 	@Override
 	public void show() {
 		
-		this.stage = new Stage(); 
+		this.stage = new Stage();
+		stage.addActor(new HpBar(comp460game.assetManager, this, player));
 		app.newMenu(stage);
 		
 		if (player != null) {
@@ -305,26 +307,15 @@ public class PlayState extends GameState {
 			schmuck.render(batch);
 		}
 		
-		//Update rays. Does nothing yet.
-		rays.setCombinedMatrix(camera);
-		rays.updateAndRender();
-				
-		batch.setProjectionMatrix(hud.combined);
-		
-		//Draw player information for temporary ui.
-		//Check for null because player is not immediately spawned in a map.
-		if (player != null) {
-			if (player.getPlayerData() != null) {
-				font.getData().setScale(1);
-				font.draw(batch, "Score: " + score+ " Hp: " + Math.round(player.getPlayerData().currentHp) + "/" + player.getPlayerData().getMaxHp(), 20, 80);
-				font.draw(batch, player.getPlayerData().currentTool.getText(), 20, 60);
-			}
-		}
+		batch.end();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
 		
-		batch.end();
 		updating = false;
+		
+		//Update rays. Does nothing yet.
+		rays.setCombinedMatrix(camera);
+		rays.updateAndRender();
 	}	
 	
 	/**
