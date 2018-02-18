@@ -1,12 +1,10 @@
 package com.mygdx.game.actors;
 
-import static com.mygdx.game.util.Constants.PPM;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
@@ -42,16 +40,19 @@ public class HpBar extends A460Actor {
 				font.draw(batch, " Hp: " + Math.round(player.getPlayerData().currentHp) + "/" + player.getPlayerData().getMaxHp(), 100, 80);
 				font.draw(batch, player.getPlayerData().currentTool.getText(), 100, 60);
 				
-				batch.draw(empty, 20, 20, 
+				float percent = player.getPlayerData().currentHp / player.getPlayerData().getMaxHp();
+				
+				batch.draw(empty, 100 - empty.getWidth() / 2, 100 - empty.getHeight() / 2, 
 						empty.getWidth() / 2, empty.getHeight() / 2,
 						empty.getWidth(), empty.getHeight(),
 						1, 1, 0, 0, 0, empty.getWidth(), empty.getHeight(), false, false);
 				
-				batch.draw(full, 20, 20, 
-						empty.getWidth() / 2, empty.getHeight() / 2,
-						empty.getWidth(), empty.getHeight() * player.getPlayerData().currentHp / player.getPlayerData().getMaxHp(),
-						1, 1, 0, 0, 0,
-						empty.getWidth(), (int) (empty.getHeight() * player.getPlayerData().currentHp / player.getPlayerData().getMaxHp()), false, false);
+				batch.draw(full, 100 - full.getWidth() / 2, 100 - full.getHeight() / 2 - (int)(full.getHeight() * (1 - percent)), 
+						full.getWidth() / 2, full.getHeight() / 2,
+						full.getWidth(), full.getHeight(),
+						1, 1, 0, 0, (int) (full.getHeight() * (1 - percent)),
+						full.getWidth(), full.getHeight(), false, false);
+
 			}
 		}
 	}
