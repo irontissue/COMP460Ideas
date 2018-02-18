@@ -81,7 +81,8 @@ public class comp460game extends ApplicationAdapter {
 		    
 		hud = new OrthographicCamera(CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE);
 	    hud.setToOrtho(false, CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE);
-		
+		hud.zoom = 1 / SCALE;	    
+	    
 	    assetManager = new AssetManager(new InternalFileHandleResolver());
 	    loadAssets();
 
