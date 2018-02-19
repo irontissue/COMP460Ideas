@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 public enum AssetList {
 	BUTLER_FONT("fonts/butler.fnt", null),
 	LEARNING_FONT("fonts/learning_curve.fnt", null),
+	FIXEDSYS_FONT("fonts/fixedsys.fnt", null),
 	
 	PROJ_1("sprites/projectiles.png", Texture.class),
 	PROJ_1_ATL("sprites/projectiles.atlas", TextureAtlas.class),
@@ -22,7 +23,10 @@ public enum AssetList {
 	COMBINED("sprites/combined.png", Texture.class),
 	
 	EMPTY_HEART("ui/heart_meter.png", Texture.class),
-	FULL_HEART("ui/heart_gauge.png", Texture.class);
+	FULL_HEART("ui/heart_gauge.png", Texture.class),
+	UI1("ui/UI.png", Texture.class),
+	UI2("ui/UI2.png", Texture.class),
+	UIATLAS("ui/UI.atlas", TextureAtlas.class);
 	
 	//Enum constructor and methods.
 	private String pathname;
