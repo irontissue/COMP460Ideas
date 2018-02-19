@@ -28,7 +28,7 @@ public class GameoverState extends GameState {
 
 				playOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
-                        gsm.removeState(VictoryState.class);
+                        gsm.removeState(GameoverState.class);
                         gsm.removeState(TitleState.class);
                         gsm.addState(GameStateManager.State.TITLE, null);
 			        }

@@ -95,7 +95,6 @@ public class KryoClient {
                             } else {
                                 myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
                             }
-                            myGame.resetClient();
                         }
                     });
                 }
