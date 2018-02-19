@@ -19,7 +19,10 @@ public enum AssetList {
 	BRIDE("sprites/bride.png", Texture.class),
 	DRESS("sprites/bride_dress.png", Texture.class),	
 	GROOM("sprites/groom.png", Texture.class),
-	COMBINED("sprites/combined.png", Texture.class);
+	COMBINED("sprites/combined.png", Texture.class),
+	
+	EMPTY_HEART("ui/heart_meter.png", Texture.class),
+	FULL_HEART("ui/heart_gauge.png", Texture.class);
 	
 	//Enum constructor and methods.
 	private String pathname;
