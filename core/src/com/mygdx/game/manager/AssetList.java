@@ -24,6 +24,7 @@ public enum AssetList {
 	
 	EMPTY_HEART("ui/heart_meter.png", Texture.class),
 	FULL_HEART("ui/heart_gauge.png", Texture.class),
+	UIMAIN("ui/UI_main_overlay.png", Texture.class),
 	UI1("ui/UI.png", Texture.class),
 	UI2("ui/UI2.png", Texture.class),
 	UIATLAS("ui/UI.atlas", TextureAtlas.class);

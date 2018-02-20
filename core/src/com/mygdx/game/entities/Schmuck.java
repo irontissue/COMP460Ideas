@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -22,8 +23,6 @@ import static com.mygdx.game.util.Constants.PPM;
 
 import box2dLight.RayHandler;
 
-import java.util.UUID;
-
 public class Schmuck extends Entity implements Location<Vector2> {
     public static final int ENTITY_TYPE = Constants.SCHMUCK;
 	//user data.
@@ -33,6 +32,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public float shootCdCount = 0;
 	public float shootDelayCount = 0;
 	
+	//Keeps track of a schmuck's sprite flashing after receiving damage.
+	public float flashingCount = 0;
+		
 	//The last used tool. This is used to process equipment with a delay between using and executing.
 	public Equipment usedTool;
 	
@@ -163,7 +165,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
             //process cooldowns
             shootCdCount -= delta;
             shootDelayCount -= delta;
-
+            flashingCount-=delta;
+            
             //If the delay on using a tool just ended, use the tool.
             if (shootDelayCount <= 0 && usedTool != null) {
                 useToolEnd();
@@ -183,12 +186,18 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 
+		if (flashingCount > 0) {
+			batch.setColor(Color.RED);
+		}
+		
 		batch.draw(schmuckSprite, 
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
 				body.getPosition().y * PPM - hbWidth * scale / 2, 
 				hbHeight * scale / 2, hbWidth * scale / 2,
 				spriteWidth * scale, spriteHeight * scale, 1, 1, 
 				(float) Math.toDegrees(body.getAngle()));
+		
+		batch.setColor(Color.WHITE);
 	}
 	
 	/**

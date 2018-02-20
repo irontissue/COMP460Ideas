@@ -263,12 +263,18 @@ public class Player extends Schmuck implements InputProcessor {
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 
+		if (flashingCount > 0) {
+			batch.setColor(Color.RED);
+		}
+		
 		batch.draw(combined, 
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
 				body.getPosition().y * PPM - hbWidth * scale / 2, 
 				hbHeight * scale / 2, hbWidth * scale / 2,
 				spriteWidth * scale, spriteHeight * scale, 1, 1, 
 				(float) Math.toDegrees(body.getAngle()));
+		
+		batch.setColor(Color.WHITE);
 		
 /*		batch.draw(groom, 
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
