@@ -29,7 +29,6 @@ public class RangedWeapon extends Equipment {
 
 	public int clipSize;
 	public int clipLeft;
-	public float reloadTime;
 	public int reloadAmount;
 	public float recoil;
 	public float projectileSpeed;
@@ -178,9 +177,9 @@ public class RangedWeapon extends Equipment {
 	@Override
 	public String getText() {
 		if (reloading) {
-			return name + ": " + clipLeft + "/" + getClipSize() + " RELOADING";
+			return clipLeft + "/" + getClipSize() + " RELOADING";
 		} else {
-			return name + ": " + clipLeft + "/" + getClipSize();
+			return clipLeft + "/" + getClipSize();
 
 		}
 	}

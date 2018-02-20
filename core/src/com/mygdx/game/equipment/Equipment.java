@@ -30,6 +30,9 @@ public abstract class Equipment {
 	//Counter for how much longer this tool needs to be reloaded before it gets more ammo
 	public float reloadCd;
 	
+	//The amount of time it takes to reload this weapon. (default = 0 for non-ranged)
+	public float reloadTime = 0;
+		
 	/**
 	 * Equipables are constructed when creating tool spawns or default schmuck loadouts
 	 * @param user: Schmuck that is using this tool.

@@ -39,7 +39,7 @@ public class comp460game extends ApplicationAdapter {
 	public static AssetManager assetManager;
     public static FitViewport viewportCamera, viewportSprite;
 
-    public static BitmapFont SYSTEM_FONT_TITLE, SYSTEM_FONT_TEXT;
+    public static BitmapFont SYSTEM_FONT_TITLE, SYSTEM_FONT_TEXT, SYSTEM_FONT_UI;
     public static Color DEFAULT_TEXT_COLOR;
     
 	private static final int DEFAULT_WIDTH = 1080;
@@ -97,6 +97,7 @@ public class comp460game extends ApplicationAdapter {
 	public void loadAssets() {
 		SYSTEM_FONT_TITLE = new BitmapFont(Gdx.files.internal(AssetList.LEARNING_FONT.toString()), false);
 		SYSTEM_FONT_TEXT = new BitmapFont(Gdx.files.internal(AssetList.BUTLER_FONT.toString()), false);
+		SYSTEM_FONT_UI = new BitmapFont(Gdx.files.internal(AssetList.FIXEDSYS_FONT.toString()), false);
 		DEFAULT_TEXT_COLOR = Color.BLACK;
 		
 		for (AssetList asset: AssetList.values()) {
