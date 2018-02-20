@@ -22,7 +22,7 @@ import static com.mygdx.game.util.Constants.PPM;
  *
  */
 public class Hitbox extends Entity {
-    public static final int ENTITY_TYPE = Constants.HITBOX;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.HITBOX;
 	//Initial velocity of the hitbox
 	public Vector2 startVelo;
 		
@@ -121,8 +121,8 @@ public class Hitbox extends Entity {
 	 * Create the hitbox body. User data is initialized separately.
 	 */
 	public void create() {
-		this.body = BodyBuilder.createBox(world, startX, startY, width / 2, height / 2, 0, 0.0f, rest, false, false, Constants.BIT_PROJECTILE, 
-				(short) (Constants.BIT_PROJECTILE | Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ENEMY | Constants.BIT_SENSOR), filter, sensor, data);
+		this.body = BodyBuilder.createBox(world, startX, startY, width / 2, height / 2, 0, 0.0f, rest, false, false, Constants.Filters.BIT_PROJECTILE, 
+				(short) (Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_WALL | Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY | Constants.Filters.BIT_SENSOR), filter, sensor, data);
 		this.body.setLinearVelocity(startVelo);
 		
 		//Rotate hitbox to match angle of fire.

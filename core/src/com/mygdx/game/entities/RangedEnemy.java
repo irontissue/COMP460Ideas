@@ -13,7 +13,7 @@ import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
 
 public class RangedEnemy extends Schmuck {
-    public static final int ENTITY_TYPE = Constants.RANGED_ENEMY;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.RANGED_ENEMY;
     public float maxSpeed = 4.0f;
 
     public float randSpeed;
@@ -44,9 +44,9 @@ public class RangedEnemy extends Schmuck {
      */
     public void create() {
         this.bodyData = new CharacterData(world, this);
-        this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, true, Constants.BIT_ENEMY,
-                (short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_PLAYER | Constants.BIT_ENEMY),
-                Constants.ENEMY_HITBOX, false, bodyData);
+        this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, true, Constants.Filters.BIT_ENEMY,
+                (short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY),
+                Constants.Filters.ENEMY_HITBOX, false, bodyData);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class RangedEnemy extends Schmuck {
 
         Vector3 target = new Vector3(state.getPlayer().getBody().getPosition().x, state.getPlayer().getBody().getPosition().y, 0);
         camera.project(target);
-        useToolStart(delta, weapon, Constants.ENEMY_HITBOX, (int)target.x, (int)target.y, true);
+        useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int)target.x, (int)target.y, true);
 
 
         if (randSpeedCdCount > randSpeedCd) {

@@ -31,7 +31,7 @@ public class TitleState extends GameState {
 
 	@Override
 	public void show() {
-		if (!app.serverMode) {
+		if (!comp460game.serverMode) {
 			stage = new Stage() {
 				{
 					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
@@ -58,7 +58,7 @@ public class TitleState extends GameState {
                     });
 					joinServerOption.addListener(new ClickListener() {
 						public void clicked(InputEvent e, float x, float y) {
-							comp460game.client.init();
+							comp460game.client.init(false);
 							joinServerOption.remove();
 							addActor(disconnect);
 						}
@@ -84,7 +84,7 @@ public class TitleState extends GameState {
 					exitOption.setScale(0.5f);
 
 					addActor(playOption);
-					if (comp460game.client.client == null) {
+					if (comp460game.client.client == null || !comp460game.client.client.isConnected()) {
 						addActor(joinServerOption);
 					} else {
 						addActor(disconnect);

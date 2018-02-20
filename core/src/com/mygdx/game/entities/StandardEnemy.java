@@ -14,7 +14,7 @@ import com.mygdx.game.util.Constants;
 import box2dLight.RayHandler;
 
 public class StandardEnemy extends SteeringEnemy {
-    public static final int ENTITY_TYPE = Constants.STANDARD_ENEMY;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.STANDARD_ENEMY;
     public Vector2 direction;
     
     public static final float moveCd = 0.25f;
@@ -62,7 +62,7 @@ public class StandardEnemy extends SteeringEnemy {
                     Vector3 target = new Vector3(state.getPlayer().getBody().getPosition().x, state.getPlayer().getBody().getPosition().y, 0);
                     camera.project(target);
 
-                    useToolStart(delta, weapon, Constants.ENEMY_HITBOX, (int) target.x, (int) target.y, true);
+                    useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int) target.x, (int) target.y, true);
 
                     super.controller(delta);
 

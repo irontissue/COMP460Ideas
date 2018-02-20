@@ -25,7 +25,7 @@ import box2dLight.RayHandler;
 import java.util.UUID;
 
 public class Schmuck extends Entity implements Location<Vector2> {
-    public static final int ENTITY_TYPE = Constants.SCHMUCK;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.SCHMUCK;
 	//user data.
 	protected CharacterData bodyData;
 	
@@ -52,7 +52,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public int hbWidth = 76;
 	public int hbHeight = 197;
 	
-	public static float scale = 1.0f;
+	public static float scale = 0.15f;
 	
 	private TextureAtlas atlas;
 	private TextureRegion schmuckSprite;

@@ -28,15 +28,15 @@ public class KryoClient {
 	public Client client;
     public comp460game myGame;
     public int IDOnServer;
+    public static String hostIP, name;
 
     public static final int timeout = 5000;
-    String name;
 
     public KryoClient(comp460game myGame) {
         this.myGame = myGame;
 	}
 
-	public void init() {
+	public void init(boolean reconnect) {
         Kryo kryo = new Kryo();
         kryo.setReferences(true);
         KryoSerialization serialization = new KryoSerialization(kryo);
@@ -306,32 +306,34 @@ public class KryoClient {
                     JOptionPane.showMessageDialog(null, "You have been kicked by the server.");
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
+                            myGame.getGsm().removeState(PlayState.class);
                             myGame.getGsm().addState(State.TITLE, PlayState.class);
-                            myGame.resetClient();
+                            myGame.resetClient(true);
                         }
                     });
                 }
             }
         });
 
-        // Request the host from the user.
-        String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE,
-                null, null, "localhost");
-        if (input == null || input.trim().length() == 0) System.exit(1);
-        final String host = input.trim();
+        if (!reconnect) {
+            // Request the host from the user.
+            String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE,
+                    null, null, "localhost");
+            if (input == null || input.trim().length() == 0) System.exit(1);
+            hostIP = input.trim();
 
-        // Request the user's name.
-        input = (String)JOptionPane.showInputDialog(null, "Name:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE, null,
-                null, "Test");
-        if (input == null || input.trim().length() == 0) System.exit(1);
-        name = input.trim();
-
+            // Request the user's name.
+            input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE, null,
+                    null, "Test");
+            if (input == null || input.trim().length() == 0) System.exit(1);
+            name = input.trim();
+        }
 
 
         new Thread("Connect") {
             public void run () {
                 try {
-                    client.connect(5000, host, portSocket);
+                    client.connect(5000, hostIP, portSocket);
                     // Server communication after connection can go here, or in Listener#connected().
                 } catch (IOException ex) {
                     ex.printStackTrace();

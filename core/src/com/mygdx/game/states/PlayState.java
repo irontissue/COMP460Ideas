@@ -133,9 +133,10 @@ public class PlayState extends GameState {
 		entities = new HashSet<Entity>();
 		
 		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
-//		map = new TmxMapLoader().load("maps/map_1_460.tmx");
+//        map = new TmxMapLoader().load("maps/map_1_460.tmx");
 //        map = new TmxMapLoader().load("maps/map_2_460.tmx");
-        map = new TmxMapLoader().load("maps/argh.tmx");
+//        map = new TmxMapLoader().load("maps/argh.tmx");
+        map = new TmxMapLoader().load("maps/kenney_map.tmx");
 
 		
 		tmr = new OrthogonalTiledMapRenderer(map);
@@ -145,7 +146,7 @@ public class PlayState extends GameState {
 		
 		player = new Player(this, world, camera, rays, 100, 100);
         if (comp460game.serverMode) {
-            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.PLAYER));
+            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER));
         }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
 		
@@ -261,11 +262,11 @@ public class PlayState extends GameState {
 //				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
 					if (won) {
+                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
 						gsm.addState(State.VICTORY, TitleState.class);
-						comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
 					} else {
+                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
 						gsm.addState(State.GAMEOVER, TitleState.class);
-						comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
 					}
 /*				} else {
 					player = new Player(this, world, camera, rays,
@@ -436,10 +437,10 @@ public class PlayState extends GameState {
         if (target == null) { return; }
         if (target instanceof Player) {
             ((Player) target).playerData.currentTool.mouseClicked(delta, this, ((Player) target).getBodyData(),
-                    Constants.PLAYER_HITBOX, x, y, world, camera, rays);
+                    Constants.Filters.PLAYER_HITBOX, x, y, world, camera, rays);
         } else if (target instanceof Enemy) {
             ((Enemy) target).weapon.mouseClicked(delta, this, ((Enemy) target).getBodyData(),
-                    Constants.ENEMY_HITBOX, x, y, world, camera, rays);
+                    Constants.Filters.ENEMY_HITBOX, x, y, world, camera, rays);
         }
     }
 
@@ -467,24 +468,24 @@ public class PlayState extends GameState {
     public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type) {
         UUID entityID = UUID.fromString(id);
         switch(type) {
-            case Constants.PLAYER : {
+            case Constants.EntityTypes.PLAYER : {
                 Log.info("PLAYER entityID assigned as: " + id);
                 player.entityID = entityID;
                 break;
             }
-            case Constants.ENEMY : {
+            case Constants.EntityTypes.ENEMY : {
                 new Enemy(this, world, camera, rays, w, h, startX, startY, id);
                 break;
             }
-            case Constants.RANGED_ENEMY : {
+            case Constants.EntityTypes.RANGED_ENEMY : {
                 new RangedEnemy(this, world, camera, rays, w, h, startX, startY, id);
                 break;
             }
-            case Constants.STANDARD_ENEMY : {
+            case Constants.EntityTypes.STANDARD_ENEMY : {
                 new StandardEnemy(this, world, camera, rays, w, h, startX, startY, id);
                 break;
             }
-            case Constants.STEERING_ENEMY : {
+            case Constants.EntityTypes.STEERING_ENEMY : {
                 new SteeringEnemy(this, world, camera, rays, w, h, startX, startY, id);
                 break;
             }

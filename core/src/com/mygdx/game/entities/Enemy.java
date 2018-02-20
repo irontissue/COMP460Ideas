@@ -12,7 +12,7 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import box2dLight.RayHandler;
 
 public class Enemy extends Schmuck {
-    public static final int ENTITY_TYPE = Constants.ENEMY;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.ENEMY;
 	public Equipment weapon;
 	
 	public Enemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
@@ -32,9 +32,9 @@ public class Enemy extends Schmuck {
 	 */
 	public void create() {
 		this.bodyData = new CharacterData(world, this);
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, true, Constants.BIT_ENEMY, 
-				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_PLAYER | Constants.BIT_ENEMY),
-				Constants.ENEMY_HITBOX, false, bodyData);
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, true, Constants.Filters.BIT_ENEMY, 
+				(short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY),
+				Constants.Filters.ENEMY_HITBOX, false, bodyData);
 	}
 	
 	@Override

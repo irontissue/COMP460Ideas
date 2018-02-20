@@ -29,7 +29,7 @@ import box2dLight.RayHandler;
 import static com.mygdx.game.util.Constants.PPM;
 
 public class Player extends Schmuck implements InputProcessor {
-    public static final int ENTITY_TYPE = Constants.PLAYER;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.PLAYER;
 	protected MoveStates moveState1, moveState2;
 
 	//Fixtures and user data
@@ -109,27 +109,27 @@ public class Player extends Schmuck implements InputProcessor {
 		
 		this.bodyData = playerData;
 		
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, false, Constants.BIT_PLAYER, 
-				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_ENEMY),
-				Constants.PLAYER_HITBOX, false, playerData);
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, false, Constants.Filters.BIT_PLAYER, 
+				(short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_ENEMY),
+				Constants.Filters.PLAYER_HITBOX, false, playerData);
 
 		if (!comp460game.serverMode) {
 			if (state.gsm.player == 1) {
 				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(-width / 2 / PPM, 0), true, 0,
-						Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+						Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
 				player1Fixture.setUserData(playerData);
 			} else {
 				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
-						Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+						Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
 				player1Fixture.setUserData(playerData);
 			}
 		} else {
 			player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
-					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+					Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
 			player2Fixture.setUserData(player2Data);
 			
 			player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
-					Constants.BIT_SENSOR, (short)(Constants.BIT_WALL | Constants.BIT_ENEMY), Constants.PLAYER_HITBOX));
+					Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
 			player1Fixture.setUserData(player1Data);
 		}
 				
@@ -220,13 +220,13 @@ public class Player extends Schmuck implements InputProcessor {
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
             if (mousePressed || mousePressed2) {
                 //charging = true;
-                useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
+                useToolStart(delta, playerData.currentTool, Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
             }
             if (mousePressed2) {
-                useToolStart(delta, playerData.currentTool, Constants.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
+                useToolStart(delta, playerData.currentTool, Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
             } else {
                 /*if (charging) {
-                    useToolRelease(playerData.currentTool, Constants.PLAYER_HITBOX, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                    useToolRelease(playerData.currentTool, Constants.Filters.PLAYER_HITBOX, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
                 }
                 charging = false;*/
             }
