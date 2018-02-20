@@ -17,6 +17,7 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.actors.UIPlay;
+import com.mygdx.game.actors.UIReload;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
@@ -164,6 +165,7 @@ public class PlayState extends GameState {
 		
 		this.stage = new Stage();
 		stage.addActor(new UIPlay(comp460game.assetManager, this, player));
+		stage.addActor(new UIReload(comp460game.assetManager, this, player));
 		app.newMenu(stage);
 		
 		if (player != null) {

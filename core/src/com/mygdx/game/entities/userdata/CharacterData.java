@@ -43,8 +43,7 @@ public class CharacterData extends UserData {
 	
 	public float[] baseStats;
 	public float[] buffedStats;	
-	
-	
+		
 	//Speed on ground
 	public float maxSpeed = 7.0f;
 	public float maxAngularSpeed = 1.5f;
@@ -57,6 +56,8 @@ public class CharacterData extends UserData {
 	public ArrayList<Status> statuses;
 	public ArrayList<Status> statusesChecked;
 	
+	private final static float flashDuration = 0.08f;
+
 	/**
 	 * This is created upon the create() method of any schmuck.
 	 * Character are the Body data type.
@@ -180,6 +181,11 @@ public class CharacterData extends UserData {
 		
 		currentHp -= damage;
 		
+		//Make shmuck flash upon receiving damage
+		if (damage > 0 && schmuck.flashingCount < -flashDuration) {
+			schmuck.flashingCount = flashDuration;
+		}
+				
 		float kbScale = 1;
 		
 		kbScale -= getKnockbackReduc();

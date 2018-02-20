@@ -1,6 +1,7 @@
 package com.mygdx.game.actors;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -20,7 +21,8 @@ public class UIPlay extends A460Actor{
 	
 	private TextureAtlas atlas;
 	
-	private TextureRegion main, reloading, hp, hpLow, hpMissing, fuel, fuelCutoff;
+	private TextureRegion hp, hpLow, hpMissing;
+	private Texture main;
 	private Array<AtlasRegion> itemNull, itemSelect, itemUnselect;
 	
 	private float scale = 0.75f;
@@ -43,9 +45,7 @@ public class UIPlay extends A460Actor{
 		this.font = comp460game.SYSTEM_FONT_UI;
 		
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
-		this.main = atlas.findRegion("UI_main_overlay");
-		this.reloading = atlas.findRegion("UI_main_reloading");
-		this.reloading = atlas.findRegion("UI_main_reloading");
+		this.main = comp460game.assetManager.get(AssetList.UIMAIN.toString());
 		this.hp = atlas.findRegion("UI_main_healthbar");
 		this.hpLow = atlas.findRegion("UI_main_health_low");
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
@@ -86,14 +86,10 @@ public class UIPlay extends A460Actor{
 		}
 		
 		if (blinking) {
-			batch.draw(hpLow, x, y, main.getRegionWidth() * scale, main.getRegionHeight() * scale);
+			batch.draw(hpLow, x, y, main.getWidth() * scale, main.getHeight() * scale);
 		}
 		
-		batch.draw(main, x, y, main.getRegionWidth() * scale, main.getRegionHeight() * scale);
-				
-		if (player.getPlayerData().currentTool.reloading) {
-			batch.draw(reloading, x, y, main.getRegionWidth() * scale, main.getRegionHeight() * scale);
-		}
+		batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
 
 		font.getData().setScale(0.4f);
 		font.draw(batch, player.getPlayerData().currentTool.name, x + 60, y + 130);
@@ -102,12 +98,12 @@ public class UIPlay extends A460Actor{
 		
 		for (int i = 0; i < 4; i++) {
 			if (player.getPlayerData().multitools.length <= i) {
-				batch.draw(itemNull.get(i), x, y, main.getRegionWidth() * scale, main.getRegionHeight() * scale);
+				batch.draw(itemNull.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
 			} else {
 				if (i == player.getPlayerData().currentSlot) {
-					batch.draw(itemSelect.get(i), x, y, main.getRegionWidth() * scale, main.getRegionHeight() * scale);
+					batch.draw(itemSelect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
 				} else {
-					batch.draw(itemUnselect.get(i), x, y, main.getRegionWidth() * scale, main.getRegionHeight() * scale);
+					batch.draw(itemUnselect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
 				}
 			}
 		}

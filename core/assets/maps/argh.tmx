@@ -47,7 +47,7 @@
   <object id="8" name="Spawn" type="Spawn" x="19456" y="9216" width="256" height="256">
    <properties>
     <property name="id" type="int" value="2"/>
-    <property name="interval" type="float" value="60"/>
+    <property name="interval" type="float" value="10"/>
     <property name="limit" type="int" value="50"/>
    </properties>
   </object>
