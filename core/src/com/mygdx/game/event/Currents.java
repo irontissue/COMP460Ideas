@@ -28,8 +28,8 @@ public class Currents extends Event {
 
 		this.eventData = new EventData(world, this);
 		
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.BIT_SENSOR, 
-				(short) (Constants.BIT_PLAYER | Constants.BIT_ENEMY),
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
+				(short) (Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY),
 				(short) 0, true, eventData);
 	}
 	

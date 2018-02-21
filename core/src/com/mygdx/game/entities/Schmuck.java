@@ -24,7 +24,7 @@ import static com.mygdx.game.util.Constants.PPM;
 import box2dLight.RayHandler;
 
 public class Schmuck extends Entity implements Location<Vector2> {
-    public static final int ENTITY_TYPE = Constants.SCHMUCK;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.SCHMUCK;
 	//user data.
 	protected CharacterData bodyData;
 	
@@ -54,7 +54,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public int hbWidth = 76;
 	public int hbHeight = 197;
 	
-	public static float scale = 1.0f;
+	public static float scale = 0.15f;
 	
 	private TextureAtlas atlas;
 	private TextureRegion schmuckSprite;
@@ -165,7 +165,6 @@ public class Schmuck extends Entity implements Location<Vector2> {
             //process cooldowns
             shootCdCount -= delta;
             shootDelayCount -= delta;
-            flashingCount-=delta;
             
             //If the delay on using a tool just ended, use the tool.
             if (shootDelayCount <= 0 && usedTool != null) {
@@ -175,6 +174,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
             comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
                     this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
         }
+
+        //Stuff below the if statement should happen both on server/client, i.e. doesn't need to be "synced"
+        flashingCount-=delta;
 	}
 
 

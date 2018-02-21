@@ -241,6 +241,30 @@ public class Packets {
         public String id;
     }
 
+    public static class EntityTakeDamage {
+	    public EntityTakeDamage() {}
+        public EntityTakeDamage(String uuid, float damage, String attackerUUID) {
+	        this.uuid = uuid;
+	        this.damage = damage;
+	        this.attackerUUID = attackerUUID;
+        }
+        public String uuid, attackerUUID;
+	    public float damage;
+    }
+
+    /**
+     * If the adjustAmount is positive, it will increase the entity's HP by that amount.
+     */
+    public static class EntityAdjustHealth {
+	    public EntityAdjustHealth() {}
+	    public EntityAdjustHealth(String uuid, float adjustAmount) {
+	        this.uuid = uuid;
+	        this.adjustAmount = adjustAmount;
+        }
+        public String uuid;
+	    public float adjustAmount;
+    }
+
     public static class DisconnectMessage {
 	    public DisconnectMessage() {}
     }
@@ -268,6 +292,8 @@ public class Packets {
         kryo.register(EntityShoot.class);
         kryo.register(ClientCreatedPlayState.class);
         kryo.register(gameOver.class);
+        kryo.register(EntityTakeDamage.class);
+        kryo.register(EntityAdjustHealth.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

@@ -9,7 +9,7 @@ import box2dLight.RayHandler;
 import com.mygdx.game.util.Constants;
 
 public class RangedHitbox extends Hitbox {
-    public static final int ENTITY_TYPE = Constants.RANGED_HITBOX;
+    public static final int ENTITY_TYPE = Constants.EntityTypes.RANGED_HITBOX;
 	public RangedHitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura,
 			float rest, Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera,
 			RayHandler rays, Schmuck creator) {

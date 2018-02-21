@@ -59,25 +59,25 @@ public class TriggerSpawn extends Event {
 					switch(id) {
 					    case 0:
 					    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY);
-							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.STANDARD_ENEMY));
+							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY));
 						    spawns.add(se);
 						    break;
                         case 2:
                         	se = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.STANDARD_ENEMY));
+                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY));
                         	spawns.add(se);
                             break;
                         case 3:
                         	st = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.STEERING_ENEMY));
+                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY));
                         	spawns.add(st);
 					}
 				}
 			}
 		};
 		
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.BIT_SENSOR, 
-				(short) (Constants.BIT_PLAYER | Constants.BIT_ENEMY | Constants.BIT_PROJECTILE),
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
+				(short) (Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY | Constants.Filters.BIT_PROJECTILE),
 				(short) 0, true, eventData);
 	}
 	

@@ -36,7 +36,7 @@ public class MenuState extends GameState {
 				
 				exitOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
-			        	gsm.application().resetClient();
+			        	gsm.application().resetClient(false);
 			            gsm.removeState(MenuState.class);
 			        	gsm.removeState(PlayState.class);
 			        }

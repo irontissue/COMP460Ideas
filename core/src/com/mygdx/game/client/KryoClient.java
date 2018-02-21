@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
@@ -12,10 +13,12 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.TitleState;
+import com.mygdx.game.status.DamageTypes;
 //import com.mygdx.game.server.Packets;
 
 import javax.swing.*;
@@ -28,15 +31,15 @@ public class KryoClient {
 	public Client client;
     public comp460game myGame;
     public int IDOnServer;
+    public static String hostIP, name;
 
     public static final int timeout = 5000;
-    String name;
 
     public KryoClient(comp460game myGame) {
         this.myGame = myGame;
 	}
 
-	public void init() {
+	public void init(boolean reconnect) {
         Kryo kryo = new Kryo();
         kryo.setReferences(true);
         KryoSerialization serialization = new KryoSerialization(kryo);
@@ -289,6 +292,35 @@ public class KryoClient {
                     }
                 }
 
+                else if (o instanceof Packets.EntityTakeDamage) {
+                    Packets.EntityTakeDamage sea = (Packets.EntityTakeDamage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        Entity e = ps.getEntity(UUID.fromString(sea.uuid));
+                        if (e instanceof Schmuck) {
+                            Schmuck s = (Schmuck) e;
+                            Entity attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
+                            if (attackerEntity instanceof Schmuck) {
+                                Schmuck attackerSchmuck = (Schmuck) attackerEntity;
+                                s.getBodyData().receiveDamage(sea.damage, new Vector2(0, 0),
+                                        attackerSchmuck.getBodyData(), true, DamageTypes.TESTTYPE1);
+                            }
+                        }
+                    }
+                }
+
+                else if (o instanceof Packets.EntityAdjustHealth) {
+                    Packets.EntityAdjustHealth sea = (Packets.EntityAdjustHealth) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                        Entity e = ps.getEntity(UUID.fromString(sea.uuid));
+                        if (e instanceof Schmuck) {
+                            Schmuck s = (Schmuck) e;
+                            s.getBodyData().regainHp(sea.adjustAmount);
+                        }
+                    }
+                }
+
                 else if (o instanceof Packets.RemoveEntity) {
                     //Log.info("Received RemoveEntity message");
                     Packets.RemoveEntity sea = (Packets.RemoveEntity) o;
@@ -306,32 +338,34 @@ public class KryoClient {
                     JOptionPane.showMessageDialog(null, "You have been kicked by the server.");
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
+                            myGame.getGsm().removeState(PlayState.class);
                             myGame.getGsm().addState(State.TITLE, PlayState.class);
-                            myGame.resetClient();
+                            myGame.resetClient(true);
                         }
                     });
                 }
             }
         });
 
-        // Request the host from the user.
-        String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE,
-                null, null, "localhost");
-        if (input == null || input.trim().length() == 0) System.exit(1);
-        final String host = input.trim();
+        if (!reconnect) {
+            // Request the host from the user.
+            String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE,
+                    null, null, "localhost");
+            if (input == null || input.trim().length() == 0) System.exit(1);
+            hostIP = input.trim();
 
-        // Request the user's name.
-        input = (String)JOptionPane.showInputDialog(null, "Name:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE, null,
-                null, "Test");
-        if (input == null || input.trim().length() == 0) System.exit(1);
-        name = input.trim();
-
+            // Request the user's name.
+            input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE, null,
+                    null, "Test");
+            if (input == null || input.trim().length() == 0) System.exit(1);
+            name = input.trim();
+        }
 
 
         new Thread("Connect") {
             public void run () {
                 try {
-                    client.connect(5000, host, portSocket);
+                    client.connect(5000, hostIP, portSocket);
                     // Server communication after connection can go here, or in Listener#connected().
                 } catch (IOException ex) {
                     ex.printStackTrace();

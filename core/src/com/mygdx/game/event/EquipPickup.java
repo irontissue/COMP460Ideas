@@ -49,8 +49,8 @@ public class EquipPickup extends Event {
 			}
 		};
 		
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.BIT_SENSOR, 
-				(short) (Constants.BIT_PLAYER),
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
+				(short) (Constants.Filters.BIT_PLAYER),
 				(short) 0, true, eventData);
 	}
 	
