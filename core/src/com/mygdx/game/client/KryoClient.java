@@ -310,7 +310,7 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EntityAdjustHealth) {
-                    Packets.EntityAdjustHealth sea = (Packets.EntityAdjustHealth) o;
+                    /*Packets.EntityAdjustHealth sea = (Packets.EntityAdjustHealth) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         Entity e = ps.getEntity(UUID.fromString(sea.uuid));
@@ -318,7 +318,7 @@ public class KryoClient {
                             Schmuck s = (Schmuck) e;
                             s.getBodyData().regainHp(sea.adjustAmount);
                         }
-                    }
+                    }*/
                 }
 
                 else if (o instanceof Packets.RemoveEntity) {
