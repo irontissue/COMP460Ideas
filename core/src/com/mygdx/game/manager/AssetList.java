@@ -11,12 +11,14 @@ public enum AssetList {
 	PROJ_1("sprites/projectiles.png", Texture.class),
 	PROJ_1_ATL("sprites/projectiles.atlas", TextureAtlas.class),
 	
-	FISH_1("sprites/fish.png", Texture.class),
+	FISH_1("sprites/Man Blue/manBlue_gun.png", Texture.class),
 	FISH_ATL("sprites/fish.atlas", TextureAtlas.class),
 
     //The following sprite was acquired from:
     //https://opengameart.org/content/animated-top-down-survivor-player
 	GUN_DUDE_1("sprites/gun_dude.png", Texture.class),
+
+	KENNEY_HITMAN("sprites/Hitman 1/hitman1_gun.png", Texture.class),
 	BRIDE("sprites/bride.png", Texture.class),
 	DRESS("sprites/bride_dress.png", Texture.class),	
 	GROOM("sprites/groom.png", Texture.class),
