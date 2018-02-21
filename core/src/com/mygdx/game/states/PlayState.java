@@ -259,7 +259,7 @@ public class PlayState extends GameState {
 //		rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
 		//process gameover
-		if (gameover) {
+		if (gameover && comp460game.serverMode) {
 			gameoverCdCount -= delta;
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {

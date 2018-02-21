@@ -165,7 +165,6 @@ public class Schmuck extends Entity implements Location<Vector2> {
             //process cooldowns
             shootCdCount -= delta;
             shootDelayCount -= delta;
-            flashingCount-=delta;
             
             //If the delay on using a tool just ended, use the tool.
             if (shootDelayCount <= 0 && usedTool != null) {
@@ -175,6 +174,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
             comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
                     this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
         }
+
+        //Stuff below the if statement should happen both on server/client, i.e. doesn't need to be "synced"
+        flashingCount-=delta;
 	}
 
 

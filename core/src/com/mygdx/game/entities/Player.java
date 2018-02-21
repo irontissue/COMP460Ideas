@@ -411,6 +411,11 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if (!comp460game.serverMode) {
+            RangedWeapon rw = (RangedWeapon) playerData.currentTool;
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, screenX, screenY,
+                    Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
+        }
         return false;
     }
 
