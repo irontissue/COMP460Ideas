@@ -24,7 +24,7 @@ public class comp460game extends ApplicationAdapter {
 	
 	//The main camera scales to the viewport size scaled to this. Useful for zoom-in/out testing.
 	//TODO: replace this with a constant aspect ratio?
-	private final float SCALE = 4.0f;
+	private final float SCALE = 0.65f;
 	
 	//Camera and Spritebatch. This is pretty standard stuff.
 	private OrthographicCamera camera, sprite, hud;
@@ -159,10 +159,14 @@ public class comp460game extends ApplicationAdapter {
 	/**
      * If the client needs to be reset, i.e. in the case of a disconnect. Closes the client, then recreates it
      * so it is ready to call client.init() again when the player attempts to reconnect.
+	 * @param reconnect: If true, attempts to reconnect to the same server using the same credentials.
      */
-	public void resetClient() {
+	public void resetClient(boolean reconnect) {
 	    client.client.close();
 		client = new KryoClient(this);
+		if (reconnect) {
+            client.init(true);
+        }
 	}
 	
 	public void newMenu(Stage menu) {

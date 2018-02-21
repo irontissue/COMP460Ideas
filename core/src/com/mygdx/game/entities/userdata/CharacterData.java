@@ -5,7 +5,9 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.status.Status;
 import com.mygdx.game.util.UserDataTypes;
@@ -180,6 +182,10 @@ public class CharacterData extends UserData {
 		}
 		
 		currentHp -= damage;
+		if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.EntityTakeDamage(this.getEntity().entityID.toString(),
+                    damage, perp.getEntity().entityID.toString()));
+        }
 		
 		//Make shmuck flash upon receiving damage
 		if (damage > 0 && schmuck.flashingCount < -flashDuration) {
@@ -203,10 +209,13 @@ public class CharacterData extends UserData {
 	 * @param heal: amount of Hp to regenerate
 	 */
 	public void regainHp(float heal) {
-		currentHp += heal;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
-		}
+        currentHp += heal;
+        if (currentHp > getMaxHp()) {
+            currentHp = getMaxHp();
+        }
+        if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.EntityAdjustHealth(getEntity().entityID.toString(), heal));
+        }
 	}
 	
 	/**
