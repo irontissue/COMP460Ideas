@@ -7,6 +7,7 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.*;
 
@@ -24,6 +25,8 @@ public class GameStateManager {
     private float syncTimer = 0;
 	public int player = 1;
     
+	private String level;
+	
 	//This enum lists all the different types of gamestates.
 	public enum State {
 		SPLASH,
@@ -41,6 +44,8 @@ public class GameStateManager {
 	public GameStateManager(comp460game hadalGame) {
 		this.app = hadalGame;
 		this.states = new Stack<GameState>();
+		
+		this.level = "maps/kenney_map.tmx";
 		
 		//Default state is the splash state currently.
 		this.addState(State.TITLE, null);
@@ -128,6 +133,16 @@ public class GameStateManager {
 		}
 	}
 
+	public void addPlayState(String map, PlayerData old, Class<? extends GameState> lastState) {
+		if (states.empty()) {
+			states.push(new PlayState(this, map, old));
+			states.peek().show();
+		} else if (states.peek().getClass().equals(lastState)) {
+			states.push(new PlayState(this, map, old));
+			states.peek().show();
+		}
+	}
+	
     /**
      * Adds initial title state after restarting from victory/gameover screens
      * @param titleState
@@ -157,7 +172,7 @@ public class GameStateManager {
 			case SPLASH: return null;
 			case TITLE: return new TitleState(this);
 			case MENU: return new MenuState(this);
-			case PLAY: return new PlayState(this);
+			case PLAY: return new PlayState(this, level, null);
 			case GAMEOVER: return new GameoverState(this);
 			case VICTORY: return new VictoryState(this);
 		}

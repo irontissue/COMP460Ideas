@@ -24,6 +24,11 @@ public class PlayerData extends CharacterData {
 		multitools[1] = new AnotherGun(body);
 		this.currentTool = multitools[currentSlot];
 	}
+	
+	public void copyData(PlayerData old) {
+		currentHp = old.currentHp;
+		//TODO: copy other things that will be carried over across levels. Statuses/Loadout
+	}
 
 	public void switchWeapon(int slot) {
 		if (multitools.length >= slot && schmuck.shootDelayCount <= 0) {
