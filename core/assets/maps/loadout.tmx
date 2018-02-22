@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="64" nextobjectid="9">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="64" nextobjectid="11">
  <tileset firstgid="1" name="kenney_tileset" tilewidth="64" tileheight="64" tilecount="540" columns="27">
   <image source="../Images/Tilesheet/tilesheet_complete.png" width="1728" height="1280"/>
  </tileset>
@@ -66,6 +66,16 @@
     <property name="id" type="int" value="0"/>
     <property name="interval" type="float" value="0"/>
     <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="9" name="Warp" type="Warp" x="465.102" y="81.101" width="30.7201" height="30.1057">
+   <properties>
+    <property name="Level" value="kenney_map.tmx"/>
+   </properties>
+  </object>
+  <object id="10" name="Warp" type="Warp" x="528.385" y="82.0226" width="30.7201" height="30.1057">
+   <properties>
+    <property name="Level" value="argh.tmx"/>
    </properties>
   </object>
  </objectgroup>
