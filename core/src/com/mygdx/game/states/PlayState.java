@@ -19,6 +19,7 @@ import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.actors.UIPlay;
 import com.mygdx.game.actors.UIReload;
 import com.mygdx.game.entities.*;
+import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
 import com.mygdx.game.manager.GameStateManager;
@@ -110,7 +111,7 @@ public class PlayState extends GameState {
 	 * Constructor is called upon player beginning a game.
 	 * @param gsm: StateManager
 	 */
-	public PlayState(GameStateManager gsm) {
+	public PlayState(GameStateManager gsm, String level, PlayerData old) {
 		super(gsm);
 		
 		//Initialize font and text camera for ui purposes.
@@ -138,15 +139,16 @@ public class PlayState extends GameState {
 //        map = new TmxMapLoader().load("maps/map_1_460.tmx");
 //        map = new TmxMapLoader().load("maps/map_2_460.tmx");
 //        map = new TmxMapLoader().load("maps/argh.tmx");
-        map = new TmxMapLoader().load("maps/kenney_map.tmx");
-
+//        map = new TmxMapLoader().load("maps/kenney_map.tmx");
+		map = new TmxMapLoader().load(level);
 		
 		tmr = new OrthogonalTiledMapRenderer(map);
 		
 		rays.setCombinedMatrix(camera);
 		//rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		player = new Player(this, world, camera, rays, 100, 100);
+		player = new Player(this, world, camera, rays, 100, 100, old);
+		
         if (comp460game.serverMode) {
             comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER));
         }
@@ -159,6 +161,11 @@ public class PlayState extends GameState {
 		if (!comp460game.serverMode) {
 		    comp460game.client.client.sendTCP(new Packets.ClientCreatedPlayState());
         }
+	}
+	
+	public void loadLevel(String level) {
+		gsm.removeState(PlayState.class);
+		gsm.addPlayState(level, player.getPlayerData(), TitleState.class);
 	}
 
 	@Override
