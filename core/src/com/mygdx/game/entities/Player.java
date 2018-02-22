@@ -55,7 +55,7 @@ public class Player extends Schmuck implements InputProcessor {
 	public Event currentEvent;
 	
 //	public Player2Dummy dummy;
-	public PlayerData player1Data, player2Data;
+	public PlayerData old, player1Data, player2Data;
 	protected Fixture player1Fixture, player2Fixture;
 
 	private ConeLight vision;
@@ -72,12 +72,13 @@ public class Player extends Schmuck implements InputProcessor {
 	 * @param y: player starting x position.
 	 */
   
-	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y) {
+	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, PlayerData old) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
+		this.old = old;
 	}
 
     public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, String id) {
@@ -96,6 +97,10 @@ public class Player extends Schmuck implements InputProcessor {
 	    
 	    //Clients will have a single data attached to the half of the body they represent
 		this.playerData = new PlayerData(world, this);
+		
+		if (old != null) {
+			playerData.copyData(old);
+		}
 		
 		//server's has 2 datas that represent player1 and player2
 		if (comp460game.serverMode) {
