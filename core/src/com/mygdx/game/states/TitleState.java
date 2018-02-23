@@ -1,10 +1,14 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.manager.GameStateManager;
@@ -19,6 +23,7 @@ public class TitleState extends GameState {
 
     //Temporary links to other modules for testing.
 	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2, disconnect;
+	Texture bground;
 
 	public TitleState(GameStateManager gsm) {
 		super(gsm);
@@ -34,6 +39,12 @@ public class TitleState extends GameState {
 		if (!comp460game.serverMode) {
 			stage = new Stage() {
 				{
+                    bground = new Texture("maps/loadout.png");
+                    bground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                    Actor bg = new Image(bground);
+                    bg.setScale(1.2f);
+                    addActor(bg);
+
 					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
                     waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180);
 					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
@@ -90,6 +101,13 @@ public class TitleState extends GameState {
 						addActor(disconnect);
 					}
 					addActor(exitOption);
+
+
+//                    bground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+//                    this.getBatch().begin();
+//                    this.getBatch().draw(bground, 0, 0, 1080,1080);
+//                    this.getBatch().end();
+
 				}
 			};
 		} else {

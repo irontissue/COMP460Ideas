@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.equipment.RangedWeapon;
@@ -141,7 +142,6 @@ public class Player extends Schmuck implements InputProcessor {
 		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
 			vision.setIgnoreAttachedBody(true);
-			
 			if (state.gsm.player == 1) {
 				vision.attachToBody(body,0 ,0, 180);
 			} else {
@@ -155,13 +155,11 @@ public class Player extends Schmuck implements InputProcessor {
 			ConeLight extraVision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			extraVision.setIgnoreAttachedBody(true);
 			extraVision.attachToBody(body,0 ,0, 0);
+			extraVision.setContactFilter(Constants.Filters.BIT_SENSOR, Constants.Filters.BIT_WALL, (short)0);
+
 		}
 		
-		
-		
-		PointLight light = new PointLight(rays, 32, Color.WHITE, 10, 0, 0);
-		light.setIgnoreAttachedBody(true);
-		light.attachToBody(body);
+		vision.setContactFilter(Constants.Filters.BIT_SENSOR, (short)0, Constants.Filters.BIT_WALL);
 		
 		super.create();
 	}
