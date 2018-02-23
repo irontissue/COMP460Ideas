@@ -4,13 +4,16 @@ import java.io.IOException;
 import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.actors.Text;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Schmuck;
@@ -63,7 +66,7 @@ public class KryoClient {
                 myGame.resetClient();*/
             }
 
-            public void received(Connection c, Object o) {
+            public void received(Connection c, final Object o) {
 
                 if (o instanceof Packets.PlayerConnect) {
                     Packets.PlayerConnect p = (Packets.PlayerConnect) o;
@@ -86,20 +89,47 @@ public class KryoClient {
                     myGame.getGsm().player = p.IDOnServer;
                 }
 
+                else if (o instanceof Packets.LoadLevel) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        Gdx.app.postRunnable(new Runnable() {
+                            public void run() {
+                                PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                                Packets.LoadLevel p = (Packets.LoadLevel) o;
+                                ps.loadLevel(p.level);
+                            }
+                        });
+                    }
+                }
+
                 else if (o instanceof Packets.gameOver) {
                     Packets.gameOver p = (Packets.gameOver) o;
                     final boolean won = p.won;
                     Log.info("Received gameover message");
-                    Gdx.app.postRunnable(new Runnable() {
-                        public void run() {
-                            myGame.getGsm().removeState(PlayState.class);
-                            if (won) {
-                                myGame.getGsm().addState(State.VICTORY, TitleState.class);
-                            } else {
-                                myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        final PlayState ps = (PlayState) myGame.getGsm().states.peek();
+
+                        Gdx.app.postRunnable(new Runnable() {
+                            public void run() {
+//                                Actor gameOver;
+//                                if (won) {
+//                                    gameOver = new Text(comp460game.assetManager, "YOU WON!", 150, comp460game.CONFIG_HEIGHT - 180);
+//                                } else {
+//                                    gameOver = new Text(comp460game.assetManager, "YOU LOST!", 150, comp460game.CONFIG_HEIGHT - 180);
+//                                }
+//                                gameOver.setScale(0.5f);
+//                                gameOver.setColor(Color.WHITE);
+//                                gameOver.setVisible(true);
+//                                gameOver.toFront();
+//                                ps.stage.addActor(gameOver);
+//                                myGame.getGsm().removeState(PlayState.class);
+                                if (won) {
+                                    myGame.getGsm().addState(State.VICTORY, TitleState.class);
+                                } else {
+                                    myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
 
                 else if (o instanceof Packets.SyncPlayState) {

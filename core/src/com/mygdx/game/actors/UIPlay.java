@@ -58,55 +58,56 @@ public class UIPlay extends A460Actor{
 	@Override
     public void draw(Batch batch, float alpha) {
 		batch.setProjectionMatrix(state.hud.combined);
+        if (player != null && player.getPlayerData() != null) {
+            //Calc the ratios needed to draw the bars
+            float hpRatio = player.getPlayerData().currentHp / player.getPlayerData().getMaxHp();
 
-		//Calc the ratios needed to draw the bars
-		float hpRatio = player.getPlayerData().currentHp / player.getPlayerData().getMaxHp();
-		
-		//This code makes the hp bar delay work.
-		if (hpDelayed > hpRatio) {
-			hpDelayed -= hpCatchup;
-		} else {
-			hpDelayed = hpRatio;
-		}
-		
-		batch.draw(hpMissing, x + 233, y + 78, hp.getRegionWidth() * scale * hpDelayed, hp.getRegionHeight() * scale);
-		batch.draw(hp, x + 233, y + 78, hp.getRegionWidth() * scale * hpRatio, hp.getRegionHeight() * scale);
-		
-		//This makes low Hp indicator blink at low health
-		if (hpRatio <= hpLowThreshold) {
-			
-			blinkCdCount -= 0.01f;
-			
-			if (blinkCdCount < 0) {
-				blinking = !blinking;
-				blinkCdCount = blinkCd;
-			}
-		} else {
-			blinking = false;
-		}
-		
-		if (blinking) {
-			batch.draw(hpLow, x, y, main.getWidth() * scale, main.getHeight() * scale);
-		}
-		
-		batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
+            //This code makes the hp bar delay work.
+            if (hpDelayed > hpRatio) {
+                hpDelayed -= hpCatchup;
+            } else {
+                hpDelayed = hpRatio;
+            }
 
-		font.getData().setScale(0.4f);
-		font.draw(batch, player.getPlayerData().currentTool.name, x + 60, y + 130);
-		font.getData().setScale(0.8f);
-		font.draw(batch, player.getPlayerData().currentTool.getText(), x + 70, y + 75);
-		
-		for (int i = 0; i < 4; i++) {
-			if (player.getPlayerData().multitools.length <= i) {
-				batch.draw(itemNull.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
-			} else {
-				if (i == player.getPlayerData().currentSlot) {
-					batch.draw(itemSelect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
-				} else {
-					batch.draw(itemUnselect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
-				}
-			}
-		}
+            batch.draw(hpMissing, x + 233, y + 78, hp.getRegionWidth() * scale * hpDelayed, hp.getRegionHeight() * scale);
+            batch.draw(hp, x + 233, y + 78, hp.getRegionWidth() * scale * hpRatio, hp.getRegionHeight() * scale);
+
+            //This makes low Hp indicator blink at low health
+            if (hpRatio <= hpLowThreshold) {
+
+                blinkCdCount -= 0.01f;
+
+                if (blinkCdCount < 0) {
+                    blinking = !blinking;
+                    blinkCdCount = blinkCd;
+                }
+            } else {
+                blinking = false;
+            }
+
+            if (blinking) {
+                batch.draw(hpLow, x, y, main.getWidth() * scale, main.getHeight() * scale);
+            }
+
+            batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
+
+            font.getData().setScale(0.4f);
+            font.draw(batch, player.getPlayerData().currentTool.name, x + 60, y + 130);
+            font.getData().setScale(0.8f);
+            font.draw(batch, player.getPlayerData().currentTool.getText(), x + 70, y + 75);
+
+            for (int i = 0; i < 4; i++) {
+                if (player.getPlayerData().multitools.length <= i) {
+                    batch.draw(itemNull.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
+                } else {
+                    if (i == player.getPlayerData().currentSlot) {
+                        batch.draw(itemSelect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
+                    } else {
+                        batch.draw(itemUnselect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
+                    }
+                }
+            }
+        }
 	}
 
 }

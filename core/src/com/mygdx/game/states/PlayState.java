@@ -12,8 +12,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.actors.Text;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.actors.UIPlay;
@@ -164,6 +167,9 @@ public class PlayState extends GameState {
 	}
 	
 	public void loadLevel(String level) {
+	    if (comp460game.serverMode) {
+	        comp460game.server.server.sendToAllTCP(new Packets.LoadLevel(level));
+        }
 		gsm.removeState(PlayState.class);
 		gsm.addPlayState(level, player.getPlayerData(), TitleState.class);
 	}
