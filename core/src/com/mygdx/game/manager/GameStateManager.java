@@ -45,7 +45,7 @@ public class GameStateManager {
 		this.app = hadalGame;
 		this.states = new Stack<GameState>();
 		
-		this.level = "maps/kenney_map.tmx";
+		this.level = "maps/loadout.tmx";
 		
 		//Default state is the splash state currently.
 		this.addState(State.TITLE, null);
@@ -73,8 +73,10 @@ public class GameStateManager {
             if (/*syncTimer > 0.5 && */comp460game.serverMode) {
                 PlayState ps = (PlayState) states.peek();
 //                Log.info("Number of entities: " + ps.getEntities().size());
-                comp460game.server.server.sendToAllTCP(new Packets.SyncPlayState(ps.player.getBody().getPosition(),
-                        ps.player.getBody().getAngle()));
+				if (ps != null && ps.player != null) {
+                    comp460game.server.server.sendToAllTCP(new Packets.SyncPlayState(ps.player.getBody().getPosition(),
+                            ps.player.getBody().getAngle()));
+                }
 //                Entity[] entities = ps.getEntities().toArray(new Entity[0]);
 //                Entity x;
 //                for (int i = 0; i < entities.length; i++) {
