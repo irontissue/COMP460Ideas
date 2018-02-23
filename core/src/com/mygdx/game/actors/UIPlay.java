@@ -57,9 +57,8 @@ public class UIPlay extends A460Actor{
 	
 	@Override
     public void draw(Batch batch, float alpha) {
-		if (player.getPlayerData() != null) {
-            batch.setProjectionMatrix(state.hud.combined);
-
+		batch.setProjectionMatrix(state.hud.combined);
+        if (player != null && player.getPlayerData() != null) {
             //Calc the ratios needed to draw the bars
             float hpRatio = player.getPlayerData().currentHp / player.getPlayerData().getMaxHp();
 

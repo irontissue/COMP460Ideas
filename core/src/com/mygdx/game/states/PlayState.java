@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
@@ -277,11 +278,11 @@ public class PlayState extends GameState {
 //				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
 					if (won) {
-                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-						gsm.addState(State.VICTORY, TitleState.class);
+//                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+//						gsm.addState(State.VICTORY, TitleState.class);
 					} else {
-                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-						gsm.addState(State.GAMEOVER, TitleState.class);
+//                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+//						gsm.addState(State.GAMEOVER, TitleState.class);
 					}
 /*				} else {
 					player = new Player(this, world, camera, rays,
