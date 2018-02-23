@@ -278,11 +278,11 @@ public class PlayState extends GameState {
 //				if (lastSave != null) {
 					gsm.removeState(PlayState.class);
 					if (won) {
-//                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-//						gsm.addState(State.VICTORY, TitleState.class);
+                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+						gsm.addState(State.VICTORY, TitleState.class);
 					} else {
-//                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-//						gsm.addState(State.GAMEOVER, TitleState.class);
+                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+						gsm.addState(State.GAMEOVER, TitleState.class);
 					}
 /*				} else {
 					player = new Player(this, world, camera, rays,

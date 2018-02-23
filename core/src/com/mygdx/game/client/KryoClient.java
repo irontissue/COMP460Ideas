@@ -110,22 +110,22 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             public void run() {
                                 Actor gameOver;
+//                                if (won) {
+//                                    gameOver = new Text(comp460game.assetManager, "YOU WON!", 150, comp460game.CONFIG_HEIGHT - 180);
+//                                    gameOver.setScale(0.5f);
+//                                    gameOver.setVisible(true);
+//                                    ps.stage.addActor(gameOver);
+//                                } else {
+//                                    gameOver = new Text(comp460game.assetManager, "YOU LOST!", 150, comp460game.CONFIG_HEIGHT - 180);
+//                                    gameOver.setScale(0.5f);
+//                                    gameOver.setVisible(true);
+//                                    ps.stage.addActor(gameOver);
+//                                }
+                                    myGame.getGsm().removeState(PlayState.class);
                                 if (won) {
-                                    gameOver = new Text(comp460game.assetManager, "YOU WON!", 150, comp460game.CONFIG_HEIGHT - 180);
-                                    gameOver.setScale(0.5f);
-                                    gameOver.setVisible(true);
-                                    ps.stage.addActor(gameOver);
+                                    myGame.getGsm().addState(State.VICTORY, TitleState.class);
                                 } else {
-                                    gameOver = new Text(comp460game.assetManager, "YOU LOST!", 150, comp460game.CONFIG_HEIGHT - 180);
-                                    gameOver.setScale(0.5f);
-                                    gameOver.setVisible(true);
-                                    ps.stage.addActor(gameOver);
-                                }
-//                                myGame.getGsm().removeState(PlayState.class);
-                                if (won) {
-//                                myGame.getGsm().addState(State.VICTORY, TitleState.class);
-                                } else {
-//                                myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
+                                    myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
                                 }
                             }
                         });
