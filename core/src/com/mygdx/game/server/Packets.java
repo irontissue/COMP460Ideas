@@ -302,6 +302,7 @@ public class Packets {
         kryo.register(gameOver.class);
         kryo.register(EntityTakeDamage.class);
         kryo.register(EntityAdjustHealth.class);
+        kryo.register(LoadLevel.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);
