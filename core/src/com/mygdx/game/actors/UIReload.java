@@ -33,23 +33,25 @@ public class UIReload extends A460Actor{
 	
 	@Override
     public void draw(Batch batch, float alpha) {
-		batch.setProjectionMatrix(state.hud.combined);
+		if (player.getPlayerData() != null) {
+            batch.setProjectionMatrix(state.hud.combined);
 
-		if (player.getPlayerData().currentTool.reloading) {
-		
-			Vector3 bodyScreenPosition = new Vector3(player.getBody().getPosition().x, player.getBody().getPosition().y, 0);
-			state.camera.project(bodyScreenPosition);
-			
-			float x = bodyScreenPosition.x - reload.getRegionWidth() * scale / 2;
-			float y = bodyScreenPosition.y + reload.getRegionHeight() * scale;// + player.hbHeight * Player.scale / 2;
-			
-			float percent = player.getPlayerData().currentTool.reloadCd / 
-					(player.getPlayerData().currentTool.reloadTime * (1 - player.getPlayerData().getReloadRate()));
-			
-			batch.draw(reloadBar, x + 12, y + 5, reloadBar.getRegionWidth() * scale * percent, reloadBar.getRegionHeight() * scale);
-			batch.draw(reload, x, y, reload.getRegionWidth() * scale, reload.getRegionHeight() * scale);
-			batch.draw(reloadMeter, x, y, reload.getRegionWidth() * scale, reload.getRegionHeight() * scale);
-		}
+            if (player.getPlayerData().currentTool.reloading) {
+
+                Vector3 bodyScreenPosition = new Vector3(player.getBody().getPosition().x, player.getBody().getPosition().y, 0);
+                state.camera.project(bodyScreenPosition);
+
+                float x = bodyScreenPosition.x - reload.getRegionWidth() * scale / 2;
+                float y = bodyScreenPosition.y + reload.getRegionHeight() * scale;// + player.hbHeight * Player.scale / 2;
+
+                float percent = player.getPlayerData().currentTool.reloadCd /
+                        (player.getPlayerData().currentTool.reloadTime * (1 - player.getPlayerData().getReloadRate()));
+
+                batch.draw(reloadBar, x + 12, y + 5, reloadBar.getRegionWidth() * scale * percent, reloadBar.getRegionHeight() * scale);
+                batch.draw(reload, x, y, reload.getRegionWidth() * scale, reload.getRegionHeight() * scale);
+                batch.draw(reloadMeter, x, y, reload.getRegionWidth() * scale, reload.getRegionHeight() * scale);
+            }
+        }
 	}
 
 }

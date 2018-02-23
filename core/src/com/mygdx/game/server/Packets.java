@@ -269,6 +269,14 @@ public class Packets {
 	    public DisconnectMessage() {}
     }
 
+    public static class LoadLevel {
+        public LoadLevel() {}
+        public LoadLevel(String level) {
+            this.level = level;
+        }
+        public String level;
+    }
+
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
         kryo.register(KeyPressOrRelease.class);

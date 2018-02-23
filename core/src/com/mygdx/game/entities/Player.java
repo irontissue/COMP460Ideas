@@ -159,9 +159,9 @@ public class Player extends Schmuck implements InputProcessor {
 		
 		
 		
-		PointLight light = new PointLight(rays, 32, Color.WHITE, 10, 0, 0);
-		light.setIgnoreAttachedBody(true);
-		light.attachToBody(body);
+		//PointLight light = new PointLight(rays, 32, Color.WHITE, 10, 0, 0);
+		//light.setIgnoreAttachedBody(true);
+		//light.attachToBody(body);
 		
 		super.create();
 	}

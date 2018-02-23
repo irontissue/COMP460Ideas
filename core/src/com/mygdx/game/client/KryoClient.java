@@ -63,7 +63,7 @@ public class KryoClient {
                 myGame.resetClient();*/
             }
 
-            public void received(Connection c, Object o) {
+            public void received(Connection c, final Object o) {
 
                 if (o instanceof Packets.PlayerConnect) {
                     Packets.PlayerConnect p = (Packets.PlayerConnect) o;
@@ -84,6 +84,18 @@ public class KryoClient {
                     Packets.ServerIDMessage p = (Packets.ServerIDMessage) o;
                     IDOnServer = p.IDOnServer;
                     myGame.getGsm().player = p.IDOnServer;
+                }
+
+                else if (o instanceof Packets.LoadLevel) {
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        Gdx.app.postRunnable(new Runnable() {
+                            public void run() {
+                                PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                                Packets.LoadLevel p = (Packets.LoadLevel) o;
+                                ps.loadLevel(p.level);
+                            }
+                        });
+                    }
                 }
 
                 else if (o instanceof Packets.gameOver) {
