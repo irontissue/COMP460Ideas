@@ -43,7 +43,7 @@ public class comp460game extends ApplicationAdapter {
     public static Color DEFAULT_TEXT_COLOR;
     
 	private static final int DEFAULT_WIDTH = 1080;
-	private static final int DEFAULT_HEIGHT = 1080;
+	private static final int DEFAULT_HEIGHT = 720;
 	public static int CONFIG_WIDTH;
 	public static int CONFIG_HEIGHT;
     public Stage currentMenu;

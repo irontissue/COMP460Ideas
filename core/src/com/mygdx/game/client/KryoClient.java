@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.esotericsoftware.kryo.Kryo;
@@ -109,19 +110,18 @@ public class KryoClient {
 
                         Gdx.app.postRunnable(new Runnable() {
                             public void run() {
-                                Actor gameOver;
+//                                Actor gameOver;
 //                                if (won) {
 //                                    gameOver = new Text(comp460game.assetManager, "YOU WON!", 150, comp460game.CONFIG_HEIGHT - 180);
-//                                    gameOver.setScale(0.5f);
-//                                    gameOver.setVisible(true);
-//                                    ps.stage.addActor(gameOver);
 //                                } else {
 //                                    gameOver = new Text(comp460game.assetManager, "YOU LOST!", 150, comp460game.CONFIG_HEIGHT - 180);
-//                                    gameOver.setScale(0.5f);
-//                                    gameOver.setVisible(true);
-//                                    ps.stage.addActor(gameOver);
 //                                }
-                                    myGame.getGsm().removeState(PlayState.class);
+//                                gameOver.setScale(0.5f);
+//                                gameOver.setColor(Color.WHITE);
+//                                gameOver.setVisible(true);
+//                                gameOver.toFront();
+//                                ps.stage.addActor(gameOver);
+//                                myGame.getGsm().removeState(PlayState.class);
                                 if (won) {
                                     myGame.getGsm().addState(State.VICTORY, TitleState.class);
                                 } else {
