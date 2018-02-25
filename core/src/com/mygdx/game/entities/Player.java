@@ -101,7 +101,7 @@ public class Player extends Schmuck implements InputProcessor {
 		if (comp460game.serverMode) {
 			player1Data = new PlayerData(world, this);
 			player2Data = new PlayerData(world, this);
-
+			this.playerData = player1Data;
             this.bodyData = player1Data;
 
 			if (old != null) {
