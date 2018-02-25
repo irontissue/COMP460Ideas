@@ -21,7 +21,7 @@ public class SavePoint extends Event {
 	
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
-			public void onInteract(Player p) {
+			public void onInteract(Player p, int playerNumber) {
 				state.lastSave = this.getEvent();
 			}
 		};

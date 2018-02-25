@@ -10,6 +10,7 @@ import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.TitleState;
@@ -19,8 +20,8 @@ public class KryoServer {
 	int serverPort = 25565;
 	int players = 0;
 
-	//The POSITION in this array is the player number (i.e. player 1 vs player 2). The actual value stored in the array
-    //is that player's connection ID.
+	//The POSITION in this array is the playerNumber number (i.e. playerNumber 1 vs playerNumber 2). The actual value stored in the array
+    //is that playerNumber's connection ID.
 	public int[] playerIDs = {0,0};
 
 	public Server server;
@@ -37,7 +38,7 @@ public class KryoServer {
 
 		server.addListener(new Listener() {
 			public void disconnected(Connection c) {
-				// This message should be sent when a player disconnects from the game
+				// This message should be sent when a playerNumber disconnects from the game
                 players = 0;
                 server.sendToAllExceptTCP(c.getID(), new Packets.DisconnectMessage());
                 Gdx.app.postRunnable(new Runnable() {
@@ -51,7 +52,7 @@ public class KryoServer {
 			public void received(Connection c, Object o) {
 				//Log.info("" + (o.getClass().getName()));
 				if (o instanceof Packets.PlayerConnect) {
-					// We have received a player connection message.
+					// We have received a playerNumber connection message.
 					Packets.PlayerConnect p = (Packets.PlayerConnect) o;
 
 					// Ignore the object if the name is invalid.
@@ -62,7 +63,7 @@ public class KryoServer {
 					}
 					name = name.trim();
 					if (name.length() == 0) {
-						server.sendToTCP(c.getID(), new Packets.PlayerConnect("Cannot have empty player name."));
+						server.sendToTCP(c.getID(), new Packets.PlayerConnect("Cannot have empty playerNumber name."));
 						return;
 					}
 					Packets.PlayerConnect newPlayer = new Packets.PlayerConnect( name + " has joined the game server.");
@@ -74,7 +75,7 @@ public class KryoServer {
 				}
 
 				else if (o instanceof Packets.KeyPressOrRelease) {
-					// We have received a player movement message.
+					// We have received a playerNumber movement message.
 					Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
 					server.sendToAllTCP(p);
 //                    Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
@@ -176,9 +177,9 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.spacePressed = true;
+                                    ps.player.spacePressed2 = true;
                                 } else {
-                                    ps.player.spacePressed = false;
+                                    ps.player.spacePressed2 = false;
                                 }
                             }
                         }
@@ -204,19 +205,14 @@ public class KryoServer {
                                 } else {
                                     ps.player.mousePressed2 = false;
                                 }
-                                //TODO: THIS SHOULD BE MOUSEPOS2 (for player 2).
-                                ps.player.mousePosX = p.x;
-                                ps.player.mousePosY = p.y;
+                                //TODO: Make the second mouse position actually matter!!
+                                //Right now everything just uses mousePosX/Y on the server!!!!!
+                                ps.player.mousePos2X = p.x;
+                                ps.player.mousePos2Y = p.y;
                             }
                         }
                     }
                 }
-
-//				else if (o instanceof Packets.Shoot) {
-//					// We have received a mouse click.
-//					Packets.Shoot p = (Packets.Shoot) o;
-//					server.sendToAllTCP(p);
-//				}
 
 				else if (o instanceof Packets.ReadyToPlay) {
 					//Log.info("Server received ReadyToPlay");
@@ -236,14 +232,20 @@ public class KryoServer {
                     }
                 }
 
-                else if (o instanceof Packets.ClientCreatedPlayState) {
-                    //Log.info("Server received ReadyToPlay");
-                    Packets.ClientCreatedPlayState p = (Packets.ClientCreatedPlayState) o;
+                else if (o instanceof Packets.ClientLoadedPlayState) {
+                    //Log.info("Server received ClientLoadedPlayState");
+                    final Packets.ClientLoadedPlayState p = (Packets.ClientLoadedPlayState) o;
                     players += 1;
                     if (players == 2) {
                         Gdx.app.postRunnable(new Runnable() {
                             public void run() {
-                                gsm.addState(GameStateManager.State.PLAY, TitleState.class);
+                                PlayerData pd1 = null, pd2 = null;
+                                if (gsm.states.peek() instanceof PlayState) {
+                                    pd1 = ((PlayState) gsm.states.peek()).player.player1Data;
+                                    pd2 = ((PlayState) gsm.states.peek()).player.player2Data;
+                                    gsm.removeState(PlayState.class);
+                                }
+                                gsm.addPlayState(p.level, pd1, pd2, TitleState.class);
                             }
                         });
                         players = 0;

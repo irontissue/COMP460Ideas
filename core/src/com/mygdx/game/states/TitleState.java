@@ -46,7 +46,7 @@ public class TitleState extends GameState {
                     addActor(bg);
 
 					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180);
-                    waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180);
+                    waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other playerNumber...", 150, comp460game.CONFIG_HEIGHT - 180);
 					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
 					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT - 240);
                     disconnect = new Text(comp460game.assetManager, "DISCONNECT FROM SERVER", 150, comp460game.CONFIG_HEIGHT - 240);

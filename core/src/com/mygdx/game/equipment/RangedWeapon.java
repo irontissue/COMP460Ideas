@@ -44,7 +44,7 @@ public class RangedWeapon extends Equipment {
 	 * @param name: Name of the weapon
 	 * @param clipSize: Amount of times the weapon can be fired before reloading
 	 * @param reloadTime: The time in seconds it takes to reload this weapon once.
-	 * @param recoil: The amount of force pushing the player upon firing.
+	 * @param recoil: The amount of force pushing the playerNumber upon firing.
 	 * @param projectileSpeed: The initial velocity of hitboxes created by this weapon.
 	 * @param shootCd: The delay after using this tool before you can use a tool again.
 	 * @param shootDelay: The delay between pressing the button for this tool and it activating. 
@@ -117,7 +117,7 @@ public class RangedWeapon extends Equipment {
                 }
 				clipLeft--;
 				
-				//If player fires in the middle of reloading, reset reload progress
+				//If playerNumber fires in the middle of reloading, reset reload progress
 				reloading = false;
 				reloadCd = reloadTime * (1 - shooter.getReloadRate());
 				

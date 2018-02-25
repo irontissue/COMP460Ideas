@@ -45,7 +45,7 @@ import javax.sound.sampled.FloatControl;
  */
 public class PlayState extends GameState {
 	
-	//This is an entity representing the player. Atm, player is not initialized here, but rather by a "Player Spawn" event in the map.
+	//This is an entity representing the playerNumber. Atm, playerNumber is not initialized here, but rather by a "Player Spawn" event in the map.
 	public Player player;
 	
 	//These process and store the map parsed from the Tiled file.
@@ -111,10 +111,10 @@ public class PlayState extends GameState {
 	public Event lastSave;
 	
 	/**
-	 * Constructor is called upon player beginning a game.
+	 * Constructor is called upon playerNumber beginning a game.
 	 * @param gsm: StateManager
 	 */
-	public PlayState(GameStateManager gsm, String level, PlayerData old) {
+	public PlayState(GameStateManager gsm, String level, PlayerData old, PlayerData old2) {
 		super(gsm);
 		
 		//Initialize font and text camera for ui purposes.
@@ -138,7 +138,7 @@ public class PlayState extends GameState {
 		updateList = new ArrayList<Pair<UUID, Object[]>>();
 		entities = new HashSet<Entity>();
 		
-		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the player chooses.
+		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the playerNumber chooses.
 //        map = new TmxMapLoader().load("maps/map_1_460.tmx");
 //        map = new TmxMapLoader().load("maps/map_2_460.tmx");
 //        map = new TmxMapLoader().load("maps/argh.tmx");
@@ -150,10 +150,11 @@ public class PlayState extends GameState {
 		rays.setCombinedMatrix(camera);
 		//rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		player = new Player(this, world, camera, rays, 100, 100, old);
+		player = new Player(this, world, camera, rays, 100, 100, old, old2);
 		
         if (comp460game.serverMode) {
             comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER));
+            Log.info("Server sending playerNumber UUID message: " + player.entityID.toString());
         }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
 		
@@ -162,7 +163,7 @@ public class PlayState extends GameState {
 		TiledObjectUtil.parseTiledTriggerLayer(this, world, camera, rays);
 
 		if (!comp460game.serverMode) {
-		    comp460game.client.client.sendTCP(new Packets.ClientCreatedPlayState());
+		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
         }
 	}
 	
@@ -170,8 +171,6 @@ public class PlayState extends GameState {
 	    if (comp460game.serverMode) {
 	        comp460game.server.server.sendToAllTCP(new Packets.LoadLevel(level));
         }
-		gsm.removeState(PlayState.class);
-		gsm.addPlayState(level, player.getPlayerData(), TitleState.class);
 	}
 
 	@Override
@@ -257,7 +256,7 @@ public class PlayState extends GameState {
 			}
 		}*/
 		
-		//This processes all entities in the world. (for example, player input/cooldowns/enemy ai)
+		//This processes all entities in the world. (for example, playerNumber input/cooldowns/enemy ai)
 		for (Entity entity : entities) {
 			entity.controller(delta);
 		}
@@ -285,11 +284,11 @@ public class PlayState extends GameState {
 						gsm.addState(State.GAMEOVER, TitleState.class);
 					}
 /*				} else {
-					player = new Player(this, world, camera, rays,
+					playerNumber = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
 							(int)(lastSave.getBody().getPosition().y * PPM));
 					
-//					controller.setPlayer(player);
+//					controller.setPlayer(playerNumber);
 					
 					gameover = false;
 				}*/
@@ -336,15 +335,15 @@ public class PlayState extends GameState {
 	}	
 	
 	/**
-	 * This is called every update. This resets the camera zoom and makes it move towards the player.
+	 * This is called every update. This resets the camera zoom and makes it move towards the playerNumber.
 	 */
 	private void cameraUpdate() {
 		camera.zoom = 1;
 		sprite.zoom = 1;
 		if (player != null) {
 			if (player.getBody() != null) {
-//				CameraStyles.lerpToPlayerAngle(camera, player.getBody().getPosition().scl(PPM), player.getBody().getAngle());
-//				CameraStyles.lerpToPlayerAngle(sprite, player.getBody().getPosition().scl(PPM), player.getBody().getAngle());
+//				CameraStyles.lerpToPlayerAngle(camera, playerNumber.getBody().getPosition().scl(PPM), playerNumber.getBody().getAngle());
+//				CameraStyles.lerpToPlayerAngle(sprite, playerNumber.getBody().getPosition().scl(PPM), playerNumber.getBody().getAngle());
 				CameraStyles.lerpToTarget(camera, player.getBody().getPosition().scl(PPM));
 				CameraStyles.lerpToTarget(sprite, player.getBody().getPosition().scl(PPM));
 			}
@@ -390,7 +389,7 @@ public class PlayState extends GameState {
 	}
 	
 	/**
-	 * Getter for the player. This will return null if the player has not been spawned
+	 * Getter for the playerNumber. This will return null if the playerNumber has not been spawned
 	 * @return: The Player entity.
 	 */
 	public Player getPlayer() {
@@ -416,7 +415,7 @@ public class PlayState extends GameState {
     }
 
 	/**
-	 * Tentative tracker of player kill number.
+	 * Tentative tracker of playerNumber kill number.
 	 * @param i: Number to increase score by.
 	 */
 

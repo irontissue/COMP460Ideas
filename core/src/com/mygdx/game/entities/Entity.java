@@ -69,7 +69,7 @@ public abstract class Entity {
         state.create(this);
 
 
-//        if (state.player == null || state.player.getClient().allowedToCreate || state.player.getClient().master) {
+//        if (state.playerNumber == null || state.playerNumber.getClient().allowedToCreate || state.playerNumber.getClient().master) {
 //            state.create(this);
 //        }
 
@@ -115,7 +115,7 @@ public abstract class Entity {
 	public abstract void create();
 
 	/**
-	 * This method is run every engine tick. Here goes the entities game logic like enemy ai or player input.
+	 * This method is run every engine tick. Here goes the entities game logic like enemy ai or playerNumber input.
 	 * @param delta: time elapsed since last engine tick.
 	 */
 	public abstract void controller(float delta);

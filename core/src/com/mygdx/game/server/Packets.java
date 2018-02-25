@@ -126,8 +126,12 @@ public class Packets {
 	    public ReadyToPlay() {}
     }
 
-    public static class ClientCreatedPlayState {
-        public ClientCreatedPlayState() {}
+    public static class ClientLoadedPlayState {
+	    public ClientLoadedPlayState() {}
+	    public ClientLoadedPlayState(String level) {
+	        this.level = level;
+        }
+        public String level;
     }
 
     public static class EnterPlayState {
@@ -298,7 +302,7 @@ public class Packets {
         kryo.register(MousePressOrRelease.class);
         kryo.register(SetEntityAim.class);
         kryo.register(EntityShoot.class);
-        kryo.register(ClientCreatedPlayState.class);
+        kryo.register(ClientLoadedPlayState.class);
         kryo.register(gameOver.class);
         kryo.register(EntityTakeDamage.class);
         kryo.register(EntityAdjustHealth.class);
