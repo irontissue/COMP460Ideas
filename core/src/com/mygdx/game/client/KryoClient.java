@@ -93,6 +93,7 @@ public class KryoClient {
                                 PlayState ps = (PlayState) myGame.getGsm().states.peek();
                                 Packets.LoadLevel p = (Packets.LoadLevel) o;
                                 ps.loadLevel(p.level);
+                                Log.info("Client received loadlevel. Level = " + p.level);
                             }
                         });
                     }

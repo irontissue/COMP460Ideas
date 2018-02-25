@@ -163,6 +163,7 @@ public class PlayState extends GameState {
 		TiledObjectUtil.parseTiledTriggerLayer(this, world, camera, rays);
 
 		if (!comp460game.serverMode) {
+		    Log.info("Client loaded playstate, level = " + level);
 		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
         }
 	}
@@ -170,6 +171,9 @@ public class PlayState extends GameState {
 	public void loadLevel(String level) {
 	    if (comp460game.serverMode) {
 	        comp460game.server.server.sendToAllTCP(new Packets.LoadLevel(level));
+        } else {
+	        gsm.removeState(PlayState.class);
+            gsm.addPlayState(level, player.playerData, null, TitleState.class);
         }
 	}
 
