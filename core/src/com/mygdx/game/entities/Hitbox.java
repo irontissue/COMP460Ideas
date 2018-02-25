@@ -29,7 +29,7 @@ public class Hitbox extends Entity {
 	//lifespan is the time in seconds that the hitbox will exist before timing out.
 	public float lifeSpan;
 	
-	//filter describes the type of body the hitbox will register a hit on .(player, enemy or neutral)
+	//filter describes the type of body the hitbox will register a hit on .(playerNumber, enemy or neutral)
 	public short filter;
 	
 	//durability is the number of things the hitbox can hit before disappearing.

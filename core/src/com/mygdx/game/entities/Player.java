@@ -24,7 +24,6 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import com.mygdx.game.util.b2d.FixtureBuilder;
 
 import box2dLight.ConeLight;
-import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
 import static com.mygdx.game.util.Constants.PPM;
@@ -38,8 +37,7 @@ public class Player extends Schmuck implements InputProcessor {
     protected Fixture viewWedge2;
 
 	private float lastDelta;
-	public boolean spacePressed;
-	//is the player currently in the process of holding their currently used tool?
+	//is the playerNumber currently in the process of holding their currently used tool?
 	private boolean charging = false;
 		
 	protected float interactCd = 0.15f;
@@ -49,6 +47,7 @@ public class Player extends Schmuck implements InputProcessor {
     public boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false, qPressed = false, ePressed = false;
     public boolean wPressed2 = false, aPressed2 = false, sPressed2 = false, dPressed2 = false, qPressed2 = false, ePressed2 = false;
     public boolean mousePressed = false, mousePressed2 = false;
+    public boolean spacePressed = false, spacePressed2 = false;
     public int mousePosX = -1, mousePosY = -1, mousePos2X = -1, mousePos2Y = -1;
 		
 	//user data
@@ -56,7 +55,7 @@ public class Player extends Schmuck implements InputProcessor {
 	public Event currentEvent;
 	
 //	public Player2Dummy dummy;
-	public PlayerData old, player1Data, player2Data;
+	public PlayerData old, old2, player1Data, player2Data;
 	protected Fixture player1Fixture, player2Fixture;
 
 	private ConeLight vision;
@@ -64,22 +63,24 @@ public class Player extends Schmuck implements InputProcessor {
 	private TextureRegion combined, bride, groom, dress;
 	
 	/**
-	 * This constructor is called by the player spawn event that must be located in each map
+	 * This constructor is called by the playerNumber spawn event that must be located in each map
 	 * @param state: current gameState
 	 * @param world: box2d world
 	 * @param camera: game camera
 	 * @param rays: game rayhandler
-	 * @param x: player starting x position.
-	 * @param y: player starting x position.
+	 * @param x: playerNumber starting x position.
+	 * @param y: playerNumber starting x position.
 	 */
   
-	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, PlayerData old) {
+	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, PlayerData old,
+                  PlayerData old2) {
 		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
 		this.old = old;
+		this.old2 = old2;
 	}
 
     public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, String id) {
@@ -91,43 +92,51 @@ public class Player extends Schmuck implements InputProcessor {
     }
 	
 	/**
-	 * Create the player's body and initialize player's user data.
+	 * Create the playerNumber's body and initialize playerNumber's user data.
 	 */
 	public void create() {
 	    setInput();
-	    
-	    //Clients will have a single data attached to the half of the body they represent
-		this.playerData = new PlayerData(world, this);
-		
-		if (old != null) {
-			playerData.copyData(old);
-		}
 		
 		//server's has 2 datas that represent player1 and player2
 		if (comp460game.serverMode) {
-			player1Data = new PlayerData(world, this) {
-				//inside these, we should overload onhit, die to send messages to corresponding clients
-			};
-			player2Data = new PlayerData(world, this) {
-				
-			};
-		}
-		
-		this.bodyData = playerData;
+			player1Data = new PlayerData(world, this);
+			player2Data = new PlayerData(world, this);
+
+            this.bodyData = player1Data;
+
+			if (old != null) {
+			    Log.info("Server copied player1data.");
+			    player1Data.copyData(old);
+            }
+            if (old2 != null) {
+                Log.info("Server copied player2data.");
+                player2Data.copyData(old2);
+            }
+		} else {
+            //Clients will have a single data attached to the half of the body they represent
+            this.playerData = new PlayerData(world, this);
+
+            this.bodyData = playerData;
+
+            if (old != null) {
+                Log.info("Client copied playerdata.");
+                playerData.copyData(old);
+            }
+        }
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, false, false, Constants.Filters.BIT_PLAYER, 
 				(short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_ENEMY),
 				Constants.Filters.PLAYER_HITBOX, false, playerData);
 
 		if (!comp460game.serverMode) {
-			if (state.gsm.player == 1) {
+			if (state.gsm.playerNumber == 1) {
 				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(-width / 2 / PPM, 0), true, 0,
 						Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
 				player1Fixture.setUserData(playerData);
 			} else {
-				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
+				player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(width / 2 / PPM, 0), true, 0,
 						Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
-				player1Fixture.setUserData(playerData);
+				player2Fixture.setUserData(playerData);
 			}
 		} else {
 			player2Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(- width / 2 / PPM, 0), true, 0,
@@ -142,7 +151,8 @@ public class Player extends Schmuck implements InputProcessor {
 		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 60);
 			vision.setIgnoreAttachedBody(true);
-			if (state.gsm.player == 1) {
+			
+			if (state.gsm.playerNumber == 1) {
 				vision.attachToBody(body,0 ,0, 180);
 			} else {
 				vision.attachToBody(body,0 ,0, 0);
@@ -170,7 +180,7 @@ public class Player extends Schmuck implements InputProcessor {
 	}
 	
 	/**
-	 * The player's controller currently polls for input.
+	 * The playerNumber's controller currently polls for input.
 	 */
 	public void controller(float delta) {
 
@@ -182,80 +192,82 @@ public class Player extends Schmuck implements InputProcessor {
             desiredAngleVel = 0;
 
             if (wPressed) {
-                desiredYVel += playerData.maxSpeed;
+                desiredYVel += player1Data.maxSpeed;
             }
             if (aPressed) {
-                desiredXVel += -playerData.maxSpeed;
+                desiredXVel += -player1Data.maxSpeed;
             }
             if (sPressed) {
-                desiredYVel += -playerData.maxSpeed;
+                desiredYVel += -player1Data.maxSpeed;
             }
             if (dPressed) {
-                desiredXVel += playerData.maxSpeed;
+                desiredXVel += player1Data.maxSpeed;
             }
 
             if (wPressed2) {
-                desiredYVel += playerData.maxSpeed;
+                desiredYVel += player2Data.maxSpeed;
             }
             if (aPressed2) {
-                desiredXVel += -playerData.maxSpeed;
+                desiredXVel += -player2Data.maxSpeed;
             }
             if (sPressed2) {
-                desiredYVel += -playerData.maxSpeed;
+                desiredYVel += -player2Data.maxSpeed;
             }
             if (dPressed2) {
-                desiredXVel += playerData.maxSpeed;
+                desiredXVel += player2Data.maxSpeed;
             }
 
             if (ePressed) {
-                desiredAngleVel += -playerData.maxAngularSpeed;
+                desiredAngleVel += -player1Data.maxAngularSpeed;
             }
             if (ePressed2) {
-                desiredAngleVel += -playerData.maxAngularSpeed;
+                desiredAngleVel += -player2Data.maxAngularSpeed;
             }
 
             if (qPressed) {
-                desiredAngleVel += playerData.maxAngularSpeed;
+                desiredAngleVel += player1Data.maxAngularSpeed;
             }
             if (qPressed2) {
-                desiredAngleVel += playerData.maxAngularSpeed;
+                desiredAngleVel += player2Data.maxAngularSpeed;
             }
 
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
-            if (mousePressed || mousePressed2) {
-                //charging = true;
-                useToolStart(delta, playerData.currentTool, Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
+            if (mousePressed) {
+                useToolStart(delta, player1Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
             }
             if (mousePressed2) {
-                useToolStart(delta, playerData.currentTool, Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
-            } else {
-                /*if (charging) {
-                    useToolRelease(playerData.currentTool, Constants.Filters.PLAYER_HITBOX, Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
+                useToolStart(delta, player2Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
+            }
+
+            if (spacePressed) {
+                if (currentEvent != null && interactCdCount < 0) {
+                    interactCdCount = interactCd;
+                    currentEvent.eventData.onInteract(this, 1);
                 }
-                charging = false;*/
+            }
+
+            if (spacePressed2) {
+                if (currentEvent != null && interactCdCount < 0) {
+                    interactCdCount = interactCd;
+                    currentEvent.eventData.onInteract(this, 2);
+                }
+            }
+
+            //If playerNumber is reloading, run the reload method of the current equipment.
+            if (player1Data.currentTool.reloading) {
+                player1Data.currentTool.reload(delta);
+            }
+            if (player2Data.currentTool.reloading) {
+                player2Data.currentTool.reload(delta);
+            }
+
+            interactCdCount-=delta;
+        } else {
+            //If playerNumber is reloading, run the reload method of the current equipment.
+            if (playerData.currentTool.reloading) {
+                playerData.currentTool.reload(delta);
             }
         }
-		
-		//Pressing 'SPACE' = interact with an event
-//		if(Gdx.input.isKeyJustPressed((Input.Keys.SPACE))) {
-//			if (currentEvent != null && interactCdCount < 0) {
-//				interactCdCount = interactCd;
-//				currentEvent.eventData.onInteract(this);
-//			}
-//		}
-        if(spacePressed) {
-            if (currentEvent != null && interactCdCount < 0) {
-                interactCdCount = interactCd;
-                currentEvent.eventData.onInteract(this);
-            }
-        }
-				
-		//If player is reloading, run the reload method of the current equipment.
-		if (playerData.currentTool.reloading) {
-			playerData.currentTool.reload(delta);
-		}				
-				
-		interactCdCount-=delta;
 
 		super.controller(delta);
 
@@ -304,10 +316,6 @@ public class Player extends Schmuck implements InputProcessor {
 	
 	public void dispose() {
 		super.dispose();
-	}
-	
-	public PlayerData getPlayerData() {
-		return playerData;
 	}
 
     @Override

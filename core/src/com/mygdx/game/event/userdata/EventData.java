@@ -6,6 +6,7 @@ import java.util.Set;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.util.UserDataTypes;
@@ -40,7 +41,12 @@ public class EventData extends UserData {
 		}
 	}
 
-	public void onInteract(Player p) {
+	/**
+	 * The things to happen when this event is interacted with by the player (or in the future, perhaps any entity?)
+	 * @param p The player to interact with
+	 * @param playerNumber The player number (p1 or p2) - this is useful for server only
+	 */
+	public void onInteract(Player p, int playerNumber) {
 		
 	}
 	

@@ -4,16 +4,13 @@ import java.io.IOException;
 import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.KryoSerialization;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
-import com.mygdx.game.actors.Text;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Schmuck;
@@ -76,8 +73,8 @@ public class KryoClient {
                     final int PNUMBER = ((Packets.EnterPlayState) o).playerNumber;
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
-                        	myGame.getGsm().player = PNUMBER;
-                        	Log.info("Set player number to: " + myGame.getGsm().player);
+                        	myGame.getGsm().playerNumber = PNUMBER;
+                        	Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });
@@ -86,7 +83,7 @@ public class KryoClient {
                 else if (o instanceof Packets.ServerIDMessage) {
                     Packets.ServerIDMessage p = (Packets.ServerIDMessage) o;
                     IDOnServer = p.IDOnServer;
-                    myGame.getGsm().player = p.IDOnServer;
+                    myGame.getGsm().playerNumber = p.IDOnServer;
                 }
 
                 else if (o instanceof Packets.LoadLevel) {
@@ -96,6 +93,7 @@ public class KryoClient {
                                 PlayState ps = (PlayState) myGame.getGsm().states.peek();
                                 Packets.LoadLevel p = (Packets.LoadLevel) o;
                                 ps.loadLevel(p.level);
+                                Log.info("Client received loadlevel. Level = " + p.level);
                             }
                         });
                     }
@@ -137,7 +135,7 @@ public class KryoClient {
                     Packets.SyncPlayState p = (Packets.SyncPlayState) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
-                        //ps.player.body.setTransform(p.body,p.angle);
+                        //ps.playerNumber.body.setTransform(p.body,p.angle);
                         ps.desiredPlayerAngle = p.angle;
                         ps.desiredPlayerPosition = p.body;
                         ps.needToSetPlayerPos = true;
@@ -202,16 +200,16 @@ public class KryoClient {
                         if (p.message == Input.Keys.W) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.wPressed = true;
+                                    ps.playerNumber.wPressed = true;
                                 } else {
-                                    ps.player.wPressed = false;
+                                    ps.playerNumber.wPressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.wPressed2 = true;
+                                    ps.playerNumber.wPressed2 = true;
                                     Log.info("W2 pressed");
                                 } else {
-                                    ps.player.wPressed2 = false;
+                                    ps.playerNumber.wPressed2 = false;
                                     Log.info("W2 released");
 
                                 }
@@ -219,85 +217,85 @@ public class KryoClient {
                         } else if (p.message == Input.Keys.A) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.aPressed = true;
+                                    ps.playerNumber.aPressed = true;
                                 } else {
-                                    ps.player.aPressed = false;
+                                    ps.playerNumber.aPressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.aPressed2 = true;
+                                    ps.playerNumber.aPressed2 = true;
                                 } else {
-                                    ps.player.aPressed2 = false;
+                                    ps.playerNumber.aPressed2 = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.S) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.sPressed = true;
+                                    ps.playerNumber.sPressed = true;
                                 } else {
-                                    ps.player.sPressed = false;
+                                    ps.playerNumber.sPressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.sPressed2 = true;
+                                    ps.playerNumber.sPressed2 = true;
                                 } else {
-                                    ps.player.sPressed2 = false;
+                                    ps.playerNumber.sPressed2 = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.D) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.dPressed = true;
+                                    ps.playerNumber.dPressed = true;
                                 } else {
-                                    ps.player.dPressed = false;
+                                    ps.playerNumber.dPressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.dPressed2 = true;
+                                    ps.playerNumber.dPressed2 = true;
                                 } else {
-                                    ps.player.dPressed2 = false;
+                                    ps.playerNumber.dPressed2 = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.Q) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.qPressed = true;
+                                    ps.playerNumber.qPressed = true;
                                 } else {
-                                    ps.player.qPressed = false;
+                                    ps.playerNumber.qPressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.qPressed2 = true;
+                                    ps.playerNumber.qPressed2 = true;
                                 } else {
-                                    ps.player.qPressed2 = false;
+                                    ps.playerNumber.qPressed2 = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.E) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.ePressed = true;
+                                    ps.playerNumber.ePressed = true;
                                 } else {
-                                    ps.player.ePressed = false;
+                                    ps.playerNumber.ePressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.ePressed2 = true;
+                                    ps.playerNumber.ePressed2 = true;
                                 } else {
-                                    ps.player.ePressed2 = false;
+                                    ps.playerNumber.ePressed2 = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.SPACE) {
                             if (p.playerID == IDOnServer) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.spacePressed = true;
+                                    ps.playerNumber.spacePressed = true;
                                 } else {
-                                    ps.player.spacePressed = false;
+                                    ps.playerNumber.spacePressed = false;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.spacePressed = true;
+                                    ps.playerNumber.spacePressed = true;
                                 } else {
-                                    ps.player.spacePressed = false;
+                                    ps.playerNumber.spacePressed = false;
                                 }
                             }
                         }

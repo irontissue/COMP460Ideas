@@ -20,10 +20,10 @@ public class GameStateManager {
 	
 	//An instance of the current game
 	private comp460game app;
-	//Stack of GameStates. These are all the states that the player has opened in that order.
+	//Stack of GameStates. These are all the states that the playerNumber has opened in that order.
 	public Stack<GameState> states;
     private float syncTimer = 0;
-	public int player = 1;
+	public int playerNumber = 1;
     
 	private String level;
 	
@@ -135,12 +135,15 @@ public class GameStateManager {
 		}
 	}
 
-	public void addPlayState(String map, PlayerData old, Class<? extends GameState> lastState) {
+	public void addPlayState(String map, PlayerData old, PlayerData old2, Class<? extends GameState> lastState) {
+		if (map == null) {
+		    map = "maps/loadout.tmx";
+        }
 		if (states.empty()) {
-			states.push(new PlayState(this, map, old));
+			states.push(new PlayState(this, map, old, old2));
 			states.peek().show();
 		} else if (states.peek().getClass().equals(lastState)) {
-			states.push(new PlayState(this, map, old));
+			states.push(new PlayState(this, map, old, old2));
 			states.peek().show();
 		}
 	}
@@ -174,7 +177,7 @@ public class GameStateManager {
 			case SPLASH: return null;
 			case TITLE: return new TitleState(this);
 			case MENU: return new MenuState(this);
-			case PLAY: return new PlayState(this, level, null);
+			case PLAY: return new PlayState(this, level, null, null);
 			case GAMEOVER: return new GameoverState(this);
 			case VICTORY: return new VictoryState(this);
 		}

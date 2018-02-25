@@ -158,7 +158,7 @@ public class comp460game extends ApplicationAdapter {
 
 	/**
      * If the client needs to be reset, i.e. in the case of a disconnect. Closes the client, then recreates it
-     * so it is ready to call client.init() again when the player attempts to reconnect.
+     * so it is ready to call client.init() again when the playerNumber attempts to reconnect.
 	 * @param reconnect: If true, attempts to reconnect to the same server using the same credentials.
      */
 	public void resetClient(boolean reconnect) {
