@@ -2,6 +2,7 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.userdata.InteractableEventData;
 import com.mygdx.game.states.PlayState;
@@ -11,7 +12,7 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import box2dLight.RayHandler;
 
 /**
- * A Use Portal is a portal that transports the player elsewhere when they interact with it.
+ * A Use Portal is a portal that transports the playerNumber elsewhere when they interact with it.
  * The event they are transported to does not have to be a portal.
  * @author Zachary Tu
  *
@@ -33,7 +34,8 @@ public class LevelWarp extends Event {
 		this.eventData = new InteractableEventData(world, this) {
 			
 			@Override
-			public void onInteract(Player p) {
+			public void onInteract(Player p, int playerNumber) {
+				Log.info("Interacted with level warp, level = " + level);
 				state.loadLevel("maps/"+level);
 			}
 		};
@@ -45,7 +47,7 @@ public class LevelWarp extends Event {
 	
 	@Override
 	public String getText() {
-		return name + " (E TO USE)";
+		return name + " (SPACE TO ACTIVATE)";
 	}
 
 }

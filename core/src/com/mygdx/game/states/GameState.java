@@ -8,7 +8,7 @@ import com.mygdx.game.manager.GameStateManager;
 
 /**
  * A GameState is any state of the game like a menu or the game screen. The game will keep track of each GameState is currently active
- * to receive input and display information to the player.
+ * to receive input and display information to the playerNumber.
  * @author Zachary Tu
  *
  */
@@ -21,7 +21,7 @@ public abstract class GameState {
 	public OrthographicCamera camera, sprite, hud;
 	
 	/**
-	 * This constructor is run when the player switches GameState to a new State.
+	 * This constructor is run when the playerNumber switches GameState to a new State.
 	 * @param gsm: Reference to GameStateManager.
 	 */
 	public GameState(GameStateManager gsm) {
@@ -60,7 +60,7 @@ public abstract class GameState {
 	public abstract void update(float delta);
 	
 	/**
-	 * This will be run every engine tick after updating and will display information to the player.
+	 * This will be run every engine tick after updating and will display information to the playerNumber.
 	 */
 	public abstract void render();
 	

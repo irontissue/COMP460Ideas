@@ -2,7 +2,9 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
+import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.AnotherGun;
 import com.mygdx.game.equipment.ranged.Gun;
@@ -39,8 +41,17 @@ public class EquipPickup extends Event {
 	
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
-			public void onInteract(Player p) {
-				Equipment temp = p.playerData.pickup(equip);
+			public void onInteract(Player p, int playerNumber) {
+                Equipment temp;
+				if (comp460game.serverMode) {
+				    if (playerNumber == 1) {
+                        temp = p.player1Data.pickup(equip);
+                    } else {
+                        temp = p.player2Data.pickup(equip);
+                    }
+                } else {
+                    temp = p.playerData.pickup(equip);
+                }
 				if (temp == null) {
 					queueDeletion();
 				} else {

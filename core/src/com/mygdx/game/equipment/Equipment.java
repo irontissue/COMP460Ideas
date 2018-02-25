@@ -55,7 +55,7 @@ public abstract class Equipment {
 	 * @param delta: The time in seconds since this tool was last attempted to used. (Mostly used for charge weapons)
 	 * @param state: The play state
 	 * @param shooter: user data of he schmuck using this tool
-	 * @param faction: Filter of the tool. (player, enemy, neutral)
+	 * @param faction: Filter of the tool. (playerNumber, enemy, neutral)
 	 * @param x: x coordinate of the target. (screen coordinates)
 	 * @param y: y coordinate of the target. (screen coordinates)
 	 * @param world: box2d world
@@ -79,7 +79,7 @@ public abstract class Equipment {
 	public abstract String[] execute(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS);
 	
 	/**
-	 * This method is called when the player releases the mouse button for using this tool.
+	 * This method is called when the playerNumber releases the mouse button for using this tool.
 	 * Default does nothing. Used mostly for charge weapons. Enemies will not care about this method.
 	 * @param state: The play state
 	 * @param bodyData: user data of he schmuck using this tool
@@ -90,7 +90,7 @@ public abstract class Equipment {
 	abstract public void release(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays);
 
 	/**
-	 * This method will be called every engine tick if the player is reloading.
+	 * This method will be called every engine tick if the playerNumber is reloading.
 	 * If the weapon is reloadable, this method will probably count down some timer and add ammo when done.
 	 * @param delta: elapsed time in seconds since last engine tick
 	 */

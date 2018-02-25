@@ -28,7 +28,7 @@ public class Enemy extends Schmuck {
 	}
 
 	/**
-	 * Create the enemy's body and initialize player's user data.
+	 * Create the enemy's body and initialize playerNumber's user data.
 	 */
 	public void create() {
 		this.bodyData = new CharacterData(world, this);

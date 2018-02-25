@@ -32,8 +32,9 @@ public class InteractableEventData extends EventData {
 		}
 		super.onRelease(fixB);
 	}
-	
-	public void onInteract(Player p) {
+
+	@Override
+	public void onInteract(Player p, int playerNumber) {
 
 	}
 
