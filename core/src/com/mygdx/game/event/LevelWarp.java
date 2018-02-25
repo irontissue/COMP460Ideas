@@ -45,7 +45,7 @@ public class LevelWarp extends Event {
 	
 	@Override
 	public String getText() {
-		return name + " (E TO USE)";
+		return name + " (SPACE TO ACTIVATE)";
 	}
 
 }

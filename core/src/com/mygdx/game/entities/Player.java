@@ -151,7 +151,7 @@ public class Player extends Schmuck implements InputProcessor {
 			vision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			vision.setIgnoreAttachedBody(true);
 			vision.attachToBody(body,0 ,0, 180);
-
+			
 			ConeLight extraVision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			extraVision.setIgnoreAttachedBody(true);
 			extraVision.attachToBody(body,0 ,0, 0);
@@ -160,6 +160,7 @@ public class Player extends Schmuck implements InputProcessor {
 		}
 		
 		vision.setContactFilter(Constants.Filters.BIT_SENSOR, (short)0, Constants.Filters.BIT_WALL);
+		vision.setSoft(true);
 		
 		super.create();
 	}

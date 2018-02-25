@@ -121,7 +121,7 @@ public class KryoClient {
 //                                gameOver.setVisible(true);
 //                                gameOver.toFront();
 //                                ps.stage.addActor(gameOver);
-//                                myGame.getGsm().removeState(PlayState.class);
+                                myGame.getGsm().removeState(PlayState.class);
                                 if (won) {
                                     myGame.getGsm().addState(State.VICTORY, TitleState.class);
                                 } else {

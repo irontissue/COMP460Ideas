@@ -45,6 +45,10 @@ public class TiledObjectUtil {
             bdef.type = BodyDef.BodyType.StaticBody;
             body = world.createBody(bdef);
             body.createFixture(shape, 1.0f);
+            Filter filter = new Filter();
+			filter.categoryBits = (short) (Constants.Filters.BIT_WALL);
+			filter.maskBits = (short) (Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY | Constants.Filters.BIT_PROJECTILE);
+            body.getFixtureList().get(0).setFilterData(filter);
             shape.dispose();
         }
     }
