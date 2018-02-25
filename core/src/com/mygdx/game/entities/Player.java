@@ -101,7 +101,7 @@ public class Player extends Schmuck implements InputProcessor {
 		if (comp460game.serverMode) {
 			player1Data = new PlayerData(world, this);
 			player2Data = new PlayerData(world, this);
-
+			this.playerData = player1Data;
             this.bodyData = player1Data;
 
 			if (old != null) {
@@ -161,17 +161,16 @@ public class Player extends Schmuck implements InputProcessor {
 			vision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			vision.setIgnoreAttachedBody(true);
 			vision.attachToBody(body,0 ,0, 180);
-
+			
 			ConeLight extraVision = new ConeLight(rays, 360, Color.WHITE, 500, 0, 0, 0, 60);
 			extraVision.setIgnoreAttachedBody(true);
 			extraVision.attachToBody(body,0 ,0, 0);
+			extraVision.setContactFilter(Constants.Filters.BIT_SENSOR, Constants.Filters.BIT_WALL, (short)0);
+
 		}
 		
-		
-		
-		//PointLight light = new PointLight(rays, 32, Color.WHITE, 10, 0, 0);
-		//light.setIgnoreAttachedBody(true);
-		//light.attachToBody(body);
+		vision.setContactFilter(Constants.Filters.BIT_SENSOR, (short)0, Constants.Filters.BIT_WALL);
+		vision.setSoft(true);
 		
 		super.create();
 	}

@@ -125,6 +125,7 @@ public class PlayState extends GameState {
 		world.setContactListener(new WorldContactListener());
 		rays = new RayHandler(world);
         rays.setAmbientLight(0.1f);
+        rays.setBlurNum(3);
         rays.setCulling(false);
         
         RayHandler.useDiffuseLight(true);
