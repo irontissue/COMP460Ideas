@@ -29,7 +29,9 @@ public enum AssetList {
 	UIMAIN("ui/UI_main_overlay.png", Texture.class),
 	UI1("ui/UI.png", Texture.class),
 	UI2("ui/UI2.png", Texture.class),
-	UIATLAS("ui/UI.atlas", TextureAtlas.class);
+	UIATLAS("ui/UI.atlas", TextureAtlas.class),
+	UISKINIMG("ui/uiskin.png", Texture.class),
+	UISKINATL("ui/uiskin.atlas", TextureAtlas.class);
 	
 	//Enum constructor and methods.
 	private String pathname;
