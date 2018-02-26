@@ -49,6 +49,9 @@ public class TriggerSpawn extends Event {
 
 		this.eventData = new EventData(world, this) {
 			public void onActivate(EventData activator) {
+				
+				defeated = false;
+				
 				StandardEnemy se;
 				SteeringEnemy st;
 				for (int i = 0; i < limit; i++) {
@@ -83,7 +86,7 @@ public class TriggerSpawn extends Event {
 	
 	public void controller(float delta) {
 		
-		if (!defeated) {
+		if (!defeated && getConnectedEvent() != null) {
 			controllerCount+=delta;
 			if (controllerCount >= 1f) {
 				controllerCount = 0;
@@ -99,7 +102,7 @@ public class TriggerSpawn extends Event {
 						}
 					}
 					
-					if (defeated && getConnectedEvent() != null) {
+					if (defeated) {
 						getConnectedEvent().eventData.onActivate(eventData);
 					}
 				}

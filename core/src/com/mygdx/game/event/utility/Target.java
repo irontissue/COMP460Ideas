@@ -1,8 +1,9 @@
-package com.mygdx.game.event;
+package com.mygdx.game.event.utility;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entities.userdata.UserData;
+import com.mygdx.game.event.Event;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;

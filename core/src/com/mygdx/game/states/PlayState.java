@@ -105,6 +105,9 @@ public class PlayState extends GameState {
 	
 //	private float controllerCounter = 0;
 	
+	//sourced effects from the world are attributed to this dummy.
+	public Enemy worldDummy;
+		
 	public Stage stage;
 	public boolean updating = false;
 	
@@ -139,7 +142,9 @@ public class PlayState extends GameState {
 		updateList = new ArrayList<Pair<UUID, Object[]>>();
 		entities = new HashSet<Entity>();
 		
-		//TODO: Load a map from Tiled file. Eventually, this will take an input map that the playerNumber chooses.
+		//The "worldDummy" will be the source of map-effects that want a perpetrator
+		worldDummy = new Enemy(this, world, camera, rays, 1, 1, -1000, -1000);
+				
 //        map = new TmxMapLoader().load("maps/map_1_460.tmx");
 //        map = new TmxMapLoader().load("maps/map_2_460.tmx");
 //        map = new TmxMapLoader().load("maps/argh.tmx");
