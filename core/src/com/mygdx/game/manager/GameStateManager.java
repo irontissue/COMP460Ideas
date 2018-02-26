@@ -3,6 +3,10 @@ package com.mygdx.game.manager;
 import java.util.Set;
 import java.util.Stack;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.comp460game;
@@ -25,6 +29,9 @@ public class GameStateManager {
     private float syncTimer = 0;
 	public int playerNumber = 1;
     
+	//temp skin for ui windows
+	public Skin skin;
+		
 	private String level;
 	
 	//This enum lists all the different types of gamestates.
@@ -49,6 +56,12 @@ public class GameStateManager {
 		
 		//Default state is the splash state currently.
 		this.addState(State.TITLE, null);
+		
+		BitmapFont font24 = new BitmapFont();
+		this.skin = new Skin();
+		this.skin.addRegions((TextureAtlas) comp460game.assetManager.get(AssetList.UISKINATL.toString()));
+		this.skin.add("default-font", font24);
+		this.skin.load(Gdx.files.internal("ui/uiskin.json"));
 	}
 	
 	/**
