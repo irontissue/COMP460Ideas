@@ -79,7 +79,7 @@ public class KryoServer {
 					Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
 					server.sendToAllTCP(p);
 //                    Packets.KeyPressOrRelease p = (Packets.KeyPressOrRelease) o;
-                    if (gsm.states.peek() instanceof PlayState) {
+                    if (!gsm.states.empty() && gsm.states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) gsm.states.peek();
                         if (p.message == Input.Keys.W) {
                             if (p.playerID == playerIDs[0]) {
@@ -188,7 +188,7 @@ public class KryoServer {
 
 				else if (o instanceof Packets.MousePressOrRelease) {
                     Packets.MousePressOrRelease p = (Packets.MousePressOrRelease) o;
-                    if (gsm.states.peek() instanceof  PlayState) {
+                    if (!gsm.states.empty() && gsm.states.peek() instanceof  PlayState) {
                         PlayState ps = (PlayState) gsm.states.peek();
                         if (p.message == Input.Buttons.LEFT) {
                             if (p.playerID == playerIDs[0]) {
@@ -239,6 +239,7 @@ public class KryoServer {
                     if (players == 2) {
                         Gdx.app.postRunnable(new Runnable() {
                             public void run() {
+                                Log.info("Both clients loaded playstate. Adding new playstate.");
                                 PlayerData pd1 = null, pd2 = null;
                                 if (gsm.states.peek() instanceof PlayState) {
                                     pd1 = ((PlayState) gsm.states.peek()).player.player1Data;

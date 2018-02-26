@@ -3,6 +3,7 @@ package com.mygdx.game.event;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.userdata.InteractableEventData;
 import com.mygdx.game.states.PlayState;
@@ -36,7 +37,9 @@ public class LevelWarp extends Event {
 			@Override
 			public void onInteract(Player p, int playerNumber) {
 				Log.info("Interacted with level warp, level = " + level);
-				state.loadLevel("maps/"+level);
+				if (comp460game.serverMode) {
+                    state.loadLevel("maps/" + level);
+                }
 			}
 		};
 		
