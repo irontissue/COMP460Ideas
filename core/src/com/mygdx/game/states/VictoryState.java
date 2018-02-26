@@ -1,8 +1,11 @@
 package com.mygdx.game.states;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.manager.GameStateManager;
@@ -15,7 +18,8 @@ public class VictoryState extends GameState {
 	
 	//Temporary links to other modules for testing.
 	private Actor playOption, title;
-	
+    Texture bground;
+
 	public VictoryState(GameStateManager gsm) {
 		super(gsm);
 	}
@@ -24,7 +28,14 @@ public class VictoryState extends GameState {
 	public void show() {
 		stage = new Stage() {
 			{
-				playOption = new Text(comp460game.assetManager, "TITLE?", 150, comp460game.CONFIG_HEIGHT - 180);
+				// https://i.ytimg.com/vi/utpTIOJve-g/maxresdefault.jpg
+                // Source of image
+                bground = new Texture("maps/dotBackground.jpg");
+                bground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                Actor bg = new Image(bground);
+                addActor(bg);
+
+				playOption = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO TITLE SCREEN", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
 
 				playOption.addListener(new ClickListener() {
 			        public void clicked(InputEvent e, float x, float y) {
@@ -36,7 +47,7 @@ public class VictoryState extends GameState {
 				playOption.setScale(0.5f);
 
 				addActor(playOption);
-				addActor(new Text(comp460game.assetManager, "VICTORY?", 150, comp460game.CONFIG_HEIGHT - 300));
+				addActor(new Text(comp460game.assetManager, "VICTORY!", 150, comp460game.CONFIG_HEIGHT - 300, Color.WHITE));
 			}
 		};
 		app.newMenu(stage);
