@@ -26,6 +26,9 @@ public class Event extends Entity {
 	
 	private Event connectedEvent;
 
+	//This is used by consumable events to avoid being activated multiple times before next engine tick.
+	protected boolean consumed = false;
+		
 	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
 			int width, int height, int x, int y) {
 		super(state, world, camera, rays, width, height, x, y);
