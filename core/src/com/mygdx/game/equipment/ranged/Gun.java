@@ -39,10 +39,10 @@ public class Gun extends RangedWeapon {
 
 		@Override
 		public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs) {
-			
+				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
+
 			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "orb_yellow", bulletIDs == null ? null : bulletIDs[0]);
+                    filter, true, world, camera, rays, user, "orb_yellow", bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
 			
 			proj.setUserData(new HitboxData(state, world, proj) {
 				

@@ -224,9 +224,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
 			shootDelayCount = tool.useDelay;
 			
 			//Register the tool targeting the input coordinates.
-			if (comp460game.serverMode) {
-			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
-            }
+//			if (comp460game.serverMode) {
+//			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
+//            }
 			tool.mouseClicked(delta, state, bodyData, filter, x, y, world, camera, rays);
 			
 			//set the tool that will be executed after delay to input tool.
@@ -244,9 +244,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		
 		//execute the tool.
 		String[] uuids = usedTool.execute(state, bodyData, world, camera, rays, null);
-        if (comp460game.serverMode) {
-            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID.toString(), uuids));
-        }
+//        if (comp460game.serverMode) {
+//            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID.toString(), uuids));
+//        }
 		
 		//clear the used tool field.
 		usedTool = null;

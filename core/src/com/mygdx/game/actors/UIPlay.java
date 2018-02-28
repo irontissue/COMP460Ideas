@@ -80,8 +80,8 @@ public class UIPlay extends A460Actor{
 
                 batch.draw(hpMissing, x + 233, y + 78, hp.getRegionWidth() * scale * hpDelayed, hp.getRegionHeight() * scale);
                 batch.draw(hp, x + 233, y + 78, hp.getRegionWidth() * scale * hpRatio, hp.getRegionHeight() * scale);
-                batch.draw(hpMissing, comp460game.CONFIG_WIDTH - x + 233, y + 78, hp.getRegionWidth() * scale * hpDelayed2, hp.getRegionHeight() * scale);
-                batch.draw(hp, comp460game.CONFIG_WIDTH - x + 233, y + 78, hp.getRegionWidth() * scale * hpRatio2, hp.getRegionHeight() * scale);
+                batch.draw(hpMissing, x + 708, y + 78, hp.getRegionWidth() * scale * hpDelayed2, hp.getRegionHeight() * scale);
+                batch.draw(hp, x + 708, y + 78, hp.getRegionWidth() * scale * hpRatio2, hp.getRegionHeight() * scale);
 
                 //This makes low Hp indicator blink at low health
                 if (hpRatio <= hpLowThreshold) {
@@ -99,7 +99,6 @@ public class UIPlay extends A460Actor{
                 if (blinking) {
                     batch.draw(hpLow, x, y, main.getWidth() * scale, main.getHeight() * scale);
                 }
-
                 batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
 
                 font.getData().setScale(0.4f);
@@ -121,18 +120,16 @@ public class UIPlay extends A460Actor{
                 }
 
                 if (blinking2) {
-                    batch.draw(hpLow, comp460game.CONFIG_WIDTH - x, y, main.getWidth() * scale, main.getHeight() * scale);
+                    batch.draw(hpLow, x + 475, y, main.getWidth() * scale, main.getHeight() * scale);
                 }
-
-                batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
-                batch.draw(main, x, y, comp460game.CONFIG_WIDTH - main.getWidth() * scale, main.getHeight() * scale);
+                batch.draw(main, x + 475, y, main.getWidth() * scale, main.getHeight() * scale);
 
                 font.getData().setScale(0.4f);
                 font.draw(batch, player.player1Data.currentTool.name, x + 60, y + 130);
-                font.draw(batch, player.player2Data.currentTool.name, comp460game.CONFIG_WIDTH - x + 60, y + 130);
+                font.draw(batch, player.player2Data.currentTool.name, x + 535, y + 130);
                 font.getData().setScale(0.8f);
                 font.draw(batch, player.player1Data.currentTool.getText(), x + 70, y + 75);
-                font.draw(batch, player.player2Data.currentTool.getText(), comp460game.CONFIG_WIDTH - x + 70, y + 75);
+                font.draw(batch, player.player2Data.currentTool.getText(), x + 545, y + 75);
 
                 for (int i = 0; i < 4; i++) {
                     if (player.player1Data.multitools.length <= i) {
@@ -148,12 +145,12 @@ public class UIPlay extends A460Actor{
 
                 for (int i = 0; i < 4; i++) {
                     if (player.player2Data.multitools.length <= i) {
-                        batch.draw(itemNull.get(i), comp460game.CONFIG_WIDTH - x, y, main.getWidth() * scale, main.getHeight() * scale);
+                        batch.draw(itemNull.get(i), 475 + x, y, main.getWidth() * scale, main.getHeight() * scale);
                     } else {
                         if (i == player.player2Data.currentSlot) {
-                            batch.draw(itemSelect.get(i), comp460game.CONFIG_WIDTH - x, y, main.getWidth() * scale, main.getHeight() * scale);
+                            batch.draw(itemSelect.get(i), 475 + x, y, main.getWidth() * scale, main.getHeight() * scale);
                         } else {
-                            batch.draw(itemUnselect.get(i), comp460game.CONFIG_WIDTH - x, y, main.getWidth() * scale, main.getHeight() * scale);
+                            batch.draw(itemUnselect.get(i), 475 + x, y, main.getWidth() * scale, main.getHeight() * scale);
                         }
                     }
                 }

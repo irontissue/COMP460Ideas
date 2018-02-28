@@ -6,7 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entities.Hitbox;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.HitboxFactory;
 import com.mygdx.game.util.SteeringUtil;
@@ -107,10 +109,24 @@ public class RangedWeapon extends Equipment {
 	        
 //			if (distance <= 60) {
 				//Generate the hitbox(s). This method's return is unused, so it may not return a hitbox or whatever at all.
+				//This code determines which player is shooting, if any at all.
+				int pDataNumber = 0;
+				if (user instanceof Player) {
+					Player p = (Player) user;
+					if (shooter instanceof PlayerData) {
+						PlayerData pd = (PlayerData) shooter;
+						if (p.player1Data.equals(pd)) {
+							pDataNumber = 1;
+						} else if (p.player2Data.equals(pd)) {
+							pDataNumber = 2;
+						}
+					}
+				}
+
 				Hitbox[] h = onShoot.makeHitbox(user, state, velo,
 						shooter.getSchmuck().getBody().getPosition().x * PPM, 
 						shooter.getSchmuck().getBody().getPosition().y * PPM, 
-						faction, world, camera, rays, bulletIDS);
+						faction, world, camera, rays, bulletIDS, pDataNumber);
 				returnIDS = new String[h.length];
 				for (int i = 0; i < h.length; i++) {
 				    returnIDS[i] = h[i].entityID.toString();
@@ -124,15 +140,23 @@ public class RangedWeapon extends Equipment {
 				//process weapon recoil.
 				user.recoil(x, y, recoil * (1 + shooter.getBonusRecoil()));
 //			}
-		} 
+			checkReload();
+		}
+
+		return returnIDS;
+	}
+
+	/**
+	 * Checks if this weapon needs to reload, and starts the reload sequence. This is in a separate function
+	 * because KryoClient uses this exact same code, on receiving a SyncHitboxImage packet.
+	 */
+	public void checkReload() {
 		if (clipLeft <= 0) {
 			if (!reloading) {
 				reloading = true;
 				reloadCd = reloadTime;
 			}
 		}
-
-		return returnIDS;
 	}
 
 	/**
