@@ -1,5 +1,6 @@
 package com.mygdx.game.states;
 
+import java.lang.reflect.Array;
 import java.util.*;
 
 import com.badlogic.gdx.Gdx;
@@ -86,8 +87,8 @@ public class PlayState extends GameState {
     //The Object[] is a list of attributes that will be used to update the corresponding entity.
 	private ArrayList<Pair<UUID, Object[]>> updateList;
 	
-	//This is a set of all entities in the world
-	private Set<Entity> entities;
+	//This is a list of all entities in the world
+	private ArrayList<Entity> entities;
 	
 	//TODO: Temporary tracker of number of enemies defeated. Will replace eventually
 	public int score = 0;
@@ -140,7 +141,7 @@ public class PlayState extends GameState {
 		removeList = new ArrayList<Entity>();
 		createList = new ArrayList<Entity>();
 		updateList = new ArrayList<Pair<UUID, Object[]>>();
-		entities = new HashSet<Entity>();
+		entities = new ArrayList<Entity>();
 		
 		//The "worldDummy" will be the source of map-effects that want a perpetrator
 		worldDummy = new Enemy(this, world, camera, rays, 1, 1, -1000, -1000);
@@ -406,11 +407,11 @@ public class PlayState extends GameState {
 		return player;
 	}
 
-	public Set<Entity> getEntities() {
+	public ArrayList<Entity> getEntities() {
 		return entities;
 	}
 
-	public void setEntities(Set<Entity> e) {
+	public void setEntities(ArrayList<Entity> e) {
 		entities = e;
 	}
 
@@ -438,14 +439,29 @@ public class PlayState extends GameState {
 		gameover = true;
 		gameoverCdCount = gameoverCd;
 	}
+
+	/**
+	 * Gets an entity given its UUID.
+	 * The reason why it's around a try catch is that currently there's no way to (efficiently) handle
+	 * concurrent modification exceptions due to the client accessing this method at any time.
+	 * This may result in an entity not being updated in a tick, so perhaps there will be slight stuttering issues?
+	 * @param entityID The UUID of the entity to get
+	 * @return the entity, null if no entity was found.
+	 */
 	public Entity getEntity(UUID entityID) {
-        for (Entity e : entities) {
-            if (e.entityID.equals(entityID)) {
-                return e;
-            }
-        }
-        return null;
+		try {
+			for (int i = 0; i < entities.size(); i++) {
+				Entity e = entities.get(i);
+				if (e.entityID.equals(entityID)) {
+					return e;
+				}
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return null;
     }
+
 	public void updateEntity(UUID entityID, Vector2 pos, Vector2 vel, float aVel, float a) {
         Object[] toUpdate = {pos, vel, aVel, a};
 	    updateList.add(new Pair<UUID, Object[]>(entityID, toUpdate));
@@ -479,7 +495,7 @@ public class PlayState extends GameState {
      *
      * @param entityID ID of entity
      */
-    public void entityShoot(UUID entityID, String[] bulletIDs) {
+    /*public void entityShoot(UUID entityID, String[] bulletIDs) {
         Entity target = getEntity(entityID);
 //        Log.info("ShootID = " + entityID.toString());
         if (target == null) {
@@ -492,7 +508,7 @@ public class PlayState extends GameState {
 //            Log.info("Player shoots (instruction from server)!");
             ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays, bulletIDs);
         }
-    }
+    }*/
 
     public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type) {
         UUID entityID = UUID.fromString(id);

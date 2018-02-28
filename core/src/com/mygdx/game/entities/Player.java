@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.PlayerData;
+import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.manager.AssetList;
@@ -31,6 +32,12 @@ import static com.mygdx.game.util.Constants.PPM;
 public class Player extends Schmuck implements InputProcessor {
     public static final int ENTITY_TYPE = Constants.EntityTypes.PLAYER;
 	protected MoveStates moveState1, moveState2;
+
+    //Counters that keep track of delay between action initiation + action execution and action execution + next action
+    public float shootCdCount1 = 0, shootCdCount2 = 0;
+    public float shootDelayCount1 = 0, shootDelayCount2 = 0;
+    //The last used tool. This is used to process equipment with a delay between using and executing.
+    public Equipment usedTool1, usedTool2;
 
 	//Fixtures and user data
 	protected Fixture viewWedge;
@@ -101,6 +108,8 @@ public class Player extends Schmuck implements InputProcessor {
 		if (comp460game.serverMode) {
 			player1Data = new PlayerData(world, this);
 			player2Data = new PlayerData(world, this);
+			player1Data.playerNumber = 1;
+			player2Data.playerNumber = 2;
 			this.playerData = player1Data;
             this.bodyData = player1Data;
 
@@ -115,7 +124,7 @@ public class Player extends Schmuck implements InputProcessor {
 		} else {
             //Clients will have a single data attached to the half of the body they represent
             this.playerData = new PlayerData(world, this);
-
+            this.playerData.playerNumber = 1;
             this.bodyData = playerData;
 
             if (old != null) {
@@ -178,6 +187,60 @@ public class Player extends Schmuck implements InputProcessor {
 		super.create();
 	}
 
+	@Override
+    public void useToolStart(float delta, Equipment tool, short filter, int x, int y, boolean wait, int pNumber) {
+        //Log.info("Got into user tool start - player " + pNumber);
+        //Only register the attempt if the user is not waiting on a tool's delay or cooldown. (or if tool ignores wait)
+        if (pNumber == 1) {
+            if ((shootCdCount1 < 0 && shootDelayCount1 < 0) || !wait) {
+
+                //account for the tool's use delay.
+                shootDelayCount1 = tool.useDelay;
+
+                //Register the tool targeting the input coordinates.
+//			if (comp460game.serverMode) {
+//			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
+//            }
+                tool.mouseClicked(delta, state, player1Data, filter, x, y, world, camera, rays);
+                usedTool1 = tool;
+            }
+        } else {
+            if ((shootCdCount2 < 0 && shootDelayCount2 < 0) || !wait) {
+
+                //account for the tool's use delay.
+                shootDelayCount2 = tool.useDelay;
+
+                //Register the tool targeting the input coordinates.
+//			if (comp460game.serverMode) {
+//			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
+//            }
+                tool.mouseClicked(delta, state, player2Data, filter, x, y, world, camera, rays);
+                usedTool2 = tool;
+            }
+        }
+    }
+
+    /**
+     * This method is called after a tool is used following the tool's delay.
+     */
+    @Override
+    public void useToolEnd(int pNumber) {
+        String[] uuids;
+        if (pNumber == 1) {
+            //the schmuck will not register another tool usage for the tool's cd
+            shootCdCount1 = usedTool1.useCd * (1 - bodyData.getToolCdReduc());
+            //execute the tool.
+            uuids = usedTool1.execute(state, player1Data, world, camera, rays, null);//clear the used tool field.
+            usedTool1 = null;
+        } else {
+            //the schmuck will not register another tool usage for the tool's cd
+            shootCdCount2 = usedTool2.useCd * (1 - bodyData.getToolCdReduc());
+            //execute the tool.
+            uuids = usedTool2.execute(state, player2Data, world, camera, rays, null);//clear the used tool field.
+            usedTool2 = null;
+        }
+    }
+
 	public void setInput() {
 		Gdx.input.setInputProcessor(this);
 	}
@@ -236,10 +299,10 @@ public class Player extends Schmuck implements InputProcessor {
 
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
             if (mousePressed) {
-                useToolStart(delta, player1Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
+                useToolStart(delta, player1Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true, 1);
             }
             if (mousePressed2) {
-                useToolStart(delta, player2Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true);
+                useToolStart(delta, player2Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true, 2);
             }
 
             if (spacePressed) {
@@ -264,15 +327,75 @@ public class Player extends Schmuck implements InputProcessor {
                 player2Data.currentTool.reload(delta);
             }
 
+            //process cooldowns
+            shootCdCount1 -= delta;
+            shootDelayCount1 -= delta;
+
+            //If the delay on using a tool just ended, use the tool.
+            if (shootDelayCount1 <= 0 && usedTool1 != null) {
+                useToolEnd(1);
+                Log.info("Used tool 1");
+            }
+
+            //process cooldowns
+            shootCdCount2 -= delta;
+            shootDelayCount2 -= delta;
+System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2);
+            //If the delay on using a tool just ended, use the tool.
+            if (shootDelayCount2 <= 0 && usedTool2 != null) {
+                useToolEnd(2);
+                Log.info("Used tool 2");
+            }
+
+            controllerCount += delta;
+            if (controllerCount >= 1 / 60f) {
+                controllerCount -= 1 / 60f;
+
+                Vector2 currentVel = body.getLinearVelocity();
+
+                float newX = acceleration * desiredXVel + (1 - acceleration) * currentVel.x;
+
+                float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
+
+                Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
+                body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
+
+                desiredXVel = 0.0f;
+                desiredYVel = 0.0f;
+
+                float currentAngleVel = body.getAngularVelocity();
+
+                float newAngleVel = acceleration * desiredAngleVel + (1 - acceleration) * currentAngleVel;
+
+
+                float angularForce = (newAngleVel - currentAngleVel) * (body.getMass());
+                body.applyAngularImpulse(angularForce * (1 + bodyData.getBonusAngSpeed()), true);
+
+                desiredAngleVel = 0.0f;
+            }
+
+            comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+                    this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+
             interactCdCount-=delta;
         } else {
             //If playerNumber is reloading, run the reload method of the current equipment.
             if (playerData.currentTool.reloading) {
                 playerData.currentTool.reload(delta);
             }
+
+            //process cooldowns
+            shootCdCount -= delta;
+            shootDelayCount -= delta;
+
+            //If the delay on using a tool just ended, use the tool.
+            if (shootDelayCount <= 0 && usedTool != null) {
+                useToolEnd(0);
+            }
         }
 
-		super.controller(delta);
+        //Stuff below the if statement should happen both on server/client, i.e. doesn't need to be "synced"
+        flashingCount-=delta;
 
 	}
 	

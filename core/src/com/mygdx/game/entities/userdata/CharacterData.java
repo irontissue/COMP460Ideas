@@ -58,6 +58,8 @@ public class CharacterData extends UserData {
 	
 	public ArrayList<Status> statuses;
 	public ArrayList<Status> statusesChecked;
+
+	public int playerNumber = 0;
 	
 	private final static float flashDuration = 0.08f;
 

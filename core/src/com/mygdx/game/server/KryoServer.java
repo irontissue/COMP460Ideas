@@ -261,11 +261,11 @@ public class KryoServer {
 					server.sendToAllExceptTCP(c.getID(),p);
 				}
 
-				else if (o instanceof Packets.SyncHitbox) {
+				/*else if (o instanceof Packets.SyncHitbox) {
 					//Log.info("Syncing Hitbox...");
 					Packets.SyncHitbox p = (Packets.SyncHitbox) o;
 					server.sendToAllTCP(p);
-				}
+				}*/
 
 				else if (o instanceof Packets.SyncCreateSchmuck) {
 					//Log.info("Syncing Schmuck Creation...");

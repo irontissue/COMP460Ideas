@@ -68,7 +68,7 @@ public class RangedEnemy extends Schmuck {
 
         Vector3 target = new Vector3(state.getPlayer().getBody().getPosition().x, state.getPlayer().getBody().getPosition().y, 0);
         camera.project(target);
-        useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int)target.x, (int)target.y, true);
+        useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int)target.x, (int)target.y, true, 0);
 
 
         if (randSpeedCdCount > randSpeedCd) {
