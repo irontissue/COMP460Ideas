@@ -110,23 +110,11 @@ public class RangedWeapon extends Equipment {
 //			if (distance <= 60) {
 				//Generate the hitbox(s). This method's return is unused, so it may not return a hitbox or whatever at all.
 				//This code determines which player is shooting, if any at all.
-				int pDataNumber = 0;
-				if (user instanceof Player) {
-					Player p = (Player) user;
-					if (shooter instanceof PlayerData) {
-						PlayerData pd = (PlayerData) shooter;
-						if (p.player1Data.equals(pd)) {
-							pDataNumber = 1;
-						} else if (p.player2Data.equals(pd)) {
-							pDataNumber = 2;
-						}
-					}
-				}
 
 				Hitbox[] h = onShoot.makeHitbox(user, state, velo,
 						shooter.getSchmuck().getBody().getPosition().x * PPM, 
 						shooter.getSchmuck().getBody().getPosition().y * PPM, 
-						faction, world, camera, rays, bulletIDS, pDataNumber);
+						faction, world, camera, rays, bulletIDS, shooter.playerNumber);
 				returnIDS = new String[h.length];
 				for (int i = 0; i < h.length; i++) {
 				    returnIDS[i] = h[i].entityID.toString();

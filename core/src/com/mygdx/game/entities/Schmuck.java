@@ -175,7 +175,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
             
             //If the delay on using a tool just ended, use the tool.
             if (shootDelayCount <= 0 && usedTool != null) {
-                useToolEnd();
+                useToolEnd(0);
             }
 
             comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
@@ -218,7 +218,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	 * @param y: y screen coordinate that represents where the tool is being directed.
 	 * @param wait: Should this tool wait for base cooldowns. No for special tools like built-in airblast/momentum freezing/some enemy attacks
 	 */
-	public void useToolStart(float delta, Equipment tool, short filter, int x, int y, boolean wait) {
+	public void useToolStart(float delta, Equipment tool, short filter, int x, int y, boolean wait, int pNumber) {
 		
 		//Only register the attempt if the user is not waiting on a tool's delay or cooldown. (or if tool ignores wait)
 		if ((shootCdCount < 0 && shootDelayCount < 0) || !wait) {
@@ -240,7 +240,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	/**
 	 * This method is called after a tool is used following the tool's delay.
 	 */
-	public void useToolEnd() {
+	public void useToolEnd(int pNumber) {
 			
 		//the schmuck will not register another tool usage for the tool's cd
 		shootCdCount = usedTool.useCd * (1 - bodyData.getToolCdReduc());
