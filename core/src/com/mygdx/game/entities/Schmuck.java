@@ -77,7 +77,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		//schmuckSprite = atlas.findRegion("spittlefish_swim");
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
-		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
+//		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
 		schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
 //		if (state.playerNumber != null) {
 //            state.playerNumber.getClient().client.sendTCP(new Packets.SyncCreateSchmuck(w,h,startX,startY,this.entityID));
@@ -90,7 +90,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
         atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
         //schmuckSprite = atlas.findRegion("spittlefish_swim");
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
-		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
+//		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
         schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
     }
 	
