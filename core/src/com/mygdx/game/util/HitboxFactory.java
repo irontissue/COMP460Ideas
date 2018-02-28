@@ -33,5 +33,5 @@ public abstract class HitboxFactory {
 	 * @return: All of the Hitbox entities created, in order, as a list
 	 */
 	public abstract Hitbox[] makeHitbox(Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-			World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS);
+			World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS, int playerDataNumber);
 }

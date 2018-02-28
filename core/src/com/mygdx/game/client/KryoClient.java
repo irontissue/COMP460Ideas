@@ -13,7 +13,10 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.HitboxImage;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
@@ -167,17 +170,25 @@ public class KryoClient {
 //
 //                }
 
-//                else if (o instanceof Packets.SyncHitboxImage) {
-////                    Log.info("Received HitboxImage sync message...");
-//                    Packets.SyncHitboxImage p = (Packets.SyncHitboxImage) o;
-//                    PlayState ps = (PlayState)myGame.getGsm().states.peek();
-//                    World world = ps.getWorld();
-//                    RayHandler rays = ps.getRays();
-////                    while (ps.updating) {}
-//                    new HitboxImage(ps,p.x,p.y,p.width,p.height,p.lifespan,p.dura,p.rest,p.startVelo,p.filter,p.sensor,world, ps.camera, rays, p.spriteID);
-////                    Log.info("Processed HitboxImage sync message!");
-//
-//                }
+                else if (o instanceof Packets.SyncHitboxImage) {
+//                    Log.info("Received HitboxImage sync message...");
+                    Packets.SyncHitboxImage p = (Packets.SyncHitboxImage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new HitboxImage(ps, p.x, p.y, p.width, p.height, p.lifespan, p.dura, p.rest, p.startVelo,
+                                p.filter, p.sensor, ps.getWorld(), ps.camera, ps.getRays(),
+                                (Schmuck)ps.getEntity(UUID.fromString(p.creatorUUID)), p.spriteID, p.uuid, p.playerDataNumber);
+                        Log.info("Received SyncHitboxImage. player number = " + p.playerDataNumber);
+                        //TODO: Add code to reduce clipLeft in the appropriate playerData. But first, we must move the weapon to the playerdata and not the player.
+                        if ((p.playerDataNumber == 1 && myGame.getGsm().playerNumber == 1) ||
+                                (p.playerDataNumber == 2 && myGame.getGsm().playerNumber == 2)) {
+                            RangedWeapon rw = (RangedWeapon) ps.player.playerData.currentTool;
+                            rw.clipLeft--;
+                            rw.checkReload();
+                        }
+                    }
+
+                }
 
 
                 else if (o instanceof Packets.SyncCreateSchmuck) {
@@ -302,7 +313,7 @@ public class KryoClient {
                     }*/
                 }
 
-                else if (o instanceof Packets.SetEntityAim) {
+                /*else if (o instanceof Packets.SetEntityAim) {
                     //Log.info("Received SetEntityAim message");
                     Packets.SetEntityAim sea = (Packets.SetEntityAim) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
@@ -318,7 +329,7 @@ public class KryoClient {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         ps.entityShoot(UUID.fromString(sea.uuid), sea.bulletUUIDs);
                     }
-                }
+                }*/
 
                 else if (o instanceof Packets.EntityTakeDamage) {
                     Packets.EntityTakeDamage sea = (Packets.EntityTakeDamage) o;

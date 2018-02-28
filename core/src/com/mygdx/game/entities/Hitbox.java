@@ -83,9 +83,9 @@ public class Hitbox extends Entity {
         //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
         this.startVelo = new Vector2(startVelo);
 
-        if (!comp460game.serverMode) {
-            comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
-        }
+        /*if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
+        }*/
     }
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,

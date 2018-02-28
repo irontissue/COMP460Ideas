@@ -54,7 +54,7 @@ public class Packets {
         public int x, y;
     }
 
-    public static class SetEntityAim {
+    /*public static class SetEntityAim {
 	    public SetEntityAim() {}
 	    public SetEntityAim(String uuid, float delta, int x, int y) {
 	        this.uuid = uuid;
@@ -75,7 +75,7 @@ public class Packets {
         }
         public String uuid;
         public String[] bulletUUIDs;
-    }
+    }*/
 
     public static class gameOver {
 	    public gameOver() {}
@@ -176,32 +176,37 @@ public class Packets {
         public float angle;
     }
 
-    public static class SyncHitbox {
-	    public SyncHitbox() {}
-        public SyncHitbox(float x, float y, int width, int height, float lifespan, int dura, float rest,
-                          Vector2 startVelo, short filter, boolean sensor) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-	        this.lifespan = lifespan;
-            this.filter = filter;
-            this.sensor = sensor;
-            this.dura = dura;
-            this.rest = rest;
-            this.startVelo = startVelo;
-        }
-	    public float x, y, lifespan, rest;
-        public int width, height, dura;
-        public Vector2 startVelo;
-        public short filter;
-        public boolean sensor;
-    }
+//    public static class SyncHitbox {
+//	    public SyncHitbox() {}
+//        public SyncHitbox(float x, float y, int width, int height, float lifespan, int dura, float rest,
+//                          Vector2 startVelo, short filter, boolean sensor) {
+//            this.x = x;
+//            this.y = y;
+//            this.width = width;
+//            this.height = height;
+//	        this.lifespan = lifespan;
+//            this.filter = filter;
+//            this.sensor = sensor;
+//            this.dura = dura;
+//            this.rest = rest;
+//            this.startVelo = startVelo;
+//        }
+//	    public float x, y, lifespan, rest;
+//        public int width, height, dura;
+//        public Vector2 startVelo;
+//        public short filter;
+//        public boolean sensor;
+//    }
 
+    /**
+     * Syncs a hitboxImage. playerDataNumber is which player is shooting the bullet, if at all. 1 means player 1,
+     * 2 means player 2, and 0 means something other than the player shot the bullet.
+     */
     public static class SyncHitboxImage {
         public SyncHitboxImage() {}
         public SyncHitboxImage(float x, float y, int width, int height, float lifespan, int dura, float rest,
-                          Vector2 startVelo, short filter, boolean sensor, String spriteID) {
+                          Vector2 startVelo, short filter, boolean sensor, String creatorUUID, String spriteID,
+                               String uuid, int playerDataNumber) {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -213,13 +218,17 @@ public class Packets {
             this.rest = rest;
             this.startVelo = startVelo;
             this.spriteID = spriteID;
+            this.uuid = uuid;
+            this.creatorUUID = creatorUUID;
+            this.playerDataNumber = playerDataNumber;
         }
         public float x, y, lifespan, rest;
-        public int width, height, dura;
+        public int width, height, dura, playerDataNumber;
         public Vector2 startVelo;
         public short filter;
         public boolean sensor;
         public String spriteID;
+        public String uuid, creatorUUID;
     }
 
     public static class SyncCreateSchmuck {
@@ -295,13 +304,13 @@ public class Packets {
         kryo.register(PlayState.class);
         kryo.register(SyncPlayState.class);
         kryo.register(Body.class);
-        kryo.register(SyncHitbox.class);
+//        kryo.register(SyncHitbox.class);
         kryo.register(SyncCreateSchmuck.class);
         kryo.register(SyncHitboxImage.class);
         kryo.register(SyncEntity.class);
         kryo.register(MousePressOrRelease.class);
-        kryo.register(SetEntityAim.class);
-        kryo.register(EntityShoot.class);
+//        kryo.register(SetEntityAim.class);
+//        kryo.register(EntityShoot.class);
         kryo.register(ClientLoadedPlayState.class);
         kryo.register(gameOver.class);
         kryo.register(EntityTakeDamage.class);
