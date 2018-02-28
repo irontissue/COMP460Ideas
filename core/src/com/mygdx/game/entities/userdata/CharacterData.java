@@ -6,6 +6,7 @@ import java.util.Arrays;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.status.DamageTypes;
@@ -81,7 +82,11 @@ public class CharacterData extends UserData {
 		
 		calcStats();
 
-		currentHp = getMaxHp();
+		if (schmuck instanceof Player) {
+			currentHp = 100;
+		} else {
+			currentHp = 1;
+		}
 	}
 	
 	public float statusProcTime(int procTime, CharacterData schmuck, float amount, Status status, DamageTypes... tags) {

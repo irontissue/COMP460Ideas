@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.comp460game;
@@ -48,11 +49,11 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	
 	public float acceleration = 0.1f;
 	
-	public int spriteWidth = 197;
-	public int spriteHeight = 76;
+	public int spriteWidth = -197;
+	public int spriteHeight = -174;
 	
-	public int hbWidth = 76;
-	public int hbHeight = 197;
+	public int hbWidth = -174;
+	public int hbHeight = -197;
 	
 	public static float scale = 0.15f;
 	
@@ -76,6 +77,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		//schmuckSprite = atlas.findRegion("spittlefish_swim");
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
+		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
 		schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
 //		if (state.playerNumber != null) {
 //            state.playerNumber.getClient().client.sendTCP(new Packets.SyncCreateSchmuck(w,h,startX,startY,this.entityID));
@@ -88,6 +90,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
         atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
         //schmuckSprite = atlas.findRegion("spittlefish_swim");
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
+		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
         schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
     }
 	
