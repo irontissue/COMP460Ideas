@@ -12,7 +12,7 @@ import box2dLight.RayHandler;
 
 public class Counter extends Event {
 
-	private static final String name = "Sensor";
+	private static final String name = "Counter";
 
 	int maxCount;
 	int currentCount = 0;

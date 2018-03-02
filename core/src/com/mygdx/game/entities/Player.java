@@ -309,7 +309,6 @@ public class Player extends Schmuck implements InputProcessor {
                 if (currentEvent != null && interactCdCount < 0) {
                     interactCdCount = interactCd;
                     currentEvent.eventData.onInteract(this, 1);
-                    comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(currentEvent.entityID.toString(), 1));
                 }
             }
 
@@ -317,7 +316,6 @@ public class Player extends Schmuck implements InputProcessor {
                 if (currentEvent != null && interactCdCount < 0) {
                     interactCdCount = interactCd;
                     currentEvent.eventData.onInteract(this, 2);
-                    comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(currentEvent.entityID.toString(), 2));
                 }
             }
 

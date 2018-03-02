@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
@@ -22,6 +23,18 @@ public class Victory extends Event {
 	
 	public Victory(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y) {
 		super(state, world, camera, rays, name, width, height, x, y);
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateVictoryMessage(x, y, width, height, entityID.toString()));
+		}
+
+        eventSprite = new TextureRegion(new Texture(AssetList.VICTORY.toString()));
+
+        spriteHeight = eventSprite.getRegionHeight();
+        spriteWidth = eventSprite.getRegionWidth();
+	}
+
+	public Victory(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 
 		eventSprite = new TextureRegion(new Texture(AssetList.VICTORY.toString()));
 
