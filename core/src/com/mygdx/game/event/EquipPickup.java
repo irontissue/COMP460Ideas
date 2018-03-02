@@ -6,7 +6,10 @@ import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.AnotherGun;
+import com.mygdx.game.equipment.ranged.AssaultRifle;
+import com.mygdx.game.equipment.ranged.Boomerang;
 import com.mygdx.game.equipment.ranged.Gun;
+import com.mygdx.game.equipment.ranged.RocketLauncher;
 import com.mygdx.game.event.userdata.InteractableEventData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
@@ -32,6 +35,15 @@ public class EquipPickup extends Event {
 			break;
 		case 1:
 			this.equip = new AnotherGun(null);
+			break;
+		case 2:
+			this.equip = new RocketLauncher(null);
+			break;
+		case 3:
+			this.equip = new Boomerang(null);
+			break;
+		case 4:
+			this.equip = new AssaultRifle(null);
 			break;
 		default:
 			this.equip = new Gun(null);
