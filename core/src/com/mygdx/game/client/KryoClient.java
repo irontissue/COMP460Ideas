@@ -14,16 +14,17 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.HitboxImage;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.equipment.RangedWeapon;
-import com.mygdx.game.event.EquipPickup;
-import com.mygdx.game.event.Event;
+import com.mygdx.game.event.*;
+import com.mygdx.game.event.utility.Switch;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.TitleState;
 import com.mygdx.game.status.DamageTypes;
-import org.w3c.dom.ranges.Range;
 //import com.mygdx.game.server.Packets;
 
 import javax.swing.*;
@@ -199,6 +200,30 @@ public class KryoClient {
 
                 }
 
+                else if (o instanceof Packets.CreateCurrentsMessage) {
+                    Packets.CreateCurrentsMessage p = (Packets.CreateCurrentsMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new Currents(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.vec, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateDestructibleBlockMessage) {
+                    Packets.CreateDestructibleBlockMessage p = (Packets.CreateDestructibleBlockMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new DestructibleBlock(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.hp, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateDoorMessage) {
+                    Packets.CreateDoorMessage p = (Packets.CreateDoorMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new Door(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                    }
+                }
+
                 else if (o instanceof Packets.CreateEquipPickupMessage) {
                     Packets.CreateEquipPickupMessage p = (Packets.CreateEquipPickupMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
@@ -207,13 +232,128 @@ public class KryoClient {
                     }
                 }
 
+                else if (o instanceof Packets.CreateInfoFlagMessage) {
+                    Packets.CreateInfoFlagMessage p = (Packets.CreateInfoFlagMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new InfoFlag(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.text, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateLevelWarpMessage) {
+                    Packets.CreateLevelWarpMessage p = (Packets.CreateLevelWarpMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new LevelWarp(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.level, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateMedpakMessage) {
+                    Packets.CreateMedpakMessage p = (Packets.CreateMedpakMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new Medpak(ps, ps.getWorld(), ps.camera, ps.getRays(), p.x, p.y, null, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreatePoisonVentMessage) {
+                    Packets.CreatePoisonVentMessage p = (Packets.CreatePoisonVentMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new PoisonVent(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.startOn, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateSavePointMessage) {
+                    Packets.CreateSavePointMessage p = (Packets.CreateSavePointMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new SavePoint(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateSpikeTrapMessage) {
+                    Packets.CreateSpikeTrapMessage p = (Packets.CreateSpikeTrapMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new SpikeTrap(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateSwitchMessage) {
+                    Packets.CreateSwitchMessage p = (Packets.CreateSwitchMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new Switch(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateUsePortalMessage) {
+                    Packets.CreateUsePortalMessage p = (Packets.CreateUsePortalMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new UsePortal(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.oneTime, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.CreateVictoryMessage) {
+                    Packets.CreateVictoryMessage p = (Packets.CreateVictoryMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new Victory(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                    }
+                }
+
                 else if (o instanceof Packets.EventInteractMessage) {
                     Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        Event e = (Event) ps.getEntity(UUID.fromString(p.entityID));
-                        if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
-                            e.eventData.onInteract(ps.player, p.playerNumber);
+                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                        if (ent instanceof Player) {
+                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                                e.eventData.onInteract(ps.player, p.playerNumber);
+                            }
+                        }
+                    }
+                }
+
+                else if (o instanceof Packets.EventActivateMessage) {
+                    Packets.EventActivateMessage p = (Packets.EventActivateMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                        Event activator = (Event) ps.getEntity(UUID.fromString(p.activatorID));
+                        if (e != null && activator != null) {
+                            e.eventData.onActivate(activator.eventData);
+                        }
+                    }
+                }
+
+                else if (o instanceof Packets.EventReleaseMessage) {
+                    Packets.EventReleaseMessage p = (Packets.EventReleaseMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                        if (ent instanceof Player) {
+                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                                e.eventData.onRelease(((Player) ent).playerData);
+                            }
+                        }
+                    }
+                }
+
+                else if (o instanceof Packets.EventTouchMessage) {
+                    Packets.EventTouchMessage p = (Packets.EventTouchMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                        if (ent instanceof Player) {
+                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                                e.eventData.onTouch(((Player) ent).playerData);
+                            }
                         }
                     }
                 }
@@ -363,14 +503,23 @@ public class KryoClient {
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         Entity e = ps.getEntity(UUID.fromString(sea.uuid));
+                        Entity attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
                         if (e instanceof Schmuck) {
                             Schmuck s = (Schmuck) e;
-                            Entity attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
-                            if (attackerEntity instanceof Schmuck) {
-                                Schmuck attackerSchmuck = (Schmuck) attackerEntity;
-                                s.getBodyData().receiveDamage(sea.damage, new Vector2(0, 0),
-                                        attackerSchmuck.getBodyData(), true, DamageTypes.TESTTYPE1);
+                            CharacterData theData = null;
+                            if (attackerEntity != null && attackerEntity instanceof Schmuck) {
+                                theData = ((Schmuck) attackerEntity).getBodyData();
                             }
+                            s.getBodyData().receiveDamage(sea.damage, new Vector2(0, 0),
+                                    theData, true, DamageTypes.TESTTYPE1);
+                        } else if (e instanceof Event) {
+                            Event ee = (Event) e;
+                            CharacterData theData = null;
+                            if (attackerEntity != null && attackerEntity instanceof Schmuck) {
+                                theData = ((Schmuck) attackerEntity).getBodyData();
+                            }
+                            ee.eventData.receiveDamage(sea.damage, new Vector2(0, 0),
+                                    theData, true, DamageTypes.TESTTYPE1);
                         }
                     }
                 }

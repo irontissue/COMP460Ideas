@@ -6,6 +6,7 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.userdata.InteractableEventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -27,6 +28,15 @@ public class LevelWarp extends Event {
 	public LevelWarp(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
 			int x, int y, String level) {
 		super(state, world, camera, rays, name, width, height, x, y);
+		this.level = level;
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateLevelWarpMessage(x, y, width, height, level, entityID.toString()));
+		}
+	}
+
+	public LevelWarp(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
+					 int x, int y, String level, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		this.level = level;
 	}
 	

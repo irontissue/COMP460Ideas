@@ -3,8 +3,10 @@ package com.mygdx.game.event;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -22,6 +24,14 @@ public class Currents extends Event {
 	public Currents(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, Vector2 vec) {
 		super(state, world, camera, rays, name, width, height, x, y);
 		this.vec = vec;
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateCurrentsMessage(x, y, width, height, vec, entityID.toString()));
+		}
+	}
+
+	public Currents(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, Vector2 vec, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
+		this.vec = vec;
 	}
 	
 	public void create() {
@@ -34,13 +44,15 @@ public class Currents extends Event {
 	}
 	
 	public void controller(float delta) {
-		controllerCount+=delta;
-		if (controllerCount >= 1/60f) {
-			controllerCount = 0;
-			
-			for (Entity entity : eventData.schmucks) {
+		if (comp460game.serverMode) {
+			controllerCount += delta;
+			if (controllerCount >= 1 / 60f) {
+				controllerCount = 0;
+
+				for (Entity entity : eventData.schmucks) {
 //				entity.getBody().applyLinearImpulse(vec, entity.getBody().getWorldCenter(), true);
-				entity.getBody().setTransform(entity.getBody().getPosition().add(vec.x / 32, vec.y / 32), entity.getBody().getAngle());
+					entity.getBody().setTransform(entity.getBody().getPosition().add(vec.x / 32, vec.y / 32), entity.getBody().getAngle());
+				}
 			}
 		}
 		

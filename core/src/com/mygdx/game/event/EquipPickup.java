@@ -44,8 +44,8 @@ public class EquipPickup extends Event {
 
 	//To be used on client only
 	public EquipPickup(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					   int x, int y, int equipId, String uuid) {
-		super(state, world, camera, rays, name, width, height, x, y, uuid);
+					   int x, int y, int equipId, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		switch(equipId) {
 			case 0:
 				this.equip = new Gun(null);
@@ -69,6 +69,7 @@ public class EquipPickup extends Event {
                     } else {
                         temp = p.player2Data.pickup(equip);
                     }
+					comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(), p.entityID.toString(), playerNumber));
                 } else {
 					if (playerNumber == state.gsm.playerNumber) {
 						temp = p.playerData.pickup(equip);
