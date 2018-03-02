@@ -4,11 +4,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
-import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.AnotherGun;
 import com.mygdx.game.equipment.ranged.Gun;
 import com.mygdx.game.event.userdata.InteractableEventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -37,12 +37,32 @@ public class EquipPickup extends Event {
 			this.equip = new Gun(null);
 			break;
 		}
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateEquipPickupMessage(x, y, width, height, equipId, entityID.toString()));
+		}
+	}
+
+	//To be used on client only
+	public EquipPickup(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
+					   int x, int y, int equipId, String uuid) {
+		super(state, world, camera, rays, name, width, height, x, y, uuid);
+		switch(equipId) {
+			case 0:
+				this.equip = new Gun(null);
+				break;
+			case 1:
+				this.equip = new AnotherGun(null);
+				break;
+			default:
+				this.equip = new Gun(null);
+				break;
+		}
 	}
 	
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
 			public void onInteract(Player p, int playerNumber) {
-                Equipment temp;
+                Equipment temp = null;
 				if (comp460game.serverMode) {
 				    if (playerNumber == 1) {
                         temp = p.player1Data.pickup(equip);
@@ -50,7 +70,9 @@ public class EquipPickup extends Event {
                         temp = p.player2Data.pickup(equip);
                     }
                 } else {
-                    temp = p.playerData.pickup(equip);
+					if (playerNumber == state.gsm.playerNumber) {
+						temp = p.playerData.pickup(equip);
+					}
                 }
 				if (temp == null) {
 					queueDeletion();

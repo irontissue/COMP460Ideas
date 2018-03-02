@@ -42,8 +42,8 @@ public class HpBar extends A460Actor {
                         player.player1Data.getMaxHp(), 100, 80);
                 font.draw(batch, " Hp 2: " + Math.round(player.player2Data.currentHp) + "/" +
                         player.player2Data.getMaxHp(), comp460game.CONFIG_WIDTH - 100, 80);
-                font.draw(batch, player.player1Data.currentTool.getText(), 100, 60);
-                font.draw(batch, player.player2Data.currentTool.getText(), comp460game.CONFIG_WIDTH - 100, 60);
+                font.draw(batch, player.player1Data.getCurrentTool().getText(), 100, 60);
+                font.draw(batch, player.player2Data.getCurrentTool().getText(), comp460game.CONFIG_WIDTH - 100, 60);
 
                 float percent = player.player1Data.currentHp / player.player1Data.getMaxHp();
                 float percent2 = player.player2Data.currentHp / player.player2Data.getMaxHp();
@@ -73,7 +73,7 @@ public class HpBar extends A460Actor {
 			} else if (player.playerData != null) {
                 font.getData().setScale(1.5f);
                 font.draw(batch, " Hp: " + Math.round(player.playerData.currentHp) + "/" + player.playerData.getMaxHp(), 100, 80);
-                font.draw(batch, player.playerData.currentTool.getText(), 100, 60);
+                font.draw(batch, player.playerData.getCurrentTool().getText(), 100, 60);
 
                 float percent = player.playerData.currentHp / player.playerData.getMaxHp();
 

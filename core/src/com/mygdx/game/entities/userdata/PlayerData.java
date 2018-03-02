@@ -1,18 +1,22 @@
 package com.mygdx.game.entities.userdata;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.AnotherGun;
 import com.mygdx.game.equipment.ranged.Gun;
+import com.mygdx.game.server.Packets;
 
 public class PlayerData extends CharacterData {
 
-	public int itemSlots = 4;
-	public Equipment[] multitools;
-	public int currentSlot = 0;
-	public int lastSlot = 0;
-	public Equipment currentTool;
+	private int itemSlots = 4;
+    private Equipment[] multitools;
+
+    private int currentSlot = 0;
+    private int lastSlot = 0;
+    private Equipment currentTool;
 	
 	public Player player;
 	
@@ -50,7 +54,7 @@ public class PlayerData extends CharacterData {
 	}
 	
 	public Equipment pickup(Equipment equip) {
-		
+		Log.info("Picked up an equip");
 		for (int i = 0; i < itemSlots; i++) {
 			if (multitools[i] == null) {
 				multitools[i] = equip;
@@ -75,4 +79,24 @@ public class PlayerData extends CharacterData {
 		schmuck.getState().gameOver(false);
 		super.die(perp);
 	}
+
+    public int getItemSlots() {
+        return itemSlots;
+    }
+
+    public Equipment[] getMultitools() {
+        return multitools;
+    }
+
+    public int getCurrentSlot() {
+        return currentSlot;
+    }
+
+    public int getLastSlot() {
+        return lastSlot;
+    }
+
+    public Equipment getCurrentTool() {
+        return currentTool;
+    }
 }

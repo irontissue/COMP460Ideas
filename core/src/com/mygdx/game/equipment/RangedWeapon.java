@@ -5,10 +5,12 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.PlayerData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.HitboxFactory;
 import com.mygdx.game.util.SteeringUtil;
@@ -120,6 +122,9 @@ public class RangedWeapon extends Equipment {
 				    returnIDS[i] = h[i].entityID.toString();
                 }
 				clipLeft--;
+				if (comp460game.serverMode) {
+					comp460game.server.server.sendToAllTCP(new Packets.PlayerShoot(shooter.playerNumber));
+				}
 				
 				//If playerNumber fires in the middle of reloading, reset reload progress
 				reloading = false;

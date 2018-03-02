@@ -34,6 +34,12 @@ public class Event extends Entity {
 		super(state, world, camera, rays, width, height, x, y);
 		this.name = name;
 	}
+
+	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
+				 int width, int height, int x, int y, String uuid) {
+		super(state, world, camera, rays, width, height, x, y, uuid);
+		this.name = name;
+	}
 	
 	@Override
 	public void create() {

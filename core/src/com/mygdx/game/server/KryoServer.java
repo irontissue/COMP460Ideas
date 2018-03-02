@@ -168,6 +168,16 @@ public class KryoServer {
                                     ps.player.ePressed2 = false;
                                 }
                             }
+                        } else if (p.message == Input.Keys.R) {
+                            if (p.playerID == playerIDs[0]) {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player1Data.getCurrentTool().reloading = true;
+                                }
+                            } else {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player2Data.getCurrentTool().reloading = true;
+                                }
+                            }
                         } else if (p.message == Input.Keys.SPACE) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
@@ -180,6 +190,46 @@ public class KryoServer {
                                     ps.player.spacePressed2 = true;
                                 } else {
                                     ps.player.spacePressed2 = false;
+                                }
+                            }
+                        } else if (p.message == Input.Keys.NUM_1) {
+                            if (p.playerID == playerIDs[0]) {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player1Data.switchWeapon(1);
+                                }
+                            } else {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player2Data.switchWeapon(1);
+                                }
+                            }
+                        } else if (p.message == Input.Keys.NUM_2) {
+                            if (p.playerID == playerIDs[0]) {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player1Data.switchWeapon(2);
+                                }
+                            } else {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player2Data.switchWeapon(2);
+                                }
+                            }
+                        } else if (p.message == Input.Keys.NUM_3) {
+                            if (p.playerID == playerIDs[0]) {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player1Data.switchWeapon(3);
+                                }
+                            } else {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player2Data.switchWeapon(3);
+                                }
+                            }
+                        } else if (p.message == Input.Keys.NUM_4) {
+                            if (p.playerID == playerIDs[0]) {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player1Data.switchWeapon(4);
+                                }
+                            } else {
+                                if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
+                                    ps.player.player2Data.switchWeapon(4);
                                 }
                             }
                         }
