@@ -97,7 +97,7 @@ public class TriggerSpawn extends Event {
 					
 					for (Schmuck s : spawns) {
 						
-						if (s.getBodyData().currentHp > 0) {
+						if (s.getBodyData() != null && s.getBodyData().currentHp > 0) {
 							defeated = false;
 						}
 					}

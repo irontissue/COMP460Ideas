@@ -265,6 +265,38 @@ public class Packets {
 	    public float damage;
     }
 
+    public static class EventInteractMessage {
+        public EventInteractMessage() {}
+        public EventInteractMessage(String entityID, int playerNumber) {
+            this.entityID = entityID;
+            this.playerNumber = playerNumber;
+        }
+        public String entityID;
+        public int playerNumber;
+    }
+
+    public static class CreateEquipPickupMessage {
+        public CreateEquipPickupMessage() {}
+        public CreateEquipPickupMessage(int x, int y, int width, int height, int equipID, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.equipID = equipID;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height, equipID;
+        public String entityID;
+    }
+
+    public static class PlayerShoot {
+        public PlayerShoot() {}
+        public PlayerShoot(int playerNumber) {
+            this.playerNumber = playerNumber;
+        }
+        public int playerNumber;
+    }
+
     /**
      * If the adjustAmount is positive, it will increase the entity's HP by that amount.
      */
@@ -316,6 +348,9 @@ public class Packets {
         kryo.register(EntityTakeDamage.class);
         kryo.register(EntityAdjustHealth.class);
         kryo.register(LoadLevel.class);
+        kryo.register(EventInteractMessage.class);
+        kryo.register(CreateEquipPickupMessage.class);
+        kryo.register(PlayerShoot.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

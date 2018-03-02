@@ -102,9 +102,9 @@ public class UIPlay extends A460Actor{
                 batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
 
                 font.getData().setScale(0.4f);
-                font.draw(batch, player.player1Data.currentTool.name, x + 60, y + 130);
+                font.draw(batch, player.player1Data.getCurrentTool().name, x + 60, y + 130);
                 font.getData().setScale(0.8f);
-                font.draw(batch, player.player1Data.currentTool.getText(), x + 70, y + 75);
+                font.draw(batch, player.player1Data.getCurrentTool().getText(), x + 70, y + 75);
 
                 //This makes low Hp indicator blink at low health
                 if (hpRatio2 <= hpLowThreshold) {
@@ -125,17 +125,17 @@ public class UIPlay extends A460Actor{
                 batch.draw(main, x + 475, y, main.getWidth() * scale, main.getHeight() * scale);
 
                 font.getData().setScale(0.4f);
-                font.draw(batch, player.player1Data.currentTool.name, x + 60, y + 130);
-                font.draw(batch, player.player2Data.currentTool.name, x + 535, y + 130);
+                font.draw(batch, player.player1Data.getCurrentTool().name, x + 60, y + 130);
+                font.draw(batch, player.player2Data.getCurrentTool().name, x + 535, y + 130);
                 font.getData().setScale(0.8f);
-                font.draw(batch, player.player1Data.currentTool.getText(), x + 70, y + 75);
-                font.draw(batch, player.player2Data.currentTool.getText(), x + 545, y + 75);
+                font.draw(batch, player.player1Data.getCurrentTool().getText(), x + 70, y + 75);
+                font.draw(batch, player.player2Data.getCurrentTool().getText(), x + 545, y + 75);
 
                 for (int i = 0; i < 4; i++) {
-                    if (player.player1Data.multitools.length <= i) {
+                    if (player.player1Data.getMultitools().length <= i) {
                         batch.draw(itemNull.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
                     } else {
-                        if (i == player.player1Data.currentSlot) {
+                        if (i == player.player1Data.getCurrentSlot()) {
                             batch.draw(itemSelect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
                         } else {
                             batch.draw(itemUnselect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
@@ -144,10 +144,10 @@ public class UIPlay extends A460Actor{
                 }
 
                 for (int i = 0; i < 4; i++) {
-                    if (player.player2Data.multitools.length <= i) {
+                    if (player.player2Data.getMultitools().length <= i) {
                         batch.draw(itemNull.get(i), 475 + x, y, main.getWidth() * scale, main.getHeight() * scale);
                     } else {
-                        if (i == player.player2Data.currentSlot) {
+                        if (i == player.player2Data.getCurrentSlot()) {
                             batch.draw(itemSelect.get(i), 475 + x, y, main.getWidth() * scale, main.getHeight() * scale);
                         } else {
                             batch.draw(itemUnselect.get(i), 475 + x, y, main.getWidth() * scale, main.getHeight() * scale);
@@ -190,15 +190,15 @@ public class UIPlay extends A460Actor{
                 batch.draw(main, x, y, main.getWidth() * scale, main.getHeight() * scale);
 
                 font.getData().setScale(0.4f);
-                font.draw(batch, player.playerData.currentTool.name, x + 60, y + 130);
+                font.draw(batch, player.playerData.getCurrentTool().name, x + 60, y + 130);
                 font.getData().setScale(0.8f);
-                font.draw(batch, player.playerData.currentTool.getText(), x + 70, y + 75);
+                font.draw(batch, player.playerData.getCurrentTool().getText(), x + 70, y + 75);
 
                 for (int i = 0; i < 4; i++) {
-                    if (player.playerData.multitools.length <= i) {
+                    if (player.playerData.getMultitools().length <= i) {
                         batch.draw(itemNull.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
                     } else {
-                        if (i == player.playerData.currentSlot) {
+                        if (i == player.playerData.getCurrentSlot()) {
                             batch.draw(itemSelect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);
                         } else {
                             batch.draw(itemUnselect.get(i), x, y, main.getWidth() * scale, main.getHeight() * scale);

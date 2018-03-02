@@ -40,7 +40,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,156,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,129,156,0,
+0,0,0,0,0,0,0,737,0,0,0,0,0,129,156,0,
 0,134,134,0,0,0,0,0,0,0,0,0,0,156,156,0,
 0,134,134,134,0,0,0,0,0,0,0,0,156,129,129,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -89,24 +89,29 @@
     <property name="Level" value="map_1_460.tmx"/>
    </properties>
   </object>
-  <object id="20" name="Warp" type="Warp" x="393.973" y="713.614" width="44.0534" height="40.7724">
+  <object id="20" name="Warp" type="Warp" x="455.973" y="777.614" width="44.0534" height="40.7724">
    <properties>
     <property name="Level" value="sportMap.tmx"/>
    </properties>
   </object>
-  <object id="22" name="Equip" type="Equip" x="352" y="432" width="16" height="16">
+  <object id="21" name="Equip" type="Equip" x="352" y="464" width="16" height="16">
    <properties>
     <property name="equipId" type="int" value="1"/>
    </properties>
   </object>
-  <object id="23" name="Equip" type="Equip" x="656" y="432" width="16" height="16">
+  <object id="22" name="Equip" type="Equip" x="624" y="448" width="16" height="16">
    <properties>
     <property name="equipId" type="int" value="2"/>
    </properties>
   </object>
-  <object id="24" name="Equip" type="Equip" x="304" y="480" width="16" height="16">
+  <object id="23" name="Equip" type="Equip" x="688" y="480" width="16" height="16">
    <properties>
     <property name="equipId" type="int" value="3"/>
+   </properties>
+  </object>
+  <object id="24" name="Equip" type="Equip" x="272" y="496" width="16" height="16">
+   <properties>
+    <property name="equipId" type="int" value="4"/>
    </properties>
   </object>
  </objectgroup>
