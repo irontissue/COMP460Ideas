@@ -1,0 +1,270 @@
+sheet_equipment.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+ball_basket1
+  rotate: false
+  xy: 69, 72
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_basket2
+  rotate: false
+  xy: 94, 18
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_basket3
+  rotate: false
+  xy: 58, 91
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_basket4
+  rotate: false
+  xy: 61, 0
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_bowling1
+  rotate: false
+  xy: 87, 68
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_bowling2
+  rotate: false
+  xy: 97, 0
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_bowling3
+  rotate: false
+  xy: 76, 18
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_football
+  rotate: false
+  xy: 32, 92
+  size: 14, 16
+  orig: 14, 16
+  offset: 0, 0
+  index: -1
+ball_generic1
+  rotate: false
+  xy: 79, 0
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_generic2
+  rotate: false
+  xy: 105, 66
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+ball_golf
+  rotate: false
+  xy: 76, 108
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+ball_puck
+  rotate: false
+  xy: 84, 108
+  size: 8, 8
+  orig: 8, 8
+  offset: 0, 0
+  index: -1
+ball_soccer1
+  rotate: false
+  xy: 53, 54
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_soccer2
+  rotate: false
+  xy: 89, 36
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_soccer3
+  rotate: false
+  xy: 58, 32
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_soccer4
+  rotate: false
+  xy: 76, 90
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_tennis1
+  rotate: false
+  xy: 76, 36
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+ball_tennis2
+  rotate: false
+  xy: 61, 18
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+ball_volley1
+  rotate: false
+  xy: 71, 50
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+ball_volley2
+  rotate: false
+  xy: 51, 73
+  size: 18, 18
+  orig: 18, 18
+  offset: 0, 0
+  index: -1
+bat_handle
+  rotate: false
+  xy: 32, 16
+  size: 29, 8
+  orig: 29, 8
+  offset: 0, 0
+  index: -1
+bat_metal
+  rotate: false
+  xy: 32, 24
+  size: 29, 8
+  orig: 29, 8
+  offset: 0, 0
+  index: -1
+bat_wood
+  rotate: false
+  xy: 32, 0
+  size: 29, 8
+  orig: 29, 8
+  offset: 0, 0
+  index: -1
+boxing_glove
+  rotate: false
+  xy: 89, 54
+  size: 15, 14
+  orig: 15, 14
+  offset: 0, 0
+  index: -1
+card_red
+  rotate: false
+  xy: 94, 86
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+card_white
+  rotate: false
+  xy: 46, 92
+  size: 12, 12
+  orig: 12, 12
+  offset: 0, 0
+  index: -1
+card_yellow
+  rotate: false
+  xy: 104, 54
+  size: 11, 12
+  orig: 11, 12
+  offset: 0, 0
+  index: -1
+flag_black
+  rotate: false
+  xy: 0, 0
+  size: 32, 27
+  orig: 32, 27
+  offset: 0, 0
+  index: -1
+flag_checkered
+  rotate: false
+  xy: 0, 27
+  size: 32, 27
+  orig: 32, 27
+  offset: 0, 0
+  index: -1
+flag_green
+  rotate: false
+  xy: 0, 81
+  size: 32, 27
+  orig: 32, 27
+  offset: 0, 0
+  index: -1
+flag_white
+  rotate: false
+  xy: 0, 54
+  size: 32, 27
+  orig: 32, 27
+  offset: 0, 0
+  index: -1
+golf_club
+  rotate: false
+  xy: 94, 98
+  size: 11, 10
+  orig: 11, 10
+  offset: 0, 0
+  index: -1
+helmet_white1
+  rotate: false
+  xy: 32, 73
+  size: 19, 19
+  orig: 19, 19
+  offset: 0, 0
+  index: -1
+helmet_white2
+  rotate: false
+  xy: 32, 54
+  size: 21, 19
+  orig: 21, 19
+  offset: 0, 0
+  index: -1
+helmet_white3
+  rotate: false
+  xy: 32, 32
+  size: 26, 22
+  orig: 26, 22
+  offset: 0, 0
+  index: -1
+racket_handle
+  rotate: false
+  xy: 29, 108
+  size: 29, 8
+  orig: 29, 8
+  offset: 0, 0
+  index: -1
+racket_metal
+  rotate: false
+  xy: 0, 108
+  size: 29, 8
+  orig: 29, 8
+  offset: 0, 0
+  index: -1
+racket_wood
+  rotate: false
+  xy: 32, 8
+  size: 29, 8
+  orig: 29, 8
+  offset: 0, 0
+  index: -1
