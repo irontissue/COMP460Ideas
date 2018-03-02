@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
@@ -22,6 +24,19 @@ public class Door extends Event {
 	public Door(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width,
 			int height, int x, int y) {
 		super(state, world, camera, rays, name, width, height, x, y);
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateDoorMessage(x, y, width, height, entityID.toString()));
+		}
+
+        eventSprite = new TextureRegion(new Texture(AssetList.DOOR.toString()));
+
+        spriteHeight = eventSprite.getRegionHeight();
+        spriteWidth = eventSprite.getRegionWidth();
+	}
+
+	public Door(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width,
+				int height, int x, int y, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 
 		eventSprite = new TextureRegion(new Texture(AssetList.DOOR.toString()));
 

@@ -3,10 +3,12 @@ package com.mygdx.game.event;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -25,6 +27,17 @@ public class PoisonVent extends Event {
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
 			int x, int y, float dps, boolean startOn) {
 		super(state, world, camera, rays, name, width, height, x, y);
+		this.dps = dps;
+		this.perp = state.worldDummy.getBodyData();
+		this.on = startOn;
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreatePoisonVentMessage(x, y, width, height, dps, startOn, entityID.toString()));
+		}
+	}
+
+	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
+					  int x, int y, float dps, boolean startOn, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 		this.on = startOn;
