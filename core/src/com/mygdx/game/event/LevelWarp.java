@@ -1,12 +1,16 @@
 package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.userdata.InteractableEventData;
 import com.mygdx.game.server.Packets;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -32,12 +36,22 @@ public class LevelWarp extends Event {
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateLevelWarpMessage(x, y, width, height, level, entityID.toString()));
 		}
+
+        eventSprite = new TextureRegion(new Texture(AssetList.LEVEL_WARP.toString()));
+
+        spriteHeight = eventSprite.getRegionHeight();
+        spriteWidth = eventSprite.getRegionWidth();
 	}
 
 	public LevelWarp(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
 					 int x, int y, String level, String entityID) {
 		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		this.level = level;
+
+		eventSprite = new TextureRegion(new Texture(AssetList.LEVEL_WARP.toString()));
+
+        spriteHeight = eventSprite.getRegionHeight();
+        spriteWidth = eventSprite.getRegionWidth();
 	}
 	
 	@Override

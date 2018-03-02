@@ -1,10 +1,15 @@
 package com.mygdx.game.event.utility;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.UserDataTypes;
@@ -22,6 +27,11 @@ public class Target extends Event {
 			int x, int y, boolean oneTime) {
 		super(state, world, camera, rays, name, width, height, x, y);
 		this.oneTime = oneTime;
+
+		eventSprite = new TextureRegion(new Texture(AssetList.TARGET.toString()));
+
+		spriteHeight = eventSprite.getRegionHeight();
+		spriteWidth = eventSprite.getRegionWidth();
 	}
 	
 	public void create() {
