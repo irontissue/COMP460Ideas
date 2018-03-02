@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.entities.Hitbox;
+import com.mygdx.game.entities.HitboxImage;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.entities.userdata.UserData;
@@ -17,9 +18,9 @@ public class WeaponUtils {
 	
 	public static Hitbox explode(PlayState state, float x, float y, World world, OrthographicCamera camera, RayHandler rays, 
 			final Schmuck user, int explosionRadius, final float explosionDamage, final float explosionKnockback, short filter) {
-		Hitbox explosion = new Hitbox(state, 
-				x, y,	explosionRadius, explosionRadius, 0, 1, 0, new Vector2(0, 0),
-				filter, true, world, camera, rays, user);
+		Hitbox explosion = new HitboxImage(state, 
+				x, y,	explosionRadius, explosionRadius, 0.3f, 1, 0, new Vector2(0, 0),
+				filter, true, world, camera, rays, user, "orb_yellow", null, explosionRadius);
 
 		explosion.setUserData(new HitboxData(state, world, explosion){
 			public void onHit(UserData fixB) {
