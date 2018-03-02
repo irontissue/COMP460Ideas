@@ -201,106 +201,171 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.CreateCurrentsMessage) {
-                    Packets.CreateCurrentsMessage p = (Packets.CreateCurrentsMessage) o;
+                    final Packets.CreateCurrentsMessage p = (Packets.CreateCurrentsMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new Currents(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.vec, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Currents(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.vec, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateDestructibleBlockMessage) {
-                    Packets.CreateDestructibleBlockMessage p = (Packets.CreateDestructibleBlockMessage) o;
+                    final Packets.CreateDestructibleBlockMessage p = (Packets.CreateDestructibleBlockMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new DestructibleBlock(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.hp, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new DestructibleBlock(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.hp, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateDoorMessage) {
-                    Packets.CreateDoorMessage p = (Packets.CreateDoorMessage) o;
+                    final Packets.CreateDoorMessage p = (Packets.CreateDoorMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new Door(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Door(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateEquipPickupMessage) {
-                    Packets.CreateEquipPickupMessage p = (Packets.CreateEquipPickupMessage) o;
+                    final Packets.CreateEquipPickupMessage p = (Packets.CreateEquipPickupMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new EquipPickup(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.equipID, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new EquipPickup(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.equipID, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateInfoFlagMessage) {
-                    Packets.CreateInfoFlagMessage p = (Packets.CreateInfoFlagMessage) o;
+                    final Packets.CreateInfoFlagMessage p = (Packets.CreateInfoFlagMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new InfoFlag(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.text, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new InfoFlag(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.text, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateLevelWarpMessage) {
-                    Packets.CreateLevelWarpMessage p = (Packets.CreateLevelWarpMessage) o;
+                    final Packets.CreateLevelWarpMessage p = (Packets.CreateLevelWarpMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new LevelWarp(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.level, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new LevelWarp(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.level, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateMedpakMessage) {
-                    Packets.CreateMedpakMessage p = (Packets.CreateMedpakMessage) o;
+                    final Packets.CreateMedpakMessage p = (Packets.CreateMedpakMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new Medpak(ps, ps.getWorld(), ps.camera, ps.getRays(), p.x, p.y, null, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Medpak(ps, ps.getWorld(), ps.camera, ps.getRays(), p.x, p.y, null, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreatePoisonVentMessage) {
-                    Packets.CreatePoisonVentMessage p = (Packets.CreatePoisonVentMessage) o;
+                    final Packets.CreatePoisonVentMessage p = (Packets.CreatePoisonVentMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new PoisonVent(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.startOn, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new PoisonVent(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.startOn, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateSavePointMessage) {
-                    Packets.CreateSavePointMessage p = (Packets.CreateSavePointMessage) o;
+                    final Packets.CreateSavePointMessage p = (Packets.CreateSavePointMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new SavePoint(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new SavePoint(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateSpikeTrapMessage) {
-                    Packets.CreateSpikeTrapMessage p = (Packets.CreateSpikeTrapMessage) o;
+                    final Packets.CreateSpikeTrapMessage p = (Packets.CreateSpikeTrapMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new SpikeTrap(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new SpikeTrap(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateSwitchMessage) {
-                    Packets.CreateSwitchMessage p = (Packets.CreateSwitchMessage) o;
+                    final Packets.CreateSwitchMessage p = (Packets.CreateSwitchMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new Switch(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Switch(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateUsePortalMessage) {
-                    Packets.CreateUsePortalMessage p = (Packets.CreateUsePortalMessage) o;
+                    final Packets.CreateUsePortalMessage p = (Packets.CreateUsePortalMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new UsePortal(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.oneTime, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new UsePortal(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.oneTime, p.entityID);
+                            }
+                        });
                     }
                 }
 
                 else if (o instanceof Packets.CreateVictoryMessage) {
-                    Packets.CreateVictoryMessage p = (Packets.CreateVictoryMessage) o;
+                    final Packets.CreateVictoryMessage p = (Packets.CreateVictoryMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        new Victory(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Victory(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                            }
+                        });
                     }
                 }
 
