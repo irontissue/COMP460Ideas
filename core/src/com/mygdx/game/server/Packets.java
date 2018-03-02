@@ -265,30 +265,6 @@ public class Packets {
 	    public float damage;
     }
 
-    public static class EventInteractMessage {
-        public EventInteractMessage() {}
-        public EventInteractMessage(String entityID, int playerNumber) {
-            this.entityID = entityID;
-            this.playerNumber = playerNumber;
-        }
-        public String entityID;
-        public int playerNumber;
-    }
-
-    public static class CreateEquipPickupMessage {
-        public CreateEquipPickupMessage() {}
-        public CreateEquipPickupMessage(int x, int y, int width, int height, int equipID, String entityID) {
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.equipID = equipID;
-            this.entityID = entityID;
-        }
-        public int x, y, width, height, equipID;
-        public String entityID;
-    }
-
     public static class PlayerShoot {
         public PlayerShoot() {}
         public PlayerShoot(int playerNumber) {
@@ -322,6 +298,321 @@ public class Packets {
         public String level;
     }
 
+    /**
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ALL EVENT TRIGGER MESSAGES BELOW THIS.
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     */
+
+    public static class EventInteractMessage {
+        public EventInteractMessage() {}
+        public EventInteractMessage(String eventID, String entityID, int playerNumber) {
+            this.entityID = entityID;
+            this.playerNumber = playerNumber;
+            this.eventID = eventID;
+        }
+        public String eventID;
+        public String entityID;
+        public int playerNumber;
+    }
+
+    public static class EventTouchMessage {
+        public EventTouchMessage() {}
+        public EventTouchMessage(String eventID, String entityID, int playerNumber) {
+            this.entityID = entityID;
+            this.playerNumber = playerNumber;
+            this.eventID = eventID;
+        }
+        public String eventID;
+        public String entityID;
+        public int playerNumber;
+    }
+
+    public static class EventReleaseMessage {
+        public EventReleaseMessage() {}
+        public EventReleaseMessage(String eventID, String entityID, int playerNumber) {
+            this.entityID = entityID;
+            this.eventID = eventID;
+            this.playerNumber = playerNumber;
+        }
+        public String eventID;
+        public String entityID;
+        public int playerNumber;
+    }
+
+    public static class EventActivateMessage {
+        public EventActivateMessage() {}
+        public EventActivateMessage(String eventID, String activatorID) {
+            this.eventID = eventID;
+            this.activatorID = activatorID;
+        }
+        public String eventID;
+        public String activatorID;
+    }
+
+    /**
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ALL EVENT CREATION MESSAGES BELOW THIS.
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     * ---------------------------------------
+     */
+
+    public static class CreateCurrentsMessage {
+        public CreateCurrentsMessage() {}
+        public CreateCurrentsMessage(int x, int y, int width, int height, Vector2 vec, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.vec = vec;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public Vector2 vec;
+    }
+
+    public static class CreateDestructibleBlockMessage {
+        public CreateDestructibleBlockMessage() {}
+        public CreateDestructibleBlockMessage(int x, int y, int width, int height, int hp, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.hp = hp;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public int hp;
+    }
+
+    public static class CreateDoorMessage {
+        public CreateDoorMessage() {}
+        public CreateDoorMessage(int x, int y, int width, int height, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+    }
+
+    public static class CreateEntitySpawnerMessage {
+        public CreateEntitySpawnerMessage() {}
+        public CreateEntitySpawnerMessage(int x, int y, int width, int height, int schmuckID, float interval, int limit, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.schmuckID = schmuckID;
+            this.interval = interval;
+            this.limit = limit;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public int schmuckID, limit;
+        public float interval;
+    }
+
+    public static class CreateEquipPickupMessage {
+        public CreateEquipPickupMessage() {}
+        public CreateEquipPickupMessage(int x, int y, int width, int height, int equipID, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.equipID = equipID;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height, equipID;
+        public String entityID;
+    }
+
+    public static class CreateInfoFlagMessage {
+        public CreateInfoFlagMessage() {}
+        public CreateInfoFlagMessage(int x, int y, int width, int height, String text, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.text = text;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public String text;
+    }
+
+    public static class CreateLevelWarpMessage {
+        public CreateLevelWarpMessage() {}
+        public CreateLevelWarpMessage(int x, int y, int width, int height, String level, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.level = level;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public String level;
+    }
+
+    public static class CreateMedpakMessage {
+        public CreateMedpakMessage() {}
+        public CreateMedpakMessage(int x, int y, int width, int height, String entityID, String spawnerID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.spawnerID = spawnerID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public String spawnerID;
+    }
+
+    public static class CreateMedpakSpawnerMessage {
+        public CreateMedpakSpawnerMessage() {}
+        public CreateMedpakSpawnerMessage(int x, int y, int width, int height, float interval, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.interval = interval;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public float interval;
+    }
+
+    public static class CreatePoisonVentMessage {
+        public CreatePoisonVentMessage() {}
+        public CreatePoisonVentMessage(int x, int y, int width, int height, float dps, boolean startOn, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.dps = dps;
+            this.startOn = startOn;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public float dps;
+        public boolean startOn;
+    }
+
+    public static class CreateSavePointMessage {
+        public CreateSavePointMessage() {}
+        public CreateSavePointMessage(int x, int y, int width, int height, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+    }
+
+    public static class CreateSpikeTrapMessage {
+        public CreateSpikeTrapMessage() {}
+        public CreateSpikeTrapMessage(int x, int y, int width, int height, float dps, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.dps = dps;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public float dps;
+    }
+
+    public static class CreateSwitchMessage {
+        public CreateSwitchMessage() {}
+        public CreateSwitchMessage(int x, int y, int width, int height, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+    }
+
+    public static class CreateTriggerSpawnMessage {
+        public CreateTriggerSpawnMessage() {}
+        public CreateTriggerSpawnMessage(int x, int y, int width, int height, int schmuckID, int limit, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.schmuckID = schmuckID;
+            this.limit = limit;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public int schmuckID, limit;
+    }
+
+    public static class CreateUsePortalMessage {
+        public CreateUsePortalMessage() {}
+        public CreateUsePortalMessage(int x, int y, int width, int height, boolean oneTime, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.oneTime = oneTime;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public boolean oneTime;
+    }
+
+    public static class CreateVictoryMessage {
+        public CreateVictoryMessage() {}
+        public CreateVictoryMessage(int x, int y, int width, int height, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String entityID;
+    }
+
+    /**
+     * REGISTER ALL THE CLASSES FOR KRYO TO SERIALIZE AND SEND
+     * @param kryo The kryo object
+     */
     public static void allPackets(Kryo kryo) {
         kryo.register(PlayerConnect.class);
         kryo.register(KeyPressOrRelease.class);
@@ -348,9 +639,30 @@ public class Packets {
         kryo.register(EntityTakeDamage.class);
         kryo.register(EntityAdjustHealth.class);
         kryo.register(LoadLevel.class);
-        kryo.register(EventInteractMessage.class);
         kryo.register(CreateEquipPickupMessage.class);
         kryo.register(PlayerShoot.class);
+
+        kryo.register(EventInteractMessage.class);
+        kryo.register(EventTouchMessage.class);
+        kryo.register(EventReleaseMessage.class);
+        kryo.register(EventActivateMessage.class);
+
+        kryo.register(CreateCurrentsMessage.class);
+        kryo.register(CreateDestructibleBlockMessage.class);
+        kryo.register(CreateDoorMessage.class);
+        kryo.register(CreateEntitySpawnerMessage.class);
+        kryo.register(CreateEquipPickupMessage.class);
+        kryo.register(CreateInfoFlagMessage.class);
+        kryo.register(CreateLevelWarpMessage.class);
+        kryo.register(CreateMedpakMessage.class);
+        kryo.register(CreateMedpakSpawnerMessage.class);
+        kryo.register(CreatePoisonVentMessage.class);
+        kryo.register(CreateSavePointMessage.class);
+        kryo.register(CreateSpikeTrapMessage.class);
+        kryo.register(CreateSwitchMessage.class);
+        kryo.register(CreateTriggerSpawnMessage.class);
+        kryo.register(CreateUsePortalMessage.class);
+        kryo.register(CreateVictoryMessage.class);
 
         kryo.register(Set.class);
         kryo.register(Entity.class);

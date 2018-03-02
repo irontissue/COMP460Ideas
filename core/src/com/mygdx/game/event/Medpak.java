@@ -6,6 +6,7 @@ import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.UserDataTypes;
@@ -27,6 +28,15 @@ public class Medpak extends Event {
 	public Medpak(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y,
 			MedpakSpawner medpakSpawner) {
 		super(state, world, camera, rays, name, width, height, x, y);
+		this.spawner = medpakSpawner;
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateMedpakMessage(x, y, width, height, medpakSpawner.entityID.toString(), entityID.toString()));
+		}
+	}
+
+	public Medpak(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y,
+				  MedpakSpawner medpakSpawner, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		this.spawner = medpakSpawner;
 	}
 	

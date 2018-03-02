@@ -3,10 +3,12 @@ package com.mygdx.game.event;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -23,6 +25,16 @@ public class SpikeTrap extends Event {
 	public SpikeTrap(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
 			int x, int y, float dps) {
 		super(state, world, camera, rays, name, width, height, x, y);
+		this.dps = dps;
+		this.perp = state.worldDummy.getBodyData();
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateSpikeTrapMessage(x, y, width, height, dps, entityID.toString()));
+		}
+	}
+
+	public SpikeTrap(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
+					 int x, int y, float dps, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 	}
