@@ -46,7 +46,7 @@ public class RocketLauncher extends RangedWeapon {
 
 		@Override
 		public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
+				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, final int playerDataNumber) {
 
 			final World world2 = world;
 			final OrthographicCamera camera2 = camera;
@@ -60,7 +60,7 @@ public class RocketLauncher extends RangedWeapon {
 					super.controller(delta);
 					if (lifeSpan <= 0) {
 						WeaponUtils.explode(state, this.body.getPosition().x * PPM , this.body.getPosition().y * PPM, 
-								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0);
+								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber);
 					}
 				}
 				
@@ -82,7 +82,7 @@ public class RocketLauncher extends RangedWeapon {
 					}
 					if (explode) {
 						WeaponUtils.explode(state, this.hbox.getBody().getPosition().x * PPM , this.hbox.getBody().getPosition().y * PPM, 
-								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0);
+								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber);
 						hbox.queueDeletion();
 					}
 					
