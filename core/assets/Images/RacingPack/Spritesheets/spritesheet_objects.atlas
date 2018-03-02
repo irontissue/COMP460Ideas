@@ -1,0 +1,277 @@
+spritesheet_obstacles.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+arrow_white
+  rotate: false
+  xy: 450, 571
+  size: 165, 99
+  orig: 165, 99
+  offset: 0, 0
+  index: -1
+arrow_yellow
+  rotate: false
+  xy: 450, 470
+  size: 165, 99
+  orig: 165, 99
+  offset: 0, 0
+  index: -1
+barrel_blue
+  rotate: false
+  xy: 762, 368
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+barrel_blue_down
+  rotate: false
+  xy: 666, 139
+  size: 70, 48
+  orig: 70, 48
+  offset: 0, 0
+  index: -1
+barrel_red
+  rotate: false
+  xy: 737, 934
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+barrel_red_down
+  rotate: false
+  xy: 728, 645
+  size: 70, 48
+  orig: 70, 48
+  offset: 0, 0
+  index: -1
+barrier_red
+  rotate: false
+  xy: 450, 406
+  size: 210, 62
+  orig: 210, 62
+  offset: 0, 0
+  index: -1
+barrier_red_race
+  rotate: false
+  xy: 450, 278
+  size: 210, 62
+  orig: 210, 62
+  offset: 0, 0
+  index: -1
+barrier_white
+  rotate: false
+  xy: 450, 214
+  size: 210, 62
+  orig: 210, 62
+  offset: 0, 0
+  index: -1
+barrier_white_race
+  rotate: false
+  xy: 450, 342
+  size: 210, 62
+  orig: 210, 62
+  offset: 0, 0
+  index: -1
+cone_down
+  rotate: false
+  xy: 795, 947
+  size: 46, 44
+  orig: 46, 44
+  offset: 0, 0
+  index: -1
+cone_straight
+  rotate: false
+  xy: 800, 645
+  size: 45, 44
+  orig: 45, 44
+  offset: 0, 0
+  index: -1
+light_white
+  rotate: false
+  xy: 662, 214
+  size: 98, 235
+  orig: 98, 235
+  offset: 0, 0
+  index: -1
+light_yellow
+  rotate: false
+  xy: 659, 697
+  size: 98, 235
+  orig: 98, 235
+  offset: 0, 0
+  index: -1
+lights
+  rotate: false
+  xy: 450, 672
+  size: 160, 64
+  orig: 160, 64
+  offset: 0, 0
+  index: -1
+oil
+  rotate: false
+  xy: 617, 600
+  size: 109, 95
+  orig: 109, 95
+  offset: 0, 0
+  index: -1
+rock1
+  rotate: false
+  xy: 646, 934
+  size: 89, 72
+  orig: 89, 72
+  offset: 0, 0
+  index: -1
+rock2
+  rotate: false
+  xy: 666, 69
+  size: 73, 68
+  orig: 73, 68
+  offset: 0, 0
+  index: -1
+rock3
+  rotate: false
+  xy: 666, 0
+  size: 87, 67
+  orig: 87, 67
+  offset: 0, 0
+  index: -1
+skidmark_long_1
+  rotate: false
+  xy: 759, 695
+  size: 60, 192
+  orig: 60, 192
+  offset: 0, 0
+  index: -1
+skidmark_long_2
+  rotate: false
+  xy: 755, 0
+  size: 60, 192
+  orig: 60, 192
+  offset: 0, 0
+  index: -1
+skidmark_long_3
+  rotate: false
+  xy: 747, 451
+  size: 76, 192
+  orig: 76, 192
+  offset: 0, 0
+  index: -1
+skidmark_short_1
+  rotate: false
+  xy: 78, 1000
+  size: 60, 16
+  orig: 60, 16
+  offset: 0, 0
+  index: -1
+skidmark_short_2
+  rotate: false
+  xy: 140, 1000
+  size: 60, 16
+  orig: 60, 16
+  offset: 0, 0
+  index: -1
+skidmark_short_3
+  rotate: false
+  xy: 0, 1000
+  size: 76, 16
+  orig: 76, 16
+  offset: 0, 0
+  index: -1
+tent_blue
+  rotate: false
+  xy: 516, 881
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tent_blue_large
+  rotate: false
+  xy: 0, 742
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+tent_red
+  rotate: false
+  xy: 617, 470
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+tent_red_large
+  rotate: false
+  xy: 258, 742
+  size: 256, 256
+  orig: 256, 256
+  offset: 0, 0
+  index: -1
+tires_red
+  rotate: false
+  xy: 762, 194
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+tires_red_alt
+  rotate: false
+  xy: 762, 252
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+tires_white
+  rotate: false
+  xy: 762, 310
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+tires_white_alt
+  rotate: false
+  xy: 795, 889
+  size: 56, 56
+  orig: 56, 56
+  offset: 0, 0
+  index: -1
+tree_large
+  rotate: false
+  xy: 450, 0
+  size: 214, 212
+  orig: 214, 212
+  offset: 0, 0
+  index: -1
+tree_small
+  rotate: false
+  xy: 516, 738
+  size: 141, 141
+  orig: 141, 141
+  offset: 0, 0
+  index: -1
+tribune_empty
+  rotate: false
+  xy: 0, 517
+  size: 448, 223
+  orig: 448, 223
+  offset: 0, 0
+  index: -1
+tribune_full
+  rotate: false
+  xy: 0, 292
+  size: 448, 223
+  orig: 448, 223
+  offset: 0, 0
+  index: -1
+tribune_overhang_red
+  rotate: false
+  xy: 0, 146
+  size: 448, 144
+  orig: 448, 144
+  offset: 0, 0
+  index: -1
+tribune_overhang_striped
+  rotate: false
+  xy: 0, 0
+  size: 448, 144
+  orig: 448, 144
+  offset: 0, 0
+  index: -1

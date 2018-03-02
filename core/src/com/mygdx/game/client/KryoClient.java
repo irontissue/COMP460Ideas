@@ -14,14 +14,16 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.HitboxImage;
-import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.equipment.RangedWeapon;
+import com.mygdx.game.event.EquipPickup;
+import com.mygdx.game.event.Event;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.states.TitleState;
 import com.mygdx.game.status.DamageTypes;
+import org.w3c.dom.ranges.Range;
 //import com.mygdx.game.server.Packets;
 
 import javax.swing.*;
@@ -178,11 +180,18 @@ public class KryoClient {
                         new HitboxImage(ps, p.x, p.y, p.width, p.height, p.lifespan, p.dura, p.rest, p.startVelo,
                                 p.filter, p.sensor, ps.getWorld(), ps.camera, ps.getRays(),
                                 (Schmuck)ps.getEntity(UUID.fromString(p.creatorUUID)), p.spriteID, p.uuid, p.playerDataNumber);
-                        Log.info("Received SyncHitboxImage. player number = " + p.playerDataNumber);
-                        //TODO: Add code to reduce clipLeft in the appropriate playerData. But first, we must move the weapon to the playerdata and not the player.
-                        if ((p.playerDataNumber == 1 && myGame.getGsm().playerNumber == 1) ||
-                                (p.playerDataNumber == 2 && myGame.getGsm().playerNumber == 2)) {
-                            RangedWeapon rw = (RangedWeapon) ps.player.playerData.currentTool;
+//                        Log.info("Received SyncHitboxImage. player number = " + p.playerDataNumber);
+                    }
+
+                }
+
+                else if (o instanceof Packets.PlayerShoot) {
+//                    Log.info("Received HitboxImage sync message...");
+                    Packets.PlayerShoot p = (Packets.PlayerShoot) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        if (p.playerNumber == myGame.getGsm().playerNumber) {
+                            RangedWeapon rw = (RangedWeapon) ps.player.playerData.getCurrentTool();
                             rw.clipLeft--;
                             rw.checkReload();
                         }
@@ -190,6 +199,24 @@ public class KryoClient {
 
                 }
 
+                else if (o instanceof Packets.CreateEquipPickupMessage) {
+                    Packets.CreateEquipPickupMessage p = (Packets.CreateEquipPickupMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        new EquipPickup(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.equipID, p.entityID);
+                    }
+                }
+
+                else if (o instanceof Packets.EventInteractMessage) {
+                    Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Event e = (Event) ps.getEntity(UUID.fromString(p.entityID));
+                        if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                            e.eventData.onInteract(ps.player, p.playerNumber);
+                        }
+                    }
+                }
 
                 else if (o instanceof Packets.SyncCreateSchmuck) {
                     //Log.info("Received Schmuck creation sync message...");

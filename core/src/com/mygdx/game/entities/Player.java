@@ -299,16 +299,17 @@ public class Player extends Schmuck implements InputProcessor {
 
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
             if (mousePressed) {
-                useToolStart(delta, player1Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true, 1);
+                useToolStart(delta, player1Data.getCurrentTool(), Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true, 1);
             }
             if (mousePressed2) {
-                useToolStart(delta, player2Data.currentTool, Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true, 2);
+                useToolStart(delta, player2Data.getCurrentTool(), Constants.Filters.PLAYER_HITBOX, mousePos2X, Gdx.graphics.getHeight() - mousePos2Y, true, 2);
             }
 
             if (spacePressed) {
                 if (currentEvent != null && interactCdCount < 0) {
                     interactCdCount = interactCd;
                     currentEvent.eventData.onInteract(this, 1);
+                    comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(currentEvent.entityID.toString(), 1));
                 }
             }
 
@@ -316,15 +317,16 @@ public class Player extends Schmuck implements InputProcessor {
                 if (currentEvent != null && interactCdCount < 0) {
                     interactCdCount = interactCd;
                     currentEvent.eventData.onInteract(this, 2);
+                    comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(currentEvent.entityID.toString(), 2));
                 }
             }
 
             //If playerNumber is reloading, run the reload method of the current equipment.
-            if (player1Data.currentTool.reloading) {
-                player1Data.currentTool.reload(delta);
+            if (player1Data.getCurrentTool().reloading) {
+                player1Data.getCurrentTool().reload(delta);
             }
-            if (player2Data.currentTool.reloading) {
-                player2Data.currentTool.reload(delta);
+            if (player2Data.getCurrentTool().reloading) {
+                player2Data.getCurrentTool().reload(delta);
             }
 
             //process cooldowns
@@ -334,17 +336,14 @@ public class Player extends Schmuck implements InputProcessor {
             //If the delay on using a tool just ended, use the tool.
             if (shootDelayCount1 <= 0 && usedTool1 != null) {
                 useToolEnd(1);
-                Log.info("Used tool 1");
             }
 
             //process cooldowns
             shootCdCount2 -= delta;
             shootDelayCount2 -= delta;
-System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2);
             //If the delay on using a tool just ended, use the tool.
             if (shootDelayCount2 <= 0 && usedTool2 != null) {
                 useToolEnd(2);
-                Log.info("Used tool 2");
             }
 
             controllerCount += delta;
@@ -380,8 +379,8 @@ System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2
             interactCdCount-=delta;
         } else {
             //If playerNumber is reloading, run the reload method of the current equipment.
-            if (playerData.currentTool.reloading) {
-                playerData.currentTool.reload(delta);
+            if (playerData.getCurrentTool().reloading) {
+                playerData.getCurrentTool().reload(delta);
             }
 
             //process cooldowns
@@ -471,23 +470,28 @@ System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2
 
             //Pressing 'R' = reload current weapon.
             if (keycode == Input.Keys.R) {
-                playerData.currentTool.reloading = true;
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.R, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                playerData.getCurrentTool().reloading = true;
             }
 
             //Pressing '1' ... '0' = switch to weapon slot.
             if (keycode == Input.Keys.NUM_1) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_1, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
                 playerData.switchWeapon(1);
             }
 
             if (keycode == Input.Keys.NUM_2) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_2, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
                 playerData.switchWeapon(2);
             }
 
             if (keycode == Input.Keys.NUM_3) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_3, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
                 playerData.switchWeapon(3);
             }
 
             if (keycode == Input.Keys.NUM_4) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_4, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
                 playerData.switchWeapon(4);
             }
         }
@@ -530,7 +534,7 @@ System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (!comp460game.serverMode) {
-            RangedWeapon rw = (RangedWeapon) playerData.currentTool;
+            RangedWeapon rw = (RangedWeapon) playerData.getCurrentTool();
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
                     Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
         }
@@ -540,7 +544,7 @@ System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 	    if (!comp460game.serverMode) {
-            RangedWeapon rw = (RangedWeapon) playerData.currentTool;
+            RangedWeapon rw = (RangedWeapon) playerData.getCurrentTool();
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
                     Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
         }
@@ -550,7 +554,7 @@ System.out.println(shootCdCount2 +" "+shootCdCount1 +" "+usedTool1+" "+usedTool2
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (!comp460game.serverMode) {
-            RangedWeapon rw = (RangedWeapon) playerData.currentTool;
+            RangedWeapon rw = (RangedWeapon) playerData.getCurrentTool();
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, screenX, screenY,
                     Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
         }

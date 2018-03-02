@@ -31,8 +31,16 @@ public enum AssetList {
 	UI2("ui/UI2.png", Texture.class),
 	UIATLAS("ui/UI.atlas", TextureAtlas.class),
 	UISKINIMG("ui/uiskin.png", Texture.class),
-	UISKINATL("ui/uiskin.atlas", TextureAtlas.class);
-	
+	UISKINATL("ui/uiskin.atlas", TextureAtlas.class),
+
+    DOOR("Images/TankPack2/PNG/Retina/barricadeWood.png", Texture.class),
+    VICTORY("Images/SportsPack/PNG/Equipment/flag_checkered.png", Texture.class),
+    TARGET("Images/TankPack2/PNG/Retina/barrelRed_top.png", Texture.class),
+    LEVEL_WARP("sprites/KenneyTileSprites/tile_537.png", Texture.class),
+    SPORTS_CHAR_EQUIP("Images/SportsPack/Spritesheet/sheet_charactersEquipment.png", Texture.class),
+    SPORTS_CHAR_EQUIP_ATL("Images/SportsPack/Spritesheet/sheet_charactersEquipment.atlas", TextureAtlas.class),
+    SPORT_EQUIP("Images/SportsPack/Spritesheet/sheet_equipment.png", Texture.class),
+	SPORTS_EQUIP_ATL("Images/SportsPack/Spritesheet/sheet_equipment.atlas", TextureAtlas.class);
 	//Enum constructor and methods.
 	private String pathname;
     private Class<?> type;

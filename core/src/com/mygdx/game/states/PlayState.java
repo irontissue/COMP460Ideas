@@ -164,8 +164,10 @@ public class PlayState extends GameState {
             Log.info("Server sending playerNumber UUID message: " + player.entityID.toString());
         }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
-		
-		TiledObjectUtil.parseTiledEventLayer(this, world, camera, rays, map.getLayers().get("event-layer").getObjects());	
+
+        if (comp460game.serverMode) {
+			TiledObjectUtil.parseTiledEventLayer(this, world, camera, rays, map.getLayers().get("event-layer").getObjects());
+		}
 		
 		TiledObjectUtil.parseTiledTriggerLayer(this, world, camera, rays);
 
@@ -481,7 +483,7 @@ public class PlayState extends GameState {
         Entity target = getEntity(entityID);
         if (target == null) { return; }
         if (target instanceof Player) {
-            ((Player) target).playerData.currentTool.mouseClicked(delta, this, ((Player) target).getBodyData(),
+            ((Player) target).playerData.getCurrentTool().mouseClicked(delta, this, ((Player) target).getBodyData(),
                     Constants.Filters.PLAYER_HITBOX, x, y, world, camera, rays);
         } else if (target instanceof Enemy) {
             ((Enemy) target).weapon.mouseClicked(delta, this, ((Enemy) target).getBodyData(),
@@ -489,26 +491,26 @@ public class PlayState extends GameState {
         }
     }
 
-    /**
-     * Makes the given entity shoot its weapon by calling execute(). Only to be used on client side, when the client
-     * receives a message from the server telling it to shoot.
-     *
-     * @param entityID ID of entity
-     */
-    /*public void entityShoot(UUID entityID, String[] bulletIDs) {
-        Entity target = getEntity(entityID);
-//        Log.info("ShootID = " + entityID.toString());
-        if (target == null) {
-            Log.info("NULL Target!!!!");
-            return; }
-        if (target instanceof Player) {
-//            Log.info("Player shoots (instruction from server)!");
-            ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays, bulletIDs);
-        } else if (target instanceof Enemy) {
-//            Log.info("Player shoots (instruction from server)!");
-            ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays, bulletIDs);
-        }
-    }*/
+//    /**
+//     * Makes the given entity shoot its weapon by calling execute(). Only to be used on client side, when the client
+//     * receives a message from the server telling it to shoot.
+//     *
+//     * @param entityID ID of entity
+//     */
+//    public void entityShoot(UUID entityID, String[] bulletIDs) {
+//        Entity target = getEntity(entityID);
+////        Log.info("ShootID = " + entityID.toString());
+//        if (target == null) {
+//            Log.info("NULL Target!!!!");
+//            return; }
+//        if (target instanceof Player) {
+////            Log.info("Player shoots (instruction from server)!");
+//            ((Player) target).playerData.currentTool.execute(this, ((Player) target).getBodyData(), world, camera, rays, bulletIDs);
+//        } else if (target instanceof Enemy) {
+////            Log.info("Player shoots (instruction from server)!");
+//            ((Enemy) target).weapon.execute(this, ((Enemy) target).getBodyData(), world, camera, rays, bulletIDs);
+//        }
+//    }
 
     public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type) {
         UUID entityID = UUID.fromString(id);
