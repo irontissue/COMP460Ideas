@@ -59,15 +59,24 @@ public class EquipPickup extends Event {
 					   int x, int y, int equipId, String entityID) {
 		super(state, world, camera, rays, name, width, height, x, y, entityID);
 		switch(equipId) {
-			case 0:
-				this.equip = new Gun(null);
-				break;
-			case 1:
-				this.equip = new AnotherGun(null);
-				break;
-			default:
-				this.equip = new Gun(null);
-				break;
+		case 0:
+			this.equip = new Gun(null);
+			break;
+		case 1:
+			this.equip = new AnotherGun(null);
+			break;
+		case 2:
+			this.equip = new RocketLauncher(null);
+			break;
+		case 3:
+			this.equip = new Boomerang(null);
+			break;
+		case 4:
+			this.equip = new AssaultRifle(null);
+			break;
+		default:
+			this.equip = new Gun(null);
+			break;
 		}
 	}
 	
