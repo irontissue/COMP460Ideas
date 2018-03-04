@@ -82,6 +82,7 @@ public class PlayState extends GameState {
 
     //These represent the set of entities to be added to/removed from the world. This is necessary to ensure we do this between world steps.
 	private ArrayList<Entity> removeList;
+	private ArrayList<Entity> graveyard;
 	private ArrayList<Entity> createList;
 	//This is the set of entities to be updated in the world. This is necessary to ensure we do this between world steps.
     //The Object[] is a list of attributes that will be used to update the corresponding entity.
@@ -98,6 +99,10 @@ public class PlayState extends GameState {
 	public static final float gameoverCd = 2.5f;
 	public float gameoverCdCount;
 
+	//these 2 counters keep track of when the graveyard is cleared.
+	public static final float clearGraveCd = 20.0f;
+	public float clearGraveCdCount = 20.0f;
+	
 	public float desiredPlayerAngle = Float.NEGATIVE_INFINITY;
 	public Vector2 desiredPlayerPosition = new Vector2(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
 	public boolean needToSetPlayerPos = false;
@@ -140,6 +145,7 @@ public class PlayState extends GameState {
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
 		createList = new ArrayList<Entity>();
+		graveyard = new ArrayList<Entity>();
 		updateList = new ArrayList<Pair<UUID, Object[]>>();
 		entities = new ArrayList<Entity>();
 		
@@ -215,11 +221,18 @@ public class PlayState extends GameState {
         updating = true;
 		world.step(delta, 6, 2);
 
+		clearGraveCdCount -= delta;
+		if (clearGraveCdCount <= 0) {
+			clearGraveCdCount = clearGraveCd;
+			graveyard.clear();
+		}
+		
 		//All entities that are set to be removed are removed.
         while (!removeList.isEmpty()) {
             Entity entity = removeList.remove(0);
             if (entities.contains(entity)) {
                 entities.remove(entity);
+                graveyard.add(entity);
                 if (comp460game.serverMode && entity instanceof Schmuck) {
                     comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
                 }
@@ -460,6 +473,12 @@ public class PlayState extends GameState {
 		try {
 			for (int i = 0; i < entities.size(); i++) {
 				Entity e = entities.get(i);
+				if (e.entityID.equals(entityID)) {
+					return e;
+				}
+			}
+			for (int i = 0; i < graveyard.size(); i++) {
+				Entity e = graveyard.get(i);
 				if (e.entityID.equals(entityID)) {
 					return e;
 				}
