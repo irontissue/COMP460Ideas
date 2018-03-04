@@ -70,11 +70,11 @@ public class Event extends Entity {
             batch.setProjectionMatrix(state.sprite.combined);
             Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
             batch.draw(eventSprite,
-                    body.getPosition().x * PPM - body.getPosition().y * scale / 2,
-                    body.getPosition().y * PPM - body.getPosition().x * scale / 2,
-                    body.getPosition().x * scale / 2, body.getPosition().y * scale / 2,
+                    body.getPosition().x * PPM - spriteWidth / 2,
+                    body.getPosition().y * PPM - spriteHeight / 2,
+                    spriteWidth / 2, spriteHeight / 2,
                     spriteWidth * scale, spriteHeight * scale, 1, 1,
-                    (float) Math.toDegrees(body.getAngle()));
+                    (float) Math.toDegrees(body.getAngle()) - 180);
 
             batch.setColor(Color.WHITE);
         } else {
