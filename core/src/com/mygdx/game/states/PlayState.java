@@ -14,7 +14,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
@@ -185,7 +187,7 @@ public class PlayState extends GameState {
 		if (!comp460game.serverMode) {
 		    Log.info("Client loaded playstate, level = " + level);
 		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
-        }
+        }		
 	}
 	
 	public void loadLevel(String level) {
@@ -310,14 +312,25 @@ public class PlayState extends GameState {
 			gameoverCdCount -= delta;
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
-					gsm.removeState(PlayState.class);
+//					gsm.removeState(PlayState.class);
 					if (won) {
                         comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-						gsm.addState(State.VICTORY, TitleState.class);
+//						gsm.addState(State.VICTORY, TitleState.class);
+                        stage.addActor(new Text(comp460game.assetManager, "VICTORY", 300, 500));
 					} else {
                         comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-						gsm.addState(State.GAMEOVER, TitleState.class);
+//						gsm.addState(State.GAMEOVER, TitleState.class);
+                        stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500));
 					}
+					Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400);
+					back.addListener(new ClickListener() {
+						
+						@Override
+				        public void clicked(InputEvent e, float x, float y) {
+							loadLevel("maps/loadout.tmx");
+				        }
+				    });
+					stage.addActor(back);
 /*				} else {
 					playerNumber = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
