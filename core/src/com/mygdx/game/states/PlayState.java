@@ -82,7 +82,7 @@ public class PlayState extends GameState {
 
     //These represent the set of entities to be added to/removed from the world. This is necessary to ensure we do this between world steps.
 	private ArrayList<Entity> removeList;
-	private ArrayList<Entity> graveyard;
+	private ArrayList<Pair<Entity, Float>> graveyard;
 	private ArrayList<Entity> createList;
 	//This is the set of entities to be updated in the world. This is necessary to ensure we do this between world steps.
     //The Object[] is a list of attributes that will be used to update the corresponding entity.
@@ -101,7 +101,6 @@ public class PlayState extends GameState {
 
 	//these 2 counters keep track of when the graveyard is cleared.
 	public static final float clearGraveCd = 20.0f;
-	public float clearGraveCdCount = 20.0f;
 	
 	public float desiredPlayerAngle = Float.NEGATIVE_INFINITY;
 	public Vector2 desiredPlayerPosition = new Vector2(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
@@ -145,7 +144,7 @@ public class PlayState extends GameState {
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
 		createList = new ArrayList<Entity>();
-		graveyard = new ArrayList<Entity>();
+		graveyard = new ArrayList<Pair<Entity, Float>>();
 		updateList = new ArrayList<Pair<UUID, Object[]>>();
 		entities = new ArrayList<Entity>();
 		
@@ -221,10 +220,14 @@ public class PlayState extends GameState {
         updating = true;
 		world.step(delta, 6, 2);
 
-		clearGraveCdCount -= delta;
-		if (clearGraveCdCount <= 0) {
-			clearGraveCdCount = clearGraveCd;
-			graveyard.clear();
+		if (comp460game.serverMode) {
+			for (int i = 0; i < graveyard.size(); i++) {
+				graveyard.get(i).setRight(graveyard.get(i).getValue() - delta);
+				if (graveyard.get(i).getValue() <= 0) {
+					graveyard.remove(i);
+					i--;
+				}
+			}
 		}
 		
 		//All entities that are set to be removed are removed.
@@ -232,7 +235,7 @@ public class PlayState extends GameState {
             Entity entity = removeList.remove(0);
             if (entities.contains(entity)) {
                 entities.remove(entity);
-                graveyard.add(entity);
+                graveyard.add(new Pair<Entity, Float>(entity, clearGraveCd));
                 if (comp460game.serverMode && entity instanceof Schmuck) {
                     comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
                 }
@@ -478,7 +481,7 @@ public class PlayState extends GameState {
 				}
 			}
 			for (int i = 0; i < graveyard.size(); i++) {
-				Entity e = graveyard.get(i);
+				Entity e = graveyard.get(i).getKey();
 				if (e.entityID.equals(entityID)) {
 					return e;
 				}
