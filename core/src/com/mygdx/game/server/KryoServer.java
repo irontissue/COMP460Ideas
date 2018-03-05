@@ -278,6 +278,9 @@ public class KryoServer {
                         } else {
                             server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(2));
                             server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(1));
+                            int temp = playerIDs[0];
+                            playerIDs[0] = playerIDs[1];
+                            playerIDs[1] = temp;
                         }
 				        players = 0;
                     }
