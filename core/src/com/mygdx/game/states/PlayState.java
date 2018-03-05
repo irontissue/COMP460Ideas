@@ -99,7 +99,7 @@ public class PlayState extends GameState {
 	//TODO: Temporary tracker of number of enemies defeated. Will replace eventually
 	public int score = 0;
 	
-	public boolean gameover = false;
+	public boolean gameover = false, gameEnded = false;
 	public boolean won = false;
 	public static final float gameoverCd = 2.5f;
 	public float gameoverCdCount;
@@ -296,8 +296,10 @@ public class PlayState extends GameState {
 		}*/
 		
 		//This processes all entities in the world. (for example, playerNumber input/cooldowns/enemy ai)
-		for (Entity entity : entities) {
-			entity.controller(delta);
+		if (!gameEnded) {
+			for (Entity entity : entities) {
+				entity.controller(delta);
+			}
 		}
         if (needToSetPlayerPos) {
             player.body.setTransform(desiredPlayerPosition, desiredPlayerAngle);
@@ -320,6 +322,7 @@ public class PlayState extends GameState {
 			}
 			
 			if (gameoverCdCount < 0) {
+				gameEnded = true;
 //				if (lastSave != null) {
 //					gsm.removeState(PlayState.class);
                     if (comp460game.serverMode) {
