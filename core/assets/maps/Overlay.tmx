@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="2" height="2" tilewidth="64" tileheight="64" nextobjectid="1">
+ <tileset firstgid="1" name="kenney_tileset" tilewidth="64" tileheight="64" tilecount="540" columns="27">
+  <image source="../Images/Tilesheet/tilesheet_complete.png" width="1728" height="1280"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="2" height="2">
+  <data encoding="csv">
+287,288,
+314,315
+</data>
+ </layer>
+</map>
