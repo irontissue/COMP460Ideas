@@ -11,6 +11,7 @@ import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.HitboxFactory;
 
 import box2dLight.RayHandler;
@@ -32,6 +33,8 @@ public class BadGun extends RangedWeapon {
     private final static float lifespan = 10.5f;
 
     private final static int projDura = 1;
+
+    public static final int equipID = Constants.EquipIDs.BAD_GUN;
 
     private final static HitboxFactory onShoot = new HitboxFactory() {
 
@@ -61,6 +64,7 @@ public class BadGun extends RangedWeapon {
 
     public BadGun(Schmuck user) {
         super(user, name, clipSize, reloadTime, recoil, projectileSpeed, shootCd, shootDelay, reloadAmount, onShoot);
+        setEquipID(equipID);
     }
 
 }

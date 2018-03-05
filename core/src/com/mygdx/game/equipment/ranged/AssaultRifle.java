@@ -11,6 +11,7 @@ import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.HitboxFactory;
 
 import box2dLight.RayHandler;
@@ -27,14 +28,16 @@ public class AssaultRifle extends RangedWeapon {
 	private final static int reloadAmount = 25;
 	private final static float baseDamage = 25.0f;
 	private final static float recoil = 0.25f;
-	private final static float knockback = 0.6f;
+	private final static float knockback = 0.05f;
 	private final static float projectileSpeed = 40.0f;
 	private final static int projectileWidth = 64;
 	private final static int projectileHeight = 8;
 	private final static float lifespan = 1.2f;
 	
 	private final static int projDura = 1;
-	
+
+	public static final int equipID = Constants.EquipIDs.MACHINE;
+
 	private final static HitboxFactory onShoot = new HitboxFactory() {
 
 		@Override
@@ -63,6 +66,7 @@ public class AssaultRifle extends RangedWeapon {
 	
 	public AssaultRifle(Schmuck user) {
 		super(user, name, clipSize, reloadTime, recoil, projectileSpeed, shootCd, shootDelay, reloadAmount, onShoot);
+        setEquipID(equipID);
 	}
 
 }

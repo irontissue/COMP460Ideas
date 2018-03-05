@@ -82,6 +82,8 @@ public class KryoClient {
                         public void run() {
                         	myGame.getGsm().playerNumber = PNUMBER;
                         	Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
+                        	myGame.getGsm().removeState(TitleState.class);
+                            myGame.getGsm().removeState(PlayState.class);
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });
@@ -115,23 +117,8 @@ public class KryoClient {
 
                         Gdx.app.postRunnable(new Runnable() {
                             public void run() {
-//                                Actor gameOver;
-//                                if (won) {
-//                                    gameOver = new Text(comp460game.assetManager, "YOU WON!", 150, comp460game.CONFIG_HEIGHT - 180);
-//                                } else {
-//                                    gameOver = new Text(comp460game.assetManager, "YOU LOST!", 150, comp460game.CONFIG_HEIGHT - 180);
-//                                }
-//                                gameOver.setScale(0.5f);
-//                                gameOver.setColor(Color.WHITE);
-//                                gameOver.setVisible(true);
-//                                gameOver.toFront();
-//                                ps.stage.addActor(gameOver);
-                                myGame.getGsm().removeState(PlayState.class);
-                                if (won) {
-                                    myGame.getGsm().addState(State.VICTORY, TitleState.class);
-                                } else {
-                                    myGame.getGsm().addState(State.GAMEOVER, TitleState.class);
-                                }
+                                ps.won = won;
+                                ps.gameend();
                             }
                         });
                     }
@@ -192,7 +179,7 @@ public class KryoClient {
                     Packets.PlayerShoot p = (Packets.PlayerShoot) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        if (p.playerNumber == myGame.getGsm().playerNumber) {
+                        if (ps.player.playerData != null && p.playerNumber == myGame.getGsm().playerNumber) {
                             RangedWeapon rw = (RangedWeapon) ps.player.playerData.getCurrentTool();
                             rw.clipLeft--;
                             rw.checkReload();
@@ -384,16 +371,21 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EventInteractMessage) {
-                    Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
+                    final Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
-                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent instanceof Player) {
-                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
-                                e.eventData.onInteract(ps.player, p.playerNumber);
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                                Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                                Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                                if (ent != null && ent instanceof Player) {
+                                    if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                                        e.eventData.onInteract(ps.player, p.playerNumber);
+                                    }
+                                }
                             }
-                        }
+                        });
                     }
                 }
 
@@ -415,7 +407,7 @@ public class KryoClient {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
                         Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                         Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent instanceof Player) {
+                        if (ent != null && ent instanceof Player) {
                             if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
                                 e.eventData.onRelease(((Player) ent).playerData);
                             }
@@ -429,7 +421,7 @@ public class KryoClient {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
                         Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                         Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent instanceof Player) {
+                        if (ent != null && ent instanceof Player) {
                             if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
                                 e.eventData.onTouch(((Player) ent).playerData);
                             }
@@ -445,6 +437,8 @@ public class KryoClient {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
                         ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType, p.synced);
+                    } else {
+                        Log.info("Tossing SyncCreateSchmuck message");
                     }
 //                    Log.info("Processed Schmuck creation sync message!");
 
@@ -586,7 +580,7 @@ public class KryoClient {
                         if (sea.attackerUUID != null) {
                             attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
                         }
-                        if (e instanceof Schmuck) {
+                        if (e != null && e instanceof Schmuck) {
                             Schmuck s = (Schmuck) e;
                             CharacterData theData = null;
                             if (attackerEntity != null && attackerEntity instanceof Schmuck) {
@@ -594,7 +588,7 @@ public class KryoClient {
                             }
                             s.getBodyData().receiveDamage(sea.damage, new Vector2(0, 0),
                                     theData, true, DamageTypes.TESTTYPE1);
-                        } else if (e instanceof Event) {
+                        } else if (e != null && e instanceof Event) {
                             Event ee = (Event) e;
                             CharacterData theData = null;
                             if (attackerEntity != null && attackerEntity instanceof Schmuck) {
@@ -646,13 +640,13 @@ public class KryoClient {
 
         if (!reconnect) {
             // Request the host from the user.
-            String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE,
+            String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to game server", JOptionPane.QUESTION_MESSAGE,
                     null, null, "localhost");
             if (input == null || input.trim().length() == 0) System.exit(1);
             hostIP = input.trim();
 
             // Request the user's name.
-            input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE, null,
+            input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to game server", JOptionPane.QUESTION_MESSAGE, null,
                     null, "Test");
             if (input == null || input.trim().length() == 0) System.exit(1);
             name = input.trim();

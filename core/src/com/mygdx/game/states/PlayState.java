@@ -99,7 +99,7 @@ public class PlayState extends GameState {
 	//TODO: Temporary tracker of number of enemies defeated. Will replace eventually
 	public int score = 0;
 	
-	public boolean gameover = false;
+	public boolean gameover = false, gameEnded = false;
 	public boolean won = false;
 	public static final float gameoverCd = 2.5f;
 	public float gameoverCdCount;
@@ -145,6 +145,7 @@ public class PlayState extends GameState {
         
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
+		b2dr.setDrawBodies(false);
 		
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
@@ -177,12 +178,11 @@ public class PlayState extends GameState {
 
         if (comp460game.serverMode) {
 			TiledObjectUtil.parseTiledEventLayer(this, world, camera, rays, map.getLayers().get("event-layer").getObjects());
-		}
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 		TiledObjectUtil.parseTiledTriggerLayer(this, world, camera, rays);
@@ -296,8 +296,10 @@ public class PlayState extends GameState {
 		}*/
 		
 		//This processes all entities in the world. (for example, playerNumber input/cooldowns/enemy ai)
-		for (Entity entity : entities) {
-			entity.controller(delta);
+		if (!gameEnded) {
+			for (Entity entity : entities) {
+				entity.controller(delta);
+			}
 		}
         if (needToSetPlayerPos) {
             player.body.setTransform(desiredPlayerPosition, desiredPlayerAngle);
@@ -309,23 +311,23 @@ public class PlayState extends GameState {
 		batch.setProjectionMatrix(camera.combined);
 //		rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-//		if (gameover && !comp460game.serverMode) {
-//			if(player.vision.getDistance() > 0) {
-//				player.vision.setDistance(player.vision.getDistance() - 1.0f);
-//			}
-//		}
-		
-		
 		//process gameover
-		if (gameover && comp460game.serverMode) {
+		if (gameover) {
 			gameoverCdCount -= delta;
 			
-			
+			if (!comp460game.serverMode) {
+				if (player.vision.getDistance() > 0) {
+					player.vision.setDistance(player.vision.getDistance() - 1.0f);
+				}
+			}
 			
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
 //					gsm.removeState(PlayState.class);
-					gameend();
+                    if (comp460game.serverMode) {
+                        gameend();
+                    }
+					gameover = false;
 /*				} else {
 					playerNumber = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
@@ -340,26 +342,47 @@ public class PlayState extends GameState {
         updating = false;
 
 	}
-	
-	private void gameend() {
+
+	private Actor back, readyToBack;
+	public void gameend() {
 		if (won) {
-            comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+			if (comp460game.serverMode) {
+				comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+			}
 //			gsm.addState(State.VICTORY, TitleState.class);
-            stage.addActor(new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE));
+			Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
+			victory.setScale(0.5f);
+			stage.addActor(victory);
 		} else {
-            comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+			if (comp460game.serverMode) {
+				comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+			}
 //			gsm.addState(State.GAMEOVER, TitleState.class);
-            stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500, Color.WHITE));
+			Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
+			defeat.setScale(0.5f);
+			stage.addActor(defeat);
 		}
-		Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
-		back.addListener(new ClickListener() {
-			
-			@Override
-	        public void clicked(InputEvent e, float x, float y) {
-				loadLevel("maps/loadout.tmx");
-	        }
-	    });
-		stage.addActor(back);
+		if (!comp460game.serverMode) {
+			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
+			readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
+			readyToBack.setVisible(false);
+			back.setScale(0.5f);
+			readyToBack.setScale(0.5f);
+			Gdx.input.setInputProcessor(stage);
+			back.addListener(new ClickListener() {
+
+				@Override
+				public void clicked(InputEvent e, float x, float y) {
+					back.setVisible(false);
+					readyToBack.setVisible(true);
+					Log.info("yay");
+					comp460game.client.client.sendTCP(new Packets.ReadyToPlay());
+					//Gdx.input.setInputProcessor(player);
+				}
+			});
+			stage.addActor(back);
+			stage.addActor(readyToBack);
+		}
 		
 	}
 
@@ -377,7 +400,7 @@ public class PlayState extends GameState {
 		tmr.render();				
 
 		//Render debug lines for box2d objects.
-		//b2dr.render(world, camera.combined.scl(PPM));
+		b2dr.render(world, camera.combined.scl(PPM));
 		
 		
 		//Iterate through entities in the world to render
@@ -385,9 +408,11 @@ public class PlayState extends GameState {
 		batch.begin();
 
 		for (Entity schmuck : entities) {
-			schmuck.render(batch);
+		    if (!(schmuck instanceof Player)) {
+                schmuck.render(batch);
+            }
 		}
-		
+		player.render(batch);
 		batch.end();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
@@ -496,9 +521,12 @@ public class PlayState extends GameState {
 	}
 	
 	public void gameOver(boolean won) {
-		this.won = won;
-		gameover = true;
-		gameoverCdCount = gameoverCd;
+		if (!gameEnded) {
+			this.won = won;
+			gameover = true;
+			gameoverCdCount = gameoverCd;
+			gameEnded = true;
+		}
 	}
 
 	/**

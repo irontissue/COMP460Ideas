@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="32" tileheight="32" infinite="0" nextobjectid="58">
+<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="200" height="200" tilewidth="32" tileheight="32" infinite="0" nextobjectid="69">
  <tileset firstgid="1" source="460.tsx"/>
  <layer name="Tile Layer 1" width="200" height="200">
   <data encoding="base64" compression="zlib">
@@ -65,37 +65,13 @@
     <property name="triggeringId" value="1"/>
    </properties>
   </object>
-  <object id="13" name="Current" type="Current" x="3392" y="1952" width="256" height="64">
+  <object id="13" name="Current" type="Current" x="3392" y="1952" width="63" height="64">
    <properties>
     <property name="currentX" type="float" value="3"/>
     <property name="currentY" type="float" value="0"/>
    </properties>
   </object>
-  <object id="14" name="Current" type="Current" x="3648" y="1824" width="256" height="64">
-   <properties>
-    <property name="currentX" type="float" value="-3"/>
-    <property name="currentY" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="15" name="Current" type="Current" x="3392" y="1824" width="256" height="64">
-   <properties>
-    <property name="currentX" type="float" value="3"/>
-    <property name="currentY" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="17" name="Current" type="Current" x="3392" y="1888" width="256" height="64">
-   <properties>
-    <property name="currentX" type="float" value="-3"/>
-    <property name="currentY" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="18" name="Current" type="Current" x="3648" y="1952" width="256" height="64">
-   <properties>
-    <property name="currentX" type="float" value="-3"/>
-    <property name="currentY" type="float" value="0"/>
-   </properties>
-  </object>
-  <object id="20" name="Current" type="Current" x="3648" y="1888" width="256" height="64">
+  <object id="15" name="Current" type="Current" x="3392" y="1824" width="65" height="64">
    <properties>
     <property name="currentX" type="float" value="3"/>
     <property name="currentY" type="float" value="0"/>
@@ -281,5 +257,65 @@
    </properties>
   </object>
   <object id="57" name="Victory" type="Victory" x="3648.12" y="3764.78" width="1807.75" height="1006.43"/>
+  <object id="58" name="Current" type="Current" x="3456" y="1952" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="59" name="Current" type="Current" x="3520" y="1952" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="60" name="Current" type="Current" x="3584" y="1952" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="61" name="Current" type="Current" x="3648" y="1888" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="62" name="Current" type="Current" x="3712" y="1888" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="63" name="Current" type="Current" x="3776" y="1888" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="64" name="Current" type="Current" x="3840" y="1888" width="63" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="66" name="Current" type="Current" x="3456" y="1824" width="65" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="67" name="Current" type="Current" x="3520" y="1824" width="65" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
+  <object id="68" name="Current" type="Current" x="3584" y="1824" width="65" height="64">
+   <properties>
+    <property name="currentX" type="float" value="3"/>
+    <property name="currentY" type="float" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

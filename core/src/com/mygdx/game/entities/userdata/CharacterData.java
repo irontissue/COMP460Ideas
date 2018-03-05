@@ -48,12 +48,12 @@ public class CharacterData extends UserData {
 	public float[] buffedStats;	
 		
 	//Speed on ground
-	public float maxSpeed = 7.0f;
+	public float maxSpeed = 4.0f;
 	public float maxAngularSpeed = 1.5f;
 
 	//Hp and regen
-	public int maxHp = 100;
-	public float currentHp = 100;
+	public int maxHp = 250;
+	public float currentHp = maxHp;
 	public float hpRegen = 0.0f;
 	
 	public ArrayList<Status> statuses;
@@ -84,10 +84,11 @@ public class CharacterData extends UserData {
 		
 		calcStats();
 
+//		currentHp = 100;
 		if (schmuck instanceof Player) {
-			currentHp = 100;
+			currentHp = maxHp;
 		} else {
-			currentHp = 1;
+			currentHp = maxHp;
 		}
 	}
 	
@@ -244,7 +245,7 @@ public class CharacterData extends UserData {
 			perp.statusProcTime(4, perp, 0, null);
 		}
 		statusProcTime(5, this, 0, null);
-		
+//		currentHp = maxHp;
 		schmuck.queueDeletion();
 	}
 

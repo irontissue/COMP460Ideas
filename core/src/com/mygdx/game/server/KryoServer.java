@@ -44,6 +44,7 @@ public class KryoServer {
                 Gdx.app.postRunnable(new Runnable() {
                      @Override
                      public void run() {
+                         gsm.removeState(PlayState.class);
                          gsm.addState(GameStateManager.State.TITLE, PlayState.class);
                      }
                  });
@@ -271,20 +272,20 @@ public class KryoServer {
                     players += 1;
 					Log.info("Player " + c.getID() + " ready.");
 				    if (players == 2) {
-				        server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
-                        server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
+				        if (playerIDs[0] < playerIDs[1]) {
+                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
+                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
+                        } else {
+                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(2));
+                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(1));
+                        }
 				        players = 0;
-//						Gdx.app.postRunnable(new Runnable() {
-//							public void run() {
-//								gsm.addState(GameStateManager.State.PLAY, TitleState.class);
-//							}
-//						});
                     }
                 }
 
                 else if (o instanceof Packets.ClientLoadedPlayState) {
                     final Packets.ClientLoadedPlayState p = (Packets.ClientLoadedPlayState) o;
-                    Log.info("Server received ClientLoadedPlayState, level = " + p.level);
+                    Log.info("Server received ClientLoadedPlayState from player " + c.getID() + ". level = " + p.level);
                     players += 1;
                     if (players == 2) {
                         Gdx.app.postRunnable(new Runnable() {
