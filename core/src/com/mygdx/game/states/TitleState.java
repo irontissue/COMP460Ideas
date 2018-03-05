@@ -26,7 +26,7 @@ public class TitleState extends GameState {
 	private Stage stage;
 
     //Temporary links to other modules for testing.
-	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2, disconnect, title;
+	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2, disconnect, title1,title2;
 	Texture bground1, bground2;
     private boolean isWaiting = false;
 	public TitleState(GameStateManager gsm) {
@@ -55,9 +55,12 @@ public class TitleState extends GameState {
                     Actor bg2 = new Image(bground2);
                     
                     Actor overlay = new Image(new Texture("Images/Overlay.png"));
-                    overlay.setWidth(300);
+                    overlay.setWidth(350);
                     overlay.setHeight(comp460game.CONFIG_HEIGHT);
+ 
                     overlay.setPosition(390, 0);
+                    overlay.setPosition(365, 0);
+
 
                     bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 40.0f),
                     		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
@@ -65,20 +68,21 @@ public class TitleState extends GameState {
                     
                     bg2.setPosition(bg2.getWidth(), 0);
                     bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 40.0f), Actions.moveTo(-bg2.getWidth(), 0, 40.0f),
-                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
+                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0),
                     				Actions.moveTo(-bg2.getWidth(), 0, 80.0f)))));
-                    
+
                     addActor(bg1);
                     addActor(bg2);
                     addActor(overlay);
                     Text nothing = new Text(comp460game.assetManager, "", 0,0);
-                    title = new Text(comp460game.assetManager, "Couple's Therapy", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
-					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
-                    waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
-					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
-					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT - 240, Color.WHITE);
-                    disconnect = new Text(comp460game.assetManager, "DISCONNECT", 150, comp460game.CONFIG_HEIGHT - 240, Color.WHITE);
-					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 300, Color.WHITE);
+                    title1 = new Text(comp460game.assetManager, "COUPLE'S", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    title2 = new Text(comp460game.assetManager, "THERAPY", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+					playOption = new Text(comp460game.assetManager, "PLAY", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    waitingOnPlayer2 = new Text(comp460game.assetManager, "...WAITING...", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+					//startServerOption = new Text(comp460game.assetManager, "START SERVER", 150, comp460game.CONFIG_HEIGHT - 240);
+					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    disconnect = new Text(comp460game.assetManager, "DISCONNECT", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
 
 					disconnect.setVisible(false);
 					waitingOnPlayer2.setVisible(false);
@@ -138,7 +142,8 @@ public class TitleState extends GameState {
                     addActor(joinServerOption);
                     addActor(disconnect);
 					addActor(exitOption);
-                    addActor(title);
+                    addActor(title1);
+                    addActor(title2);
 
 //                    bground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
 //                    this.getBatch().begin();
@@ -148,9 +153,13 @@ public class TitleState extends GameState {
                     table.setFillParent(true);
                     addActor(table);
                     //add buttons to table
-                    table.add(title).fillX().uniformX().center();
+                    table.add(nothing).fillX().uniformX().center();
+                    table.row();
+                    table.add(title1).fillX().uniformX().center();
                     table.row();
                     table.add(nothing).fillX().uniformX().center();
+                    table.row();
+                    table.add(title2).fillX().uniformX().center();
                     table.row();
                     table.add(nothing).fillX().uniformX().center();
                     table.row();

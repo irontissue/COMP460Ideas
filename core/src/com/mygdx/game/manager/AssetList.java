@@ -35,12 +35,22 @@ public enum AssetList {
 
     DOOR("Images/TankPack2/PNG/Retina/barricadeWood.png", Texture.class),
     VICTORY("Images/SportsPack/PNG/Equipment/flag_checkered.png", Texture.class),
-    TARGET("Images/TankPack2/PNG/Retina/barrelRed_top.png", Texture.class),
+    TARGET("Images/RacingPack/PNG/Objects/cone_straight.png", Texture.class),
     LEVEL_WARP("sprites/KenneyTileSprites/tile_537.png", Texture.class),
     SPORTS_CHAR_EQUIP("Images/SportsPack/Spritesheet/sheet_charactersEquipment.png", Texture.class),
     SPORTS_CHAR_EQUIP_ATL("Images/SportsPack/Spritesheet/sheet_charactersEquipment.atlas", TextureAtlas.class),
     SPORT_EQUIP("Images/SportsPack/Spritesheet/sheet_equipment.png", Texture.class),
-	SPORTS_EQUIP_ATL("Images/SportsPack/Spritesheet/sheet_equipment.atlas", TextureAtlas.class);
+	SPORTS_EQUIP_ATL("Images/SportsPack/Spritesheet/sheet_equipment.atlas", TextureAtlas.class),
+
+    USE_PORTAL("sprites/KenneyTileSprites/tile_535.png", Texture.class),
+    SWITCH_OFF("Images/TankPack2/PNG/Retina/barrelRed_top.png", Texture.class),
+    SWITCH_ON("Images/TankPack2/PNG/Retina/barrelGreen_top.png", Texture.class),
+    CURRENT("Images/RacingPack/PNG/Objects/arrow_yellow.png", Texture.class),
+    GUN("sprites/weapon_gun.png",Texture.class),
+    SHOTGUN("sprites/weapon_machine.png",Texture.class),
+//    ROCKET("",Texture.class),
+//    BOOMERANG("",Texture.class),
+    MACHINE("sprites/weapon_silencer.png",Texture.class);
 	//Enum constructor and methods.
 	private String pathname;
     private Class<?> type;

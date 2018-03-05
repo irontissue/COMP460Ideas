@@ -90,9 +90,9 @@ public class TriggerSpawn extends Event {
 			controllerCount+=delta;
 			if (controllerCount >= 1f) {
 				controllerCount = 0;
-				
+
 				if (!spawns.isEmpty()) {
-					
+
 					defeated = true;
 					
 					for (Schmuck s : spawns) {
@@ -101,7 +101,7 @@ public class TriggerSpawn extends Event {
 							defeated = false;
 						}
 					}
-					
+
 					if (defeated) {
 						getConnectedEvent().eventData.onActivate(eventData);
 					}

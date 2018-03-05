@@ -12,6 +12,7 @@ import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.equipment.WeaponUtils;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.HitboxFactory;
 import com.mygdx.game.util.UserDataTypes;
 
@@ -41,7 +42,9 @@ public class RocketLauncher extends RangedWeapon {
 	private final static int explosionRadius = 300;
 	private final static float explosionDamage = 60.0f;
 	private final static float explosionKnockback = 10.0f;
-	
+
+	public static final int equipID = Constants.EquipIDs.ROCKET_LAUNCHER;
+
 	private final static HitboxFactory onShoot = new HitboxFactory() {
 
 		@Override
@@ -97,6 +100,7 @@ public class RocketLauncher extends RangedWeapon {
 	
 	public RocketLauncher(Schmuck user) {
 		super(user, name, clipSize, reloadTime, recoil, projectileSpeed, shootCd, shootDelay, reloadAmount, onShoot);
+        setEquipID(equipID);
 	}
 
 }

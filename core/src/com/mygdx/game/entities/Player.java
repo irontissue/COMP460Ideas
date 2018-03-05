@@ -445,7 +445,7 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-	    if (!comp460game.serverMode) {
+	    if (!comp460game.serverMode && playerData != null) {
             if (keycode == Input.Keys.W) {
                 comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
             }
@@ -500,7 +500,7 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean keyUp(int keycode) {
-        if (!comp460game.serverMode) {
+        if (!comp460game.serverMode && playerData != null) {
             if (keycode == Input.Keys.W) {
                 comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
             }
@@ -533,7 +533,7 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        if (!comp460game.serverMode) {
+        if (!comp460game.serverMode && playerData != null) {
             RangedWeapon rw = (RangedWeapon) playerData.getCurrentTool();
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
                     Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
@@ -543,7 +543,7 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-	    if (!comp460game.serverMode) {
+	    if (!comp460game.serverMode && playerData != null) {
             RangedWeapon rw = (RangedWeapon) playerData.getCurrentTool();
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
                     Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
@@ -553,7 +553,7 @@ public class Player extends Schmuck implements InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        if (!comp460game.serverMode) {
+        if (!comp460game.serverMode && playerData != null) {
             RangedWeapon rw = (RangedWeapon) playerData.getCurrentTool();
             comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, screenX, screenY,
                     Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));

@@ -2,13 +2,12 @@ package com.mygdx.game.entities.userdata;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
-import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.equipment.Equipment;
-import com.mygdx.game.equipment.ranged.AnotherGun;
+import com.mygdx.game.equipment.ranged.AssaultRifle;
+import com.mygdx.game.equipment.ranged.Shotgun;
 import com.mygdx.game.equipment.ranged.Gun;
 import com.mygdx.game.equipment.ranged.RocketLauncher;
-import com.mygdx.game.server.Packets;
 
 public class PlayerData extends CharacterData {
 
@@ -26,13 +25,20 @@ public class PlayerData extends CharacterData {
 		this.player = body;
 		multitools = new Equipment[itemSlots];
 		multitools[0] = new Gun(body);
-		multitools[1] = new AnotherGun(body);
-		multitools[2] = new RocketLauncher(body);
+//		multitools[1] = new Shotgun(body);
+//		multitools[2] = new RocketLauncher(body);
+//        multitools[3] = new AssaultRifle(body);
 		this.currentTool = multitools[currentSlot];
 	}
 	
 	public void copyData(PlayerData old) {
-		currentHp = old.currentHp;
+		if (old.currentHp <= 0) {
+			currentHp = maxHp;
+		} else {
+			currentHp = old.currentHp;
+		}
+		currentHp = maxHp;
+		multitools = old.getMultitools();
 		//TODO: copy other things that will be carried over across levels. Statuses/Loadout
 	}
 
