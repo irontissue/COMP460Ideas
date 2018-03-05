@@ -640,13 +640,13 @@ public class KryoClient {
 
         if (!reconnect) {
             // Request the host from the user.
-            String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE,
+            String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to game server", JOptionPane.QUESTION_MESSAGE,
                     null, null, "localhost");
             if (input == null || input.trim().length() == 0) System.exit(1);
             hostIP = input.trim();
 
             // Request the user's name.
-            input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to chat server", JOptionPane.QUESTION_MESSAGE, null,
+            input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to game server", JOptionPane.QUESTION_MESSAGE, null,
                     null, "Test");
             if (input == null || input.trim().length() == 0) System.exit(1);
             name = input.trim();

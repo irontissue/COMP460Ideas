@@ -272,8 +272,13 @@ public class KryoServer {
                     players += 1;
 					Log.info("Player " + c.getID() + " ready.");
 				    if (players == 2) {
-				        server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
-                        server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
+				        if (playerIDs[0] < playerIDs[1]) {
+                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
+                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
+                        } else {
+                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(2));
+                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(1));
+                        }
 				        players = 0;
                     }
                 }
