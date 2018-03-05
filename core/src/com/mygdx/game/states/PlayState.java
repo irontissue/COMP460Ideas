@@ -14,7 +14,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
@@ -82,6 +84,7 @@ public class PlayState extends GameState {
 
     //These represent the set of entities to be added to/removed from the world. This is necessary to ensure we do this between world steps.
 	private ArrayList<Entity> removeList;
+	private ArrayList<Pair<Entity, Float>> graveyard;
 	private ArrayList<Entity> createList;
 	//This is the set of entities to be updated in the world. This is necessary to ensure we do this between world steps.
     //The Object[] is a list of attributes that will be used to update the corresponding entity.
@@ -98,6 +101,9 @@ public class PlayState extends GameState {
 	public static final float gameoverCd = 2.5f;
 	public float gameoverCdCount;
 
+	//these 2 counters keep track of when the graveyard is cleared.
+	public static final float clearGraveCd = 20.0f;
+	
 	public float desiredPlayerAngle = Float.NEGATIVE_INFINITY;
 	public Vector2 desiredPlayerPosition = new Vector2(Float.NEGATIVE_INFINITY, Float.NEGATIVE_INFINITY);
 	public boolean needToSetPlayerPos = false;
@@ -140,6 +146,7 @@ public class PlayState extends GameState {
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
 		createList = new ArrayList<Entity>();
+		graveyard = new ArrayList<Pair<Entity, Float>>();
 		updateList = new ArrayList<Pair<UUID, Object[]>>();
 		entities = new ArrayList<Entity>();
 		
@@ -180,7 +187,7 @@ public class PlayState extends GameState {
 		if (!comp460game.serverMode) {
 		    Log.info("Client loaded playstate, level = " + level);
 		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
-        }
+        }		
 	}
 	
 	public void loadLevel(String level) {
@@ -215,11 +222,22 @@ public class PlayState extends GameState {
         updating = true;
 		world.step(delta, 6, 2);
 
+		if (comp460game.serverMode) {
+			for (int i = 0; i < graveyard.size(); i++) {
+				graveyard.get(i).setRight(graveyard.get(i).getValue() - delta);
+				if (graveyard.get(i).getValue() <= 0) {
+					graveyard.remove(i);
+					i--;
+				}
+			}
+		}
+		
 		//All entities that are set to be removed are removed.
         while (!removeList.isEmpty()) {
             Entity entity = removeList.remove(0);
             if (entities.contains(entity)) {
                 entities.remove(entity);
+                graveyard.add(new Pair<Entity, Float>(entity, clearGraveCd));
                 if (comp460game.serverMode && entity instanceof Schmuck) {
                     comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
                 }
@@ -294,14 +312,25 @@ public class PlayState extends GameState {
 			gameoverCdCount -= delta;
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
-					gsm.removeState(PlayState.class);
+//					gsm.removeState(PlayState.class);
 					if (won) {
                         comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-						gsm.addState(State.VICTORY, TitleState.class);
+//						gsm.addState(State.VICTORY, TitleState.class);
+                        stage.addActor(new Text(comp460game.assetManager, "VICTORY", 300, 500));
 					} else {
                         comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-						gsm.addState(State.GAMEOVER, TitleState.class);
+//						gsm.addState(State.GAMEOVER, TitleState.class);
+                        stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500));
 					}
+					Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400);
+					back.addListener(new ClickListener() {
+						
+						@Override
+				        public void clicked(InputEvent e, float x, float y) {
+							loadLevel("maps/loadout.tmx");
+				        }
+				    });
+					stage.addActor(back);
 /*				} else {
 					playerNumber = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
@@ -460,6 +489,12 @@ public class PlayState extends GameState {
 		try {
 			for (int i = 0; i < entities.size(); i++) {
 				Entity e = entities.get(i);
+				if (e.entityID.equals(entityID)) {
+					return e;
+				}
+			}
+			for (int i = 0; i < graveyard.size(); i++) {
+				Entity e = graveyard.get(i).getKey();
 				if (e.entityID.equals(entityID)) {
 					return e;
 				}
