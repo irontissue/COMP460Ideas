@@ -363,7 +363,7 @@ public class PlayState extends GameState {
 		if (!comp460game.serverMode) {
 			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
             readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
-            readyToBack.setVisible(true);
+            readyToBack.setVisible(false);
 			back.setScale(0.5f);
 			readyToBack.setScale(0.5f);
 			Gdx.input.setInputProcessor(stage);
