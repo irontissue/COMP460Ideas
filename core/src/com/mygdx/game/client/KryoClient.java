@@ -430,6 +430,8 @@ public class KryoClient {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
                         ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType, p.synced);
+                    } else {
+                        Log.info("Tossing SyncCreateSchmuck message");
                     }
 //                    Log.info("Processed Schmuck creation sync message!");
 

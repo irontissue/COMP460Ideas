@@ -178,12 +178,11 @@ public class PlayState extends GameState {
 
         if (comp460game.serverMode) {
 			TiledObjectUtil.parseTiledEventLayer(this, world, camera, rays, map.getLayers().get("event-layer").getObjects());
-		}
-
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
 
 		TiledObjectUtil.parseTiledTriggerLayer(this, world, camera, rays);
