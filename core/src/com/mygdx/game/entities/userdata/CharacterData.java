@@ -177,21 +177,29 @@ public class CharacterData extends UserData {
 		float damage = basedamage;
 		
 		damage -= basedamage * (getDamageReduc());
-		damage += basedamage * (perp.getDamageAmp());
-		
-		if (Arrays.asList(tags).contains(DamageTypes.RANGED)) {
-			damage *= (1 + perp.getBonusRangedDamage());
+		if (perp != null) {
+			damage += basedamage * (perp.getDamageAmp());
+
+			if (Arrays.asList(tags).contains(DamageTypes.RANGED)) {
+				damage *= (1 + perp.getBonusRangedDamage());
+			}
 		}
 		
 		if (procEffects) {
-			damage = perp.statusProcTime(1, perp, damage, null);
+			if (perp != null) {
+				damage = perp.statusProcTime(1, perp, damage, null);
+			}
 			damage = statusProcTime(2, this, damage, null);
 		}
 		
 		currentHp -= damage;
 		if (comp460game.serverMode) {
+			String attackerUUID = null;
+			if (perp != null) {
+				attackerUUID = perp.getEntity().entityID.toString();
+			}
             comp460game.server.server.sendToAllTCP(new Packets.EntityTakeDamage(this.getEntity().entityID.toString(),
-                    damage, perp.getEntity().entityID.toString()));
+                    damage, attackerUUID));
         }
 		
 		//Make shmuck flash upon receiving damage
@@ -202,7 +210,9 @@ public class CharacterData extends UserData {
 		float kbScale = 1;
 		
 		kbScale -= getKnockbackReduc();
-		kbScale += perp.getKnockbackAmp();
+		if (perp != null) {
+			kbScale += perp.getKnockbackAmp();
+		}
 		
 		schmuck.getBody().applyLinearImpulse(knockback.scl(kbScale), schmuck.getBody().getWorldCenter(), true);
 		if (currentHp <= 0) {
@@ -229,8 +239,10 @@ public class CharacterData extends UserData {
 	 * This method is called when the schmuck dies. Queue up to be deleted next engine tick.
 	 */
 	public void die(CharacterData perp) {
-		
-		perp.statusProcTime(4, perp, 0, null);
+
+		if (perp != null) {
+			perp.statusProcTime(4, perp, 0, null);
+		}
 		statusProcTime(5, this, 0, null);
 		
 		schmuck.queueDeletion();

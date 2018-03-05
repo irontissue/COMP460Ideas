@@ -23,8 +23,8 @@ public class SpikeTrap extends Event {
 	private static final String name = "Spike Trap";
 
 	public SpikeTrap(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
-			int x, int y, float dps) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, float dps, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 		if (comp460game.serverMode) {
@@ -33,8 +33,8 @@ public class SpikeTrap extends Event {
 	}
 
 	public SpikeTrap(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					 int x, int y, float dps, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+					 int x, int y, float dps, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 	}

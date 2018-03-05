@@ -29,8 +29,8 @@ public class SteeringEnemy extends Enemy implements Steerable<Vector2> {
 	SteeringAcceleration<Vector2> steeringOutput;
 	
 	public SteeringEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-			float startX, float startY) {
-		super(state, world, camera, rays, w, h, startX, startY);
+			float startX, float startY, boolean synced) {
+		super(state, world, camera, rays, w, h, startX, startY, synced);
 
 		this.maxLinearSpeed = 10;
 		this.maxLinearAcceleration = 75;
@@ -47,8 +47,8 @@ public class SteeringEnemy extends Enemy implements Steerable<Vector2> {
 	}
 
 	public SteeringEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-						 float startX, float startY, String id) {
-		super(state, world, camera, rays, w, h, startX, startY, id);
+						 float startX, float startY, boolean synced, String id) {
+		super(state, world, camera, rays, w, h, startX, startY, synced, id);
 
 		this.maxLinearSpeed = 10;
 		this.maxLinearAcceleration = 75;
@@ -86,8 +86,10 @@ public class SteeringEnemy extends Enemy implements Steerable<Vector2> {
             if (behavior != null) {
                 behavior.calculateSteering(steeringOutput);
                 applySteering(delta);
-                comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
-                        this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+                if (synced) {
+					comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+							this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+				}
             }
         }
 	}

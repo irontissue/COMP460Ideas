@@ -27,8 +27,8 @@ public class EquipPickup extends Event {
 	private static final String name = "Equip Pickup";
 
 	public EquipPickup(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, int equipId) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, int equipId, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		switch(equipId) {
 		case 0:
 			this.equip = new Gun(null);
@@ -56,8 +56,8 @@ public class EquipPickup extends Event {
 
 	//To be used on client only
 	public EquipPickup(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					   int x, int y, int equipId, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+					   int x, int y, int equipId, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		switch(equipId) {
 		case 0:
 			this.equip = new Gun(null);

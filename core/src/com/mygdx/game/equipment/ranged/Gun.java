@@ -42,7 +42,7 @@ public class Gun extends RangedWeapon {
 				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
 
 			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "orb_yellow", bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
+                    filter, true, world, camera, rays, user, "orb_yellow", false, bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
 			
 			proj.setUserData(new HitboxData(state, world, proj) {
 				

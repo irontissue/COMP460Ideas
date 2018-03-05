@@ -80,8 +80,8 @@ public class Player extends Schmuck implements InputProcessor {
 	 */
   
 	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, PlayerData old,
-                  PlayerData old2) {
-		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384);
+                  PlayerData old2, boolean synced) {
+		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384, synced);
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
@@ -90,8 +90,8 @@ public class Player extends Schmuck implements InputProcessor {
 		this.old2 = old2;
 	}
 
-    public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, String id) {
-        super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384, id);
+    public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, boolean synced, String id) {
+        super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384, synced, id);
         this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
         this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
         this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
@@ -371,8 +371,10 @@ public class Player extends Schmuck implements InputProcessor {
                 desiredAngleVel = 0.0f;
             }
 
-            comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
-                    this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+            if (synced) {
+                comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+                        this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+            }
 
             interactCdCount-=delta;
         } else {

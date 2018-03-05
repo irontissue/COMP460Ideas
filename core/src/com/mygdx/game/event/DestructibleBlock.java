@@ -22,8 +22,8 @@ public class DestructibleBlock extends Event {
 	private int hp;
 	
 	public DestructibleBlock(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-                             int width, int height, int x, int y, int hp) {
-		super(state, world, camera, rays, name, width, height, x, y);
+                             int width, int height, int x, int y, int hp, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.hp = hp;
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateDestructibleBlockMessage(x, y, width, height, hp, entityID.toString()));
@@ -31,8 +31,8 @@ public class DestructibleBlock extends Event {
 	}
 
 	public DestructibleBlock(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-							 int width, int height, int x, int y, int hp, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+							 int width, int height, int x, int y, int hp, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.hp = hp;
 	}
 

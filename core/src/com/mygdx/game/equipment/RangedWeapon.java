@@ -141,7 +141,7 @@ public class RangedWeapon extends Equipment {
 
 	/**
 	 * Checks if this weapon needs to reload, and starts the reload sequence. This is in a separate function
-	 * because KryoClient uses this exact same code, on receiving a SyncHitboxImage packet.
+	 * because KryoClient uses this exact same code, on receiving a CreateHitboxImage packet.
 	 */
 	public void checkReload() {
 		if (clipLeft <= 0) {

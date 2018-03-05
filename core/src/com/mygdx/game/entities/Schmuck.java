@@ -72,8 +72,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	 * @param startY: starting y position
 	 */
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-			float startX, float startY) {
-		super(state, world, camera, rays, w * scale, h * scale, startX, startY);
+			float startX, float startY, boolean synced) {
+		super(state, world, camera, rays, w * scale, h * scale, startX, startY, synced);
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		//schmuckSprite = atlas.findRegion("spittlefish_swim");
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
@@ -85,8 +85,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	}
 
     public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-                   float startX, float startY, String id) {
-        super(state, world, camera, rays, w * scale, h * scale, startX, startY, id);
+                   float startX, float startY, boolean synced, String id) {
+        super(state, world, camera, rays, w * scale, h * scale, startX, startY, synced, id);
         atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
         //schmuckSprite = atlas.findRegion("spittlefish_swim");
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
@@ -95,8 +95,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
     }
 	
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-			float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight) {
-		super(state, world, camera, rays, width * scale, height * scale, startX, startY);
+			float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight, boolean synced) {
+		super(state, world, camera, rays, width * scale, height * scale, startX, startY, synced);
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		this.schmuckSprite = atlas.findRegion(spriteId);
 		this.schmuckSprite = new TextureRegion(new Texture(AssetList.GROOM.toString()));
@@ -107,8 +107,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	}
 
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-				   float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight, String id) {
-		super(state, world, camera, rays, width * scale, height * scale, startX, startY, id);
+				   float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight, boolean synced, String id) {
+		super(state, world, camera, rays, width * scale, height * scale, startX, startY, synced, id);
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		this.schmuckSprite = atlas.findRegion(spriteId);
 		this.schmuckSprite = new TextureRegion(new Texture(AssetList.GROOM.toString()));
@@ -178,8 +178,10 @@ public class Schmuck extends Entity implements Location<Vector2> {
                 useToolEnd(0);
             }
 
-            comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
-                    this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+            if (synced) {
+				comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+						this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+			}
         }
 
         //Stuff below the if statement should happen both on server/client, i.e. doesn't need to be "synced"

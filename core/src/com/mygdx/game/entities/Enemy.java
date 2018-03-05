@@ -16,14 +16,14 @@ public class Enemy extends Schmuck {
 	public Equipment weapon;
 	
 	public Enemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-			float startX, float startY) {
-		super(state, world, camera, rays, w, h, startX, startY);
+			float startX, float startY, boolean synced) {
+		super(state, world, camera, rays, w, h, startX, startY, synced);
 		weapon = new BadGun(this);
 	}
 
 	public Enemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-				 float startX, float startY, String id) {
-		super(state, world, camera, rays, w, h, startX, startY, id);
+				 float startX, float startY, boolean synced, String id) {
+		super(state, world, camera, rays, w, h, startX, startY, synced, id);
 		weapon = new BadGun(this);
 	}
 

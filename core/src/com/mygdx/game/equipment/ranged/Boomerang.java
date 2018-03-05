@@ -45,7 +45,7 @@ public class Boomerang extends RangedWeapon {
 				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
 
 			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "boomerang", bulletIDs == null ? null : bulletIDs[0], playerDataNumber) {
+                    filter, true, world, camera, rays, user, "boomerang", true, bulletIDs == null ? null : bulletIDs[0], playerDataNumber) {
 				
 				float controllerCount = 0;
 				
