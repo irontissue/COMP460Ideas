@@ -53,7 +53,7 @@ public class CharacterData extends UserData {
 
 	//Hp and regen
 	public int maxHp = 100;
-	public float currentHp = 1;
+	public float currentHp = 100;
 	public float hpRegen = 0.0f;
 	
 	public ArrayList<Status> statuses;
