@@ -28,7 +28,7 @@ public class AssaultRifle extends RangedWeapon {
 	private final static int reloadAmount = 25;
 	private final static float baseDamage = 25.0f;
 	private final static float recoil = 0.25f;
-	private final static float knockback = 0.6f;
+	private final static float knockback = 0.05f;
 	private final static float projectileSpeed = 40.0f;
 	private final static int projectileWidth = 64;
 	private final static int projectileHeight = 8;

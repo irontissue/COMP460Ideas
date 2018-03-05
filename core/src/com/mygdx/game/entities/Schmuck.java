@@ -79,6 +79,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
 //		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
 		schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
+//        hbWidth = (int) (t.getWidth()*.9f);
+//        hbHeight = (int) (t.getHeight()*.9f);
 //		if (state.playerNumber != null) {
 //            state.playerNumber.getClient().client.sendTCP(new Packets.SyncCreateSchmuck(w,h,startX,startY,this.entityID));
 //        }
@@ -92,6 +94,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
 //		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
         schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
+//        hbWidth = (int) (t.getWidth()*.9f);
+//        hbHeight = (int) (t.getHeight()*.9f);
     }
 	
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
