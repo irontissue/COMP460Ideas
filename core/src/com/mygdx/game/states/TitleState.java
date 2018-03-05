@@ -57,7 +57,10 @@ public class TitleState extends GameState {
                     Actor overlay = new Image(new Texture("Images/Overlay.png"));
                     overlay.setWidth(350);
                     overlay.setHeight(comp460game.CONFIG_HEIGHT);
+ 
+                    overlay.setPosition(390, 0);
                     overlay.setPosition(365, 0);
+
 
                     bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 40.0f),
                     		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
