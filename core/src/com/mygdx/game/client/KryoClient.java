@@ -80,11 +80,20 @@ public class KryoClient {
                     final int PNUMBER = ((Packets.EnterPlayState) o).playerNumber;
                     Gdx.app.postRunnable(new Runnable() {
                         public void run() {
-                        	myGame.getGsm().playerNumber = PNUMBER;
-                        	Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
-                        	myGame.getGsm().removeState(TitleState.class);
-                            myGame.getGsm().removeState(PlayState.class);
-                            myGame.getGsm().addState(State.PLAY, TitleState.class);
+                            if (myGame.getGsm().states.peek() instanceof PlayState) {
+                                Player p = ((PlayState) (myGame.getGsm().states.peek())).player;
+                                myGame.getGsm().playerNumber = PNUMBER;
+                                Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
+                                myGame.getGsm().removeState(TitleState.class);
+                                myGame.getGsm().removeState(PlayState.class);
+                                myGame.getGsm().addPlayState(null, p.playerData, null, TitleState.class);
+                            } else if (myGame.getGsm().states.peek() instanceof TitleState) {
+                                myGame.getGsm().playerNumber = PNUMBER;
+                                Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
+                                myGame.getGsm().removeState(TitleState.class);
+                                myGame.getGsm().removeState(PlayState.class);
+                                myGame.getGsm().addState(State.PLAY, TitleState.class);
+                            }
                         }
                     });
                 }

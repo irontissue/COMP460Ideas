@@ -87,6 +87,9 @@ public class Player extends Schmuck implements InputProcessor {
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
 		this.dress = new TextureRegion(new Texture(AssetList.DRESS.toString()));
 		this.old = old;
+		if (old != null) {
+		    Log.info("Set old");
+        }
 		this.old2 = old2;
 	}
 
