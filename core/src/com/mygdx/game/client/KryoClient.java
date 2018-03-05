@@ -371,16 +371,21 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EventInteractMessage) {
-                    Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
+                    final Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
-                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent instanceof Player) {
-                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
-                                e.eventData.onInteract(ps.player, p.playerNumber);
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                                Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                                Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                                if (ent instanceof Player) {
+                                    if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                                        e.eventData.onInteract(ps.player, p.playerNumber);
+                                    }
+                                }
                             }
-                        }
+                        });
                     }
                 }
 

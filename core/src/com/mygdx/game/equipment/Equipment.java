@@ -32,7 +32,9 @@ public abstract class Equipment {
 	
 	//The amount of time it takes to reload this weapon. (default = 0 for non-ranged)
 	public float reloadTime = 0;
-		
+
+	private int equipID = -1;
+
 	/**
 	 * Equipables are constructed when creating tool spawns or default schmuck loadouts
 	 * @param user: Schmuck that is using this tool.
@@ -102,4 +104,11 @@ public abstract class Equipment {
 	 */
 	public abstract String getText();
 
+    public void setEquipID(int equipID) {
+        this.equipID = equipID;
+    }
+
+    public int getEquipID() {
+        return equipID;
+    }
 }

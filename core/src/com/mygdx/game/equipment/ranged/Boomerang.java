@@ -37,7 +37,9 @@ public class Boomerang extends RangedWeapon {
 	private final static float lifespan = 4.0f;
 	
 	private final static int projDura = 1;
-	
+
+	public static final int equipID = Constants.EquipIDs.BOOMERANG;
+
 	private final static HitboxFactory onShoot = new HitboxFactory() {
 
 		@Override
@@ -90,6 +92,7 @@ public class Boomerang extends RangedWeapon {
 	
 	public Boomerang(Schmuck user) {
 		super(user, name, clipSize, reloadTime, recoil, projectileSpeed, shootCd, shootDelay, reloadAmount, onShoot);
+        setEquipID(equipID);
 	}
 
 }

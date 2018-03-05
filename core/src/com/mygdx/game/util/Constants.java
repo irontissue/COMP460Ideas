@@ -35,5 +35,14 @@ public class Constants {
         public static final int STEERING_ENEMY = 10;
         public static final int STANDARD_ENEMY = 11;
     }
+
+    public class EquipIDs {
+        public static final int GUN = 0;
+        public static final int SHOTGUN = 1;
+        public static final int MACHINE = 4;
+        public static final int BOOMERANG = 3;
+        public static final int ROCKET_LAUNCHER = 2;
+        public static final int BAD_GUN = 5;
+    }
     
 }

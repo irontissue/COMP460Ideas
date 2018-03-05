@@ -72,14 +72,14 @@ public class TitleState extends GameState {
                     addActor(bg2);
                     addActor(overlay);
                     Text nothing = new Text(comp460game.assetManager, "", 0,0);
-                    title1 = new Text(comp460game.assetManager, "Couple's", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
-                    title2 = new Text(comp460game.assetManager, "Therapy", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
-					playOption = new Text(comp460game.assetManager, "PLAY", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
-                    waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
+                    title1 = new Text(comp460game.assetManager, "COUPLE'S", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    title2 = new Text(comp460game.assetManager, "THERAPY", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+					playOption = new Text(comp460game.assetManager, "PLAY", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    waitingOnPlayer2 = new Text(comp460game.assetManager, "WAITING...", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
 					//startServerOption = new Text(comp460game.assetManager, "START SERVER", 150, comp460game.CONFIG_HEIGHT - 240);
-					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT - 240, Color.WHITE);
-                    disconnect = new Text(comp460game.assetManager, "DISCONNECT", 150, comp460game.CONFIG_HEIGHT - 240, Color.WHITE);
-					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 300, Color.WHITE);
+					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    disconnect = new Text(comp460game.assetManager, "DISCONNECT", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
 
 					disconnect.setVisible(false);
 					waitingOnPlayer2.setVisible(false);
@@ -150,13 +150,13 @@ public class TitleState extends GameState {
                     table.setFillParent(true);
                     addActor(table);
                     //add buttons to table
+                    table.add(nothing).fillX().uniformX().center();
+                    table.row();
                     table.add(title1).fillX().uniformX().center();
                     table.row();
                     table.add(nothing).fillX().uniformX().center();
                     table.row();
                     table.add(title2).fillX().uniformX().center();
-                    table.row();
-                    table.add(nothing).fillX().uniformX().center();
                     table.row();
                     table.add(nothing).fillX().uniformX().center();
                     table.row();
