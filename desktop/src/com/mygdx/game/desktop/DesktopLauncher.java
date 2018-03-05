@@ -16,6 +16,7 @@ public class DesktopLauncher {
 //		config.fullscreen = true;
 		config.foregroundFPS = 60;
 		config.backgroundFPS = 60;
+		config.resizable = false;
 //		new ChatServer();
 //		new ChatClient();
 /*		try {
