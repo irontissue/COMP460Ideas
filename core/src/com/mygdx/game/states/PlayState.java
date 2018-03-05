@@ -346,43 +346,46 @@ public class PlayState extends GameState {
 
 	private Actor back, readyToBack;
 	public void gameend() {
-		if (won) {
-			if (comp460game.serverMode) {
-				comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-			}
-//			gsm.addState(State.VICTORY, TitleState.class);
-            Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
-			victory.setScale(0.5f);
-            stage.addActor(victory);
-		} else {
-			if (comp460game.serverMode) {
-				comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-			}
-//			gsm.addState(State.GAMEOVER, TitleState.class);
-            Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
-			defeat.setScale(0.5f);
-            stage.addActor(defeat);
-		}
-		if (!comp460game.serverMode) {
-			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
-            readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
-            readyToBack.setVisible(false);
-			back.setScale(0.5f);
-			readyToBack.setScale(0.5f);
-			Gdx.input.setInputProcessor(stage);
-			back.addListener(new ClickListener() {
+	    if (!gameEnded) {
+            if (won) {
+                if (comp460game.serverMode) {
+                    comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+                }
+    //			gsm.addState(State.VICTORY, TitleState.class);
+                Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
+                victory.setScale(0.5f);
+                stage.addActor(victory);
+            } else {
+                if (comp460game.serverMode) {
+                    comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+                }
+    //			gsm.addState(State.GAMEOVER, TitleState.class);
+                Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
+                defeat.setScale(0.5f);
+                stage.addActor(defeat);
+            }
+            if (!comp460game.serverMode) {
+                back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
+                readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
+                readyToBack.setVisible(false);
+                back.setScale(0.5f);
+                readyToBack.setScale(0.5f);
+                Gdx.input.setInputProcessor(stage);
+                back.addListener(new ClickListener() {
 
-				@Override
-				public void clicked(InputEvent e, float x, float y) {
-					back.setVisible(false);
-					readyToBack.setVisible(true);
-					Log.info("yay");
-					comp460game.client.client.sendTCP(new Packets.ReadyToPlay());
-					//Gdx.input.setInputProcessor(player);
-				}
-			});
-			stage.addActor(back);
-			stage.addActor(readyToBack);
+                    @Override
+                    public void clicked(InputEvent e, float x, float y) {
+                        back.setVisible(false);
+                        readyToBack.setVisible(true);
+                        Log.info("yay");
+                        comp460game.client.client.sendTCP(new Packets.ReadyToPlay());
+                        //Gdx.input.setInputProcessor(player);
+                    }
+                });
+                stage.addActor(back);
+                stage.addActor(readyToBack);
+                gameEnded = true;
+            }
 		}
 		
 	}
