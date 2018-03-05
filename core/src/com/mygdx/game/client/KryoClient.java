@@ -82,6 +82,8 @@ public class KryoClient {
                         public void run() {
                         	myGame.getGsm().playerNumber = PNUMBER;
                         	Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
+                        	myGame.getGsm().removeState(TitleState.class);
+                            myGame.getGsm().removeState(PlayState.class);
                             myGame.getGsm().addState(State.PLAY, TitleState.class);
                         }
                     });

@@ -322,7 +322,9 @@ public class PlayState extends GameState {
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
 //					gsm.removeState(PlayState.class);
-					gameend();
+                    if (comp460game.serverMode) {
+                        gameend();
+                    }
 					gameover = false;
 /*				} else {
 					playerNumber = new Player(this, world, camera, rays,
@@ -361,7 +363,7 @@ public class PlayState extends GameState {
 		if (!comp460game.serverMode) {
 			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
             readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
-            readyToBack.setVisible(false);
+            readyToBack.setVisible(true);
 			back.setScale(0.5f);
 			readyToBack.setScale(0.5f);
 			Gdx.input.setInputProcessor(stage);
@@ -377,6 +379,7 @@ public class PlayState extends GameState {
 				}
 			});
 			stage.addActor(back);
+			stage.addActor(readyToBack);
 		}
 		
 	}
