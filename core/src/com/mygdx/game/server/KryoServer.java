@@ -274,11 +274,6 @@ public class KryoServer {
 				        server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
                         server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
 				        players = 0;
-//						Gdx.app.postRunnable(new Runnable() {
-//							public void run() {
-//								gsm.addState(GameStateManager.State.PLAY, TitleState.class);
-//							}
-//						});
                     }
                 }
 

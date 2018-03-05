@@ -145,6 +145,7 @@ public class PlayState extends GameState {
         
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
+		b2dr.setDrawBodies(false);
 		
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
@@ -309,23 +310,21 @@ public class PlayState extends GameState {
 		batch.setProjectionMatrix(camera.combined);
 //		rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		if (gameover && !comp460game.serverMode) {
-			if(player.vision.getDistance() > 0) {
-				player.vision.setDistance(player.vision.getDistance() - 1.0f);
-			}
-		}
-		
-		
 		//process gameover
-		if (gameover && comp460game.serverMode) {
+		if (gameover) {
 			gameoverCdCount -= delta;
 			
-			
+			if (!comp460game.serverMode) {
+				if(player.vision.getDistance() > 0) {
+					player.vision.setDistance(player.vision.getDistance() - 1.0f);
+				}
+			}
 			
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
 //					gsm.removeState(PlayState.class);
 					gameend();
+					gameover = false;
 /*				} else {
 					playerNumber = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
@@ -341,25 +340,34 @@ public class PlayState extends GameState {
 
 	}
 	
-	private void gameend() {
+	public void gameend() {
 		if (won) {
-            comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+			if (comp460game.serverMode) {
+				comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+			}
 //			gsm.addState(State.VICTORY, TitleState.class);
             stage.addActor(new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE));
 		} else {
-            comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+			if (comp460game.serverMode) {
+				comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+			}
 //			gsm.addState(State.GAMEOVER, TitleState.class);
             stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500, Color.WHITE));
 		}
-		Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
-		back.addListener(new ClickListener() {
-			
-			@Override
-	        public void clicked(InputEvent e, float x, float y) {
-				loadLevel("maps/loadout.tmx");
-	        }
-	    });
-		stage.addActor(back);
+		if (!comp460game.serverMode) {
+			Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
+			back.addListener(new ClickListener() {
+
+				@Override
+				public void clicked(InputEvent e, float x, float y) {
+					Text readyToBack = new Text(comp460game.assetManager, "WAITING ON PLAYER 2...", 300, 500, Color.WHITE);
+					stage.addActor(readyToBack);
+					Log.info("yay");
+					comp460game.client.client.sendTCP(new Packets.ReadyToPlay());
+				}
+			});
+			stage.addActor(back);
+		}
 		
 	}
 
@@ -377,7 +385,7 @@ public class PlayState extends GameState {
 		tmr.render();				
 
 		//Render debug lines for box2d objects.
-		//b2dr.render(world, camera.combined.scl(PPM));
+		b2dr.render(world, camera.combined.scl(PPM));
 		
 		
 		//Iterate through entities in the world to render

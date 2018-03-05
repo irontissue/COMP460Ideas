@@ -58,33 +58,24 @@ public class TitleState extends GameState {
                     overlay.setWidth(300);
                     overlay.setHeight(comp460game.CONFIG_HEIGHT);
                     overlay.setPosition(390, 0);
-                    
+
                     bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 40.0f),
                     		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
                     				Actions.moveTo(-bg1.getWidth(), 0, 80.0f)))));
                     
                     bg2.setPosition(bg2.getWidth(), 0);
                     bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 40.0f), Actions.moveTo(-bg2.getWidth(), 0, 40.0f),
-                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
+                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0),
                     				Actions.moveTo(-bg2.getWidth(), 0, 80.0f)))));
-                    bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 20.0f), 
-                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
-                    				Actions.moveTo(-bg1.getWidth(), 0, 40.0f)))));
-                    
-                    bg2.setPosition(bg2.getWidth(), 0);
-                    bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 10.0f), Actions.moveTo(-bg2.getWidth(), 0, 20.0f), 
-                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
-                    				Actions.moveTo(-bg2.getWidth(), 0, 40.0f)))));
->>>>>>> pr/60
-                    
+
                     addActor(bg1);
                     addActor(bg2);
                     addActor(overlay);
                     Text nothing = new Text(comp460game.assetManager, "", 0,0);
                     title = new Text(comp460game.assetManager, "Couple's Therapy", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
-					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
+					playOption = new Text(comp460game.assetManager, "PLAY", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
                     waitingOnPlayer2 = new Text(comp460game.assetManager, "Waiting on other player...", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
-					//startServerOption = new Text(comp460game.assetManager, "START SERVER?", 150, comp460game.CONFIG_HEIGHT - 240);
+					//startServerOption = new Text(comp460game.assetManager, "START SERVER", 150, comp460game.CONFIG_HEIGHT - 240);
 					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT - 240, Color.WHITE);
                     disconnect = new Text(comp460game.assetManager, "DISCONNECT", 150, comp460game.CONFIG_HEIGHT - 240, Color.WHITE);
 					exitOption = new Text(comp460game.assetManager, "EXIT?", 150, comp460game.CONFIG_HEIGHT - 300, Color.WHITE);
