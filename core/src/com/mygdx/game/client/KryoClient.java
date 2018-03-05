@@ -179,7 +179,7 @@ public class KryoClient {
                     Packets.PlayerShoot p = (Packets.PlayerShoot) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        if (p.playerNumber == myGame.getGsm().playerNumber) {
+                        if (ps.player.playerData != null && p.playerNumber == myGame.getGsm().playerNumber) {
                             RangedWeapon rw = (RangedWeapon) ps.player.playerData.getCurrentTool();
                             rw.clipLeft--;
                             rw.checkReload();
@@ -379,7 +379,7 @@ public class KryoClient {
                                 PlayState ps = (PlayState) myGame.getGsm().states.peek();
                                 Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                                 Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                                if (ent instanceof Player) {
+                                if (ent != null && ent instanceof Player) {
                                     if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
                                         e.eventData.onInteract(ps.player, p.playerNumber);
                                     }
@@ -407,7 +407,7 @@ public class KryoClient {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
                         Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                         Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent instanceof Player) {
+                        if (ent != null && ent instanceof Player) {
                             if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
                                 e.eventData.onRelease(((Player) ent).playerData);
                             }
@@ -421,7 +421,7 @@ public class KryoClient {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
                         Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                         Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent instanceof Player) {
+                        if (ent != null && ent instanceof Player) {
                             if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
                                 e.eventData.onTouch(((Player) ent).playerData);
                             }
@@ -580,7 +580,7 @@ public class KryoClient {
                         if (sea.attackerUUID != null) {
                             attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
                         }
-                        if (e instanceof Schmuck) {
+                        if (e != null && e instanceof Schmuck) {
                             Schmuck s = (Schmuck) e;
                             CharacterData theData = null;
                             if (attackerEntity != null && attackerEntity instanceof Schmuck) {
@@ -588,7 +588,7 @@ public class KryoClient {
                             }
                             s.getBodyData().receiveDamage(sea.damage, new Vector2(0, 0),
                                     theData, true, DamageTypes.TESTTYPE1);
-                        } else if (e instanceof Event) {
+                        } else if (e != null && e instanceof Event) {
                             Event ee = (Event) e;
                             CharacterData theData = null;
                             if (attackerEntity != null && attackerEntity instanceof Schmuck) {
