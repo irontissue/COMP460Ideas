@@ -245,7 +245,7 @@ public class CharacterData extends UserData {
 			perp.statusProcTime(4, perp, 0, null);
 		}
 		statusProcTime(5, this, 0, null);
-		currentHp = maxHp;
+//		currentHp = maxHp;
 		schmuck.queueDeletion();
 	}
 
