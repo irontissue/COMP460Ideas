@@ -75,7 +75,7 @@ public class TitleState extends GameState {
                     title1 = new Text(comp460game.assetManager, "COUPLE'S", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
                     title2 = new Text(comp460game.assetManager, "THERAPY", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
 					playOption = new Text(comp460game.assetManager, "PLAY", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
-                    waitingOnPlayer2 = new Text(comp460game.assetManager, "WAITING...", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
+                    waitingOnPlayer2 = new Text(comp460game.assetManager, "...WAITING...", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
 					//startServerOption = new Text(comp460game.assetManager, "START SERVER", 150, comp460game.CONFIG_HEIGHT - 240);
 					joinServerOption = new Text(comp460game.assetManager, "ENTER IP", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
                     disconnect = new Text(comp460game.assetManager, "DISCONNECT", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
