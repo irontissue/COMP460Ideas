@@ -37,6 +37,7 @@ public class PlayerData extends CharacterData {
 		} else {
 			currentHp = old.currentHp;
 		}
+		currentHp = maxHp;
 		multitools = old.multitools;
 		//TODO: copy other things that will be carried over across levels. Statuses/Loadout
 	}

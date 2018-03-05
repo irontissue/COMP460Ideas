@@ -48,7 +48,7 @@ public class CharacterData extends UserData {
 	public float[] buffedStats;	
 		
 	//Speed on ground
-	public float maxSpeed = 7.0f;
+	public float maxSpeed = 4.0f;
 	public float maxAngularSpeed = 1.5f;
 
 	//Hp and regen
