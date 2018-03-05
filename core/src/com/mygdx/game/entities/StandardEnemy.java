@@ -31,16 +31,16 @@ public class StandardEnemy extends SteeringEnemy {
   	private enemyState aiState;
 
 	public StandardEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-			float startX, float startY) {
-		super(state, world, camera, rays, w, h, startX, startY);
+			float startX, float startY, boolean synced) {
+		super(state, world, camera, rays, w, h, startX, startY, synced);
 		
 		this.aiState = enemyState.ROAMING;
 
 	}
 
 	public StandardEnemy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-						 float startX, float startY, String id) {
-		super(state, world, camera, rays, w, h, startX, startY, id);
+						 float startX, float startY, boolean synced, String id) {
+		super(state, world, camera, rays, w, h, startX, startY, synced, id);
 
 		this.aiState = enemyState.ROAMING;
 

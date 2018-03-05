@@ -15,8 +15,8 @@ public class Player2Dummy extends Schmuck {
 	public Equipment dummyWeapon;
 	
 	public Player2Dummy(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-			float startX, float startY, Player player) {
-		super(state, world, camera, rays, w, h, startX, startY);
+			float startX, float startY, Player player, boolean synced) {
+		super(state, world, camera, rays, w, h, startX, startY, synced);
 		this.player = player;
 		dummyWeapon = new Gun(this);
 	}

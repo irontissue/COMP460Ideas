@@ -21,16 +21,16 @@ public class Currents extends Event {
 	
 	private static final String name = "Conveyor Belt";
 
-	public Currents(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, Vector2 vec) {
-		super(state, world, camera, rays, name, width, height, x, y);
+	public Currents(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, Vector2 vec, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.vec = vec;
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateCurrentsMessage(x, y, width, height, vec, entityID.toString()));
 		}
 	}
 
-	public Currents(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, Vector2 vec, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+	public Currents(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, Vector2 vec, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.vec = vec;
 	}
 	

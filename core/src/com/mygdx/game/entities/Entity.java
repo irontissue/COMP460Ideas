@@ -40,6 +40,7 @@ public abstract class Entity {
 	protected float startX, startY;
 	public UUID entityID;
 	boolean alive = true;
+	boolean synced;
     public static final int ENTITY_TYPE = Constants.EntityTypes.ENTITY;
 	/**
 	 * Constructor is called when an entity is created. USE THIS FOR SERVER
@@ -52,7 +53,7 @@ public abstract class Entity {
 	 * @param startX: Starting x position
 	 * @param startY: Starting y position
 	 */
-	public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY) {
+	public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY, boolean synced) {
 
         entityID = UUID.randomUUID();
 
@@ -65,6 +66,7 @@ public abstract class Entity {
         this.height = h;
         this.startX = startX;
         this.startY = startY;
+        this.synced = synced;
 
         //Queue this entity up for creating in the world next engine tick
         state.create(this);
@@ -87,7 +89,7 @@ public abstract class Entity {
 	 * @param startY: Starting y position
 	 * @param id: UUID of entity you are creating, in String format
 	 */
-    public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY, String id) {
+    public Entity(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h, float startX, float startY, boolean synced, String id) {
         if (id == null) {
             entityID = UUID.randomUUID();
         } else {
@@ -103,6 +105,7 @@ public abstract class Entity {
         this.height = h;
         this.startX = startX;
         this.startY = startY;
+        this.synced = synced;
 
         //Queue this entity up for creating in the world next engine tick
         state.create(this);

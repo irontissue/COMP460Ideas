@@ -26,8 +26,8 @@ public class Timer extends Event {
 	private static final String name = "Timer";
 	
 	public Timer(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, float interval, int limit, boolean startOn) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, float interval, int limit, boolean startOn, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.interval = interval;
 		this.limit = limit;
 		this.on = startOn;

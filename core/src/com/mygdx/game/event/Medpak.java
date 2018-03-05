@@ -26,8 +26,8 @@ public class Medpak extends Event {
 	private static final String name = "Medpak";
 
 	public Medpak(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y,
-			MedpakSpawner medpakSpawner) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			MedpakSpawner medpakSpawner, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.spawner = medpakSpawner;
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateMedpakMessage(x, y, width, height, medpakSpawner.entityID.toString(), entityID.toString()));
@@ -35,8 +35,8 @@ public class Medpak extends Event {
 	}
 
 	public Medpak(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y,
-				  MedpakSpawner medpakSpawner, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+				  MedpakSpawner medpakSpawner, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.spawner = medpakSpawner;
 	}
 	

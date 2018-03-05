@@ -17,16 +17,16 @@ public class InfoFlag extends Event {
 
 	private String text;
 	
-	public InfoFlag(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String text) {
-		super(state, world, camera, rays, name, width, height, x, y);
+	public InfoFlag(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String text, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.text = text;
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateInfoFlagMessage(x, y, width, height, text, entityID.toString()));
 		}
 	}
 
-	public InfoFlag(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String text, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+	public InfoFlag(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String text, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.text = text;
 	}
 	

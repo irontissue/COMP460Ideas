@@ -35,8 +35,8 @@ public class TriggerSpawn extends Event {
 	boolean defeated = false;
 	
 	public TriggerSpawn(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, int schmuckId, int limit) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, int schmuckId, int limit, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.id = schmuckId;
 		this.limit = limit;
 		this.spawnX = x;
@@ -61,18 +61,18 @@ public class TriggerSpawn extends Event {
 					
 					switch(id) {
 					    case 0:
-					    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY);
-							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY));
+					    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY, true);
+							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY, true));
 						    spawns.add(se);
 						    break;
                         case 2:
-                        	se = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY));
+                        	se = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
+                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true));
                         	spawns.add(se);
                             break;
                         case 3:
-                        	st = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY));
+                        	st = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
+                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true));
                         	spawns.add(st);
 					}
 				}

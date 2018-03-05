@@ -17,10 +17,10 @@ public class WeaponUtils {
 	private static final float selfDamageReduction = 0.4f;
 	
 	public static Hitbox explode(PlayState state, float x, float y, World world, OrthographicCamera camera, RayHandler rays, 
-			final Schmuck user, int explosionRadius, final float explosionDamage, final float explosionKnockback, short filter, int playerDataNumber) {
+			final Schmuck user, int explosionRadius, final float explosionDamage, final float explosionKnockback, short filter, int playerDataNumber, boolean synced) {
 		Hitbox explosion = new HitboxImage(state, 
 				x, y,	explosionRadius, explosionRadius, 0.3f, 1, 0, new Vector2(0, 0),
-				filter, true, world, camera, rays, user, "orb_yellow", null, playerDataNumber);
+				filter, true, world, camera, rays, user, "orb_yellow", synced, null, playerDataNumber);
 
 		explosion.setUserData(new HitboxData(state, world, explosion){
 			public void onHit(UserData fixB) {

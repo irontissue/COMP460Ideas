@@ -19,8 +19,8 @@ public class UsePortal extends Event {
 	boolean oneTime;
 
 	public UsePortal(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, boolean oneTime) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, boolean oneTime, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.oneTime = oneTime;
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateUsePortalMessage(x, y, width, height, oneTime, entityID.toString()));
@@ -28,8 +28,8 @@ public class UsePortal extends Event {
 	}
 
 	public UsePortal(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					 int x, int y, boolean oneTime, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+					 int x, int y, boolean oneTime, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.oneTime = oneTime;
 	}
 	
