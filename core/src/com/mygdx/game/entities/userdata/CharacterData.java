@@ -84,6 +84,7 @@ public class CharacterData extends UserData {
 		
 		calcStats();
 
+//		currentHp = 100;
 		if (schmuck instanceof Player) {
 			currentHp = 100;
 		} else {
@@ -244,7 +245,6 @@ public class CharacterData extends UserData {
 			perp.statusProcTime(4, perp, 0, null);
 		}
 		statusProcTime(5, this, 0, null);
-		
 		schmuck.queueDeletion();
 	}
 

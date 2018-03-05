@@ -406,9 +406,11 @@ public class PlayState extends GameState {
 		batch.begin();
 
 		for (Entity schmuck : entities) {
-			schmuck.render(batch);
+		    if (!(schmuck instanceof Player)) {
+                schmuck.render(batch);
+            }
 		}
-		
+		player.render(batch);
 		batch.end();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }

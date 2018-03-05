@@ -34,7 +34,10 @@ public class Event extends Entity {
 	public TextureRegion eventSprite;
     public int spriteWidth = -197;
     public int spriteHeight = -174;
-
+    public float specialScale = 1f;
+    public float specialAngle = 0;
+    public int xOffset = 0;
+    public int yOffset = 0;
     public static float scale = 1f;
 
 	//This is used by consumable events to avoid being activated multiple times before next engine tick.
@@ -71,11 +74,11 @@ public class Event extends Entity {
             batch.setProjectionMatrix(state.sprite.combined);
             Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
             batch.draw(eventSprite,
-                    body.getPosition().x * PPM - spriteWidth / 2,
-                    body.getPosition().y * PPM - spriteHeight / 2,
-                    spriteWidth / 2, spriteHeight / 2,
-                    spriteWidth * scale, spriteHeight * scale, 1, 1,
-                    (float) Math.toDegrees(body.getAngle()) - 180);
+                    body.getPosition().x * PPM - spriteWidth*specialScale / 2,
+                    body.getPosition().y * PPM - spriteHeight*specialScale / 2,
+                    spriteWidth*specialScale / 2, spriteHeight*specialScale / 2,
+                    spriteWidth * scale * specialScale, spriteHeight * scale * specialScale, 1, 1,
+                    (float) Math.toDegrees(body.getAngle()) - 180 - specialAngle);
 
             batch.setColor(Color.WHITE);
         } else {
