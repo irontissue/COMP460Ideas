@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.states.PlayState;
@@ -40,14 +41,14 @@ public class Event extends Entity {
 	protected boolean consumed = false;
 		
 	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
-			int width, int height, int x, int y) {
-		super(state, world, camera, rays, width, height, x, y);
+			int width, int height, int x, int y, boolean synced) {
+		super(state, world, camera, rays, width, height, x, y, synced);
 		this.name = name;
 	}
 
 	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
-				 int width, int height, int x, int y, String uuid) {
-		super(state, world, camera, rays, width, height, x, y, uuid);
+				 int width, int height, int x, int y, boolean synced, String uuid) {
+		super(state, world, camera, rays, width, height, x, y, synced, uuid);
 		this.name = name;
 	}
 	
@@ -81,7 +82,7 @@ public class Event extends Entity {
             batch.setProjectionMatrix(state.hud.combined);
             Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
             camera.project(bodyScreenPosition);
-            state.font.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
+			comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
         }
 	}
 	

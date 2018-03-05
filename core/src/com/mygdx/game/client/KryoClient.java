@@ -20,6 +20,7 @@ import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.*;
 import com.mygdx.game.event.utility.Switch;
+import com.mygdx.game.event.utility.Target;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
@@ -173,15 +174,15 @@ public class KryoClient {
 //
 //                }
 
-                else if (o instanceof Packets.SyncHitboxImage) {
+                else if (o instanceof Packets.CreateHitboxImage) {
 //                    Log.info("Received HitboxImage sync message...");
-                    Packets.SyncHitboxImage p = (Packets.SyncHitboxImage) o;
+                    Packets.CreateHitboxImage p = (Packets.CreateHitboxImage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
                         new HitboxImage(ps, p.x, p.y, p.width, p.height, p.lifespan, p.dura, p.rest, p.startVelo,
                                 p.filter, p.sensor, ps.getWorld(), ps.camera, ps.getRays(),
-                                (Schmuck)ps.getEntity(UUID.fromString(p.creatorUUID)), p.spriteID, p.uuid, p.playerDataNumber);
-//                        Log.info("Received SyncHitboxImage. player number = " + p.playerDataNumber);
+                                (Schmuck)ps.getEntity(UUID.fromString(p.creatorUUID)), p.spriteID, false, p.uuid, p.playerDataNumber);
+//                        Log.info("Received CreateHitboxImage. player number = " + p.playerDataNumber);
                     }
 
                 }
@@ -207,7 +208,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new Currents(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.vec, p.entityID);
+                                new Currents(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.vec, false, p.entityID);
                             }
                         });
                     }
@@ -220,7 +221,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new DestructibleBlock(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.hp, p.entityID);
+                                new DestructibleBlock(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.hp, false, p.entityID);
                             }
                         });
                     }
@@ -233,7 +234,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new Door(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                                new Door(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, false, p.entityID);
                             }
                         });
                     }
@@ -246,7 +247,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new EquipPickup(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.equipID, p.entityID);
+                                new EquipPickup(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.equipID, false, p.entityID);
                             }
                         });
                     }
@@ -259,7 +260,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new InfoFlag(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.text, p.entityID);
+                                new InfoFlag(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.text, false, p.entityID);
                             }
                         });
                     }
@@ -272,7 +273,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new LevelWarp(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.level, p.entityID);
+                                new LevelWarp(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.level, false, p.entityID);
                             }
                         });
                     }
@@ -285,7 +286,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new Medpak(ps, ps.getWorld(), ps.camera, ps.getRays(), p.x, p.y, null, p.entityID);
+                                new Medpak(ps, ps.getWorld(), ps.camera, ps.getRays(), p.x, p.y, null, false, p.entityID);
                             }
                         });
                     }
@@ -298,7 +299,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new PoisonVent(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.startOn, p.entityID);
+                                new PoisonVent(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.startOn, false, p.entityID);
                             }
                         });
                     }
@@ -311,7 +312,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new SavePoint(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                                new SavePoint(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, false, p.entityID);
                             }
                         });
                     }
@@ -324,7 +325,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new SpikeTrap(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, p.entityID);
+                                new SpikeTrap(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.dps, false, p.entityID);
                             }
                         });
                     }
@@ -337,7 +338,20 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new Switch(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                                new Switch(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, false, p.entityID);
+                            }
+                        });
+                    }
+                }
+
+                else if (o instanceof Packets.CreateTargetMessage) {
+                    final Packets.CreateTargetMessage p = (Packets.CreateTargetMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Target(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.oneTime, false, p.entityID);
                             }
                         });
                     }
@@ -350,7 +364,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new UsePortal(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.oneTime, p.entityID);
+                                new UsePortal(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.oneTime, false, p.entityID);
                             }
                         });
                     }
@@ -363,7 +377,7 @@ public class KryoClient {
                         Gdx.app.postRunnable(new Runnable() {
                             @Override
                             public void run() {
-                                new Victory(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.entityID);
+                                new Victory(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, false, p.entityID);
                             }
                         });
                     }
@@ -430,7 +444,7 @@ public class KryoClient {
                         //Log.info("PlayState ready when message received...");
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
-                        ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType);
+                        ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType, p.synced);
                     }
 //                    Log.info("Processed Schmuck creation sync message!");
 
@@ -568,7 +582,10 @@ public class KryoClient {
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
                         Entity e = ps.getEntity(UUID.fromString(sea.uuid));
-                        Entity attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
+                        Entity attackerEntity = null;
+                        if (sea.attackerUUID != null) {
+                            attackerEntity = ps.getEntity(UUID.fromString(sea.attackerUUID));
+                        }
                         if (e instanceof Schmuck) {
                             Schmuck s = (Schmuck) e;
                             CharacterData theData = null;

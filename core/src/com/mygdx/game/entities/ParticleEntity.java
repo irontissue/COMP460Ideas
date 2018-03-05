@@ -23,8 +23,8 @@ public class ParticleEntity extends Entity {
 	private boolean despawn;
 	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-			float startX, float startY, ParticleEffect effect, float lifespan) {
-		super(state, world, camera, rays, 0, 0, startX, startY);
+			float startX, float startY, ParticleEffect effect, float lifespan, boolean synced) {
+		super(state, world, camera, rays, 0, 0, startX, startY, synced);
 		this.effect = effect;
 		this.despawn = false;
 		this.lifespan = lifespan;
@@ -33,8 +33,8 @@ public class ParticleEntity extends Entity {
 	}
 
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-						  float startX, float startY, ParticleEffect effect, float lifespan, String id) {
-		super(state, world, camera, rays, 0, 0, startX, startY, id);
+						  float startX, float startY, ParticleEffect effect, float lifespan, boolean synced, String id) {
+		super(state, world, camera, rays, 0, 0, startX, startY, synced, id);
 		this.effect = effect;
 		this.despawn = false;
 		this.lifespan = lifespan;
@@ -43,8 +43,8 @@ public class ParticleEntity extends Entity {
 	}
 	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-			Entity entity, ParticleEffect effect, float lifespan) {
-		super(state, world, camera, rays, 0, 0, 0, 0);
+			Entity entity, ParticleEffect effect, float lifespan, boolean synced) {
+		super(state, world, camera, rays, 0, 0, 0, 0, synced);
 		this.attachedEntity = entity;
 		this.effect = effect;
 		this.despawn = false;
@@ -54,8 +54,8 @@ public class ParticleEntity extends Entity {
 	}
 
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-						  Entity entity, ParticleEffect effect, float lifespan, String id) {
-		super(state, world, camera, rays, 0, 0, 0, 0, id);
+						  Entity entity, ParticleEffect effect, float lifespan, boolean synced, String id) {
+		super(state, world, camera, rays, 0, 0, 0, 0, synced, id);
 		this.attachedEntity = entity;
 		this.effect = effect;
 		this.despawn = false;

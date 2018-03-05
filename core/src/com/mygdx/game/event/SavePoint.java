@@ -17,16 +17,16 @@ public class SavePoint extends Event {
 	private static final String name = "Save Point";
 
 	public SavePoint(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateSavePointMessage(x, y, width, height, entityID.toString()));
 		}
 	}
 
 	public SavePoint(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					 int x, int y, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+					 int x, int y, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 	}
 	
 	public void create() {

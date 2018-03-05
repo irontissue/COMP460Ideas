@@ -53,14 +53,14 @@ public class RocketLauncher extends RangedWeapon {
 			final RayHandler rays2 = rays;
 			
 			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "torpedo", bulletIDs == null ? null : bulletIDs[0], playerDataNumber) {
+                    filter, true, world, camera, rays, user, "torpedo", false, bulletIDs == null ? null : bulletIDs[0], playerDataNumber) {
 				
 				@Override
 				public void controller(float delta) {
 					super.controller(delta);
 					if (lifeSpan <= 0) {
 						WeaponUtils.explode(state, this.body.getPosition().x * PPM , this.body.getPosition().y * PPM, 
-								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber);
+								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber, false);
 					}
 				}
 				
@@ -82,7 +82,7 @@ public class RocketLauncher extends RangedWeapon {
 					}
 					if (explode) {
 						WeaponUtils.explode(state, this.hbox.getBody().getPosition().x * PPM , this.hbox.getBody().getPosition().y * PPM, 
-								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber);
+								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber, false);
 						hbox.queueDeletion();
 					}
 					

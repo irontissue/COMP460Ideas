@@ -30,8 +30,8 @@ public class LevelWarp extends Event {
 	String level;
 
 	public LevelWarp(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, String level) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, String level, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.level = level;
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateLevelWarpMessage(x, y, width, height, level, entityID.toString()));
@@ -44,8 +44,8 @@ public class LevelWarp extends Event {
 	}
 
 	public LevelWarp(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					 int x, int y, String level, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+					 int x, int y, String level, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.level = level;
 
 		eventSprite = new TextureRegion(new Texture(AssetList.LEVEL_WARP.toString()));

@@ -25,8 +25,8 @@ public class PoisonVent extends Event {
 	private static final String name = "Poison";
 
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
-			int x, int y, float dps, boolean startOn) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, float dps, boolean startOn, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 		this.on = startOn;
@@ -36,8 +36,8 @@ public class PoisonVent extends Event {
 	}
 
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-					  int x, int y, float dps, boolean startOn, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+					  int x, int y, float dps, boolean startOn, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 		this.on = startOn;

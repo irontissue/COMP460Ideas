@@ -202,11 +202,11 @@ public class Packets {
      * Syncs a hitboxImage. playerDataNumber is which player is shooting the bullet, if at all. 1 means player 1,
      * 2 means player 2, and 0 means something other than the player shot the bullet.
      */
-    public static class SyncHitboxImage {
-        public SyncHitboxImage() {}
-        public SyncHitboxImage(float x, float y, int width, int height, float lifespan, int dura, float rest,
-                          Vector2 startVelo, short filter, boolean sensor, String creatorUUID, String spriteID,
-                               String uuid, int playerDataNumber) {
+    public static class CreateHitboxImage {
+        public CreateHitboxImage() {}
+        public CreateHitboxImage(float x, float y, int width, int height, float lifespan, int dura, float rest,
+                                 Vector2 startVelo, short filter, boolean sensor, String creatorUUID, String spriteID,
+                                 String uuid, int playerDataNumber) {
             this.x = x;
             this.y = y;
             this.width = width;
@@ -233,17 +233,19 @@ public class Packets {
 
     public static class SyncCreateSchmuck {
 	    public SyncCreateSchmuck() {}
-	    public SyncCreateSchmuck(String id, float w, float h, float startX, float startY, int entityType) {
+	    public SyncCreateSchmuck(String id, float w, float h, float startX, float startY, int entityType, boolean synced) {
 	        this.w = w;
 	        this.h = h;
 	        this.startX = startX;
 	        this.startY = startY;
 	        this.id = id;
 	        this.entityType = entityType;
+	        this.synced = synced;
         }
 	    public float w, h, startX, startY;
 	    public String id;
 	    public int entityType;
+	    public boolean synced;
     }
 
     public static class RemoveEntity {
@@ -565,6 +567,21 @@ public class Packets {
         public String entityID;
     }
 
+    public static class CreateTargetMessage {
+        public CreateTargetMessage() {}
+        public CreateTargetMessage(int x, int y, int width, int height, boolean oneTime, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.entityID = entityID;
+            this.oneTime = oneTime;
+        }
+        public int x, y, width, height;
+        public String entityID;
+        public boolean oneTime;
+    }
+
     public static class CreateTriggerSpawnMessage {
         public CreateTriggerSpawnMessage() {}
         public CreateTriggerSpawnMessage(int x, int y, int width, int height, int schmuckID, int limit, String entityID) {
@@ -629,7 +646,7 @@ public class Packets {
         kryo.register(Body.class);
 //        kryo.register(SyncHitbox.class);
         kryo.register(SyncCreateSchmuck.class);
-        kryo.register(SyncHitboxImage.class);
+        kryo.register(CreateHitboxImage.class);
         kryo.register(SyncEntity.class);
         kryo.register(MousePressOrRelease.class);
 //        kryo.register(SetEntityAim.class);
@@ -660,6 +677,7 @@ public class Packets {
         kryo.register(CreateSavePointMessage.class);
         kryo.register(CreateSpikeTrapMessage.class);
         kryo.register(CreateSwitchMessage.class);
+        kryo.register(CreateTargetMessage.class);
         kryo.register(CreateTriggerSpawnMessage.class);
         kryo.register(CreateUsePortalMessage.class);
         kryo.register(CreateVictoryMessage.class);

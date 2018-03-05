@@ -22,8 +22,8 @@ public class Door extends Event {
 	private boolean activated = false;
 	
 	public Door(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width,
-			int height, int x, int y) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int height, int x, int y, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateDoorMessage(x, y, width, height, entityID.toString()));
 		}
@@ -35,8 +35,8 @@ public class Door extends Event {
 	}
 
 	public Door(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width,
-				int height, int x, int y, String entityID) {
-		super(state, world, camera, rays, name, width, height, x, y, entityID);
+				int height, int x, int y, boolean synced, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 
 		eventSprite = new TextureRegion(new Texture(AssetList.DOOR.toString()));
 

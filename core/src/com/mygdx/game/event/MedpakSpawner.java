@@ -24,8 +24,8 @@ private float interval;
 	private static final String name = "Medpak Spawner";
 
 	public MedpakSpawner(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, float interval) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, float interval, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.interval = interval;
 		this.spawnX = x;
 		this.spawnY = y;
@@ -50,7 +50,7 @@ private float interval;
 			
 			if (readyToSpawn) {
 				readyToSpawn = false;
-				new Medpak(state, world, camera, rays, spawnX, spawnY, this);
+				new Medpak(state, world, camera, rays, spawnX, spawnY, this, false);
 			}
 		}
 	}

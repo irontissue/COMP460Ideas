@@ -18,8 +18,8 @@ public class Counter extends Event {
 	int currentCount = 0;
 	
 	public Counter(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, int maxCount, int startCount) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, int maxCount, int startCount, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.maxCount = maxCount;
 		this.currentCount = startCount;
 	}

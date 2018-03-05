@@ -58,15 +58,15 @@ public class TitleState extends GameState {
                     overlay.setWidth(300);
                     overlay.setHeight(comp460game.CONFIG_HEIGHT);
                     overlay.setPosition(390, 0);
-                    
-                    bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 20.0f), 
+
+                    bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 40.0f),
                     		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
-                    				Actions.moveTo(-bg1.getWidth(), 0, 40.0f)))));
+                    				Actions.moveTo(-bg1.getWidth(), 0, 80.0f)))));
                     
                     bg2.setPosition(bg2.getWidth(), 0);
-                    bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 10.0f), Actions.moveTo(-bg2.getWidth(), 0, 20.0f), 
+                    bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 40.0f), Actions.moveTo(-bg2.getWidth(), 0, 40.0f),
                     		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
-                    				Actions.moveTo(-bg2.getWidth(), 0, 40.0f)))));
+                    				Actions.moveTo(-bg2.getWidth(), 0, 80.0f)))));
                     
                     addActor(bg1);
                     addActor(bg2);

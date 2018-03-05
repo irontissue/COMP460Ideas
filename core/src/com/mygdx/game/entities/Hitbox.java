@@ -52,8 +52,8 @@ public class Hitbox extends Entity {
 	 * @param : pretty much the same as the fields above.
 	 */
 	public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
-			Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays, Schmuck creator) {
-		super(state, world, camera, rays, width, height, x, y);
+			Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays, Schmuck creator, boolean synced) {
+		super(state, world, camera, rays, width, height, x, y, synced);
 		this.lifeSpan = lifespan;
 		this.filter = filter;
 		this.sensor = sensor;
@@ -71,8 +71,8 @@ public class Hitbox extends Entity {
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
                   Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays,
-                  Schmuck creator, String id) {
-        super(state, world, camera, rays, width, height, x, y, id);
+                  Schmuck creator, boolean synced, String id) {
+        super(state, world, camera, rays, width, height, x, y, synced, id);
         this.lifeSpan = lifespan;
         this.filter = filter;
         this.sensor = sensor;
@@ -89,8 +89,8 @@ public class Hitbox extends Entity {
     }
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
-                  Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays) {
-        super(state, world, camera, rays, width, height, x, y);
+                  Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays, boolean synced) {
+        super(state, world, camera, rays, width, height, x, y, synced);
         this.lifeSpan = lifespan;
         this.filter = filter;
         this.sensor = sensor;
@@ -104,8 +104,8 @@ public class Hitbox extends Entity {
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
                   Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera,
-                  RayHandler rays, String id) {
-        super(state, world, camera, rays, width, height, x, y, id);
+                  RayHandler rays, boolean synced, String id) {
+        super(state, world, camera, rays, width, height, x, y, synced, id);
         this.lifeSpan = lifespan;
         this.filter = filter;
         this.sensor = sensor;
@@ -152,6 +152,9 @@ public class Hitbox extends Entity {
 		lifeSpan -= delta;
 		if (lifeSpan <= 0) {
 			queueDeletion();
+		} else if (synced && comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), body.getPosition(),
+					body.getLinearVelocity(), body.getAngularVelocity(), body.getAngle()));
 		}
 	}
 

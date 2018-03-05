@@ -154,7 +154,7 @@ public class PlayState extends GameState {
 		entities = new ArrayList<Entity>();
 		
 		//The "worldDummy" will be the source of map-effects that want a perpetrator
-		worldDummy = new Enemy(this, world, camera, rays, 1, 1, -1000, -1000);
+		worldDummy = new Enemy(this, world, camera, rays, 1, 1, -1000, -1000, true);
 				
 //        map = new TmxMapLoader().load("maps/map_1_460.tmx");
 //        map = new TmxMapLoader().load("maps/map_2_460.tmx");
@@ -167,10 +167,10 @@ public class PlayState extends GameState {
 		rays.setCombinedMatrix(camera);
 		//rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		player = new Player(this, world, camera, rays, 100, 100, old, old2);
+		player = new Player(this, world, camera, rays, 100, 100, old, old2, false);
 		
         if (comp460game.serverMode) {
-            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER));
+            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER, true));
             Log.info("Server sending playerNumber UUID message: " + player.entityID.toString());
         }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
@@ -309,11 +309,11 @@ public class PlayState extends GameState {
 		batch.setProjectionMatrix(camera.combined);
 //		rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		if (gameover && !comp460game.serverMode) {
-			if(player.vision.getDistance() > 0) {
-				player.vision.setDistance(player.vision.getDistance() - 1.0f);
-			}
-		}
+//		if (gameover && !comp460game.serverMode) {
+//			if(player.vision.getDistance() > 0) {
+//				player.vision.setDistance(player.vision.getDistance() - 1.0f);
+//			}
+//		}
 		
 		
 		//process gameover
@@ -377,7 +377,7 @@ public class PlayState extends GameState {
 		tmr.render();				
 
 		//Render debug lines for box2d objects.
-		b2dr.render(world, camera.combined.scl(PPM));
+		//b2dr.render(world, camera.combined.scl(PPM));
 		
 		
 		//Iterate through entities in the world to render
@@ -577,7 +577,7 @@ public class PlayState extends GameState {
 //        }
 //    }
 
-    public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type) {
+    public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type, boolean synced) {
         UUID entityID = UUID.fromString(id);
         switch(type) {
             case Constants.EntityTypes.PLAYER : {
@@ -586,19 +586,19 @@ public class PlayState extends GameState {
                 break;
             }
             case Constants.EntityTypes.ENEMY : {
-                new Enemy(this, world, camera, rays, w, h, startX, startY, id);
+                new Enemy(this, world, camera, rays, w, h, startX, startY, synced, id);
                 break;
             }
             case Constants.EntityTypes.RANGED_ENEMY : {
-                new RangedEnemy(this, world, camera, rays, w, h, startX, startY, id);
+                new RangedEnemy(this, world, camera, rays, w, h, startX, startY, synced, id);
                 break;
             }
             case Constants.EntityTypes.STANDARD_ENEMY : {
-                new StandardEnemy(this, world, camera, rays, w, h, startX, startY, id);
+                new StandardEnemy(this, world, camera, rays, w, h, startX, startY, synced, id);
                 break;
             }
             case Constants.EntityTypes.STEERING_ENEMY : {
-                new SteeringEnemy(this, world, camera, rays, w, h, startX, startY, id);
+                new SteeringEnemy(this, world, camera, rays, w, h, startX, startY, synced, id);
                 break;
             }
             default : break;

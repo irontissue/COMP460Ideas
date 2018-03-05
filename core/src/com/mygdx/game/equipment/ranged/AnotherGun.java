@@ -50,7 +50,7 @@ public class AnotherGun extends RangedWeapon {
 				
 				Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0,
 						startVelocity.setAngle(newDegrees), filter, true, world, camera, rays, user,
-						"orb_yellow", bulletIDs == null ? null : bulletIDs[i], playerDataNumber);
+						"orb_yellow", false, bulletIDs == null ? null : bulletIDs[i], playerDataNumber);
 				madeHitboxes[i] = proj;
 				proj.setUserData(new HitboxData(state, world, proj) {
 					

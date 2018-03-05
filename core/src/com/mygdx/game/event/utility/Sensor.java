@@ -19,8 +19,8 @@ public class Sensor extends Event {
 	boolean oneTime;
 	
 	public Sensor(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, boolean oneTime) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, boolean oneTime, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.oneTime = oneTime;
 	}
 	

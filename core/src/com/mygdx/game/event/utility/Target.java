@@ -10,6 +10,7 @@ import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.manager.AssetList;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.UserDataTypes;
@@ -24,8 +25,22 @@ public class Target extends Event {
 	boolean oneTime;
 	
 	public Target(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
-			int x, int y, boolean oneTime) {
-		super(state, world, camera, rays, name, width, height, x, y);
+			int x, int y, boolean oneTime, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, synced);
+		this.oneTime = oneTime;
+
+		eventSprite = new TextureRegion(new Texture(AssetList.TARGET.toString()));
+
+		spriteHeight = eventSprite.getRegionHeight();
+		spriteWidth = eventSprite.getRegionWidth();
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateTargetMessage(x, y, width, height, oneTime, entityID.toString()));
+		}
+	}
+
+	public Target(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
+				  int x, int y, boolean oneTime, boolean synced, String id) {
+		super(state, world, camera, rays, name, width, height, x, y, synced, id);
 		this.oneTime = oneTime;
 
 		eventSprite = new TextureRegion(new Texture(AssetList.TARGET.toString()));
