@@ -5,7 +5,10 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.status.Status;
 import com.mygdx.game.util.UserDataTypes;
@@ -43,10 +46,9 @@ public class CharacterData extends UserData {
 	
 	public float[] baseStats;
 	public float[] buffedStats;	
-	
-	
+		
 	//Speed on ground
-	public float maxSpeed = 3.5f;
+	public float maxSpeed = 7.0f;
 	public float maxAngularSpeed = 1.5f;
 
 	//Hp and regen
@@ -56,7 +58,11 @@ public class CharacterData extends UserData {
 	
 	public ArrayList<Status> statuses;
 	public ArrayList<Status> statusesChecked;
+
+	public int playerNumber = 0;
 	
+	private final static float flashDuration = 0.08f;
+
 	/**
 	 * This is created upon the create() method of any schmuck.
 	 * Character are the Body data type.
@@ -78,7 +84,11 @@ public class CharacterData extends UserData {
 		
 		calcStats();
 
-		currentHp = getMaxHp();
+		if (schmuck instanceof Player) {
+			currentHp = 100;
+		} else {
+			currentHp = 1;
+		}
 	}
 	
 	public float statusProcTime(int procTime, CharacterData schmuck, float amount, Status status, DamageTypes... tags) {
@@ -179,7 +189,16 @@ public class CharacterData extends UserData {
 		}
 		
 		currentHp -= damage;
+		if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.EntityTakeDamage(this.getEntity().entityID.toString(),
+                    damage, perp.getEntity().entityID.toString()));
+        }
 		
+		//Make shmuck flash upon receiving damage
+		if (damage > 0 && schmuck.flashingCount < -flashDuration) {
+			schmuck.flashingCount = flashDuration;
+		}
+				
 		float kbScale = 1;
 		
 		kbScale -= getKnockbackReduc();
@@ -197,10 +216,13 @@ public class CharacterData extends UserData {
 	 * @param heal: amount of Hp to regenerate
 	 */
 	public void regainHp(float heal) {
-		currentHp += heal;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
-		}
+        currentHp += heal;
+        if (currentHp > getMaxHp()) {
+            currentHp = getMaxHp();
+        }
+        if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.EntityAdjustHealth(getEntity().entityID.toString(), heal));
+        }
 	}
 	
 	/**

@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.event.*;
+import com.mygdx.game.event.utility.*;
 import com.mygdx.game.states.PlayState;
 
 import box2dLight.RayHandler;
@@ -45,13 +46,18 @@ public class TiledObjectUtil {
             bdef.type = BodyDef.BodyType.StaticBody;
             body = world.createBody(bdef);
             body.createFixture(shape, 1.0f);
+            Filter filter = new Filter();
+			filter.categoryBits = (short) (Constants.Filters.BIT_WALL);
+			filter.maskBits = (short) (Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY | Constants.Filters.BIT_PROJECTILE);
+            body.getFixtureList().get(0).setFilterData(filter);
             shape.dispose();
         }
     }
     
     static Map<String, Event> triggeredEvents = new HashMap<String, Event>();
     static Map<Event, String> triggeringEvents = new HashMap<Event, String>();
-    
+    static Map<TriggerMulti, String> multiTriggeringEvents = new HashMap<TriggerMulti, String>();
+
     /**
      * Parses Tiled objects into in game events
      * @param state: Current GameState
@@ -101,7 +107,14 @@ public class TiledObjectUtil {
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
     					object.getProperties().get("oneTime", boolean.class)), object.getProperties().get("triggeringId", String.class));
     		}
-    		
+    		if (object.getName().equals("Timer")) {
+    			Event timer = new Timer(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
+    					object.getProperties().get("interval", float.class), object.getProperties().get("limit", int.class),
+    					object.getProperties().get("startOn", true, boolean.class));
+    			triggeringEvents.put(timer, object.getProperties().get("triggeringId", "", String.class));
+    			triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), timer);
+    		}
     		if (object.getName().equals("Target")) {
     			triggeringEvents.put(new Target(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
@@ -110,11 +123,17 @@ public class TiledObjectUtil {
     		
     		if (object.getName().equals("Counter")) {
     			Event counter = new Counter(state, world, camera, rays, (int)rect.width, (int)rect.height, 
-    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), object.getProperties().get("count", int.class));
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
+    					object.getProperties().get("count", int.class), object.getProperties().get("countStart", 0, int.class));
     			triggeringEvents.put(counter, object.getProperties().get("triggeringId", String.class));
     			triggeredEvents.put(object.getProperties().get("triggeredId", String.class), counter);
     		}
-    		
+    		if (object.getName().equals("Multitrigger")) {
+    			TriggerMulti multiTrigger = new TriggerMulti(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2));
+    			multiTriggeringEvents.put(multiTrigger, object.getProperties().get("triggeringId", "", String.class));
+    			triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), multiTrigger);
+    		}
     		if (object.getName().equals("TriggerSpawn") && comp460game.serverMode) {
     			
     			Event spawn = new TriggerSpawn(state, world, camera, rays, (int)rect.width, (int)rect.height, 
@@ -138,7 +157,7 @@ public class TiledObjectUtil {
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2));
     		}
     		if (object.getName().equals("Destr_Obj")) {
-    			new DestructableBlock(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    			new DestructibleBlock(state, world, camera, rays, (int)rect.width, (int)rect.height,
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
     					object.getProperties().get("Hp", Integer.class));
     		}
@@ -146,12 +165,38 @@ public class TiledObjectUtil {
     			new SavePoint(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2));
     		}
+    		if (object.getName().equals("Warp")) {
+    			new LevelWarp(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
+    					object.getProperties().get("Level", String.class));
+    		}
+    		if (object.getName().equals("Medpak")) {
+    			new MedpakSpawner(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2),
+    					object.getProperties().get("interval", float.class));
+    		}
+    		if (object.getName().equals("Poison")) {
+    			new PoisonVent(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2),
+    					object.getProperties().get("damage", float.class), object.getProperties().get("startOn", true, boolean.class));
+    		}
+    		if (object.getName().equals("Spike")) {
+    			new SpikeTrap(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2),
+    					object.getProperties().get("damage", float.class));
+    		}
     	}
     }
 
     public static void parseTiledTriggerLayer(PlayState state, World world, OrthographicCamera camera, RayHandler rays) {
     	for (Event key : triggeringEvents.keySet()) {
     		key.setConnectedEvent(triggeredEvents.getOrDefault(triggeringEvents.get(key), null));
+    	}
+    	
+    	for (TriggerMulti key : multiTriggeringEvents.keySet()) {
+    		for (String id : multiTriggeringEvents.get(key).split(",")) {
+    			key.addTrigger(triggeredEvents.getOrDefault(id, null));
+    		}
     	}
     }
     

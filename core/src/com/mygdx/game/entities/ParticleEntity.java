@@ -16,7 +16,7 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 import box2dLight.RayHandler;
 
 public class ParticleEntity extends Entity {
-
+    public static final int ENTITY_TYPE = Constants.EntityTypes.PARTICLE_ENTITY;
 	private ParticleEffect effect;
 	private Entity attachedEntity;
 	private float lifespan;
@@ -31,6 +31,16 @@ public class ParticleEntity extends Entity {
 		
 		effect.start();
 	}
+
+	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+						  float startX, float startY, ParticleEffect effect, float lifespan, String id) {
+		super(state, world, camera, rays, 0, 0, startX, startY, id);
+		this.effect = effect;
+		this.despawn = false;
+		this.lifespan = lifespan;
+
+		effect.start();
+	}
 	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 			Entity entity, ParticleEffect effect, float lifespan) {
@@ -43,12 +53,23 @@ public class ParticleEntity extends Entity {
 
 	}
 
+	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+						  Entity entity, ParticleEffect effect, float lifespan, String id) {
+		super(state, world, camera, rays, 0, 0, 0, 0, id);
+		this.attachedEntity = entity;
+		this.effect = effect;
+		this.despawn = false;
+		this.lifespan = lifespan;
+		effect.start();
+
+	}
+
 	@Override
 	public void create() {
 		this.userData = new UserData(world, UserDataTypes.FEET, this);
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 0, 0, false, true, Constants.BIT_PLAYER, 
-				(short) (Constants.BIT_WALL | Constants.BIT_SENSOR | Constants.BIT_PROJECTILE | Constants.BIT_ENEMY),
-				Constants.PLAYER_HITBOX, true, userData);
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 0, 0, false, true, Constants.Filters.BIT_PLAYER, 
+				(short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_ENEMY),
+				Constants.Filters.PLAYER_HITBOX, true, userData);
 	}
 
 	@Override

@@ -23,7 +23,7 @@ public class BadGun extends RangedWeapon {
     private final static float shootDelay = 0;
     private final static float reloadTime = 0.5f;
     private final static int reloadAmount = 6;
-    private final static float baseDamage = 1.0f;
+    private final static float baseDamage = 12.0f;
     private final static float recoil = 0.0f;
     private final static float knockback = 15.5f;
     private final static float projectileSpeed = 6.0f;
@@ -36,12 +36,11 @@ public class BadGun extends RangedWeapon {
     private final static HitboxFactory onShoot = new HitboxFactory() {
 
         @Override
-        public Hitbox makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-                                 World world, OrthographicCamera camera,
-                                 RayHandler rays) {
+        public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
+                                 World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
 
             Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "orb_red");
+                    filter, true, world, camera, rays, user, "orb_red", bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
 
             proj.setUserData(new HitboxData(state, world, proj) {
 
@@ -54,7 +53,8 @@ public class BadGun extends RangedWeapon {
                 }
             });
 
-            return null;
+            Hitbox[] toReturn = {proj};
+            return toReturn;
         }
 
     };

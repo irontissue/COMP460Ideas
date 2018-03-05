@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+
+
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.esotericsoftware.minlog.Log;
@@ -22,7 +24,7 @@ public class comp460game extends ApplicationAdapter {
 	
 	//The main camera scales to the viewport size scaled to this. Useful for zoom-in/out testing.
 	//TODO: replace this with a constant aspect ratio?
-	private final float SCALE = 1.0f;
+	private final float SCALE = 0.65f;
 	
 	//Camera and Spritebatch. This is pretty standard stuff.
 	private OrthographicCamera camera, sprite, hud;
@@ -37,7 +39,7 @@ public class comp460game extends ApplicationAdapter {
 	public static AssetManager assetManager;
     public static FitViewport viewportCamera, viewportSprite;
 
-    public static BitmapFont SYSTEM_FONT_TITLE, SYSTEM_FONT_TEXT;
+    public static BitmapFont SYSTEM_FONT_TITLE, SYSTEM_FONT_TEXT, SYSTEM_FONT_UI;
     public static Color DEFAULT_TEXT_COLOR;
     
 	private static final int DEFAULT_WIDTH = 1080;
@@ -77,9 +79,10 @@ public class comp460game extends ApplicationAdapter {
 		viewportSprite = new FitViewport(CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE, sprite);
 		viewportSprite.apply();
 		    
-		hud = new OrthographicCamera(CONFIG_WIDTH, CONFIG_HEIGHT);
-	    hud.setToOrtho(false, CONFIG_WIDTH, CONFIG_HEIGHT);
-		
+		hud = new OrthographicCamera(CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE);
+	    hud.setToOrtho(false, CONFIG_WIDTH * SCALE, CONFIG_HEIGHT * SCALE);
+		hud.zoom = 1 / SCALE;	    
+	    
 	    assetManager = new AssetManager(new InternalFileHandleResolver());
 	    loadAssets();
 
@@ -93,7 +96,8 @@ public class comp460game extends ApplicationAdapter {
 	
 	public void loadAssets() {
 		SYSTEM_FONT_TITLE = new BitmapFont(Gdx.files.internal(AssetList.LEARNING_FONT.toString()), false);
-		SYSTEM_FONT_TEXT = new BitmapFont(Gdx.files.internal(AssetList.BUTLER_FONT.toString()), false);
+		SYSTEM_FONT_TEXT = new BitmapFont(Gdx.files.internal(AssetList.FIXEDSYS_FONT.toString()), false);
+		SYSTEM_FONT_UI = new BitmapFont(Gdx.files.internal(AssetList.FIXEDSYS_FONT.toString()), false);
 		DEFAULT_TEXT_COLOR = Color.BLACK;
 		
 		for (AssetList asset: AssetList.values()) {
@@ -119,10 +123,11 @@ public class comp460game extends ApplicationAdapter {
         //} else {
             Gdx.gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+            
+            
             gsm.render();
 
-            batch.setProjectionMatrix(hud.combined);
+   //         batch.setProjectionMatrix(hud.combined);
             batch.begin();
             currentMenu.draw();
             batch.end();
@@ -149,6 +154,19 @@ public class comp460game extends ApplicationAdapter {
 
 		CONFIG_WIDTH = width;
 		CONFIG_HEIGHT = height;
+	}
+
+	/**
+     * If the client needs to be reset, i.e. in the case of a disconnect. Closes the client, then recreates it
+     * so it is ready to call client.init() again when the playerNumber attempts to reconnect.
+	 * @param reconnect: If true, attempts to reconnect to the same server using the same credentials.
+     */
+	public void resetClient(boolean reconnect) {
+	    client.client.close();
+		client = new KryoClient(this);
+		if (reconnect) {
+            client.init(true);
+        }
 	}
 	
 	public void newMenu(Stage menu) {

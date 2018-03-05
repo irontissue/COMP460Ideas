@@ -1,7 +1,9 @@
 package com.mygdx.game.entities.userdata;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.UserDataTypes;
 

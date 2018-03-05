@@ -1,5 +1,6 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -7,12 +8,14 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.SteeringUtil;
 import com.badlogic.gdx.ai.utils.Location;
 
@@ -21,10 +24,8 @@ import static com.mygdx.game.util.Constants.PPM;
 
 import box2dLight.RayHandler;
 
-import java.util.UUID;
-
 public class Schmuck extends Entity implements Location<Vector2> {
-
+    public static final int ENTITY_TYPE = Constants.EntityTypes.SCHMUCK;
 	//user data.
 	protected CharacterData bodyData;
 	
@@ -32,6 +33,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public float shootCdCount = 0;
 	public float shootDelayCount = 0;
 	
+	//Keeps track of a schmuck's sprite flashing after receiving damage.
+	public float flashingCount = 0;
+		
 	//The last used tool. This is used to process equipment with a delay between using and executing.
 	public Equipment usedTool;
 	
@@ -45,13 +49,13 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	
 	public float acceleration = 0.1f;
 	
-	public int spriteWidth = 197;
-	public int spriteHeight = 76;
+	public int spriteWidth = -197;
+	public int spriteHeight = -174;
 	
-	public int hbWidth = 76;
-	public int hbHeight = 197;
+	public int hbWidth = -174;
+	public int hbHeight = -197;
 	
-	public static float scale = 0.25f;
+	public static float scale = 0.15f;
 	
 	private TextureAtlas atlas;
 	private TextureRegion schmuckSprite;
@@ -71,22 +75,40 @@ public class Schmuck extends Entity implements Location<Vector2> {
 			float startX, float startY) {
 		super(state, world, camera, rays, w * scale, h * scale, startX, startY);
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
-		schmuckSprite = atlas.findRegion("spittlefish_swim");
-//		if (state.player != null) {
-//            state.player.getClient().client.sendTCP(new Packets.SyncCreateSchmuck(w,h,startX,startY,this.entityID));
+		//schmuckSprite = atlas.findRegion("spittlefish_swim");
+        Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
+//		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
+		schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
+//		if (state.playerNumber != null) {
+//            state.playerNumber.getClient().client.sendTCP(new Packets.SyncCreateSchmuck(w,h,startX,startY,this.entityID));
 //        }
 	}
 
     public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
-                   float startX, float startY, UUID id) {
+                   float startX, float startY, String id) {
         super(state, world, camera, rays, w * scale, h * scale, startX, startY, id);
         atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
-        schmuckSprite = atlas.findRegion("spittlefish_swim");
+        //schmuckSprite = atlas.findRegion("spittlefish_swim");
+        Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
+//		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
+        schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
     }
 	
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 			float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight) {
 		super(state, world, camera, rays, width * scale, height * scale, startX, startY);
+		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
+		this.schmuckSprite = atlas.findRegion(spriteId);
+		this.schmuckSprite = new TextureRegion(new Texture(AssetList.GROOM.toString()));
+		this.hbWidth = hbWidth;
+		this.hbHeight = hbHeight;
+		this.spriteWidth = width;
+		this.spriteHeight = height;
+	}
+
+	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+				   float startX, float startY, String spriteId, int width, int height, int hbWidth, int hbHeight, String id) {
+		super(state, world, camera, rays, width * scale, height * scale, startX, startY, id);
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.FISH_ATL.toString());
 		this.schmuckSprite = atlas.findRegion(spriteId);
 		this.schmuckSprite = new TextureRegion(new Texture(AssetList.GROOM.toString()));
@@ -110,47 +132,58 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	/**
 	 * The basic behaviour of a schmuck depends on its moveState.
 	 * This method contains some physics that constrains schmucks in addition to box2d stuff.
+     * This also sends a message to clients (if in server mode) what the position of this schmuck is. Therefore,
+     * be careful when overriding this method - make sure that only one position update is sent for this entity
+     * every server tick.
 	 */
 	@Override
 	public void controller(float delta) {
-		controllerCount+=delta;
-		if (controllerCount >= 1/60f) {
-			controllerCount -= 1/60f;
-			
-			Vector2 currentVel = body.getLinearVelocity();
-			
-			float newX = acceleration * desiredXVel + (1 - acceleration) * currentVel.x;
-			
-			float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
-			
-			Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
-			body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
-			
-			desiredXVel = 0.0f;
-			desiredYVel = 0.0f;
-			
-			float currentAngleVel = body.getAngularVelocity();
-			
-			float newAngleVel = acceleration * desiredAngleVel + (1 - acceleration) * currentAngleVel;
-			
-			
-			float angularForce = (newAngleVel - currentAngleVel) * (body.getMass());
-			body.applyAngularImpulse(angularForce * (1 + bodyData.getBonusAngSpeed()), true);
-			
-			desiredAngleVel = 0.0f;
-		}
-		
-		//Apply base hp regen
-		bodyData.regainHp(bodyData.getHpRegen() * delta);
-		
-		//process cooldowns
-		shootCdCount-=delta;
-		shootDelayCount-=delta;
-		
-		//If the delay on using a tool just ended, use the tool.
-		if (shootDelayCount <= 0 && usedTool != null) {
-			useToolEnd();
-		}
+	    if (comp460game.serverMode) {
+            controllerCount += delta;
+            if (controllerCount >= 1 / 60f) {
+                controllerCount -= 1 / 60f;
+
+                Vector2 currentVel = body.getLinearVelocity();
+
+                float newX = acceleration * desiredXVel + (1 - acceleration) * currentVel.x;
+
+                float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
+
+                Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
+                body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
+
+                desiredXVel = 0.0f;
+                desiredYVel = 0.0f;
+
+                float currentAngleVel = body.getAngularVelocity();
+
+                float newAngleVel = acceleration * desiredAngleVel + (1 - acceleration) * currentAngleVel;
+
+
+                float angularForce = (newAngleVel - currentAngleVel) * (body.getMass());
+                body.applyAngularImpulse(angularForce * (1 + bodyData.getBonusAngSpeed()), true);
+
+                desiredAngleVel = 0.0f;
+            }
+
+            //Apply base hp regen
+            bodyData.regainHp(bodyData.getHpRegen() * delta);
+
+            //process cooldowns
+            shootCdCount -= delta;
+            shootDelayCount -= delta;
+            
+            //If the delay on using a tool just ended, use the tool.
+            if (shootDelayCount <= 0 && usedTool != null) {
+                useToolEnd(0);
+            }
+
+            comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), this.body.getPosition(),
+                    this.body.getLinearVelocity(), this.body.getAngularVelocity(), this.body.getAngle()));
+        }
+
+        //Stuff below the if statement should happen both on server/client, i.e. doesn't need to be "synced"
+        flashingCount-=delta;
 	}
 
 
@@ -162,24 +195,30 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 
+		if (flashingCount > 0) {
+			batch.setColor(Color.RED);
+		}
+		
 		batch.draw(schmuckSprite, 
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
 				body.getPosition().y * PPM - hbWidth * scale / 2, 
 				hbHeight * scale / 2, hbWidth * scale / 2,
 				spriteWidth * scale, spriteHeight * scale, 1, 1, 
 				(float) Math.toDegrees(body.getAngle()));
+		
+		batch.setColor(Color.WHITE);
 	}
 	
 	/**
 	 * This method is called when a schmuck wants to use a tool.
 	 * @param delta: Time passed since last usage. This is used for Charge tools that keep track of time charged.
 	 * @param tool: Equipment that the schmuck wants to use
-	 * @param hitbox: aka filter. Who will be affected by this equipment? Player or enemy or neutral?
+	 * @param filter: aka filter. Who will be affected by this equipment? Player or enemy or neutral?
 	 * @param x: x screen coordinate that represents where the tool is being directed.
 	 * @param y: y screen coordinate that represents where the tool is being directed.
 	 * @param wait: Should this tool wait for base cooldowns. No for special tools like built-in airblast/momentum freezing/some enemy attacks
 	 */
-	public void useToolStart(float delta, Equipment tool, short hitbox, int x, int y, boolean wait) {
+	public void useToolStart(float delta, Equipment tool, short filter, int x, int y, boolean wait, int pNumber) {
 		
 		//Only register the attempt if the user is not waiting on a tool's delay or cooldown. (or if tool ignores wait)
 		if ((shootCdCount < 0 && shootDelayCount < 0) || !wait) {
@@ -188,7 +227,10 @@ public class Schmuck extends Entity implements Location<Vector2> {
 			shootDelayCount = tool.useDelay;
 			
 			//Register the tool targeting the input coordinates.
-			tool.mouseClicked(delta, state, bodyData, hitbox, x, y, world, camera, rays);
+//			if (comp460game.serverMode) {
+//			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
+//            }
+			tool.mouseClicked(delta, state, bodyData, filter, x, y, world, camera, rays);
 			
 			//set the tool that will be executed after delay to input tool.
 			usedTool = tool;
@@ -198,13 +240,16 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	/**
 	 * This method is called after a tool is used following the tool's delay.
 	 */
-	public void useToolEnd() {
+	public void useToolEnd(int pNumber) {
 			
 		//the schmuck will not register another tool usage for the tool's cd
 		shootCdCount = usedTool.useCd * (1 - bodyData.getToolCdReduc());
 		
 		//execute the tool.
-		usedTool.execute(state, bodyData, world, camera, rays);
+		String[] uuids = usedTool.execute(state, bodyData, world, camera, rays, null);
+//        if (comp460game.serverMode) {
+//            comp460game.server.server.sendToAllTCP(new Packets.EntityShoot(entityID.toString(), uuids));
+//        }
 		
 		//clear the used tool field.
 		usedTool = null;

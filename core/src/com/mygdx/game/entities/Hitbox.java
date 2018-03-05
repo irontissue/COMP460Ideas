@@ -22,14 +22,14 @@ import static com.mygdx.game.util.Constants.PPM;
  *
  */
 public class Hitbox extends Entity {
-
+    public static final int ENTITY_TYPE = Constants.EntityTypes.HITBOX;
 	//Initial velocity of the hitbox
 	public Vector2 startVelo;
 		
 	//lifespan is the time in seconds that the hitbox will exist before timing out.
 	public float lifeSpan;
 	
-	//filter describes the type of body the hitbox will register a hit on .(player, enemy or neutral)
+	//filter describes the type of body the hitbox will register a hit on .(playerNumber, enemy or neutral)
 	public short filter;
 	
 	//durability is the number of things the hitbox can hit before disappearing.
@@ -64,10 +64,29 @@ public class Hitbox extends Entity {
 		//Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
 		this.startVelo = new Vector2(startVelo);
 
-		if (!comp460game.serverMode) {
-            comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
-        }
+//		if (!comp460game.serverMode) {
+//            comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
+//        }
 	}
+
+    public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
+                  Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays,
+                  Schmuck creator, String id) {
+        super(state, world, camera, rays, width, height, x, y, id);
+        this.lifeSpan = lifespan;
+        this.filter = filter;
+        this.sensor = sensor;
+        this.dura = dura;
+        this.rest = rest;
+        this.creator = creator;
+
+        //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
+        this.startVelo = new Vector2(startVelo);
+
+        /*if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
+        }*/
+    }
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
                   Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera, RayHandler rays) {
@@ -83,12 +102,27 @@ public class Hitbox extends Entity {
         this.startVelo = new Vector2(startVelo);
 	}
 
+    public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
+                  Vector2 startVelo, short filter, boolean sensor, World world, OrthographicCamera camera,
+                  RayHandler rays, String id) {
+        super(state, world, camera, rays, width, height, x, y, id);
+        this.lifeSpan = lifespan;
+        this.filter = filter;
+        this.sensor = sensor;
+        this.dura = dura;
+        this.rest = rest;
+        this.creator = creator;
+
+        //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
+        this.startVelo = new Vector2(startVelo);
+    }
+
 	/**
 	 * Create the hitbox body. User data is initialized separately.
 	 */
 	public void create() {
-		this.body = BodyBuilder.createBox(world, startX, startY, width / 2, height / 2, 0, 0.0f, rest, false, false, Constants.BIT_PROJECTILE, 
-				(short) (Constants.BIT_PROJECTILE | Constants.BIT_WALL | Constants.BIT_PLAYER | Constants.BIT_ENEMY | Constants.BIT_SENSOR), filter, sensor, data);
+		this.body = BodyBuilder.createBox(world, startX, startY, width / 2, height / 2, 0, 0.0f, rest, false, false, Constants.Filters.BIT_PROJECTILE, 
+				(short) (Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_WALL | Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY | Constants.Filters.BIT_SENSOR), filter, sensor, data);
 		this.body.setLinearVelocity(startVelo);
 		
 		//Rotate hitbox to match angle of fire.
@@ -117,7 +151,7 @@ public class Hitbox extends Entity {
 	public void controller(float delta) {
 		lifeSpan -= delta;
 		if (lifeSpan <= 0) {
-			state.destroy(this);
+			queueDeletion();
 		}
 	}
 

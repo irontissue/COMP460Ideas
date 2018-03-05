@@ -8,6 +8,8 @@ import com.mygdx.game.entities.userdata.CharacterData;
 
 import box2dLight.RayHandler;
 
+import java.util.UUID;
+
 public abstract class Equipment {	
 	
 	//The Schmuck that is using this tool
@@ -28,6 +30,9 @@ public abstract class Equipment {
 	//Counter for how much longer this tool needs to be reloaded before it gets more ammo
 	public float reloadCd;
 	
+	//The amount of time it takes to reload this weapon. (default = 0 for non-ranged)
+	public float reloadTime = 0;
+		
 	/**
 	 * Equipables are constructed when creating tool spawns or default schmuck loadouts
 	 * @param user: Schmuck that is using this tool.
@@ -50,7 +55,7 @@ public abstract class Equipment {
 	 * @param delta: The time in seconds since this tool was last attempted to used. (Mostly used for charge weapons)
 	 * @param state: The play state
 	 * @param shooter: user data of he schmuck using this tool
-	 * @param faction: Filter of the tool. (player, enemy, neutral)
+	 * @param faction: Filter of the tool. (playerNumber, enemy, neutral)
 	 * @param x: x coordinate of the target. (screen coordinates)
 	 * @param y: y coordinate of the target. (screen coordinates)
 	 * @param world: box2d world
@@ -67,11 +72,14 @@ public abstract class Equipment {
 	 * @param world: box2d world
 	 * @param camera: game camera
 	 * @param rays: game rayhandler
+	 * @param bulletID: The ID of the bullet to be created, if on the client side
+	 * @return Returns a list of the UUIDs of the created projectiles or objects due to the execution.
+     *          Returns null if nothing is created.
 	 */
-	public abstract void execute(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays);
+	public abstract String[] execute(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS);
 	
 	/**
-	 * This method is called when the player releases the mouse button for using this tool.
+	 * This method is called when the playerNumber releases the mouse button for using this tool.
 	 * Default does nothing. Used mostly for charge weapons. Enemies will not care about this method.
 	 * @param state: The play state
 	 * @param bodyData: user data of he schmuck using this tool
@@ -82,7 +90,7 @@ public abstract class Equipment {
 	abstract public void release(PlayState state, CharacterData bodyData, World world, OrthographicCamera camera, RayHandler rays);
 
 	/**
-	 * This method will be called every engine tick if the player is reloading.
+	 * This method will be called every engine tick if the playerNumber is reloading.
 	 * If the weapon is reloadable, this method will probably count down some timer and add ammo when done.
 	 * @param delta: elapsed time in seconds since last engine tick
 	 */
