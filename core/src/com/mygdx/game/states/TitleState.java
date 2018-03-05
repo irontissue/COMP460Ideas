@@ -47,11 +47,11 @@ public class TitleState extends GameState {
 				    // https://twomann.com/wp-content/uploads/2017/03/Two-Mann-Studios-Worlds-Best-Wedding-Photography-Best-of-2016-001-1080x720.jpg
                     // Source of tree image
                     bground1 = new Texture("Images/title_background.png");
-    //                bground1.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                    bground1.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
                     Actor bg1 = new Image(bground1);
 
                     bground2 = new Texture("Images/title_background.png");
-   //                 bground2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                    bground2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
                     Actor bg2 = new Image(bground2);
                     
                     Actor overlay = new Image(new Texture("Images/Overlay.png"));
@@ -67,6 +67,15 @@ public class TitleState extends GameState {
                     bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 40.0f), Actions.moveTo(-bg2.getWidth(), 0, 40.0f),
                     		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
                     				Actions.moveTo(-bg2.getWidth(), 0, 80.0f)))));
+                    bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 20.0f), 
+                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
+                    				Actions.moveTo(-bg1.getWidth(), 0, 40.0f)))));
+                    
+                    bg2.setPosition(bg2.getWidth(), 0);
+                    bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 10.0f), Actions.moveTo(-bg2.getWidth(), 0, 20.0f), 
+                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
+                    				Actions.moveTo(-bg2.getWidth(), 0, 40.0f)))));
+>>>>>>> pr/60
                     
                     addActor(bg1);
                     addActor(bg2);

@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -308,35 +309,23 @@ public class PlayState extends GameState {
 		batch.setProjectionMatrix(camera.combined);
 //		rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
+		if (gameover && !comp460game.serverMode) {
+			if(player.vision.getDistance() > 0) {
+				player.vision.setDistance(player.vision.getDistance() - 1.0f);
+			}
+		}
+		
+		
 		//process gameover
 		if (gameover && comp460game.serverMode) {
 			gameoverCdCount -= delta;
+			
+			
+			
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
 //					gsm.removeState(PlayState.class);
-					 Actor overlay = new Image(new Texture("Images/Overlay.png"));
-	                 overlay.setWidth(300);
-	                 overlay.setHeight(comp460game.CONFIG_HEIGHT);
-	                 overlay.setPosition(390, 0);
-	                 stage.addActor(overlay);
-					if (won) {
-                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-//						gsm.addState(State.VICTORY, TitleState.class);
-                        stage.addActor(new Text(comp460game.assetManager, "VICTORY", 300, 500));
-					} else {
-                        comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-//						gsm.addState(State.GAMEOVER, TitleState.class);
-                        stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500));
-					}
-					Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400);
-					overlay.addListener(new ClickListener() {
-						
-						@Override
-				        public void clicked(InputEvent e, float x, float y) {
-							loadLevel("maps/loadout.tmx");
-				        }
-				    });
-					stage.addActor(back);
+					gameend();
 /*				} else {
 					playerNumber = new Player(this, world, camera, rays,
 							(int)(lastSave.getBody().getPosition().x * PPM),
@@ -352,6 +341,28 @@ public class PlayState extends GameState {
 
 	}
 	
+	private void gameend() {
+		if (won) {
+            comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+//			gsm.addState(State.VICTORY, TitleState.class);
+            stage.addActor(new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE));
+		} else {
+            comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+//			gsm.addState(State.GAMEOVER, TitleState.class);
+            stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500, Color.WHITE));
+		}
+		Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
+		back.addListener(new ClickListener() {
+			
+			@Override
+	        public void clicked(InputEvent e, float x, float y) {
+				loadLevel("maps/loadout.tmx");
+	        }
+	    });
+		stage.addActor(back);
+		
+	}
+
 	/**
 	 * This method renders stuff to the screen after updating.
 	 * TODO: atm, this is mostly debug info + temporary ui. Will replace eventually

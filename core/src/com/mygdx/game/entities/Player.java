@@ -65,7 +65,7 @@ public class Player extends Schmuck implements InputProcessor {
 	public PlayerData old, old2, player1Data, player2Data;
 	protected Fixture player1Fixture, player2Fixture;
 
-	private ConeLight vision;
+	public ConeLight vision;
 	
 	private TextureRegion combined, bride, groom, dress;
 	
