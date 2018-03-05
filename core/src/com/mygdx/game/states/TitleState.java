@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -25,7 +27,7 @@ public class TitleState extends GameState {
 
     //Temporary links to other modules for testing.
 	private Actor playOption, exitOption, joinServerOption, startServerOption, waitingOnPlayer2, disconnect, title;
-	Texture bground;
+	Texture bground1, bground2;
     private boolean isWaiting = false;
 	public TitleState(GameStateManager gsm) {
 		super(gsm);
@@ -44,11 +46,31 @@ public class TitleState extends GameState {
                     final Table table = new Table();
 				    // https://twomann.com/wp-content/uploads/2017/03/Two-Mann-Studios-Worlds-Best-Wedding-Photography-Best-of-2016-001-1080x720.jpg
                     // Source of tree image
-                    bground = new Texture("maps/couple2.png");
-                    bground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-                    Actor bg = new Image(bground);
+                    bground1 = new Texture("Images/title_background.png");
+    //                bground1.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                    Actor bg1 = new Image(bground1);
 
-                    addActor(bg);
+                    bground2 = new Texture("Images/title_background.png");
+   //                 bground2.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                    Actor bg2 = new Image(bground2);
+                    
+                    Actor overlay = new Image(new Texture("Images/Overlay.png"));
+                    overlay.setWidth(300);
+                    overlay.setHeight(comp460game.CONFIG_HEIGHT);
+                    overlay.setPosition(390, 0);
+                    
+                    bg1.addAction(Actions.sequence(Actions.moveTo(-bg1.getWidth(), 0, 10.0f), 
+                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
+                    				Actions.moveTo(-bg1.getWidth(), 0, 20.0f)))));
+                    
+                    bg2.setPosition(bg2.getWidth(), 0);
+                    bg2.addAction(Actions.sequence(Actions.moveTo(0, 0, 10.0f), Actions.moveTo(-bg2.getWidth(), 0, 10.0f), 
+                    		Actions.repeat(RepeatAction.FOREVER, Actions.sequence(Actions.moveTo(bg1.getWidth(), 0), 
+                    				Actions.moveTo(-bg2.getWidth(), 0, 20.0f)))));
+                    
+                    addActor(bg1);
+                    addActor(bg2);
+                    addActor(overlay);
                     Text nothing = new Text(comp460game.assetManager, "", 0,0);
                     title = new Text(comp460game.assetManager, "Couple's Therapy", 150, comp460game.CONFIG_HEIGHT, Color.WHITE);
 					playOption = new Text(comp460game.assetManager, "PLAY?", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);
@@ -167,9 +189,9 @@ public class TitleState extends GameState {
 				{
                     // https://i.ytimg.com/vi/utpTIOJve-g/maxresdefault.jpg
                     // Source of image
-                    bground = new Texture("maps/dotBackground.jpg");
-                    bground.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
-                    Actor bg = new Image(bground);
+                    bground1 = new Texture("maps/dotBackground.jpg");
+                    bground1.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+                    Actor bg = new Image(bground1);
 
                     addActor(bg);
 					playOption = new Text(comp460game.assetManager, "Server Mode: Waiting for players...", 150, comp460game.CONFIG_HEIGHT - 180, Color.WHITE);

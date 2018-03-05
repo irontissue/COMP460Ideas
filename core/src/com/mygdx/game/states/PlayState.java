@@ -6,6 +6,7 @@ import java.util.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
@@ -312,6 +314,11 @@ public class PlayState extends GameState {
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
 //					gsm.removeState(PlayState.class);
+					 Actor overlay = new Image(new Texture("Images/Overlay.png"));
+	                 overlay.setWidth(300);
+	                 overlay.setHeight(comp460game.CONFIG_HEIGHT);
+	                 overlay.setPosition(390, 0);
+	                 stage.addActor(overlay);
 					if (won) {
                         comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
 //						gsm.addState(State.VICTORY, TitleState.class);
@@ -322,7 +329,7 @@ public class PlayState extends GameState {
                         stage.addActor(new Text(comp460game.assetManager, "GAME OVER", 300, 500));
 					}
 					Text back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400);
-					back.addListener(new ClickListener() {
+					overlay.addListener(new ClickListener() {
 						
 						@Override
 				        public void clicked(InputEvent e, float x, float y) {
