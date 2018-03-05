@@ -45,10 +45,7 @@ public class HitboxData extends UserData {
 			hbox.dura--;
 		}
 		if (hbox.dura <= 0) {
-			if (comp460game.serverMode) {
-			    comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(hbox.entityID.toString()));
-                hbox.queueDeletion();
-            }
+			hbox.queueDeletion();
 		}
 	}
 }
