@@ -237,7 +237,6 @@ public class PlayState extends GameState {
             Entity entity = removeList.remove(0);
             if (entities.contains(entity)) {
                 entities.remove(entity);
-                graveyard.add(new Pair<Entity, Float>(entity, clearGraveCd));
                 if (comp460game.serverMode && entity instanceof Schmuck) {
                     comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
                 }
@@ -425,6 +424,13 @@ public class PlayState extends GameState {
 	public void destroy(Entity entity) {
 	    if (!removeList.contains(entity)) {
             removeList.add(entity);
+            
+            if (comp460game.serverMode) {
+			    comp460game.server.server.sendToAllTCP(new Packets.RemoveEntity(entity.entityID.toString()));
+            }
+            
+            graveyard.add(new Pair<Entity, Float>(entity, clearGraveCd));
+            
         }
 	}
 	
