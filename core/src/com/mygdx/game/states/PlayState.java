@@ -51,6 +51,11 @@ import javax.sound.sampled.FloatControl;
  */
 public class PlayState extends GameState {
 	
+	public static final boolean playerBulletsAboveShadow = true;
+	public static final boolean enemyBulletsAboveShadow = true;
+	public static final boolean eventsAboveShadow = true;
+	
+	
 	//This is an entity representing the playerNumber. Atm, playerNumber is not initialized here, but rather by a "Player Spawn" event in the map.
 	public Player player;
 	
@@ -422,6 +427,17 @@ public class PlayState extends GameState {
 		//Update rays. Does nothing yet.
 		rays.setCombinedMatrix(camera);
 		rays.updateAndRender();
+		
+		batch.setProjectionMatrix(camera.combined);
+		batch.begin();
+
+		for (Entity schmuck : entities) {
+		    if (!(schmuck instanceof Player)) {
+                schmuck.renderAboveShadow(batch);
+            }
+		}
+		player.renderAboveShadow(batch);
+		batch.end();
 	}	
 	
 	/**

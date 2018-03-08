@@ -90,6 +90,13 @@ public class Event extends Entity {
         }
 	}
 	
+	@Override
+	public void renderAboveShadow(SpriteBatch batch) {
+		if (PlayState.eventsAboveShadow) {
+			render(batch);
+		}
+	}
+	
 	public String getText() {
 		return name;
 	}
