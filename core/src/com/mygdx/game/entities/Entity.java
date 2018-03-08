@@ -130,6 +130,11 @@ public abstract class Entity {
 	 */
 	public abstract void render(SpriteBatch batch);
 	
+	public void renderAboveShadow(SpriteBatch batch) {
+		
+	}
+	
+	
 	/**
 	 * Call this method to delete a body. NOT dispose().
 	 * This tells the playstate to remove this entity next engine tick.
