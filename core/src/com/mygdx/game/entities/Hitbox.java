@@ -162,4 +162,14 @@ public class Hitbox extends Entity {
 	public void render(SpriteBatch batch) {
 		
 	}
+	
+	@Override
+	public void renderAboveShadow(SpriteBatch batch) {
+		if (PlayState.playerBulletsAboveShadow && filter == Constants.Filters.PLAYER_HITBOX) {
+			render(batch);
+		}
+		if (PlayState.enemyBulletsAboveShadow && filter != Constants.Filters.PLAYER_HITBOX) {
+			render(batch);
+		}
+	}
 }
