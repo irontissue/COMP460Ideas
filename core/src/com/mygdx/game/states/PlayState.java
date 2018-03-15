@@ -145,7 +145,7 @@ public class PlayState extends GameState implements InputProcessor {
 		world = new World(new Vector2(0, 0), false);
 		world.setContactListener(new WorldContactListener());
 		rays = new RayHandler(world);
-        rays.setAmbientLight(0.1f, 0.1f, 0.1f, 0.5f);
+        rays.setAmbientLight(1f, 1f, 1f, 0.5f);
         rays.setBlurNum(3);
         rays.setCulling(false);
         
@@ -426,6 +426,7 @@ public class PlayState extends GameState implements InputProcessor {
             }
 		}
 		player.render(batch);
+		player2.render(batch);
 		batch.end();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
@@ -445,6 +446,7 @@ public class PlayState extends GameState implements InputProcessor {
             }
 		}
 		player.renderAboveShadow(batch);
+		player2.renderAboveShadow(batch);
 		batch.end();
 	}	
 	
