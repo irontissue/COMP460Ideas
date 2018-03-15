@@ -158,7 +158,7 @@ public abstract class Entity {
 	 * @param y: y position in screen coordinates
 	 * @param power: Magnitude of impulse
 	 */
-	public void recoil(int x, int y, float power) {
+	public void recoil(float x, float y, float power) {
 		
 		Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
 				
