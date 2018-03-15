@@ -91,10 +91,10 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.wPressed2 = true;
+                                    ps.player2.wPressed = true;
                                     //Log.info("W2 pressed");
                                 } else {
-                                    ps.player.wPressed2 = false;
+                                    ps.player2.wPressed = false;
                                     //Log.info("W2 released");
 
                                 }
@@ -108,9 +108,9 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.aPressed2 = true;
+                                    ps.player2.aPressed = true;
                                 } else {
-                                    ps.player.aPressed2 = false;
+                                    ps.player2.aPressed = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.S) {
@@ -122,9 +122,9 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.sPressed2 = true;
+                                    ps.player2.sPressed = true;
                                 } else {
-                                    ps.player.sPressed2 = false;
+                                    ps.player2.sPressed = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.D) {
@@ -136,9 +136,9 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.dPressed2 = true;
+                                    ps.player2.dPressed = true;
                                 } else {
-                                    ps.player.dPressed2 = false;
+                                    ps.player2.dPressed = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.Q) {
@@ -150,9 +150,9 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.qPressed2 = true;
+                                    ps.player2.qPressed = true;
                                 } else {
-                                    ps.player.qPressed2 = false;
+                                    ps.player2.qPressed = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.E) {
@@ -164,19 +164,19 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.ePressed2 = true;
+                                    ps.player2.ePressed = true;
                                 } else {
-                                    ps.player.ePressed2 = false;
+                                    ps.player2.ePressed = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.R) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player1Data.getCurrentTool().reloading = true;
+                                    ps.player.playerData.getCurrentTool().reloading = true;
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player2Data.getCurrentTool().reloading = true;
+                                    ps.player2.playerData.getCurrentTool().reloading = true;
                                 }
                             }
                         } else if (p.message == Input.Keys.SPACE) {
@@ -188,49 +188,49 @@ public class KryoServer {
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.spacePressed2 = true;
+                                    ps.player2.spacePressed = true;
                                 } else {
-                                    ps.player.spacePressed2 = false;
+                                    ps.player2.spacePressed = false;
                                 }
                             }
                         } else if (p.message == Input.Keys.NUM_1) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player1Data.switchWeapon(1);
+                                    ps.player.playerData.switchWeapon(1);
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player2Data.switchWeapon(1);
+                                    ps.player2.playerData.switchWeapon(1);
                                 }
                             }
                         } else if (p.message == Input.Keys.NUM_2) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player1Data.switchWeapon(2);
+                                    ps.player.playerData.switchWeapon(2);
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player2Data.switchWeapon(2);
+                                    ps.player2.playerData.switchWeapon(2);
                                 }
                             }
                         } else if (p.message == Input.Keys.NUM_3) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player1Data.switchWeapon(3);
+                                    ps.player.playerData.switchWeapon(3);
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player2Data.switchWeapon(3);
+                                    ps.player2.playerData.switchWeapon(3);
                                 }
                             }
                         } else if (p.message == Input.Keys.NUM_4) {
                             if (p.playerID == playerIDs[0]) {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player1Data.switchWeapon(4);
+                                    ps.player.playerData.switchWeapon(4);
                                 }
                             } else {
                                 if (p.pressOrRelease == Packets.KeyPressOrRelease.PRESSED) {
-                                    ps.player.player2Data.switchWeapon(4);
+                                    ps.player2.playerData.switchWeapon(4);
                                 }
                             }
                         }
@@ -239,10 +239,12 @@ public class KryoServer {
 
 				else if (o instanceof Packets.MousePressOrRelease) {
                     Packets.MousePressOrRelease p = (Packets.MousePressOrRelease) o;
-                    if (!gsm.states.empty() && gsm.states.peek() instanceof  PlayState) {
+                    if (!gsm.states.empty() && gsm.states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) gsm.states.peek();
+                        //Log.info("MousePressOrRelease on server");
                         if (p.message == Input.Buttons.LEFT) {
                             if (p.playerID == playerIDs[0]) {
+                                //Log.info("MousePressOrRelease on server - player 1");
                                 if (p.pressOrRelease == Packets.MousePressOrRelease.PRESSED) {
                                     ps.player.mousePressed = true;
                                 } else {
@@ -251,15 +253,16 @@ public class KryoServer {
                                 ps.player.mousePosX = p.x;
                                 ps.player.mousePosY = p.y;
                             } else {
+                                //Log.info("MousePressOrRelease on server - player 2");
                                 if (p.pressOrRelease == Packets.MousePressOrRelease.PRESSED) {
-                                    ps.player.mousePressed2 = true;
+                                    ps.player2.mousePressed = true;
                                 } else {
-                                    ps.player.mousePressed2 = false;
+                                    ps.player2.mousePressed = false;
                                 }
                                 //TODO: Make the second mouse position actually matter!!
                                 //Right now everything just uses mousePosX/Y on the server!!!!!
-                                ps.player.mousePos2X = p.x;
-                                ps.player.mousePos2Y = p.y;
+                                ps.player2.mousePosX = p.x;
+                                ps.player2.mousePosY = p.y;
                             }
                         }
                     }
@@ -296,8 +299,8 @@ public class KryoServer {
                                 Log.info("Both clients loaded playstate. Adding new playstate.");
                                 PlayerData pd1 = null, pd2 = null;
                                 if (gsm.states.peek() instanceof PlayState) {
-                                    pd1 = ((PlayState) gsm.states.peek()).player.player1Data;
-                                    pd2 = ((PlayState) gsm.states.peek()).player.player2Data;
+                                    pd1 = ((PlayState) gsm.states.peek()).player.playerData;
+                                    pd2 = ((PlayState) gsm.states.peek()).player2.playerData;
                                     gsm.removeState(PlayState.class);
                                 } else {
                                     gsm.removeState(TitleState.class);
