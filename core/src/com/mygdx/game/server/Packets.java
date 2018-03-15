@@ -233,7 +233,7 @@ public class Packets {
 
     public static class SyncCreateSchmuck {
 	    public SyncCreateSchmuck() {}
-	    public SyncCreateSchmuck(String id, float w, float h, float startX, float startY, int entityType, boolean synced) {
+	    public SyncCreateSchmuck(String id, float w, float h, float startX, float startY, int entityType, boolean synced, int playerNumber) {
 	        this.w = w;
 	        this.h = h;
 	        this.startX = startX;
@@ -241,10 +241,11 @@ public class Packets {
 	        this.id = id;
 	        this.entityType = entityType;
 	        this.synced = synced;
+	        this.playerNumber = playerNumber;
         }
 	    public float w, h, startX, startY;
 	    public String id;
-	    public int entityType;
+	    public int entityType, playerNumber;
 	    public boolean synced;
     }
 

@@ -27,7 +27,7 @@ public class GameStateManager {
 	//Stack of GameStates. These are all the states that the playerNumber has opened in that order.
 	public Stack<GameState> states;
     private float syncTimer = 0;
-	public int playerNumber = 1;
+    public int playerNumber;
     
 	//temp skin for ui windows
 	public Skin skin;
@@ -87,8 +87,8 @@ public class GameStateManager {
                 PlayState ps = (PlayState) states.peek();
 //                Log.info("Number of entities: " + ps.getEntities().size());
 				if (ps != null && ps.player != null && ps.player.getBody() != null) {
-                    comp460game.server.server.sendToAllTCP(new Packets.SyncPlayState(ps.player.getBody().getPosition(),
-                            ps.player.getBody().getAngle()));
+                    /*comp460game.server.server.sendToAllTCP(new Packets.SyncPlayState(ps.player.getBody().getPosition(),
+                            ps.player.getBody().getAngle()));*/
                 }
 //                Entity[] entities = ps.getEntities().toArray(new Entity[0]);
 //                Entity x;

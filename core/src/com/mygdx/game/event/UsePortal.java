@@ -48,7 +48,7 @@ public class UsePortal extends Event {
 	
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
-			public void onInteract(Player p, int playerNumber) {
+			public void onInteract(Player p) {
 				if (comp460game.serverMode) {
 					if (event.getConnectedEvent() != null) {
 						p.getBody().setTransform(event.getConnectedEvent().getBody().getPosition(), p.getOrientation());

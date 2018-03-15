@@ -5,6 +5,7 @@ import java.util.*;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -29,6 +30,7 @@ import com.mygdx.game.actors.UIPlay;
 import com.mygdx.game.actors.UIReload;
 import com.mygdx.game.entities.*;
 import com.mygdx.game.entities.userdata.PlayerData;
+import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
 import com.mygdx.game.manager.GameStateManager;
@@ -49,7 +51,7 @@ import javax.sound.sampled.FloatControl;
  * @author Zachary Tu
  *
  */
-public class PlayState extends GameState {
+public class PlayState extends GameState implements InputProcessor {
 	
 	public static final boolean playerBulletsAboveShadow = true;
 	public static final boolean enemyBulletsAboveShadow = true;
@@ -57,7 +59,7 @@ public class PlayState extends GameState {
 	
 	
 	//This is an entity representing the playerNumber. Atm, playerNumber is not initialized here, but rather by a "Player Spawn" event in the map.
-	public Player player;
+	public Player player, player2;
 	
 	//These process and store the map parsed from the Tiled file.
 	private TiledMap map;
@@ -142,7 +144,7 @@ public class PlayState extends GameState {
 		world = new World(new Vector2(0, 0), false);
 		world.setContactListener(new WorldContactListener());
 		rays = new RayHandler(world);
-        rays.setAmbientLight(0.1f);
+        rays.setAmbientLight(0.1f, 0.1f, 0.1f, 0.5f);
         rays.setBlurNum(3);
         rays.setCulling(false);
         
@@ -173,11 +175,14 @@ public class PlayState extends GameState {
 		rays.setCombinedMatrix(camera);
 		//rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
 		
-		player = new Player(this, world, camera, rays, 100, 100, old, old2, false);
+		player = new Player(this, world, camera, rays, 100, 100, old, 1, true);
+		player2 = new Player(this, world, camera, rays, 100, 150, old2, 2, true);
 		
         if (comp460game.serverMode) {
-            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER, true));
+            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER, true, 1));
+            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player2.entityID.toString(), 32,32, 100, 150, Constants.EntityTypes.PLAYER, true, 2));
             Log.info("Server sending playerNumber UUID message: " + player.entityID.toString());
+            Log.info("Server sending playerNumber UUID message: " + player2.entityID.toString());
         }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
 
@@ -195,7 +200,9 @@ public class PlayState extends GameState {
 		if (!comp460game.serverMode) {
 		    Log.info("Client loaded playstate, level = " + level);
 		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
-        }		
+        }
+
+        setInput();
 	}
 	
 	public void loadLevel(String level) {
@@ -211,12 +218,12 @@ public class PlayState extends GameState {
 	public void show() {
 		
 		this.stage = new Stage();
-		stage.addActor(new UIPlay(comp460game.assetManager, this, player));
-		stage.addActor(new UIReload(comp460game.assetManager, this, player));
+		stage.addActor(new UIPlay(comp460game.assetManager, this, player, player2));
+		stage.addActor(new UIReload(comp460game.assetManager, this, player, player2));
 		app.newMenu(stage);
 		
 		if (player != null) {
-			player.setInput();
+			setInput();
 		}
 	}
 	
@@ -306,10 +313,10 @@ public class PlayState extends GameState {
 				entity.controller(delta);
 			}
 		}
-        if (needToSetPlayerPos) {
+        /*if (needToSetPlayerPos) {
             player.body.setTransform(desiredPlayerPosition, desiredPlayerAngle);
             needToSetPlayerPos = false;
-        }
+        }*/
 		//Update the game camera and batch.
 		cameraUpdate();
 		tmr.setView(camera);
@@ -621,12 +628,17 @@ public class PlayState extends GameState {
 //        }
 //    }
 
-    public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type, boolean synced) {
+    public void clientCreateSchmuck(String id, float w, float h, float startX, float startY, int type, boolean synced, int playerNumber) {
         UUID entityID = UUID.fromString(id);
         switch(type) {
             case Constants.EntityTypes.PLAYER : {
-                Log.info("PLAYER entityID assigned as: " + id);
-                player.entityID = entityID;
+                if (playerNumber == gsm.playerNumber) {
+					Log.info("MY PLAYER (P" + playerNumber + ") entityID assigned as: " + id);
+					player.entityID = entityID;
+				} else {
+					Log.info("OTHER PLAYER (P" + playerNumber + ") entityID assigned as: " + id);
+                	player2.entityID = entityID;
+				}
                 break;
             }
             case Constants.EntityTypes.ENEMY : {
@@ -649,5 +661,135 @@ public class PlayState extends GameState {
         }
     }
 
+    public void setInput() {
+        Gdx.input.setInputProcessor(this);
+    }
 
+    @Override
+    public boolean keyDown(int keycode) {
+        if (!comp460game.serverMode && player.playerData != null) {
+            if (keycode == Input.Keys.W) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.A) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.S) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.D) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.Q) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.E) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.SPACE) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+            }
+
+            //Pressing 'R' = reload current weapon.
+            if (keycode == Input.Keys.R) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.R, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                player.playerData.getCurrentTool().reloading = true;
+            }
+
+            //Pressing '1' ... '0' = switch to weapon slot.
+            if (keycode == Input.Keys.NUM_1) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_1, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                player.playerData.switchWeapon(1);
+            }
+
+            if (keycode == Input.Keys.NUM_2) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_2, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                player.playerData.switchWeapon(2);
+            }
+
+            if (keycode == Input.Keys.NUM_3) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_3, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                player.playerData.switchWeapon(3);
+            }
+
+            if (keycode == Input.Keys.NUM_4) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.NUM_4, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                player.playerData.switchWeapon(4);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        if (!comp460game.serverMode && player.playerData != null) {
+            if (keycode == Input.Keys.W) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.W, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.A) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.A, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.S) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.S, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.D) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.D, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.Q) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.Q, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.E) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.E, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+            if (keycode == Input.Keys.SPACE) {
+                comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.RELEASED, comp460game.client.IDOnServer));
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        if (!comp460game.serverMode && player.playerData != null) {
+            RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
+                    Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        if (!comp460game.serverMode && player.playerData != null) {
+            RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
+                    Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        if (!comp460game.serverMode && player.playerData != null) {
+            RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, screenX, screenY,
+                    Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
+        }
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        return false;
+    }
 }

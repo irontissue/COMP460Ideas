@@ -12,7 +12,7 @@ import com.mygdx.game.states.PlayState;
 
 public class HpBar extends A460Actor {
 
-	private Player player;
+	private Player player, player2;
 	private PlayState state;
 	
 	//The font is for writing text.
@@ -20,9 +20,10 @@ public class HpBar extends A460Actor {
     
     private Texture empty, full;
     
-	public HpBar(AssetManager assetManager, PlayState state, Player player) {
+	public HpBar(AssetManager assetManager, PlayState state, Player player, Player player2) {
 		super(assetManager);
 		this.player = player;
+		this.player2 = player2;
 		this.state = state;
 		font = new BitmapFont();
 		this.empty = new Texture(AssetList.EMPTY_HEART.toString());
@@ -36,17 +37,17 @@ public class HpBar extends A460Actor {
 		batch.setProjectionMatrix(state.hud.combined);
 
 		if (player != null) {
-			if (comp460game.serverMode && player.player1Data != null && player.player2Data != null) {
+			if (comp460game.serverMode && player.playerData != null && player2.playerData != null) {
                 font.getData().setScale(1.5f);
-                font.draw(batch, " Hp: " + Math.round(player.player1Data.currentHp) + "/" +
-                        player.player1Data.getMaxHp(), 100, 80);
-                font.draw(batch, " Hp 2: " + Math.round(player.player2Data.currentHp) + "/" +
-                        player.player2Data.getMaxHp(), comp460game.CONFIG_WIDTH - 100, 80);
-                font.draw(batch, player.player1Data.getCurrentTool().getText(), 100, 60);
-                font.draw(batch, player.player2Data.getCurrentTool().getText(), comp460game.CONFIG_WIDTH - 100, 60);
+                font.draw(batch, " Hp: " + Math.round(player.playerData.currentHp) + "/" +
+                        player.playerData.getMaxHp(), 100, 80);
+                font.draw(batch, " Hp 2: " + Math.round(player2.playerData.currentHp) + "/" +
+                        player2.playerData.getMaxHp(), comp460game.CONFIG_WIDTH - 100, 80);
+                font.draw(batch, player.playerData.getCurrentTool().getText(), 100, 60);
+                font.draw(batch, player2.playerData.getCurrentTool().getText(), comp460game.CONFIG_WIDTH - 100, 60);
 
-                float percent = player.player1Data.currentHp / player.player1Data.getMaxHp();
-                float percent2 = player.player2Data.currentHp / player.player2Data.getMaxHp();
+                float percent = player.playerData.currentHp / player.playerData.getMaxHp();
+                float percent2 = player2.playerData.currentHp / player2.playerData.getMaxHp();
 
                 batch.draw(empty, 100 - empty.getWidth() / 2, 100 - empty.getHeight() / 2,
                         empty.getWidth() / 2, empty.getHeight() / 2,

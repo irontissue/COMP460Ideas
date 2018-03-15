@@ -34,7 +34,7 @@ public class InteractableEventData extends EventData {
 	}
 
 	@Override
-	public void onInteract(Player p, int playerNumber) {
+	public void onInteract(Player p) {
 
 	}
 

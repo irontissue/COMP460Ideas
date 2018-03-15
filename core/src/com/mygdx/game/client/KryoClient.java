@@ -82,16 +82,15 @@ public class KryoClient {
                         public void run() {
                             if (myGame.getGsm().states.peek() instanceof PlayState) {
                                 Player p = ((PlayState) (myGame.getGsm().states.peek())).player;
+                                Player p2 = ((PlayState) (myGame.getGsm().states.peek())).player2;
                                 myGame.getGsm().playerNumber = PNUMBER;
                                 Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
-                                myGame.getGsm().removeState(TitleState.class);
                                 myGame.getGsm().removeState(PlayState.class);
-                                myGame.getGsm().addPlayState(null, p.playerData, null, TitleState.class);
+                                myGame.getGsm().addPlayState(null, p.playerData, p2.playerData, TitleState.class);
                             } else if (myGame.getGsm().states.peek() instanceof TitleState) {
                                 myGame.getGsm().playerNumber = PNUMBER;
                                 Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
                                 myGame.getGsm().removeState(TitleState.class);
-                                myGame.getGsm().removeState(PlayState.class);
                                 myGame.getGsm().addState(State.PLAY, TitleState.class);
                             }
                         }
@@ -389,8 +388,13 @@ public class KryoClient {
                                 Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                                 Entity ent = ps.getEntity(UUID.fromString(p.entityID));
                                 if (ent != null && ent instanceof Player) {
-                                    if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
-                                        e.eventData.onInteract(ps.player, p.playerNumber);
+                                    if (e != null) {
+                                        /*if (myGame.getGsm().playerNumber == p.playerNumber) {
+                                            e.eventData.onInteract(ps.player);
+                                        } else {
+                                            e.eventData.onInteract(ps.player2);
+                                        }*/
+                                        e.eventData.onInteract((Player) ent);
                                     }
                                 }
                             }
@@ -411,16 +415,26 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EventReleaseMessage) {
-                    Packets.EventReleaseMessage p = (Packets.EventReleaseMessage) o;
+                    final Packets.EventReleaseMessage p = (Packets.EventReleaseMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
-                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent != null && ent instanceof Player) {
-                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
-                                e.eventData.onRelease(((Player) ent).playerData);
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                                Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                                Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                                if (ent != null && ent instanceof Player) {
+                                    if (e != null) {
+                                        /*if (myGame.getGsm().playerNumber == p.playerNumber) {
+                                            e.eventData.onRelease(((Player) ent).playerData);
+                                        } else {
+                                            e.eventData.onRelease(((Player) ent).playerData);
+                                        }*/
+                                        e.eventData.onRelease(((Player) ent).playerData);
+                                    }
+                                }
                             }
-                        }
+                        });
                     }
                 }
 
@@ -431,7 +445,7 @@ public class KryoClient {
                         Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                         Entity ent = ps.getEntity(UUID.fromString(p.entityID));
                         if (ent != null && ent instanceof Player) {
-                            if (myGame.getGsm().playerNumber == p.playerNumber && e != null) {
+                            if (/*myGame.getGsm().playerNumber == p.playerNumber &&*/ e != null) {
                                 e.eventData.onTouch(((Player) ent).playerData);
                             }
                         }
@@ -445,7 +459,7 @@ public class KryoClient {
                         //Log.info("PlayState ready when message received...");
                         PlayState ps = (PlayState) myGame.getGsm().states.peek();
 //                    while (ps.updating) {}
-                        ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType, p.synced);
+                        ps.clientCreateSchmuck(p.id, p.w, p.h, p.startX, p.startY, p.entityType, p.synced, p.playerNumber);
                     } else {
                         Log.info("Tossing SyncCreateSchmuck message");
                     }
