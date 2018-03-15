@@ -1,8 +1,10 @@
 package com.mygdx.game.entities;
 
+import com.badlogic.gdx.ai.steer.behaviors.Arrive;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
@@ -27,6 +29,7 @@ public class StandardEnemy extends SteeringEnemy {
 	    
 	float shortestFraction;
   	Fixture closestFixture;
+  	Body target;
   	
   	private enemyState aiState;
 
@@ -59,12 +62,15 @@ public class StandardEnemy extends SteeringEnemy {
                             0).nor().scl(moveMag);
                     break;
                 case CHASING:
-                    Vector3 target = new Vector3(state.getPlayer().getBody().getPosition().x, state.getPlayer().getBody().getPosition().y, 0);
-                    camera.project(target);
+                	if (target != null) {
+                		Vector3 aim = new Vector3(target.getPosition().x, target.getPosition().y, 0);
+ //                       camera.project(aim);
 
-                    useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int) target.x, (int) target.y, true);
+                        useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int) aim.x, (int) aim.y, true);
 
-                    super.controller(delta);
+                        super.controller(delta);
+                	}
+                    
 
                     break;
                 default:
@@ -115,7 +121,52 @@ public class StandardEnemy extends SteeringEnemy {
                     }, getBody().getPosition(), state.getPlayer().getBody().getPosition());
                     if (closestFixture != null) {
                         if (closestFixture.getUserData() instanceof PlayerData) {
+                        	target = state.getPlayer().getBody();
                             aiState = enemyState.CHASING;
+                            
+                            Arrive<Vector2> arriveSB = new Arrive<Vector2>(this, state.getPlayer())
+                    				.setArrivalTolerance(2f)
+                    				.setDecelerationRadius(decelerationRad);
+                    		
+                    		this.setBehavior(arriveSB);
+                        }
+                    }
+                }
+                
+                if (getBody().getPosition().x != state.getPlayer2().getBody().getPosition().x ||
+                        getBody().getPosition().y != state.getPlayer2().getBody().getPosition().y) {
+                    world.rayCast(new RayCastCallback() {
+
+                        @Override
+                        public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+                            if (fixture.getUserData() == null) {
+                                if (fraction < shortestFraction) {
+                                    shortestFraction = fraction;
+                                    closestFixture = fixture;
+                                    return fraction;
+                                }
+                            } else if (fixture.getUserData() instanceof PlayerData) {
+                                if (fraction < shortestFraction) {
+                                    shortestFraction = fraction;
+                                    closestFixture = fixture;
+                                    return fraction;
+                                }
+
+                            }
+                            return -1.0f;
+                        }
+
+                    }, getBody().getPosition(), state.getPlayer2().getBody().getPosition());
+                    if (closestFixture != null) {
+                        if (closestFixture.getUserData() instanceof PlayerData) {
+                        	target = state.getPlayer2().getBody();
+                            aiState = enemyState.CHASING;
+                            
+                            Arrive<Vector2> arriveSB = new Arrive<Vector2>(this, state.getPlayer2())
+                    				.setArrivalTolerance(2f)
+                    				.setDecelerationRadius(decelerationRad);
+                    		
+                    		this.setBehavior(arriveSB);
                         }
                     }
                 }

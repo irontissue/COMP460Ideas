@@ -64,7 +64,7 @@ public abstract class Equipment {
 	 * @param camera: game camera
 	 * @param rays: game rayhandler
 	 */
-	public abstract void mouseClicked(float delta, PlayState state, CharacterData bodyData, short faction, int x, int y, World world, OrthographicCamera camera, RayHandler rays);
+	public abstract void mouseClicked(float delta, PlayState state, CharacterData bodyData, short faction, float x, float y, World world, OrthographicCamera camera, RayHandler rays);
 	
 	/**
 	 * This method is called useDelay seconds after mouseClicked(). This involves the tool actually firing off in a direction

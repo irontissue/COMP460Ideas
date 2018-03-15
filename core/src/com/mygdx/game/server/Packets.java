@@ -41,7 +41,7 @@ public class Packets {
         public static final int PRESSED = 0;
         public static final int RELEASED = 1;
         public MousePressOrRelease() {}
-        public MousePressOrRelease(int m, int x, int y, int pOrR, int playerID) {
+        public MousePressOrRelease(int m, float x, float y, int pOrR, int playerID) {
             message = m;
             pressOrRelease = pOrR;
             this.playerID = playerID;
@@ -51,7 +51,7 @@ public class Packets {
         public int playerID;
         public int message;
         public int pressOrRelease; //0 = pressed, 1 = released.
-        public int x, y;
+        public float x, y;
     }
 
     /*public static class SetEntityAim {

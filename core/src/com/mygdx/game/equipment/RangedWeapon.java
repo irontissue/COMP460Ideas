@@ -40,7 +40,7 @@ public class RangedWeapon extends Equipment {
 	public HitboxFactory onShoot;
 	
 	public Vector2 velo;
-	public int x, y;
+	public float x, y;
 	public short faction;
 
 	/**
@@ -73,14 +73,13 @@ public class RangedWeapon extends Equipment {
 	 * The weapon is not fired yet. Instead, a vector keeping track of the target is set.
 	 */
 	@Override
-	public void mouseClicked(float delta, PlayState state, CharacterData shooter, short faction, int x, int y, World world, OrthographicCamera camera, RayHandler rays) {
+	public void mouseClicked(float delta, PlayState state, CharacterData shooter, short faction, float x, float y, World world, OrthographicCamera camera, RayHandler rays) {
 		
 		//Convert screen coordinates into a starting velocity for the projectile.
 		Vector3 bodyScreenPosition = new Vector3(
 				shooter.getSchmuck().getBody().getPosition().x,
 				shooter.getSchmuck().getBody().getPosition().y, 0);
-		camera.project(bodyScreenPosition);
-		
+//		camera.project(bodyScreenPosition);
 		float powerDiv = bodyScreenPosition.dst(x, y, 0) / projectileSpeed;
 		
 		float xImpulse = -(bodyScreenPosition.x - x) / powerDiv;
