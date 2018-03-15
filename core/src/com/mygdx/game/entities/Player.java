@@ -131,7 +131,7 @@ public class Player extends Schmuck {
 			player1Fixture.setUserData(playerData);
 		}
 				
-		if (!comp460game.serverMode) {
+/*		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 80);
 			vision.setIgnoreAttachedBody(true);
 			
@@ -156,7 +156,7 @@ public class Player extends Schmuck {
 		
 		vision.setContactFilter(Constants.Filters.BIT_SENSOR, (short)0, Constants.Filters.BIT_WALL);
 		vision.setSoft(true);
-		vision.setSoftnessLength(5);
+		vision.setSoftnessLength(5);*/
 		
 		super.create();
 	}
@@ -308,7 +308,7 @@ public class Player extends Schmuck {
 	
 	@Override
 	public void render(SpriteBatch batch) {
-		vision.setPosition(body.getPosition());
+//		vision.setPosition(body.getPosition());
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 
