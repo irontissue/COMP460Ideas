@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.Player;
@@ -98,7 +99,9 @@ public class RangedWeapon extends Equipment {
 	 */
 	@Override
 	public String[] execute(PlayState state, CharacterData shooter, World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS) {
-
+		if (shooter instanceof PlayerData) {
+			Log.info("EXECUTE SERVER AHHHHHHHH - player " + ((PlayerData) shooter).playerNumber);
+		}
 		String[] returnIDS = null;
 		//Check clip size. empty clip = reload instead. This makes reloading automatic.
 		if (clipLeft > 0) {

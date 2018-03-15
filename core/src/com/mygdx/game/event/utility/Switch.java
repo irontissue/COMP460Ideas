@@ -45,12 +45,12 @@ public class Switch extends Event {
 	
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
-			public void onInteract(Player p, int playerNumber) {
+			public void onInteract(Player p) {
                 eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_ON.toString()));
 				if (event.getConnectedEvent() != null) {
 					event.getConnectedEvent().eventData.onActivate(this);
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(), p.entityID.toString(), playerNumber));
+                        comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(), p.entityID.toString(), state.gsm.playerNumber));
                     }
 				}
 			}

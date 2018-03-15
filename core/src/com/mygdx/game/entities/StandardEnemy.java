@@ -62,7 +62,7 @@ public class StandardEnemy extends SteeringEnemy {
                     Vector3 target = new Vector3(state.getPlayer().getBody().getPosition().x, state.getPlayer().getBody().getPosition().y, 0);
                     camera.project(target);
 
-                    useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int) target.x, (int) target.y, true, 0);
+                    useToolStart(delta, weapon, Constants.Filters.ENEMY_HITBOX, (int) target.x, (int) target.y, true);
 
                     super.controller(delta);
 
@@ -127,7 +127,7 @@ public class StandardEnemy extends SteeringEnemy {
             
             //If the delay on using a tool just ended, use thte tool.
             if (shootDelayCount <= 0 && usedTool != null) {
-                useToolEnd(0);
+                useToolEnd();
             }
 
             if (weapon.reloading) {

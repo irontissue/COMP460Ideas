@@ -102,19 +102,13 @@ public class EquipPickup extends Event {
     }
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
-			public void onInteract(Player p, int playerNumber) {
+			public void onInteract(Player p) {
                 Equipment temp = null;
 				if (comp460game.serverMode) {
-				    if (playerNumber == 1) {
-                        temp = p.player1Data.pickup(equip);
-                    } else {
-                        temp = p.player2Data.pickup(equip);
-                    }
-					comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(), p.entityID.toString(), playerNumber));
+                    temp = p.playerData.pickup(equip);
+					comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(), p.entityID.toString(), state.gsm.playerNumber));
                 } else {
-					if (playerNumber == state.gsm.playerNumber) {
-						temp = p.playerData.pickup(equip);
-					}
+                    temp = p.playerData.pickup(equip);
                 }
 				if (temp == null) {
 					queueDeletion();

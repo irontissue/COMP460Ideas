@@ -60,26 +60,29 @@ public class EntitySpawner extends Event {
                     state.player.getBody().setTransform(
                             spawnX / PPM + state.getPlayer().width / PPM / 2,
                             spawnY / PPM + state.getPlayer().height / PPM / 2, 0);
+					state.player2.getBody().setTransform(
+							spawnX / PPM + state.getPlayer().width / PPM / 2,
+							spawnY / PPM + state.getPlayer().height / PPM / 2 * 4, 0);
                     break;
                 case 1:
                     Enemy e = new Enemy(state, world, camera, rays, 50, 50, spawnX, spawnY, true);
                     Log.info("Created enemy on server.");
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(e.entityID.toString(), 50,50, spawnX, spawnY, Constants.EntityTypes.ENEMY, true));
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(e.entityID.toString(), 50,50, spawnX, spawnY, Constants.EntityTypes.ENEMY, true, 0));
                     }
                     break;
                 case 2:
                     StandardEnemy s = new StandardEnemy(state, world, camera, rays, 150, 150, spawnX, spawnY, true);
                     Log.info("Created standard enemy on server.");
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(s.entityID.toString(), 150, 150, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true));
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(s.entityID.toString(), 150, 150, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
                     }
                     break;
                 case 3:
                     SteeringEnemy q = new SteeringEnemy(state, world, camera, rays, 50, 50, spawnX, spawnY, true);
                     Log.info("Created steering enemy on server.");
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(q.entityID.toString(), 50, 50, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true));
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(q.entityID.toString(), 50, 50, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true, 0));
                     }
                     break;
             }

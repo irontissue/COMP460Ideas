@@ -62,17 +62,17 @@ public class TriggerSpawn extends Event {
 					switch(id) {
 					    case 0:
 					    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY, true);
-							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY, true));
+							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
 						    spawns.add(se);
 						    break;
                         case 2:
                         	se = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true));
+                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
                         	spawns.add(se);
                             break;
                         case 3:
                         	st = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true));
+                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true, 0));
                         	spawns.add(st);
 					}
 				}
