@@ -51,7 +51,7 @@ public class Player extends Schmuck {
     public boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false, qPressed = false, ePressed = false;
     public boolean mousePressed = false;
     public boolean spacePressed = false;
-    public int mousePosX = -1, mousePosY = -1;
+    public float mousePosX = -1, mousePosY = -1;
 		
 	//user data
 	public PlayerData playerData;
@@ -131,7 +131,7 @@ public class Player extends Schmuck {
 			player1Fixture.setUserData(playerData);
 		}
 				
-		if (!comp460game.serverMode) {
+/*		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 80);
 			vision.setIgnoreAttachedBody(true);
 			
@@ -156,13 +156,13 @@ public class Player extends Schmuck {
 		
 		vision.setContactFilter(Constants.Filters.BIT_SENSOR, (short)0, Constants.Filters.BIT_WALL);
 		vision.setSoft(true);
-		vision.setSoftnessLength(5);
+		vision.setSoftnessLength(5);*/
 		
 		super.create();
 	}
 
 	@Override
-    public void useToolStart(float delta, Equipment tool, short filter, int x, int y, boolean wait) {
+    public void useToolStart(float delta, Equipment tool, short filter, float x, float y, boolean wait) {
         //Log.info("Got into user tool start - player " + pNumber);
         //Only register the attempt if the user is not waiting on a tool's delay or cooldown. (or if tool ignores wait)
         if ((shootCdCount < 0 && shootDelayCount < 0) || !wait) {
@@ -174,7 +174,7 @@ public class Player extends Schmuck {
 //			if (comp460game.serverMode) {
 //			    comp460game.server.server.sendToAllTCP(new Packets.SetEntityAim(entityID.toString(), delta, x, y));
 //            }
-            tool.mouseClicked(delta, state, playerData, filter, x, y, world, camera, rays);
+            tool.mouseClicked(delta, state, playerData, filter, x / 32, y / 32, world, camera, rays);
             usedTool = tool;
         }
     }
@@ -228,7 +228,7 @@ public class Player extends Schmuck {
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
             if (mousePressed) {
             	//Log.info("USE TOOL START SERVER AHHHHHHHHH - player " + playerData.playerNumber);
-                useToolStart(delta, playerData.getCurrentTool(), Constants.Filters.PLAYER_HITBOX, mousePosX, Gdx.graphics.getHeight() - mousePosY, true);
+                useToolStart(delta, playerData.getCurrentTool(), Constants.Filters.PLAYER_HITBOX, mousePosX, mousePosY, true);
             }
 
             if (spacePressed) {
@@ -308,7 +308,7 @@ public class Player extends Schmuck {
 	
 	@Override
 	public void render(SpriteBatch batch) {
-		vision.setPosition(body.getPosition());
+//		vision.setPosition(body.getPosition());
 		
 		batch.setProjectionMatrix(state.sprite.combined);
 

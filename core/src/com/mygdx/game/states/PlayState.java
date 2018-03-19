@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -144,7 +145,7 @@ public class PlayState extends GameState implements InputProcessor {
 		world = new World(new Vector2(0, 0), false);
 		world.setContactListener(new WorldContactListener());
 		rays = new RayHandler(world);
-        rays.setAmbientLight(0.1f, 0.1f, 0.1f, 0.5f);
+        rays.setAmbientLight(1f, 1f, 1f, 0.5f);
         rays.setBlurNum(3);
         rays.setCulling(false);
         
@@ -425,6 +426,7 @@ public class PlayState extends GameState implements InputProcessor {
             }
 		}
 		player.render(batch);
+		player2.render(batch);
 		batch.end();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
@@ -444,6 +446,7 @@ public class PlayState extends GameState implements InputProcessor {
             }
 		}
 		player.renderAboveShadow(batch);
+		player2.renderAboveShadow(batch);
 		batch.end();
 	}	
 	
@@ -514,6 +517,10 @@ public class PlayState extends GameState implements InputProcessor {
 	 */
 	public Player getPlayer() {
 		return player;
+	}
+	
+	public Player getPlayer2() {
+		return player2;
 	}
 
 	public ArrayList<Entity> getEntities() {
@@ -757,7 +764,10 @@ public class PlayState extends GameState implements InputProcessor {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         if (!comp460game.serverMode && player.playerData != null) {
             RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
-            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
+            
+            Vector3 mousePosition = new Vector3(screenX, screenY, 0);
+    		camera.unproject(mousePosition);
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, mousePosition.x, mousePosition.y,
                     Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
         }
         return false;
@@ -767,7 +777,9 @@ public class PlayState extends GameState implements InputProcessor {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         if (!comp460game.serverMode && player.playerData != null) {
             RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
-            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, screenX, screenY,
+            Vector3 mousePosition = new Vector3(screenX, screenY, 0);
+    		camera.unproject(mousePosition);
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, mousePosition.x, mousePosition.y,
                     Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
         }
         return false;
@@ -777,7 +789,10 @@ public class PlayState extends GameState implements InputProcessor {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         if (!comp460game.serverMode && player.playerData != null) {
             RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
-            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, screenX, screenY,
+
+            Vector3 mousePosition = new Vector3(screenX, screenY, 0);
+    		camera.unproject(mousePosition);
+            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, mousePosition.x, mousePosition.y,
                     Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
         }
         return false;
