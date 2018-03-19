@@ -41,7 +41,7 @@ public class RocketLauncher extends RangedWeapon {
 	
 	private final static int explosionRadius = 300;
 	private final static float explosionDamage = 60.0f;
-	private final static float explosionKnockback = 10.0f;
+	private final static float explosionKnockback = 3.0f;
 
 	public static final int equipID = Constants.EquipIDs.ROCKET_LAUNCHER;
 

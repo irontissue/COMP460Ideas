@@ -7,6 +7,7 @@ import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.AssaultRifle;
 import com.mygdx.game.equipment.ranged.Shotgun;
 import com.mygdx.game.equipment.ranged.Gun;
+import com.mygdx.game.equipment.ranged.Medigun;
 import com.mygdx.game.equipment.ranged.RocketLauncher;
 
 public class PlayerData extends CharacterData {
@@ -25,7 +26,7 @@ public class PlayerData extends CharacterData {
 		this.player = body;
 		multitools = new Equipment[itemSlots];
 		multitools[0] = new Gun(body);
-//		multitools[1] = new Shotgun(body);
+		multitools[1] = new Medigun(body);
 //		multitools[2] = new RocketLauncher(body);
 //        multitools[3] = new AssaultRifle(body);
 		this.currentTool = multitools[currentSlot];
