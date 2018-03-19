@@ -92,6 +92,10 @@ public class EquipPickup extends Event {
                 eventSprite = new TextureRegion(new Texture(AssetList.MACHINE.toString()));
                 specialScale = 1f;
                 break;
+            case Constants.EquipIDs.HEAL_GUN:
+                eventSprite = new TextureRegion(new Texture(AssetList.GUN.toString()));
+                specialScale = 1f;
+                break;
             default:
                 eventSprite = new TextureRegion(new Texture(AssetList.GUN.toString()));
                 specialScale = 1f;
