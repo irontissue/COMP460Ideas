@@ -190,12 +190,16 @@ public class TiledObjectUtil {
 
     public static void parseTiledTriggerLayer(PlayState state, World world, OrthographicCamera camera, RayHandler rays) {
     	for (Event key : triggeringEvents.keySet()) {
-    		key.setConnectedEvent(triggeredEvents.getOrDefault(triggeringEvents.get(key), null));
+    		if (!triggeringEvents.get(key).equals("")) {
+    			key.setConnectedEvent(triggeredEvents.getOrDefault(triggeringEvents.get(key), null));
+    		}
     	}
     	
     	for (TriggerMulti key : multiTriggeringEvents.keySet()) {
     		for (String id : multiTriggeringEvents.get(key).split(",")) {
-    			key.addTrigger(triggeredEvents.getOrDefault(id, null));
+    			if (!id.equals("")) {
+    				key.addTrigger(triggeredEvents.getOrDefault(id, null));
+    			}
     		}
     	}
     }
