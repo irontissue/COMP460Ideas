@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" infinite="0" nextobjectid="180">
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="50" height="50" tilewidth="64" tileheight="64" nextobjectid="254">
  <tileset firstgid="1" name="kenney_tileset" tilewidth="64" tileheight="64" tilecount="540" columns="27">
   <image source="../Images/Tilesheet/tilesheet_complete.png" width="1728" height="1280"/>
  </tileset>
@@ -272,7 +272,7 @@
     <property name="limit" type="int" value="1"/>
    </properties>
   </object>
-  <object id="54" name="Spawn" type="Spawn" x="704" y="576" width="64" height="64">
+  <object id="54" name="Spawn" type="Spawn" x="448" y="576" width="64" height="64">
    <properties>
     <property name="id" type="int" value="2"/>
     <property name="interval" type="float" value="0.1"/>
@@ -454,20 +454,6 @@
     <property name="limit" type="int" value="1"/>
    </properties>
   </object>
-  <object id="80" name="Spawn" type="Spawn" x="256" y="2816" width="64" height="64">
-   <properties>
-    <property name="id" type="int" value="2"/>
-    <property name="interval" type="float" value="0.1"/>
-    <property name="limit" type="int" value="1"/>
-   </properties>
-  </object>
-  <object id="81" name="Spawn" type="Spawn" x="320" y="2880" width="64" height="64">
-   <properties>
-    <property name="id" type="int" value="2"/>
-    <property name="interval" type="float" value="0.1"/>
-    <property name="limit" type="int" value="1"/>
-   </properties>
-  </object>
   <object id="82" name="Spawn" type="Spawn" x="960" y="2880" width="64" height="64">
    <properties>
     <property name="id" type="int" value="2"/>
@@ -525,5 +511,497 @@
    </properties>
   </object>
   <object id="90" name="Victory" type="Victory" x="3060.17" y="2099.5" width="23.753" height="22.4334"/>
+  <object id="180" name="Spawn" type="Spawn" x="448" y="128" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="181" name="Spawn" type="Spawn" x="704" y="320" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="182" name="Spawn" type="Spawn" x="1024" y="128" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="183" name="Spawn" type="Spawn" x="1024" y="576" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="184" name="Spawn" type="Spawn" x="704" y="768" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="185" name="Spawn" type="Spawn" x="704" y="576" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="186" name="Spawn" type="Spawn" x="64" y="704" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="187" name="Spawn" type="Spawn" x="192" y="640" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="188" name="Spawn" type="Spawn" x="320" y="1216" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="189" name="Spawn" type="Spawn" x="384" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="190" name="Spawn" type="Spawn" x="320" y="1600" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="191" name="Spawn" type="Spawn" x="384" y="1664" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="192" name="Spawn" type="Spawn" x="640" y="1664" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="193" name="Spawn" type="Spawn" x="832" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="194" name="Spawn" type="Spawn" x="883.482" y="1250.61" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="195" name="Spawn" type="Spawn" x="1102.2" y="1245.93" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="196" name="Spawn" type="Spawn" x="1158.44" y="1330.29" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="197" name="Spawn" type="Spawn" x="1095.95" y="1411.52" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="198" name="Spawn" type="Spawn" x="1177.19" y="1419.34" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="199" name="Spawn" type="Spawn" x="1119.38" y="1484.95" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="200" name="Spawn" type="Spawn" x="1074.08" y="1623.99" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="201" name="Spawn" type="Spawn" x="994.402" y="1617.74" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="202" name="Spawn" type="Spawn" x="1792" y="1536" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="203" name="Spawn" type="Spawn" x="2414.49" y="1377.15" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="204" name="Spawn" type="Spawn" x="1280" y="640" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="205" name="Spawn" type="Spawn" x="1925.51" y="233.584" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="206" name="Spawn" type="Spawn" x="1951.25" y="107.638" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="207" name="Spawn" type="Spawn" x="1917.7" y="161.72" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="208" name="Spawn" type="Spawn" x="2009.87" y="119.539" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="209" name="Spawn" type="Spawn" x="1983.31" y="244.519" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="210" name="Spawn" type="Spawn" x="2030.18" y="227.334" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="211" name="Spawn" type="Spawn" x="3022.21" y="285.138" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="212" name="Spawn" type="Spawn" x="2936.29" y="163.282" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="213" name="Spawn" type="Spawn" x="3012.84" y="180.467" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="214" name="Spawn" type="Spawn" x="3022.21" y="110.165" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="215" name="Switch" type="Switch" x="1888.01" y="542.91" width="64" height="64">
+   <properties>
+    <property name="triggeringId" value="Counter1"/>
+   </properties>
+  </object>
+  <object id="216" name="Switch" type="Switch" x="2528.54" y="1219.37" width="64" height="64">
+   <properties>
+    <property name="triggeringId" value="Counter1"/>
+   </properties>
+  </object>
+  <object id="217" name="Spawn" type="Spawn" x="2420.74" y="1031.9" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="218" name="Spawn" type="Spawn" x="2373.87" y="994.402" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="219" name="Spawn" type="Spawn" x="2453.55" y="1449.02" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="220" name="Spawn" type="Spawn" x="2023.93" y="500.729" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="221" name="Spawn" type="Spawn" x="2023.93" y="589.778" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="222" name="Spawn" type="Spawn" x="2072.36" y="549.159" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="223" name="Door" type="Door" x="2560" y="896" width="576" height="64">
+   <properties>
+    <property name="triggeredId" value="Door1"/>
+   </properties>
+  </object>
+  <object id="225" name="Counter" type="Counter" x="3247.93" y="831.12">
+   <properties>
+    <property name="count" type="int" value="3"/>
+    <property name="triggeredId" value="Counter1"/>
+    <property name="triggeringId" value="Door1"/>
+   </properties>
+  </object>
+  <object id="226" name="Switch" type="Switch" x="3040.96" y="799.12" width="64" height="64">
+   <properties>
+    <property name="triggeringId" value="Counter1"/>
+   </properties>
+  </object>
+  <object id="227" name="Spawn" type="Spawn" x="2880" y="1856" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="228" name="Spawn" type="Spawn" x="2816" y="1856" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="229" name="Spawn" type="Spawn" x="2752" y="1856" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="230" name="Spawn" type="Spawn" x="2432" y="2048" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="231" name="Spawn" type="Spawn" x="1408" y="1920" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="232" name="Spawn" type="Spawn" x="1600" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="233" name="Spawn" type="Spawn" x="768" y="2304" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="234" name="Spawn" type="Spawn" x="704" y="2432" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="235" name="Spawn" type="Spawn" x="256" y="2432" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="236" name="Spawn" type="Spawn" x="192" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="237" name="Spawn" type="Spawn" x="256" y="1920" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="238" name="Spawn" type="Spawn" x="128" y="1984" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="241" name="TriggerSpawn" type="TriggerSpawn" x="448" y="2880" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn1"/>
+    <property name="triggeringId" value="Counter2"/>
+   </properties>
+  </object>
+  <object id="242" name="Multitrigger" type="Multitrigger" x="-182.784" y="2712.08">
+   <properties>
+    <property name="triggeredId" value="MapInit"/>
+    <property name="triggeringId" value="TSpawn1,TSpawn2,TSpawn3,TSpawn4,TSpawn5"/>
+   </properties>
+  </object>
+  <object id="243" name="Timer" type="Timer" x="-218.716" y="2630.84">
+   <properties>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="triggeredId" value="MapInit"/>
+   </properties>
+  </object>
+  <object id="244" name="TriggerSpawn" type="TriggerSpawn" x="320" y="2880" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn3"/>
+    <property name="triggeringId" value="Counter2"/>
+   </properties>
+  </object>
+  <object id="245" name="TriggerSpawn" type="TriggerSpawn" x="256" y="2816" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn4"/>
+    <property name="triggeringId" value="Counter2"/>
+   </properties>
+  </object>
+  <object id="246" name="TriggerSpawn" type="TriggerSpawn" x="256" y="3008" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn5"/>
+    <property name="triggeringId" value="Counter2"/>
+   </properties>
+  </object>
+  <object id="247" name="TriggerSpawn" type="TriggerSpawn" x="448" y="2688" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn2"/>
+    <property name="triggeringId" value="Counter2"/>
+   </properties>
+  </object>
+  <object id="248" name="Door" type="Door" x="576" y="3072" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="Door2"/>
+   </properties>
+  </object>
+  <object id="249" name="Counter" type="Counter" x="3247.93" y="831.12">
+   <properties>
+    <property name="count" type="int" value="3"/>
+    <property name="triggeredId" value="Counter1"/>
+    <property name="triggeringId" value="Door1"/>
+   </properties>
+  </object>
+  <object id="250" name="Counter" type="Counter" x="606.155" y="3276.05">
+   <properties>
+    <property name="count" type="int" value="5"/>
+    <property name="triggeredId" value="Counter2"/>
+    <property name="triggeringId" value="Door2"/>
+   </properties>
+  </object>
+  <object id="251" name="Spawn" type="Spawn" x="2814.43" y="2353.56" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="252" name="Spawn" type="Spawn" x="2730.07" y="2241.08" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="253" name="Spawn" type="Spawn" x="1472" y="3072" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
