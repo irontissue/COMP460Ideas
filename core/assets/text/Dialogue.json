@@ -1,0 +1,30 @@
+{
+	"0": [
+		{
+			"Name": "Therapist",
+			"Text": "Testing Dialogue",
+			"Sprite": ""
+		}, 
+		{
+			"Name": "Therapist",
+			"Text": "Testing More Dialogue",
+			"Sprite": "",
+			"End": true
+		}
+	],
+	"1": [
+		{
+			"Name": "test",
+			"Text": "MEEP MERP",
+			"Sprite": "",
+			"Duration": 5
+		}, 
+		{
+			"Name": "more test",
+			"Text": "AY CARAMBAS",
+			"Sprite": "",
+			"Duration": 1,
+			"End": true
+		}
+	]
+}

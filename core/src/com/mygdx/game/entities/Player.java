@@ -59,7 +59,7 @@ public class Player extends Schmuck {
 	
 //	public Player2Dummy dummy;
 	public PlayerData old;
-	protected Fixture player1Fixture, player2Fixture;
+//	protected Fixture player1Fixture, player2Fixture;
 
 	public ConeLight vision;
 	
@@ -111,7 +111,7 @@ public class Player extends Schmuck {
 				(short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_ENEMY),
 				Constants.Filters.PLAYER_HITBOX, false, playerData);
 
-		if (!comp460game.serverMode) {
+/*		if (!comp460game.serverMode) {
 			if (state.gsm.playerNumber == 1) {
 				player1Fixture = this.body.createFixture(FixtureBuilder.createFixtureDef(width / 2, height, new Vector2(-width / 2 / PPM, 0), true, 0,
 						Constants.Filters.BIT_SENSOR, (short)(Constants.Filters.BIT_WALL | Constants.Filters.BIT_ENEMY), Constants.Filters.PLAYER_HITBOX));
@@ -131,7 +131,7 @@ public class Player extends Schmuck {
 			player1Fixture.setUserData(playerData);
 		}
 				
-/*		if (!comp460game.serverMode) {
+		if (!comp460game.serverMode) {
 			vision = new ConeLight(rays, 32, Color.WHITE, 500, 0, 0, 0, 80);
 			vision.setIgnoreAttachedBody(true);
 			

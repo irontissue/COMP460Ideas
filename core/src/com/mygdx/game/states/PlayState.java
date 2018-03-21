@@ -27,6 +27,7 @@ import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
+import com.mygdx.game.actors.PlayStateStage;
 import com.mygdx.game.actors.UIPlay;
 import com.mygdx.game.actors.UIReload;
 import com.mygdx.game.entities.*;
@@ -126,10 +127,11 @@ public class PlayState extends GameState implements InputProcessor {
 	//sourced effects from the world are attributed to this dummy.
 	public Enemy worldDummy;
 		
-	public Stage stage;
 	public boolean updating = false;
 	
 	public Event lastSave;
+	
+	public PlayStateStage stage;
 	
 	/**
 	 * Constructor is called upon playerNumber beginning a game.
@@ -218,7 +220,7 @@ public class PlayState extends GameState implements InputProcessor {
 	@Override
 	public void show() {
 		
-		this.stage = new Stage();
+		this.stage = new PlayStateStage(this);
 		stage.addActor(new UIPlay(comp460game.assetManager, this, player, player2));
 		stage.addActor(new UIReload(comp460game.assetManager, this, player, player2));
 		app.newMenu(stage);
@@ -695,6 +697,9 @@ public class PlayState extends GameState implements InputProcessor {
             }
             if (keycode == Input.Keys.SPACE) {
                 comp460game.client.client.sendTCP(new Packets.KeyPressOrRelease(Input.Keys.SPACE, Packets.KeyPressOrRelease.PRESSED, comp460game.client.IDOnServer));
+                if (stage != null) {
+    				stage.nextDialogue();
+    			}
             }
 
             //Pressing 'R' = reload current weapon.

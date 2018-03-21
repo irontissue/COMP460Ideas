@@ -115,6 +115,13 @@ public class TiledObjectUtil {
     			triggeringEvents.put(timer, object.getProperties().get("triggeringId", "", String.class));
     			triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), timer);
     		}
+    		if (object.getName().equals("Dialog")) {
+    			Event dialog = new Radio(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
+    					object.getProperties().get("id", String.class));
+    			triggeringEvents.put(dialog, object.getProperties().get("triggeringId", "", String.class));
+    			triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), dialog);
+    		}
     		if (object.getName().equals("Target")) {
     			triggeringEvents.put(new Target(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
