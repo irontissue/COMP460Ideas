@@ -115,6 +115,13 @@ public class TiledObjectUtil {
     			triggeringEvents.put(timer, object.getProperties().get("triggeringId", "", String.class));
     			triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), timer);
     		}
+    		if (object.getName().equals("Dialog")) {
+    			Event dialog = new Radio(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
+    					object.getProperties().get("id", String.class));
+    			triggeringEvents.put(dialog, object.getProperties().get("triggeringId", "", String.class));
+    			triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), dialog);
+    		}
     		if (object.getName().equals("Target")) {
     			triggeringEvents.put(new Target(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), 
@@ -190,12 +197,16 @@ public class TiledObjectUtil {
 
     public static void parseTiledTriggerLayer(PlayState state, World world, OrthographicCamera camera, RayHandler rays) {
     	for (Event key : triggeringEvents.keySet()) {
-    		key.setConnectedEvent(triggeredEvents.getOrDefault(triggeringEvents.get(key), null));
+    		if (!triggeringEvents.get(key).equals("")) {
+    			key.setConnectedEvent(triggeredEvents.getOrDefault(triggeringEvents.get(key), null));
+    		}
     	}
     	
     	for (TriggerMulti key : multiTriggeringEvents.keySet()) {
     		for (String id : multiTriggeringEvents.get(key).split(",")) {
-    			key.addTrigger(triggeredEvents.getOrDefault(id, null));
+    			if (!id.equals("")) {
+    				key.addTrigger(triggeredEvents.getOrDefault(id, null));
+    			}
     		}
     	}
     }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.comp460game;
@@ -31,7 +32,8 @@ public class GameStateManager {
     
 	//temp skin for ui windows
 	public Skin skin;
-		
+	public NinePatchDrawable patch;
+	
 	private String level;
 	
 	//This enum lists all the different types of gamestates.
@@ -62,6 +64,8 @@ public class GameStateManager {
 		this.skin.addRegions((TextureAtlas) comp460game.assetManager.get(AssetList.UISKINATL.toString()));
 		this.skin.add("default-font", font24);
 		this.skin.load(Gdx.files.internal("ui/uiskin.json"));
+		
+		this.patch = new NinePatchDrawable(((TextureAtlas) comp460game.assetManager.get(AssetList.UIPATCHATL.toString())).createPatch("UI_window"));
 	}
 	
 	/**

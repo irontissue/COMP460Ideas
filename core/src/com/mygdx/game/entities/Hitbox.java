@@ -127,7 +127,9 @@ public class Hitbox extends Entity {
 		
 		//Rotate hitbox to match angle of fire.
 		if (startVelo.x != 0) {
-			this.body.setTransform(startX / PPM, startY / PPM, (float) Math.atan(startVelo.y / startVelo.x));
+			float newAngle = (float)(Math.atan2(startVelo.y , startVelo.x));
+			Vector2 newPosition = new Vector2(startX / PPM, startY / PPM).add(startVelo.nor().scl(2.0f));
+			this.body.setTransform(newPosition.x, newPosition.y, newAngle);
 		}
 	}
 	
