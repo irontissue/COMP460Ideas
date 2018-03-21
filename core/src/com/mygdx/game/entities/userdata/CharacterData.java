@@ -220,6 +220,10 @@ public class CharacterData extends UserData {
 			currentHp = 0;
 			die(perp);
 		}
+		
+		if (currentHp > getMaxHp()) {
+            currentHp = getMaxHp();
+        }
 	}
 	
 	/**
