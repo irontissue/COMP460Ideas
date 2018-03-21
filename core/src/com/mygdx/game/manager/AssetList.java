@@ -32,7 +32,9 @@ public enum AssetList {
 	UIATLAS("ui/UI.atlas", TextureAtlas.class),
 	UISKINIMG("ui/uiskin.png", Texture.class),
 	UISKINATL("ui/uiskin.atlas", TextureAtlas.class),
-
+	UIPATCHIMG("ui/window.png", Texture.class),
+	UIPATCHATL("ui/window.atlas", TextureAtlas.class),
+	
     DOOR("Images/TankPack2/PNG/Retina/barricadeWood.png", Texture.class),
     VICTORY("Images/SportsPack/PNG/Equipment/flag_checkered.png", Texture.class),
     TARGET("Images/RacingPack/PNG/Objects/cone_straight.png", Texture.class),
