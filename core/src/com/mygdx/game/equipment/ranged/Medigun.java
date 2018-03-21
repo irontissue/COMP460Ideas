@@ -53,7 +53,8 @@ public class Medigun extends RangedWeapon {
 				public void onHit(UserData fixB) {
 					if (fixB != null) {
 						if (fixB instanceof CharacterData) {
-							((CharacterData)fixB).regainHp(baseDamage);
+//							((CharacterData)fixB).regainHp(baseDamage);
+							((CharacterData)fixB).receiveDamage(-baseDamage, this.hbox.getBody().getLinearVelocity().nor().scl(knockback), user.getBodyData(), true);
 						}
 					}
 					super.onHit(fixB);
