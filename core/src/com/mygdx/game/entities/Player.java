@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
@@ -77,7 +78,7 @@ public class Player extends Schmuck {
   
 	public Player(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int x, int y, PlayerData old,
                   int playerNumber, boolean synced) {
-		super(state, world, camera, rays, x, y, "torpedofish_swim", 384, 256, 256, 384, synced);
+		super(state, world, camera, rays, x, y, "torpedofish_swim", 256, 256, 256, 256, synced);
 		this.combined = new TextureRegion(new Texture(AssetList.COMBINED.toString()));
 		this.bride = new TextureRegion(new Texture(AssetList.BRIDE.toString()));
 		this.groom = new TextureRegion(new Texture(AssetList.GROOM.toString()));
@@ -218,12 +219,24 @@ public class Player extends Schmuck {
                 desiredXVel += playerData.maxSpeed;
             }
 
-            if (ePressed) {
+     /*       if (ePressed) {
                 desiredAngleVel += -playerData.maxAngularSpeed;
             }
             if (qPressed) {
                 desiredAngleVel += playerData.maxAngularSpeed;
-            }
+            }*/
+            
+            Vector3 bodyScreenPosition = new Vector3(
+    				body.getPosition().x,
+    				body.getPosition().y, 0);
+//    		camera.project(bodyScreenPosition);
+    		
+    		//Determine player mouse location and hence where the arm should be angled.
+    		float attackAngle = (float)(Math.atan2(
+    				bodyScreenPosition.y - mousePosY / 32,
+    				bodyScreenPosition.x - mousePosX / 32));
+    		    		
+    		body.setTransform(body.getPosition(), (float) (attackAngle + Math.PI));
 
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
             if (mousePressed) {
@@ -316,35 +329,39 @@ public class Player extends Schmuck {
 			batch.setColor(Color.RED);
 		}
 		
-		batch.draw(combined, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.setColor(Color.WHITE);
-		
-/*		batch.draw(groom, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.draw(dress, 
-				body.getPosition().x * PPM - hbHeight * scale / 2, 
-				body.getPosition().y * PPM - hbWidth * scale / 2, 
-				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()));
-		
-		batch.draw(bride, 
+/*		batch.draw(combined, 
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
 				body.getPosition().y * PPM - hbWidth * scale / 2, 
 				hbHeight * scale / 2, hbWidth * scale / 2,
 				spriteWidth * scale, spriteHeight * scale, 1, 1, 
 				(float) Math.toDegrees(body.getAngle()));*/
+		
+		
+		
+		if (playerData.playerNumber == 1) {
+			batch.draw(groom, 
+					body.getPosition().x * PPM - hbHeight * scale / 2, 
+					body.getPosition().y * PPM - hbWidth * scale / 2, 
+					hbHeight * scale / 2, hbWidth * scale / 2,
+					spriteWidth * scale, spriteHeight * scale, 1, 1, 
+					(float) Math.toDegrees(body.getAngle()));
+		} else {
+			batch.draw(dress, 
+					body.getPosition().x * PPM - hbHeight * scale / 2, 
+					body.getPosition().y * PPM - hbWidth * scale / 2, 
+					hbHeight * scale / 2, hbWidth * scale / 2,
+					spriteWidth * scale, spriteHeight * scale, 1, 1, 
+					(float) Math.toDegrees(body.getAngle()));
+			
+			batch.draw(bride, 
+					body.getPosition().x * PPM - hbHeight * scale / 2, 
+					body.getPosition().y * PPM - hbWidth * scale / 2, 
+					hbHeight * scale / 2, hbWidth * scale / 2,
+					spriteWidth * scale, spriteHeight * scale, 1, 1, 
+					(float) Math.toDegrees(body.getAngle()));
+		}
+		
+		batch.setColor(Color.WHITE);
 	}
 	
 	public void dispose() {
