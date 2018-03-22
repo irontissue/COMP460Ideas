@@ -19,6 +19,7 @@ import box2dLight.RayHandler;
 public class Switch extends Event {
 
 	private static final String name = "Switch";
+	private static boolean isOn = false;
 
 	public Switch(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
 			int x, int y, boolean synced) {
@@ -46,13 +47,19 @@ public class Switch extends Event {
 	public void create() {
 		this.eventData = new InteractableEventData(world, this) {
 			public void onInteract(Player p) {
-                eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_ON.toString()));
-				if (event.getConnectedEvent() != null) {
-					event.getConnectedEvent().eventData.onActivate(this);
+			    if (!isOn) {
+                    eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_ON.toString()));
+                    isOn = true;
+                } else {
+                    eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_OFF.toString()));
+                    isOn = false;
+                }
+                if (event.getConnectedEvent() != null) {
+                    event.getConnectedEvent().eventData.onActivate(this);
                     if (comp460game.serverMode) {
                         comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(), p.entityID.toString(), state.gsm.playerNumber));
                     }
-				}
+                }
 			}
 		};
 		

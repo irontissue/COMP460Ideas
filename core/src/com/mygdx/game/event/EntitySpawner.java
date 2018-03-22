@@ -60,10 +60,14 @@ public class EntitySpawner extends Event {
                     state.player.getBody().setTransform(
                             spawnX / PPM + state.getPlayer().width / PPM / 2,
                             spawnY / PPM + state.getPlayer().height / PPM / 2, 0);
+                    state.player2.getBody().setTransform(
+                            spawnX / PPM + state.getPlayer().width / PPM / 2,
+                            spawnY / PPM + state.getPlayer().height / PPM / 2 * 4, 0);
+                    break;
+				case -1:
 					state.player2.getBody().setTransform(
 							spawnX / PPM + state.getPlayer().width / PPM / 2,
 							spawnY / PPM + state.getPlayer().height / PPM / 2 * 4, 0);
-                    break;
                 case 1:
                     Enemy e = new Enemy(state, world, camera, rays, 50, 50, spawnX, spawnY, true);
                     Log.info("Created enemy on server.");
