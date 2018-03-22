@@ -25,12 +25,12 @@ public class Medigun extends RangedWeapon {
 	private final static int clipSize = 1;
 	private final static float shootCd = 0.25f;
 	private final static float shootDelay = 0;
-	private final static float reloadTime = 1.5f;
+	private final static float reloadTime = 3.0f;
 	private final static int reloadAmount = 1;
 	private final static float baseDamage = 25.0f;
 	private final static float recoil = 0.0f;
 	private final static float knockback = 0.0f;
-	private final static float projectileSpeed = 30.0f;
+	private final static float projectileSpeed = 20.0f;
 	private final static int projectileWidth = 60;
 	private final static int projectileHeight = 15;
 	private final static float lifespan = 1.2f;
