@@ -241,7 +241,8 @@ public class Player extends Schmuck {
             //Clicking left mouse = use tool. charging keeps track of whether button is held.
             if (mousePressed) {
             	//Log.info("USE TOOL START SERVER AHHHHHHHHH - player " + playerData.playerNumber);
-                useToolStart(delta, playerData.getCurrentTool(), Constants.Filters.PLAYER_HITBOX, mousePosX, mousePosY, true);
+                //useToolStart(delta, playerData.getCurrentTool(), Constants.Filters.PLAYER_HITBOX, mousePosX, mousePosY, true);
+            	useToolStart(delta, playerData.getCurrentTool(), (short)0, mousePosX, mousePosY, true);
             }
 
             if (spacePressed) {
