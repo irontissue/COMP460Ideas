@@ -330,11 +330,11 @@ public class PlayState extends GameState implements InputProcessor {
 		if (gameover) {
 			gameoverCdCount -= delta;
 			
-			if (!comp460game.serverMode) {
+			/*if (!comp460game.serverMode) {
 				if (player.vision.getDistance() > 0) {
 					player.vision.setDistance(player.vision.getDistance() - 1.0f);
 				}
-			}
+			}*/
 			
 			if (gameoverCdCount < 0) {
 //				if (lastSave != null) {
@@ -772,8 +772,8 @@ public class PlayState extends GameState implements InputProcessor {
             
             Vector3 mousePosition = new Vector3(screenX, screenY, 0);
     		camera.unproject(mousePosition);
-            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, mousePosition.x, mousePosition.y,
-                    Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
+			comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button,
+					Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
         }
         return false;
     }
@@ -784,8 +784,8 @@ public class PlayState extends GameState implements InputProcessor {
             RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
             Vector3 mousePosition = new Vector3(screenX, screenY, 0);
     		camera.unproject(mousePosition);
-            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button, mousePosition.x, mousePosition.y,
-                    Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
+			comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(button,
+					Packets.MousePressOrRelease.RELEASED, comp460game.client.IDOnServer));
         }
         return false;
     }
@@ -797,15 +797,25 @@ public class PlayState extends GameState implements InputProcessor {
 
             Vector3 mousePosition = new Vector3(screenX, screenY, 0);
     		camera.unproject(mousePosition);
-            comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT, mousePosition.x, mousePosition.y,
-                    Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));
+			comp460game.client.client.sendTCP(new Packets.MouseReposition(mousePosition.x, mousePosition.y,
+					comp460game.client.IDOnServer));
+			/*comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT,
+					Packets.MousePressOrRelease.PRESSED, comp460game.client.IDOnServer));*/
         }
         return false;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+		if (!comp460game.serverMode && player.playerData != null) {
+			RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
+
+			Vector3 mousePosition = new Vector3(screenX, screenY, 0);
+			camera.unproject(mousePosition);
+			comp460game.client.client.sendTCP(new Packets.MouseReposition(mousePosition.x, mousePosition.y,
+					comp460game.client.IDOnServer));
+		}
+    	return false;
     }
 
     @Override

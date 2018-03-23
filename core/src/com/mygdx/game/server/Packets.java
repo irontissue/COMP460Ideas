@@ -41,16 +41,24 @@ public class Packets {
         public static final int PRESSED = 0;
         public static final int RELEASED = 1;
         public MousePressOrRelease() {}
-        public MousePressOrRelease(int m, float x, float y, int pOrR, int playerID) {
-            message = m;
+        public MousePressOrRelease(int buttonID, int pOrR, int playerID) {
+            this.buttonID = buttonID;
             pressOrRelease = pOrR;
+            this.playerID = playerID;
+        }
+        public int playerID;
+        public int buttonID;
+        public int pressOrRelease; //0 = pressed, 1 = released.
+    }
+
+    public static class MouseReposition {
+        public MouseReposition() {}
+        public MouseReposition(float x, float y, int playerID) {
             this.playerID = playerID;
             this.x = x;
             this.y = y;
         }
         public int playerID;
-        public int message;
-        public int pressOrRelease; //0 = pressed, 1 = released.
         public float x, y;
     }
 
@@ -650,6 +658,7 @@ public class Packets {
         kryo.register(CreateHitboxImage.class);
         kryo.register(SyncEntity.class);
         kryo.register(MousePressOrRelease.class);
+        kryo.register(MouseReposition.class);
 //        kryo.register(SetEntityAim.class);
 //        kryo.register(EntityShoot.class);
         kryo.register(ClientLoadedPlayState.class);
