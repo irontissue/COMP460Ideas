@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="64" infinite="0" nextobjectid="29">
+<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="64" infinite="0" nextobjectid="30">
  <tileset firstgid="1" name="kenney_tileset" tilewidth="64" tileheight="64" tilecount="540" columns="27">
   <image source="../Images/Tilesheet/tilesheet_complete.png" width="1728" height="1280"/>
  </tileset>
@@ -67,7 +67,7 @@
   </object>
  </objectgroup>
  <objectgroup name="event-layer">
-  <object id="8" name="Spawn" type="Spawn" x="501.891" y="502.562" width="18.4839" height="18.4839">
+  <object id="8" name="Spawn" type="Spawn" x="504" y="472" width="16" height="16">
    <properties>
     <property name="id" type="int" value="0"/>
     <property name="interval" type="float" value="0"/>
@@ -77,11 +77,6 @@
   <object id="9" name="Warp" type="Warp" x="266.435" y="203.768" width="45.3868" height="39.439">
    <properties>
     <property name="Level" value="kenney_map.tmx"/>
-   </properties>
-  </object>
-  <object id="10" name="Warp" type="Warp" x="520.385" y="204.689" width="44.0534" height="40.7724">
-   <properties>
-    <property name="Level" value="argh.tmx"/>
    </properties>
   </object>
   <object id="11" name="Warp" type="Warp" x="775.307" y="201.947" width="46.7201" height="47.439">
@@ -122,6 +117,13 @@
   <object id="28" name="Warp" type="Warp" x="262.973" y="774.614" width="44.0534" height="40.7724">
    <properties>
     <property name="Level" value="separateSpawn.tmx"/>
+   </properties>
+  </object>
+  <object id="29" name="Spawn" type="Spawn" x="504" y="536" width="16" height="16">
+   <properties>
+    <property name="id" type="int" value="-1"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>
