@@ -242,7 +242,7 @@ public class KryoServer {
                     if (!gsm.states.empty() && gsm.states.peek() instanceof PlayState) {
                         PlayState ps = (PlayState) gsm.states.peek();
                         //Log.info("MousePressOrRelease on server");
-                        if (p.message == Input.Buttons.LEFT) {
+                        if (p.buttonID == Input.Buttons.LEFT) {
                             if (p.playerID == playerIDs[0]) {
                                 //Log.info("MousePressOrRelease on server - player 1");
                                 if (p.pressOrRelease == Packets.MousePressOrRelease.PRESSED) {
@@ -250,8 +250,6 @@ public class KryoServer {
                                 } else {
                                     ps.player.mousePressed = false;
                                 }
-                                ps.player.mousePosX = p.x;
-                                ps.player.mousePosY = p.y;
                             } else {
                                 //Log.info("MousePressOrRelease on server - player 2");
                                 if (p.pressOrRelease == Packets.MousePressOrRelease.PRESSED) {
@@ -259,11 +257,24 @@ public class KryoServer {
                                 } else {
                                     ps.player2.mousePressed = false;
                                 }
-                                //TODO: Make the second mouse position actually matter!!
-                                //Right now everything just uses mousePosX/Y on the server!!!!!
-                                ps.player2.mousePosX = p.x;
-                                ps.player2.mousePosY = p.y;
                             }
+                        }
+                    }
+                }
+
+                else if (o instanceof Packets.MouseReposition) {
+                    Packets.MouseReposition p = (Packets.MouseReposition) o;
+                    if (!gsm.states.empty() && gsm.states.peek() instanceof PlayState) {
+                        PlayState ps = (PlayState) gsm.states.peek();
+                        //Log.info("MouseReposition on server");
+                        if (p.playerID == playerIDs[0]) {
+                            //Log.info("MouseReposition on server - player 1");
+                            ps.player.mousePosX = p.x;
+                            ps.player.mousePosY = p.y;
+                        } else {
+                            //Log.info("MouseReposition on server - player 2");
+                            ps.player2.mousePosX = p.x;
+                            ps.player2.mousePosY = p.y;
                         }
                     }
                 }

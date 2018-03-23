@@ -67,7 +67,7 @@
   </object>
  </objectgroup>
  <objectgroup name="event-layer">
-  <object id="8" name="Spawn" type="Spawn" x="501.891" y="502.562" width="18.4839" height="18.4839">
+  <object id="8" name="Spawn" type="Spawn" x="504" y="472" width="16" height="16">
    <properties>
     <property name="id" type="int" value="0"/>
     <property name="interval" type="float" value="0"/>
@@ -77,11 +77,6 @@
   <object id="9" name="Warp" type="Warp" x="266.435" y="203.768" width="45.3868" height="39.439">
    <properties>
     <property name="Level" value="kenney_map.tmx"/>
-   </properties>
-  </object>
-  <object id="10" name="Warp" type="Warp" x="520.385" y="204.689" width="44.0534" height="40.7724">
-   <properties>
-    <property name="Level" value="argh.tmx"/>
    </properties>
   </object>
   <object id="11" name="Warp" type="Warp" x="775.307" y="201.947" width="46.7201" height="47.439">
@@ -119,17 +114,16 @@
     <property name="Level" value="good_level.tmx"/>
    </properties>
   </object>
-  <object id="28" name="Timer" type="Timer" x="64" y="0" width="32" height="32">
+  <object id="28" name="Warp" type="Warp" x="262.973" y="774.614" width="44.0534" height="40.7724">
    <properties>
-    <property name="interval" type="float" value="1"/>
-    <property name="limit" type="int" value="1"/>
-    <property name="triggeringId" value="dialog1"/>
+    <property name="Level" value="separateSpawn.tmx"/>
    </properties>
   </object>
-  <object id="29" name="Dialog" type="Dialog" x="160" y="32" width="32" height="32">
+  <object id="29" name="Spawn" type="Spawn" x="504" y="536" width="16" height="16">
    <properties>
-    <property name="id" value="1"/>
-    <property name="triggeredId" value="dialog1"/>
+    <property name="id" type="int" value="-1"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
    </properties>
   </object>
  </objectgroup>
