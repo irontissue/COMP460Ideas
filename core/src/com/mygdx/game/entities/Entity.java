@@ -39,7 +39,7 @@ public abstract class Entity {
 	public float height, width;
 	protected float startX, startY;
 	public UUID entityID;
-	boolean alive = true;
+	public boolean alive = true;
 	boolean synced;
     public static final int ENTITY_TYPE = Constants.EntityTypes.ENTITY;
 	/**
