@@ -103,7 +103,7 @@ public class TiledObjectUtil {
     					object.getProperties().get("text", String.class), false);
     		}
     		if (object.getName().equals("Switch")) {
-    			e = new Switch(state, world, camera, rays, (int)rect.width, (int)rect.height, 
+    			e = new Switch(state, world, camera, rays, (int)rect.width, (int)rect.height,
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), false);
       		}
     		
@@ -141,7 +141,7 @@ public class TiledObjectUtil {
     		}
     		if (object.getName().equals("TriggerSpawn") && comp460game.serverMode) {
     			e = new TriggerSpawn(state, world, camera, rays, (int)rect.width, (int)rect.height, 
-    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), object.getProperties().get("enemyId", int.class), 
+    					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2), object.getProperties().get("id", int.class), 
     					object.getProperties().get("limit", int.class), false);
     		}
     		if (object.getName().equals("UsePortal")) {
@@ -221,7 +221,7 @@ public class TiledObjectUtil {
     		if (e != null) {
     			triggeringEvents.put(e, object.getProperties().get("triggeringId", "", String.class));
 				triggeredEvents.put(object.getProperties().get("triggeredId", "", String.class), e);
-//				triggeredEvents.put(object.getProperties().get("id", "", String.class), e);
+				triggeredEvents.put(object.getProperties().get("eventId", "", String.class), e);
     		}
     	}
     }

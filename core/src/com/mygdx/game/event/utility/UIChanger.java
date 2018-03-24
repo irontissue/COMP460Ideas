@@ -9,6 +9,8 @@ import com.mygdx.game.actors.UITag.uiType;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.util.Constants;
+import com.mygdx.game.util.b2d.BodyBuilder;
 
 import box2dLight.RayHandler;
 
@@ -60,6 +62,11 @@ public class UIChanger extends Event {
 				state.uiLevel.incrementScore(scoreIncr);
 				state.uiLevel.incrementTimer(timerIncr);
 			}
+			
+			
 		};
+		
+		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
+				(short) 0, (short) 0, true, eventData);
 	}
 }
