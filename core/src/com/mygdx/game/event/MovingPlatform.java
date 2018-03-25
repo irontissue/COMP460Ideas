@@ -3,13 +3,18 @@ package com.mygdx.game.event;
 
 import java.util.ArrayList;
 import static com.mygdx.game.util.Constants.PPM;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.util.Constants;
@@ -97,6 +102,28 @@ public class MovingPlatform extends Event {
 		if (e != null) {
 			connected.add(e);
 		}
+	}
+	
+	@Override
+	public void render(SpriteBatch batch) {
+        if (eventSprite != null) {
+            batch.setProjectionMatrix(state.sprite.combined);
+            Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
+            batch.draw(eventSprite,
+                    body.getPosition().x * PPM - width*specialScale / 2,
+                    body.getPosition().y * PPM - height*specialScale / 2,
+                    width*specialScale / 2, height*specialScale / 2,
+                    width * scale * specialScale, height * scale * specialScale, 1, 1,
+                    (float) Math.toDegrees(body.getAngle()) - 180 - specialAngle);
+
+            batch.setColor(Color.WHITE);
+        } else {
+            batch.setProjectionMatrix(state.hud.combined);
+            Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
+            camera.project(bodyScreenPosition);
+            comp460game.SYSTEM_FONT_UI.getData().setScale(0.4f);
+			comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
+        }
 	}
 
 }
