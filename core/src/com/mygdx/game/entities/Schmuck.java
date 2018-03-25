@@ -209,7 +209,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
 				body.getPosition().y * PPM - hbWidth * scale / 2, 
 				hbHeight * scale / 2, hbWidth * scale / 2,
-				spriteWidth * scale, spriteHeight * scale, 1, 1, 
+				hbWidth * scale, hbHeight * scale, 1, 1, 
 				(float) Math.toDegrees(body.getAngle()));
 		
 		batch.setColor(Color.WHITE);
