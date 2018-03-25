@@ -26,5 +26,32 @@
 			"Duration": 1,
 			"End": true
 		}
+	],
+	"3": [
+		{
+			"Name": "Therapist",
+			"Text": "Please select a Switch.",
+			"Sprite": "",
+			"Duration": 5
+		}, 
+		{
+			"Name": "Therapist",
+			"Text": "The Switch on the upper left will initiate 1-min survival.",
+			"Sprite": "",
+			"Duration": 5,
+		},
+		{
+			"Name": "Therapist",
+			"Text": "The Switch on the upper right will initiate 5-min survival.",
+			"Sprite": "",
+			"Duration": 5,
+		},
+		{
+			"Name": "Therapist",
+			"Text": "The Switch on the upper right will initiate endless survival.",
+			"Sprite": "",
+			"Duration": 5,
+			"End": true
+		}
 	]
 }

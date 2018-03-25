@@ -65,7 +65,7 @@ public class GameStateManager {
 		this.skin.add("default-font", font24);
 		this.skin.load(Gdx.files.internal("ui/uiskin.json"));
 		
-		this.patch = new NinePatchDrawable(((TextureAtlas) comp460game.assetManager.get(AssetList.UIPATCHATL.toString())).createPatch("UI_window"));
+		this.patch = new NinePatchDrawable(((TextureAtlas) comp460game.assetManager.get(AssetList.UIPATCHATL.toString())).createPatch("UI_box_dialogue"));
 	}
 	
 	/**
