@@ -40,7 +40,7 @@ public abstract class Entity {
 	protected float startX, startY;
 	public UUID entityID;
 	public boolean alive = true;
-	boolean synced;
+	public boolean synced;
     public static final int ENTITY_TYPE = Constants.EntityTypes.ENTITY;
 	/**
 	 * Constructor is called when an entity is created. USE THIS FOR SERVER

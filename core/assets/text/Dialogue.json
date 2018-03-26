@@ -48,7 +48,7 @@
 		},
 		{
 			"Name": "Therapist",
-			"Text": "The Switch on the upper right will initiate endless survival.",
+			"Text": "The Switch on the bottom will initiate endless survival.",
 			"Sprite": "",
 			"Duration": 5,
 			"End": true

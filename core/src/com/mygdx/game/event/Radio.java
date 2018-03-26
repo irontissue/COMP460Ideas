@@ -2,7 +2,9 @@ package com.mygdx.game.event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -23,6 +25,15 @@ public class Radio extends Event {
 	public Radio(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String id) {
 		super(state, world, camera, rays, name, width, height, x, y, false);
 		this.id = id;
+		
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateDialogMessage(x, y, width, height, id, entityID.toString()));
+		}
+	}
+	
+	public Radio(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, int x, int y, String id, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, false, entityID);
+		this.id = id;
 	}
 	
 	@Override
@@ -38,6 +49,9 @@ public class Radio extends Event {
 					state.stage.addDialogue(id, this, null);
 				}
 				
+				if (comp460game.serverMode) {
+                    comp460game.server.server.sendToAllTCP(new Packets.EventActivateMessage(entityID.toString(), activator.getEvent().entityID.toString()));
+                }
 			}
 		};
 		

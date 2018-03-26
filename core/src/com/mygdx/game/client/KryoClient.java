@@ -21,6 +21,7 @@ import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.*;
 import com.mygdx.game.event.utility.Switch;
 import com.mygdx.game.event.utility.Target;
+import com.mygdx.game.event.utility.UIChanger;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
@@ -378,6 +379,45 @@ public class KryoClient {
                     }
                 }
 
+                else if (o instanceof Packets.CreateMovingPlatformMessage) {
+                    final Packets.CreateMovingPlatformMessage p = (Packets.CreateMovingPlatformMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new MovingPlatform(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.speed, p.entityID);
+                            }
+                        });
+                    }
+                }
+                
+                else if (o instanceof Packets.CreateUIChangerMessage) {
+                    final Packets.CreateUIChangerMessage p = (Packets.CreateUIChangerMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new UIChanger(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.types, p.changeType, p.scoreIncr, p.timerIncr, p.misc, p.entityID);
+                            }
+                        });
+                    }
+                }
+                
+                else if (o instanceof Packets.CreateDialogMessage) {
+                    final Packets.CreateDialogMessage p = (Packets.CreateDialogMessage) o;
+                    if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
+                        final PlayState ps = (PlayState)myGame.getGsm().states.peek();
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                new Radio(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.id, p.entityID);
+                            }
+                        });
+                    }
+                }
+                
                 else if (o instanceof Packets.EventInteractMessage) {
                     final Packets.EventInteractMessage p = (Packets.EventInteractMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
@@ -408,7 +448,9 @@ public class KryoClient {
                         PlayState ps = (PlayState)myGame.getGsm().states.peek();
                         Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                         Event activator = (Event) ps.getEntity(UUID.fromString(p.activatorID));
-                        if (e != null && activator != null) {
+                        if (activator == null) {
+                        	e.eventData.onActivate(null);
+                        } else if (e != null) {
                             e.eventData.onActivate(activator.eventData);
                         }
                     }
