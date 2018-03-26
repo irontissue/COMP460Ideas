@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 
 import box2dLight.RayHandler;
@@ -62,7 +63,10 @@ public class Event extends Entity {
 
 	@Override
 	public void controller(float delta) {
-		
+		if (synced && comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), body.getPosition(),
+					body.getLinearVelocity(), body.getAngularVelocity(), body.getAngle()));
+		}
 	}
 
 	/**

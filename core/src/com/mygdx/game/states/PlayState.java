@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
+import com.mygdx.game.actors.UILevel;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.actors.PlayStateStage;
@@ -105,9 +106,6 @@ public class PlayState extends GameState implements InputProcessor {
 	//This is a list of all entities in the world
 	private ArrayList<Entity> entities;
 	
-	//TODO: Temporary tracker of number of enemies defeated. Will replace eventually
-	public int score = 0;
-	
 	public boolean gameover = false, gameEnded = false;
 	public boolean won = false;
 	public static final float gameoverCd = 2.5f;
@@ -132,6 +130,8 @@ public class PlayState extends GameState implements InputProcessor {
 	public Event lastSave;
 	
 	public PlayStateStage stage;
+	
+	public UILevel uiLevel;
 	
 	/**
 	 * Constructor is called upon playerNumber beginning a game.
@@ -221,8 +221,13 @@ public class PlayState extends GameState implements InputProcessor {
 	public void show() {
 		
 		this.stage = new PlayStateStage(this);
+		
+		uiLevel = new UILevel(comp460game.assetManager, this);
+		
 		stage.addActor(new UIPlay(comp460game.assetManager, this, player, player2));
 		stage.addActor(new UIReload(comp460game.assetManager, this, player, player2));
+		stage.addActor(uiLevel);
+		
 		app.newMenu(stage);
 		
 		if (player != null) {
@@ -549,7 +554,7 @@ public class PlayState extends GameState implements InputProcessor {
 	 */
 
 	public void incrementScore(int i) {
-		score += i;
+		uiLevel.incrementScore(i);
 	}
 	
 	public void gameOver(boolean won) {

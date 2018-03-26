@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.3" orientation="orthogonal" renderorder="right-down" width="70" height="60" tilewidth="64" tileheight="64" infinite="0" nextobjectid="99">
+ <tileset firstgid="1" name="kenney_tileset" tilewidth="64" tileheight="64" tilecount="540" columns="27">
+  <image source="../Images/Tilesheet/tilesheet_complete.png" width="1728" height="1280"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="70" height="60">
+  <data encoding="base64" compression="zlib">
+   eJztmktOwzAURd8UiU2yAMS3eyCRCt0DSC1dBEiwDrbBuO4gIm2d5jrEzsfnSHeWn49sx8+JGQAAAAAAgM61y02P+XH5ErNI0L6ulC6XPWbt8i5mk6B9XYnp5dXl25M3y9vLpuWYD9PHXOoxOKSX/yR2XxvCy4v5x5eSVGNwCC++XIlZ2/S91OePRct5OXk5ng/w0u6lvp68t/l7+TX/fLk6Oq403cUcvKjXw8t8vSzFtubmJaRP4SWNl0c7rIs+DS/1/jHG+ggv4/OyrzGrWhEvzW6qva5Vjw58e7nFBLzEfg/tn+WiQ5ra+mynnrf2V/OcO2frOfdcnTQlL/QX3ctDwHE5eQkJXvCCF7yEeFH3JJaij7l4yek9/WT6/wx3pq3rCtHHmL3ECl7wgpfDKP9d3ZpWI/pSfZfqc3+hIqaXUrx/iIt6lOt3BS/Nz4WXU0LWIaEpIt9fuT4AAAAAQE7sAI8guOk=
+  </data>
+ </layer>
+ <objectgroup name="event-layer">
+  <object id="5" name="Spawn" type="Spawn" x="2688" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="-1"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="6" name="Spawn" type="Spawn" x="2432" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="0"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="7" name="Timer" type="Timer" x="832" y="512" width="64" height="64">
+   <properties>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="triggeringId" value="MapInit"/>
+   </properties>
+  </object>
+  <object id="8" name="Multitrigger" type="Multitrigger" x="960" y="512" width="63.0292" height="64.9563" rotation="-0.862627">
+   <properties>
+    <property name="triggeredId" value="MapInit"/>
+    <property name="triggeringId" value="ui,dialog1"/>
+   </properties>
+  </object>
+  <object id="9" name="Platform" type="Platform" x="2432" y="2048" width="160" height="64">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door1"/>
+   </properties>
+  </object>
+  <object id="10" name="Platform" type="Platform" x="2592" y="2048" width="160" height="64">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door2"/>
+   </properties>
+  </object>
+  <object id="11" name="Platform" type="Platform" x="2240" y="2240" width="64" height="128">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door3"/>
+   </properties>
+  </object>
+  <object id="12" name="Platform" type="Platform" x="2240" y="2368" width="64" height="128">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door4"/>
+   </properties>
+  </object>
+  <object id="13" name="Platform" type="Platform" x="2880" y="2240" width="64" height="128">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door5"/>
+   </properties>
+  </object>
+  <object id="14" name="Platform" type="Platform" x="2880" y="2368" width="64" height="128">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door6"/>
+   </properties>
+  </object>
+  <object id="15" name="Platform" type="Platform" x="2432" y="2624" width="160" height="64">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door7"/>
+   </properties>
+  </object>
+  <object id="16" name="Platform" type="Platform" x="2592" y="2624" width="160" height="64">
+   <properties>
+    <property name="speed" type="float" value="1"/>
+    <property name="triggeredId" value="door8"/>
+   </properties>
+  </object>
+  <object id="17" name="Switch" type="Switch" x="2368" y="2176" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="onePressed"/>
+   </properties>
+  </object>
+  <object id="18" name="Switch" type="Switch" x="2752" y="2176" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="fivePressed"/>
+   </properties>
+  </object>
+  <object id="19" name="Switch" type="Switch" x="2560" y="2496" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="endlessPressed"/>
+   </properties>
+  </object>
+  <object id="20" name="Multitrigger" type="Multitrigger" x="832" y="3584" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="opendoors"/>
+    <property name="triggeringId" value="opendoor1,opendoor2,opendoor3,opendoor4,opendoor5,opendoor6,opendoor7,opendoor8,uisurvive"/>
+   </properties>
+  </object>
+  <object id="22" name="Redirecttrigger" type="Redirecttrigger" x="960" y="3584" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge1"/>
+    <property name="triggeredId" value="opendoor1"/>
+    <property name="triggeringId" value="door1"/>
+   </properties>
+  </object>
+  <object id="23" name="Dummy" type="Dummy" x="2256" y="2064" width="32" height="32">
+   <properties>
+    <property name="triggeredId" value="hinge1"/>
+   </properties>
+  </object>
+  <object id="24" name="Dummy" type="Dummy" x="2896" y="2064" width="32" height="32">
+   <properties>
+    <property name="triggeredId" value="hinge2"/>
+   </properties>
+  </object>
+  <object id="25" name="Dummy" type="Dummy" x="2256" y="2640" width="32" height="32">
+   <properties>
+    <property name="triggeredId" value="hinge3"/>
+   </properties>
+  </object>
+  <object id="26" name="Dummy" type="Dummy" x="2896" y="2640" width="32" height="32">
+   <properties>
+    <property name="triggeredId" value="hinge4"/>
+   </properties>
+  </object>
+  <object id="27" name="Redirecttrigger" type="Redirecttrigger" x="1088" y="3584" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge2"/>
+    <property name="triggeredId" value="opendoor2"/>
+    <property name="triggeringId" value="door2"/>
+   </properties>
+  </object>
+  <object id="28" name="Redirecttrigger" type="Redirecttrigger" x="1216" y="3584" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge1"/>
+    <property name="triggeredId" value="opendoor3"/>
+    <property name="triggeringId" value="door3"/>
+   </properties>
+  </object>
+  <object id="29" name="Redirecttrigger" type="Redirecttrigger" x="1344" y="3584" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge3"/>
+    <property name="triggeredId" value="opendoor4"/>
+    <property name="triggeringId" value="door4"/>
+   </properties>
+  </object>
+  <object id="30" name="Redirecttrigger" type="Redirecttrigger" x="960" y="3712" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge2"/>
+    <property name="triggeredId" value="opendoor5"/>
+    <property name="triggeringId" value="door5"/>
+   </properties>
+  </object>
+  <object id="31" name="Redirecttrigger" type="Redirecttrigger" x="1088" y="3712" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge4"/>
+    <property name="triggeredId" value="opendoor6"/>
+    <property name="triggeringId" value="door6"/>
+   </properties>
+  </object>
+  <object id="32" name="Redirecttrigger" type="Redirecttrigger" x="1216" y="3712" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge3"/>
+    <property name="triggeredId" value="opendoor7"/>
+    <property name="triggeringId" value="door7"/>
+   </properties>
+  </object>
+  <object id="33" name="Redirecttrigger" type="Redirecttrigger" x="1344" y="3712" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge4"/>
+    <property name="triggeredId" value="opendoor8"/>
+    <property name="triggeringId" value="door8"/>
+   </properties>
+  </object>
+  <object id="34" name="Multitrigger" type="Multitrigger" x="192" y="3008" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="oneMin"/>
+    <property name="triggeringId" value="opendoors,onemintimer,uitimerone,timerdecrement,turnoffswitches,wavetimer"/>
+   </properties>
+  </object>
+  <object id="35" name="UI" type="UI" x="1088" y="512" width="64" height="64">
+   <properties>
+    <property name="misc">Flip a Switch!
+</property>
+    <property name="tags" value="SCORE,MISC"/>
+    <property name="triggeredId" value="ui1"/>
+   </properties>
+  </object>
+  <object id="36" name="Dialog" type="Dialog" x="1216" y="512" width="64" height="64">
+   <properties>
+    <property name="id" value="3"/>
+    <property name="triggeredId" value="dialog1"/>
+   </properties>
+  </object>
+  <object id="37" name="Timer" type="Timer" x="320" y="3008" width="64" height="64">
+   <properties>
+    <property name="interval" type="float" value="60"/>
+    <property name="limit" type="int" value="0"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="triggeredId" value="onemintimer"/>
+    <property name="triggeringId" value="victory"/>
+   </properties>
+  </object>
+  <object id="38" name="Victory" type="Victory" x="64" y="3520" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="victory"/>
+   </properties>
+  </object>
+  <object id="39" name="Multitrigger" type="Multitrigger" x="192" y="3136" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="fiveMin"/>
+    <property name="triggeringId" value="opendoors,fivemintimer,uitimerfive,timerdecrement,turnoffswitches,wavetimer"/>
+   </properties>
+  </object>
+  <object id="40" name="Timer" type="Timer" x="320" y="3136" width="64" height="64">
+   <properties>
+    <property name="interval" type="float" value="300"/>
+    <property name="limit" type="int" value="0"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="triggeredId" value="fivemintimer"/>
+    <property name="triggeringId" value="victory"/>
+   </properties>
+  </object>
+  <object id="41" name="Multitrigger" type="Multitrigger" x="192" y="3264" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="endless"/>
+    <property name="triggeringId" value="opendoors,uitimerendless,timerincrement,turnoffswitches,wavetimer"/>
+   </properties>
+  </object>
+  <object id="42" name="UI" type="UI" x="832" y="3712" width="64" height="64">
+   <properties>
+    <property name="change" type="int" value="1"/>
+    <property name="misc">Survive!
+</property>
+    <property name="tags" value="MISC"/>
+    <property name="triggeredId" value="uisurvive"/>
+   </properties>
+  </object>
+  <object id="43" name="UI" type="UI" x="448" y="3008" width="64" height="64">
+   <properties>
+    <property name="change" type="int" value="1"/>
+    <property name="tags" value="TIMER"/>
+    <property name="timer" type="float" value="60"/>
+    <property name="triggeredId" value="uitimerone"/>
+   </properties>
+  </object>
+  <object id="44" name="UI" type="UI" x="448" y="3136" width="64" height="64">
+   <properties>
+    <property name="change" type="int" value="1"/>
+    <property name="tags" value="TIMER"/>
+    <property name="timer" type="float" value="300"/>
+    <property name="triggeredId" value="uitimerfive"/>
+   </properties>
+  </object>
+  <object id="45" name="UI" type="UI" x="448" y="3264" width="64" height="64">
+   <properties>
+    <property name="change" type="int" value="1"/>
+    <property name="misc" value="ENDLESS"/>
+    <property name="tags" value="MISC,TIMER"/>
+    <property name="timer" type="float" value="0"/>
+    <property name="triggeredId" value="uitimerendless"/>
+   </properties>
+  </object>
+  <object id="46" name="Timer" type="Timer" x="320" y="2880" width="64" height="64">
+   <properties>
+    <property name="interval" type="float" value="1"/>
+    <property name="limit" type="int" value="0"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="triggeredId" value="timerdecrement"/>
+    <property name="triggeringId" value="minussecond"/>
+   </properties>
+  </object>
+  <object id="47" name="UI" type="UI" x="448" y="2880" width="64" height="64">
+   <properties>
+    <property name="change" type="int" value="1"/>
+    <property name="timer" type="float" value="-1"/>
+    <property name="triggeredId" value="minussecond"/>
+   </properties>
+  </object>
+  <object id="48" name="Condtrigger" type="Condtrigger" x="64" y="3008" width="64" height="64">
+   <properties>
+    <property name="start" value="oneMin"/>
+    <property name="triggeredId" value="onePressed"/>
+    <property name="triggeringId" value="oneMin"/>
+   </properties>
+  </object>
+  <object id="49" name="Condtrigger" type="Condtrigger" x="64" y="3136" width="64" height="64">
+   <properties>
+    <property name="start" value="fiveMin"/>
+    <property name="triggeredId" value="fivePressed"/>
+    <property name="triggeringId" value="fiveMin"/>
+   </properties>
+  </object>
+  <object id="50" name="Condtrigger" type="Condtrigger" x="64" y="3264" width="64" height="64">
+   <properties>
+    <property name="start" value="endless"/>
+    <property name="triggeredId" value="endlessPressed"/>
+    <property name="triggeringId" value="endless"/>
+   </properties>
+  </object>
+  <object id="52" name="Multitrigger" type="Multitrigger" x="64" y="3392" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="turnoffswitches"/>
+    <property name="triggeringId" value="turnoffone,turnofffive,turnoffendless"/>
+   </properties>
+  </object>
+  <object id="53" name="Alttrigger" type="Alttrigger" x="192" y="3392" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="turnoffone"/>
+    <property name="triggeringId" value="onePressed"/>
+   </properties>
+  </object>
+  <object id="54" name="Alttrigger" type="Alttrigger" x="320" y="3392" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="turnofffive"/>
+    <property name="triggeringId" value="fivePressed"/>
+   </properties>
+  </object>
+  <object id="55" name="Alttrigger" type="Alttrigger" x="448" y="3392" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="turnoffendless"/>
+    <property name="triggeringId" value="endlessPressed"/>
+   </properties>
+  </object>
+  <object id="56" name="TriggerSpawn" type="TriggerSpawn" x="2432" y="1856" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn1"/>
+   </properties>
+  </object>
+  <object id="57" name="TriggerSpawn" type="TriggerSpawn" x="2560" y="1856" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn2"/>
+   </properties>
+  </object>
+  <object id="58" name="TriggerSpawn" type="TriggerSpawn" x="2688" y="1856" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn3"/>
+   </properties>
+  </object>
+  <object id="59" name="TriggerSpawn" type="TriggerSpawn" x="2112" y="2240" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn4"/>
+   </properties>
+  </object>
+  <object id="60" name="TriggerSpawn" type="TriggerSpawn" x="2112" y="2432" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn7"/>
+   </properties>
+  </object>
+  <object id="61" name="TriggerSpawn" type="TriggerSpawn" x="1984" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn6"/>
+   </properties>
+  </object>
+  <object id="62" name="TriggerSpawn" type="TriggerSpawn" x="1984" y="2304" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn5"/>
+   </properties>
+  </object>
+  <object id="64" name="TriggerSpawn" type="TriggerSpawn" x="2688" y="2752" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn10"/>
+   </properties>
+  </object>
+  <object id="65" name="TriggerSpawn" type="TriggerSpawn" x="2560" y="2752" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn9"/>
+   </properties>
+  </object>
+  <object id="66" name="TriggerSpawn" type="TriggerSpawn" x="2432" y="2752" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="TSpawn8"/>
+   </properties>
+  </object>
+  <object id="67" name="Sensor" type="Sensor" x="1024" y="768" width="1248" height="1312">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone1"/>
+   </properties>
+  </object>
+  <object id="68" name="Sensor" type="Sensor" x="1600" y="2080" width="1312" height="576">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone3"/>
+   </properties>
+  </object>
+  <object id="69" name="Sensor" type="Sensor" x="2304" y="768" width="1472" height="1312">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone2"/>
+   </properties>
+  </object>
+  <object id="70" name="Sensor" type="Sensor" x="704" y="2048" width="864" height="1088">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone4"/>
+   </properties>
+  </object>
+  <object id="71" name="Sensor" type="Sensor" x="1568" y="2656" width="1152" height="544">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone4"/>
+   </properties>
+  </object>
+  <object id="72" name="Sensor" type="Sensor" x="2912" y="2080" width="864" height="1088">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone5"/>
+   </properties>
+  </object>
+  <object id="73" name="Sensor" type="Sensor" x="2720" y="2656" width="192" height="512">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeringId" value="zone5"/>
+   </properties>
+  </object>
+  <object id="74" name="Alttrigger" type="Alttrigger" x="192" y="768" width="64" height="64">
+   <properties>
+    <property name="message" value="zonespawn1"/>
+    <property name="triggeredId" value="zone1"/>
+    <property name="triggeringId" value="timespawn"/>
+   </properties>
+  </object>
+  <object id="75" name="Alttrigger" type="Alttrigger" x="192" y="896" width="64" height="64">
+   <properties>
+    <property name="message" value="zonespawn2"/>
+    <property name="triggeredId" value="zone2"/>
+    <property name="triggeringId" value="timespawn"/>
+   </properties>
+  </object>
+  <object id="76" name="Alttrigger" type="Alttrigger" x="192" y="1024" width="64" height="64">
+   <properties>
+    <property name="message" value="zonespawn3"/>
+    <property name="triggeredId" value="zone3"/>
+    <property name="triggeringId" value="timespawn"/>
+   </properties>
+  </object>
+  <object id="77" name="Alttrigger" type="Alttrigger" x="192" y="1152" width="64" height="64">
+   <properties>
+    <property name="message" value="zonespawn4"/>
+    <property name="triggeredId" value="zone4"/>
+    <property name="triggeringId" value="timespawn"/>
+   </properties>
+  </object>
+  <object id="78" name="Alttrigger" type="Alttrigger" x="192" y="1280" width="64" height="64">
+   <properties>
+    <property name="message" value="zonespawn5"/>
+    <property name="triggeredId" value="zone5"/>
+    <property name="triggeringId" value="timespawn"/>
+   </properties>
+  </object>
+  <object id="79" name="Condtrigger" type="Condtrigger" x="192" y="1408" width="64" height="64">
+   <properties>
+    <property name="start" value="zonespawn3"/>
+    <property name="triggeredId" value="timespawn"/>
+    <property name="triggeringId" value="zonespawn1,zonespawn2,zonespawn3,zonespawn4,zonespawn5"/>
+   </properties>
+  </object>
+  <object id="80" name="Multitrigger" type="Multitrigger" x="320" y="768" width="63.0292" height="64.9563" rotation="-0.862627">
+   <properties>
+    <property name="triggeredId" value="zonespawn1"/>
+    <property name="triggeringId" value="spawn1a,spawn1b"/>
+   </properties>
+  </object>
+  <object id="81" name="TriggerSpawn" type="TriggerSpawn" x="1088" y="2304" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn1b"/>
+   </properties>
+  </object>
+  <object id="82" name="TriggerSpawn" type="TriggerSpawn" x="1856" y="2304" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn1a"/>
+   </properties>
+  </object>
+  <object id="83" name="Multitrigger" type="Multitrigger" x="320" y="896" width="63.0292" height="64.9563" rotation="-0.862627">
+   <properties>
+    <property name="triggeredId" value="zonespawn2"/>
+    <property name="triggeringId" value="spawn2a,spawn2b"/>
+   </properties>
+  </object>
+  <object id="84" name="TriggerSpawn" type="TriggerSpawn" x="2560" y="2304" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn2a"/>
+   </properties>
+  </object>
+  <object id="85" name="TriggerSpawn" type="TriggerSpawn" x="3328" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn2b"/>
+   </properties>
+  </object>
+  <object id="86" name="Multitrigger" type="Multitrigger" x="320" y="1024" width="63.0292" height="64.9563" rotation="-0.862627">
+   <properties>
+    <property name="triggeredId" value="zonespawn3"/>
+    <property name="triggeringId" value="spawn3a,spawn3b,spawn3c"/>
+   </properties>
+  </object>
+  <object id="87" name="TriggerSpawn" type="TriggerSpawn" x="1728" y="1728" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="2"/>
+    <property name="triggeredId" value="spawn3a"/>
+   </properties>
+  </object>
+  <object id="88" name="TriggerSpawn" type="TriggerSpawn" x="2560" y="1664" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="2"/>
+    <property name="triggeredId" value="spawn3b"/>
+   </properties>
+  </object>
+  <object id="89" name="TriggerSpawn" type="TriggerSpawn" x="3200" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="2"/>
+    <property name="triggeredId" value="spawn3c"/>
+   </properties>
+  </object>
+  <object id="90" name="Multitrigger" type="Multitrigger" x="320" y="1152" width="63.0292" height="64.9563" rotation="-0.862627">
+   <properties>
+    <property name="triggeredId" value="zonespawn4"/>
+    <property name="triggeringId" value="spawn4a,spawn4b"/>
+   </properties>
+  </object>
+  <object id="91" name="TriggerSpawn" type="TriggerSpawn" x="1280" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn4a"/>
+   </properties>
+  </object>
+  <object id="92" name="TriggerSpawn" type="TriggerSpawn" x="3264" y="2752" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn4b"/>
+   </properties>
+  </object>
+  <object id="93" name="Multitrigger" type="Multitrigger" x="320" y="1280" width="63.0292" height="64.9563" rotation="-0.862627">
+   <properties>
+    <property name="triggeredId" value="zonespawn5"/>
+    <property name="triggeringId" value="spawn5a,spawn5b"/>
+   </properties>
+  </object>
+  <object id="94" name="TriggerSpawn" type="TriggerSpawn" x="2048" y="2752" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn5a"/>
+   </properties>
+  </object>
+  <object id="95" name="TriggerSpawn" type="TriggerSpawn" x="3392" y="1728" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="3"/>
+    <property name="triggeredId" value="spawn5b"/>
+   </properties>
+  </object>
+  <object id="96" name="Timer" type="Timer" x="64" y="1408" width="64" height="64">
+   <properties>
+    <property name="interval" type="float" value="5"/>
+    <property name="limit" type="int" value="0"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="triggeredId" value="wavetimer"/>
+    <property name="triggeringId" value="timespawn"/>
+   </properties>
+  </object>
+  <object id="97" name="Timer" type="Timer" x="576" y="3264" width="64" height="64">
+   <properties>
+    <property name="interval" type="float" value="1"/>
+    <property name="limit" type="int" value="0"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="triggeredId" value="timerincrement"/>
+    <property name="triggeringId" value="plussecond"/>
+   </properties>
+  </object>
+  <object id="98" name="UI" type="UI" x="704" y="3264" width="64" height="64">
+   <properties>
+    <property name="change" type="int" value="1"/>
+    <property name="timer" type="float" value="1"/>
+    <property name="triggeredId" value="plussecond"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="collision-layer">
+  <object id="1" x="2240" y="2112">
+   <polyline points="0,0 0,128 64,128 64,0 192,0 192,-64 64,-64 64,-704 448,-704 448,-960 256,-960 256,-1216 576,-1216 576,-1024 1536,-1024 1536,-448 1280,-448 1280,-192 1344,-192 1344,-128 1408,-128 1408,1024 512,1024 512,832 704,832 704,768 -128,768 -128,1024 -1536,1024 -1536,-64 -1216,-64 -1216,-1344 0,-1344 0,-64 -320,-64 -320,0 0,0"/>
+  </object>
+  <object id="2" x="1536" y="1536">
+   <polyline points="0,0 64,0 64,1088 704,1088 704,960 768,960 768,1088 896,1088 896,1152 0,1152 0,0"/>
+  </object>
+  <object id="3" x="2944" y="2688">
+   <polyline points="0,0 0,-192 -64,-192 -64,-64 -192,-64 -192,0 0,0"/>
+  </object>
+  <object id="4" x="2880" y="2112">
+   <polyline points="0,0 0,128 64,128 64,0 384,0 384,-64 64,-64 64,-768 256,-768 256,-832 0,-832 0,-64 -128,-64 -128,0 0,0"/>
+  </object>
+ </objectgroup>
+</map>

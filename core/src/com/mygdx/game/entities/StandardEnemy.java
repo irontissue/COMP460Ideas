@@ -133,6 +133,8 @@ public class StandardEnemy extends SteeringEnemy {
                     }
                 }
                 
+                shortestFraction = 1.0f;
+                
                 if (getBody().getPosition().x != state.getPlayer2().getBody().getPosition().x ||
                         getBody().getPosition().y != state.getPlayer2().getBody().getPosition().y) {
                     world.rayCast(new RayCastCallback() {

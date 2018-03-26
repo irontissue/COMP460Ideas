@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
-import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.manager.AssetList;
@@ -44,17 +43,21 @@ public class Victory extends Event {
 	
 	public void create() {
 
+
 		this.eventData = new EventData(world, this) {
-			public void onTouch(UserData fixB) {
+			
+			@Override
+			public void onActivate(EventData activator) {
 				if (comp460game.serverMode) {
 					if (!touched) {
 						touched = true;
 						state.gameOver(true);
-						event.queueDeletion();
 					}
 				}
 			}
+			
 		};
+		
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
 				(short) (Constants.Filters.BIT_PLAYER),

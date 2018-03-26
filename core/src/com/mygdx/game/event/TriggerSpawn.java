@@ -9,6 +9,7 @@ import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.StandardEnemy;
 import com.mygdx.game.entities.SteeringEnemy;
 import com.mygdx.game.event.userdata.EventData;
+import com.mygdx.game.event.utility.TriggerAlt;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
@@ -50,30 +51,34 @@ public class TriggerSpawn extends Event {
 		this.eventData = new EventData(world, this) {
 			public void onActivate(EventData activator) {
 				
-				defeated = false;
-				
-				StandardEnemy se;
-				SteeringEnemy st;
-				for (int i = 0; i < limit; i++) {
+				if (activator.getEvent() instanceof TriggerAlt) {
+					limit += Integer.parseInt(((TriggerAlt)activator.getEvent()).getMessage());
+				} else {
+					defeated = false;
 					
-					int randX = spawnX + (int)( (Math.random() - 0.5) * 100);
-					int randY = spawnY + (int)( (Math.random() - 0.5) * 100);
-					
-					switch(id) {
-					    case 0:
-					    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY, true);
-							comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
-						    spawns.add(se);
-						    break;
-                        case 2:
-                        	se = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
-                        	spawns.add(se);
-                            break;
-                        case 3:
-                        	st = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
-                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true, 0));
-                        	spawns.add(st);
+					StandardEnemy se;
+					SteeringEnemy st;
+					for (int i = 0; i < limit; i++) {
+						
+						int randX = spawnX + (int)( (Math.random() - 0.5) * 100);
+						int randY = spawnY + (int)( (Math.random() - 0.5) * 100);
+						
+						switch(id) {
+						    case 0:
+						    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY, true);
+								comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 32, 32, randX, randY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
+							    spawns.add(se);
+							    break;
+	                        case 2:
+	                        	se = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
+	                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(se.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
+	                        	spawns.add(se);
+	                            break;
+	                        case 3:
+	                        	st = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
+	                            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(st.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true, 0));
+	                        	spawns.add(st);
+						}
 					}
 				}
 			}
