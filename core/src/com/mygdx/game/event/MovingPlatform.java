@@ -17,6 +17,7 @@ import com.mygdx.game.states.PlayState;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.event.userdata.EventData;
 import com.mygdx.game.manager.AssetList;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.UserDataTypes;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -39,6 +40,16 @@ public class MovingPlatform extends Event {
 	public MovingPlatform(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 			int width, int height, int x, int y, float speed) {
 		super(state, world, camera, rays, name, width, height, x, y, true);
+		this.speed = speed;
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreateMovingPlatformMessage(x, y, width, height, speed, entityID.toString()));
+		}
+		eventSprite = new TextureRegion(new Texture(AssetList.DOOR.toString()));
+	}
+	
+	public MovingPlatform(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+			int width, int height, int x, int y, float speed, String entityID) {
+		super(state, world, camera, rays, name, width, height, x, y, true, entityID);
 		this.speed = speed;
 		
 		eventSprite = new TextureRegion(new Texture(AssetList.DOOR.toString()));
@@ -65,36 +76,39 @@ public class MovingPlatform extends Event {
 	
 	@Override
 	public void controller(float delta) {
-		if (getConnectedEvent() != null) {
-			Vector2 dist = getConnectedEvent().getBody().getPosition().sub(body.getPosition()).scl(PPM);
-
-			if ((int)dist.len2() <= 1) {
-				if (getConnectedEvent().getConnectedEvent() == null) {
-					body.setLinearVelocity(0, 0);
-					for (Event e : connected) {
-						if (e.getBody() != null && e.alive) {
-							e.getBody().setLinearVelocity(0, 0);
+		super.controller(delta);
+		if (comp460game.serverMode) {
+			if (getConnectedEvent() != null) {
+				Vector2 dist = getConnectedEvent().getBody().getPosition().sub(body.getPosition()).scl(PPM);
+	
+				if ((int)dist.len2() <= 1) {
+					if (getConnectedEvent().getConnectedEvent() == null) {
+						body.setLinearVelocity(0, 0);
+						for (Event e : connected) {
+							if (e.getBody() != null && e.alive) {
+								e.getBody().setLinearVelocity(0, 0);
+							}
 						}
+					} else {
+						body.setTransform(getConnectedEvent().getBody().getPosition(), 0);
+						setConnectedEvent(getConnectedEvent().getConnectedEvent());
 					}
 				} else {
-					body.setTransform(getConnectedEvent().getBody().getPosition(), 0);
-					setConnectedEvent(getConnectedEvent().getConnectedEvent());
-				}
-			} else {
-				body.setLinearVelocity(dist.nor().scl(speed));
-				for (Event e : connected) {
-					if (e.getBody() != null && e.alive) {
-						e.getBody().setLinearVelocity(dist.nor().scl(speed));
+					body.setLinearVelocity(dist.nor().scl(speed));
+					for (Event e : connected) {
+						if (e.getBody() != null && e.alive) {
+							e.getBody().setLinearVelocity(dist.nor().scl(speed));
+						}
 					}
 				}
-			}
-		} else {
-			for (Event e : connected) {
-				if (e.getBody() != null && e.alive) {
-					e.getBody().setLinearVelocity(0, 0);
+			} else {
+				for (Event e : connected) {
+					if (e.getBody() != null && e.alive) {
+						e.getBody().setLinearVelocity(0, 0);
+					}
 				}
+	
 			}
-
 		}
 	}
 	

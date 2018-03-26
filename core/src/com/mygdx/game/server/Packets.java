@@ -634,6 +634,56 @@ public class Packets {
         public int x, y, width, height;
         public String entityID;
     }
+    
+    public static class CreateMovingPlatformMessage {
+        public CreateMovingPlatformMessage() {}
+        public CreateMovingPlatformMessage(int x, int y, int width, int height, float speed, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.speed = speed;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public float speed;
+        public String entityID;
+    }
+    
+    public static class CreateDialogMessage {
+        public CreateDialogMessage() {}
+        public CreateDialogMessage(int x, int y, int width, int height, String id, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.id = id;
+            this.entityID = entityID;
+        }
+        public int x, y, width, height;
+        public String id;
+        public String entityID;
+    }
+    
+    public static class CreateUIChangerMessage {
+        public CreateUIChangerMessage() {}
+        public CreateUIChangerMessage(int x, int y, int width, int height, String types, int changeType, int scoreIncr, float timerIncr, String misc, String entityID) {
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+            this.types= types;
+            this.changeType = changeType;
+            this.scoreIncr = scoreIncr;
+            this.timerIncr = timerIncr;
+            this.misc= misc;
+            this.entityID = entityID;
+        }
+        public String types, misc;
+        public int x, y, width, height, changeType, scoreIncr;
+        public float timerIncr;
+        public String entityID;
+    }
 
     /**
      * REGISTER ALL THE CLASSES FOR KRYO TO SERIALIZE AND SEND
