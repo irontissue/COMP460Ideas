@@ -26,7 +26,7 @@ public class BadGun extends RangedWeapon {
     private final static int reloadAmount = 6;
     private final static float baseDamage = 12.0f;
     private final static float recoil = 0.0f;
-    private final static float knockback = 15.5f;
+    private final static float knockback = 5.5f;
     private final static float projectileSpeed = 6.0f;
     private final static int projectileWidth = 22;
     private final static int projectileHeight = 22;
