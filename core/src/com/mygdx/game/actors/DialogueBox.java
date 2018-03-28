@@ -145,7 +145,7 @@ public class DialogueBox extends A460Actor {
 			 
 			 //Only draw dialogue text if window has reached specified size.
 			 if (currX >= maxX * textAppearThreshold) {
-		         font.draw(batch, dialogues.first().getName() +": " + dialogues.first().getText(), getX() + 150, getY() - 20);
+		         font.draw(batch, dialogues.first().getName() +": " + dialogues.first().getText(), getX() + 150, getY() - 20, maxX - 150, -1, true);
 			 }
 		 }
 		 
