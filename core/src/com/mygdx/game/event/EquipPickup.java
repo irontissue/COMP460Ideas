@@ -11,6 +11,7 @@ import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.Shotgun;
 import com.mygdx.game.equipment.ranged.AssaultRifle;
 import com.mygdx.game.equipment.ranged.Boomerang;
+import com.mygdx.game.equipment.ranged.BouncingBlade;
 import com.mygdx.game.equipment.ranged.Gun;
 import com.mygdx.game.equipment.ranged.RocketLauncher;
 import com.mygdx.game.event.userdata.InteractableEventData;
@@ -65,6 +66,9 @@ public class EquipPickup extends Event {
             case Constants.EquipIDs.MACHINE:
                 this.equip = new AssaultRifle(null);
                 break;
+            case Constants.EquipIDs.BOUNCING_BLADE:
+                this.equip = new BouncingBlade(null);
+                break;
             default:
                 this.equip = new Gun(null);
                 break;
@@ -94,6 +98,10 @@ public class EquipPickup extends Event {
                 break;
             case Constants.EquipIDs.HEAL_GUN:
                 eventSprite = new TextureRegion(new Texture(AssetList.GUN.toString()));
+                specialScale = 1f;
+                break;
+            case Constants.EquipIDs.BOUNCING_BLADE:
+                eventSprite = atlas.findRegion("bouncing_blade");
                 specialScale = 1f;
                 break;
             default:
