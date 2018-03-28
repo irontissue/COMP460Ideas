@@ -53,5 +53,19 @@
 			"Duration": 5,
 			"End": true
 		}
+	],
+	"test_dialog": [
+		{
+			"Name": "Test Mystery Person",
+			"Text": "What an interesting test. It's just long enough to make sure text wrapping actually works as intended.",
+			"Sprite": "",
+			"Duration": 5
+		}, 
+		{
+			"Name": "Trash",
+			"Text": "BBLlrghddabbnkkldgr",
+			"Sprite": "",
+			"Duration": 3,
+		}
 	]
 }
