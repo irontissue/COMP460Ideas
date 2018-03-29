@@ -1,5 +1,7 @@
 package com.mygdx.game.equipment;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -11,8 +13,10 @@ import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.PlayerData;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.HitboxFactory;
 import com.mygdx.game.util.SteeringUtil;
 
@@ -178,6 +182,11 @@ public class RangedWeapon extends Equipment {
 				clipLeft = getClipSize();
 				reloading = false;
 			}
+
+			if (getEquipID() == Constants.EquipIDs.SHOTGUN) {
+                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+                sound.play(1.0f);
+            }
 		}
 	}
 

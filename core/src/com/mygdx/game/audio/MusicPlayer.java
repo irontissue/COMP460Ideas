@@ -22,7 +22,7 @@ public class MusicPlayer {
         trackListByName = new HashMap<String, String>(NUM_TRACKS);
         trackListByNumber = new HashMap<Integer, String>(NUM_TRACKS);
         
- //       trackListByName.put("test0", "sound/test.mp3");
+        trackListByName.put("bgm", "sounds/bgm/Overworld-Rough-Draft (1).mp3");
         
         int count = 0;
         for (String name : trackListByName.keySet()){
