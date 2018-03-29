@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
 import com.mygdx.game.actors.UILevel;
+import com.mygdx.game.audio.MusicPlayer;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.actors.PlayStateStage;
@@ -206,6 +207,9 @@ public class PlayState extends GameState implements InputProcessor {
         }
 
         setInput();
+
+        MusicPlayer m = new MusicPlayer();
+        m.playSong("bgm",1.0f);
 	}
 	
 	public void loadLevel(String level) {
@@ -432,8 +436,6 @@ public class PlayState extends GameState implements InputProcessor {
                 schmuck.render(batch);
             }
 		}
-		player.render(batch);
-		player2.render(batch);
 		batch.end();
 		
 		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
@@ -452,6 +454,8 @@ public class PlayState extends GameState implements InputProcessor {
                 schmuck.renderAboveShadow(batch);
             }
 		}
+		player.render(batch);
+		player2.render(batch);
 		player.renderAboveShadow(batch);
 		player2.renderAboveShadow(batch);
 		batch.end();

@@ -1,5 +1,6 @@
 package com.mygdx.game.manager;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -52,7 +53,10 @@ public enum AssetList {
     SHOTGUN("sprites/weapon_machine.png",Texture.class),
 //    ROCKET("",Texture.class),
 //    BOOMERANG("",Texture.class),
-    MACHINE("sprites/weapon_silencer.png",Texture.class);
+    MACHINE("sprites/weapon_silencer.png",Texture.class),
+
+	SFX_SHOTGUN("sounds/weaponSFX/Shotgun/Shotgun trimmed.wav", Sound.class),
+    SFX_SHOTGUN_RELOAD("sounds/weaponSFX/Shotgun/Pump Shotgun-SoundBible.com-1653268682 (1).wav", Sound.class);
 	//Enum constructor and methods.
 	private String pathname;
     private Class<?> type;
