@@ -2,6 +2,8 @@ package com.mygdx.game.equipment.ranged;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,6 +13,7 @@ import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.equipment.RangedWeapon;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.util.Constants;
@@ -66,6 +69,8 @@ public class Shotgun extends RangedWeapon {
 					}
 				});		
 			}
+			Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN.toString()));
+			sound.play(1.0f);
 			return madeHitboxes;
 		}
 		
