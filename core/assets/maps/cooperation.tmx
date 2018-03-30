@@ -5,7 +5,7 @@
  </tileset>
  <layer name="Tile Layer 1" width="70" height="60">
   <data encoding="base64" compression="zlib">
-   eJztmktOwzAURd8UiU2yAMS3eyCRCt0DSC1dBEiwDrbBuO4gIm2d5jrEzsfnSHeWn49sx8+JGQAAAAAAgM61y02P+XH5ErNI0L6ulC6XPWbt8i5mk6B9XYnp5dXl25M3y9vLpuWYD9PHXOoxOKSX/yR2XxvCy4v5x5eSVGNwCC++XIlZ2/S91OePRct5OXk5ng/w0u6lvp68t/l7+TX/fLk6Oq403cUcvKjXw8t8vSzFtubmJaRP4SWNl0c7rIs+DS/1/jHG+ggv4/OyrzGrWhEvzW6qva5Vjw58e7nFBLzEfg/tn+WiQ5ra+mynnrf2V/OcO2frOfdcnTQlL/QX3ctDwHE5eQkJXvCCF7yEeFH3JJaij7l4yek9/WT6/wx3pq3rCtHHmL3ECl7wgpfDKP9d3ZpWI/pSfZfqc3+hIqaXUrx/iIt6lOt3BS/Nz4WXU0LWIaEpIt9fuT4AAAAAQE7sAI8guOk=
+   eJztmltuwjAQRee3EpvsAgDRwh5IJB57aCUeiwCpXUe30e+6HxYvQ2dS2wTnHOn+xZZ95CQeJyIAAAAAAAB6+i7DiPly+VBmkmF+TaldehGzctkos84wv6bgJcw9vexEf8/lvgfv6eU/Sb3Wcnl5c/mMkHcpy8v6j3bPyqwEL3jBi8/xfvJFyvfyLeHn5fLsulr0Lkrwou0PL+V6mSnn2jUvljWFlzxexnJaF+0FL8fro431EV7a52Uhh1oRL9fd+Lp8GdFB6Cy3egAvqd9Dv2N5apBrc53LpeetHGqeW222gba36qRH8sJ60Xt5NVzXJS+W4AUveMGLxYv2TGKm9FGKly69p6ei/59hJLp9XaX00WYvqYIXvODlNNb/rgZKHz7+u1TM8wVPSi91g7FYvFj7t44FL+Gx4OUSyz7EmirxWKz9AwAAAACUzg/5Yb8W
   </data>
  </layer>
  <objectgroup name="event-layer">
@@ -621,7 +621,7 @@
  </objectgroup>
  <objectgroup name="collision-layer">
   <object id="1" x="2240" y="2112">
-   <polyline points="0,0 0,128 64,128 64,0 192,0 192,-64 64,-64 64,-704 448,-704 448,-960 256,-960 256,-1216 576,-1216 576,-1024 1536,-1024 1536,-448 1280,-448 1280,-192 1344,-192 1344,-128 1408,-128 1408,1024 512,1024 512,832 704,832 704,768 -128,768 -128,1024 -1536,1024 -1536,-64 -1216,-64 -1216,-1344 0,-1344 0,-64 -320,-64 -320,0 0,0"/>
+   <polyline points="0,0 0,128 64,128 64,0 192,0 192,-64 64,-64 64,-704 448,-704 448,-1024 1536,-1024 1536,-448 1280,-448 1280,-192 1344,-192 1344,-128 1408,-128 1408,1024 704,1024 704,768 -128,768 -128,1024 -1536,1024 -1536,-64 -1216,-64 -1216,-1344 0,-1344 0,-64 -320,-64 -320,0 0,0"/>
   </object>
   <object id="2" x="1536" y="1536">
    <polyline points="0,0 64,0 64,1088 704,1088 704,960 768,960 768,1088 896,1088 896,1152 0,1152 0,0"/>
