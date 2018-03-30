@@ -77,17 +77,17 @@ public class EntitySpawner extends Event {
                     }
                     break;
                 case 2:
-                    StandardEnemy s = new StandardEnemy(state, world, camera, rays, 150, 150, spawnX, spawnY, true);
+                    StandardEnemy s = new StandardEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
                     Log.info("Created standard enemy on server.");
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(s.entityID.toString(), 150, 150, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(s.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STANDARD_ENEMY, true, 0));
                     }
                     break;
                 case 3:
-                    SteeringEnemy q = new SteeringEnemy(state, world, camera, rays, 50, 50, spawnX, spawnY, true);
+                    SteeringEnemy q = new SteeringEnemy(state, world, camera, rays, 24, 24, spawnX, spawnY, true);
                     Log.info("Created steering enemy on server.");
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(q.entityID.toString(), 50, 50, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true, 0));
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(q.entityID.toString(), 24, 24, spawnX, spawnY, Constants.EntityTypes.STEERING_ENEMY, true, 0));
                     }
                     break;
             }
