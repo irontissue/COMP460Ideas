@@ -73,7 +73,7 @@ public class EntitySpawner extends Event {
                     Enemy e = new Enemy(state, world, camera, rays, 50, 50, spawnX, spawnY, true);
                     Log.info("Created enemy on server.");
                     if (comp460game.serverMode) {
-                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(e.entityID.toString(), 50,50, spawnX, spawnY, Constants.EntityTypes.ENEMY, true, 0));
+                        comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(e.entityID.toString(), 24,24, spawnX, spawnY, Constants.EntityTypes.ENEMY, true, 0));
                     }
                     break;
                 case 2:
