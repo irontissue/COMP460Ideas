@@ -156,7 +156,7 @@ public class PlayState extends GameState implements InputProcessor {
         
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
-		b2dr.setDrawBodies(false);
+//		b2dr.setDrawBodies(false);
 		
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
