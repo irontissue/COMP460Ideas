@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
 import com.mygdx.game.actors.UILevel;
+import com.mygdx.game.audio.MusicPlayer;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
 import com.mygdx.game.actors.PlayStateStage;
@@ -155,7 +156,7 @@ public class PlayState extends GameState implements InputProcessor {
         
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
-		b2dr.setDrawBodies(false);
+//		b2dr.setDrawBodies(false);
 		
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
@@ -206,6 +207,9 @@ public class PlayState extends GameState implements InputProcessor {
         }
 
         setInput();
+
+        MusicPlayer m = new MusicPlayer();
+        m.playSong("bgm",1.0f);
 	}
 	
 	public void loadLevel(String level) {
