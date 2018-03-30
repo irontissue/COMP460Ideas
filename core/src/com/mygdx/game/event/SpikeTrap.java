@@ -23,7 +23,6 @@ public class SpikeTrap extends Event {
 	private float dps;
 	private CharacterData perp;
 	private boolean isUp = false;
-	private Texture sprite;
 
 	private static final String name = "Spike Trap";
 
@@ -32,7 +31,7 @@ public class SpikeTrap extends Event {
 		super(state, world, camera, rays, name, width, height, x, y, synced);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
-		sprite = new Texture(AssetList.SPIKE_DOWN.toString());
+		eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_DOWN.toString()));
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreateSpikeTrapMessage(x, y, width, height, dps, entityID.toString()));
 		}
@@ -43,7 +42,7 @@ public class SpikeTrap extends Event {
 		super(state, world, camera, rays, name, width, height, x, y, synced, entityID);
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
-		sprite = new Texture(AssetList.SPIKE_DOWN.toString());
+		eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_DOWN.toString()));
 	}
 	
 	public void create() {
@@ -55,10 +54,10 @@ public class SpikeTrap extends Event {
 					if (entity instanceof Schmuck) {
 						((Schmuck)entity).getBodyData().receiveDamage(dps, new Vector2(0, 0), perp, true);
 						if (isUp) {
-							sprite = new Texture(AssetList.SPIKE_DOWN.toString());
+							eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_DOWN.toString()));
 							System.out.println("spike down");
 						} else {
-							sprite = new Texture(AssetList.SPIKE_UP.toString());
+							eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_UP.toString()));
 							System.out.println("spike up");
 						}
 						isUp = !isUp;
