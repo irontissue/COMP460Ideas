@@ -49,6 +49,9 @@ public enum AssetList {
     SWITCH_OFF("Images/TankPack2/PNG/Retina/barrelRed_top.png", Texture.class),
     SWITCH_ON("Images/TankPack2/PNG/Retina/barrelGreen_top.png", Texture.class),
     CURRENT("Images/RacingPack/PNG/Objects/arrow_yellow.png", Texture.class),
+	SPIKE_DOWN("sprites/SpikeDown.png", Texture.class),
+	SPIKE_UP("sprites/SpikeUp.png", Texture.class),
+
     GUN("sprites/weapon_gun.png",Texture.class),
     SHOTGUN("sprites/weapon_machine.png",Texture.class),
 //    ROCKET("",Texture.class),

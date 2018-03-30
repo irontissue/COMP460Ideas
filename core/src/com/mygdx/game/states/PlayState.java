@@ -377,6 +377,7 @@ public class PlayState extends GameState implements InputProcessor {
 			Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
 			victory.setScale(0.5f);
 			stage.addActor(victory);
+			gsm.application().musicPlayer.playSong("victory", 1.0f);
 		} else {
 			if (comp460game.serverMode) {
 				comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
@@ -385,6 +386,7 @@ public class PlayState extends GameState implements InputProcessor {
 			Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
 			defeat.setScale(0.5f);
 			stage.addActor(defeat);
+			gsm.application().musicPlayer.playSong("defeat", 1.0f);
 		}
 		if (!comp460game.serverMode) {
 			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
