@@ -49,7 +49,7 @@ public class HitboxImage extends Hitbox {
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.PROJ_1_ATL.toString());
 		projectileSprite = atlas.findRegion(spriteId);
 		if (comp460game.serverMode) {
-		    Log.info("Sending new hitbox image sync, playerdatanumber = " + playerDataNumber);
+		    //Log.info("Sending new hitbox image sync, playerdatanumber = " + playerDataNumber);
             comp460game.server.server.sendToAllTCP(new Packets.CreateHitboxImage(x, y, width, height, lifespan, dura, rest,
                     startVelo, filter, sensor, creator.entityID.toString(), spriteId, entityID.toString(), playerDataNumber));
         }
