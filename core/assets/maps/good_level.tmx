@@ -369,7 +369,7 @@
   </object>
   <object id="79" name="Spike" type="Spike" x="640" y="320" width="64" height="64">
    <properties>
-    <property name="damage" type="float" value="10"/>
+    <property name="damage" type="float" value="100"/>
     <property name="triggeredId" value="spike1"/>
    </properties>
   </object>
@@ -384,7 +384,7 @@
    <properties>
     <property name="interval" type="float" value="5"/>
     <property name="limit" type="int" value="0"/>
-    <property name="startOn" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="true"/>
     <property name="triggeredId" value="timer1"/>
     <property name="triggeringId" value="poison1"/>
    </properties>
@@ -427,7 +427,7 @@
    <properties>
     <property name="interval" type="float" value="5"/>
     <property name="limit" type="int" value="0"/>
-    <property name="startOn" type="bool" value="false"/>
+    <property name="startOn" type="bool" value="true"/>
     <property name="triggeredId" value="timer1"/>
     <property name="triggeringId" value="spike1"/>
    </properties>
