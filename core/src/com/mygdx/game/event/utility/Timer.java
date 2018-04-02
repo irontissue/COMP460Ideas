@@ -56,7 +56,9 @@ public class Timer extends Event {
 			if (timeCount >= interval) {
 				timeCount = 0;
 				amountCount++;
+				//System.out.println("Timer should proc");
 				if (getConnectedEvent() != null) {
+					//System.out.println("Timer activating event " + eventData.getEvent().name);
 					getConnectedEvent().eventData.onActivate(eventData);
 				}
 			}

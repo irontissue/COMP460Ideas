@@ -49,13 +49,34 @@ public enum AssetList {
     SWITCH_OFF("Images/TankPack2/PNG/Retina/barrelRed_top.png", Texture.class),
     SWITCH_ON("Images/TankPack2/PNG/Retina/barrelGreen_top.png", Texture.class),
     CURRENT("Images/RacingPack/PNG/Objects/arrow_yellow.png", Texture.class),
+	SPIKE_DOWN("sprites/SpikeDown.png", Texture.class),
+	SPIKE_UP("sprites/SpikeUp.png", Texture.class),
+
     GUN("sprites/weapon_gun.png",Texture.class),
     SHOTGUN("sprites/weapon_machine.png",Texture.class),
 //    ROCKET("",Texture.class),
 //    BOOMERANG("",Texture.class),
     MACHINE("sprites/weapon_silencer.png",Texture.class),
 
-	SFX_SHOTGUN("sounds/weaponSFX/Shotgun/Shotgun trimmed.wav", Sound.class),
+    SFX_BGM("sounds/bgm/Overworld.mp3", Sound.class),
+    SFX_BOOMERANG("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
+
+    SFX_AR("sounds/weaponSFX/AssaultRifle/arSingleShot.mp3", Sound.class),
+    SFX_AR_RELOAD("sounds/weaponSFX/AssaultRifle/reloadSlow.mp3", Sound.class),
+
+    SFX_RL("sounds/weaponSFX/RocketLauncher/rocketLaunchTrimmed.mp3", Sound.class),
+    SFX_RL_RELOAD("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
+
+    SFX_MED("sounds/weaponSFX/MediGun/mediShot.mp3", Sound.class),
+    SFX_MED_RELOAD("sounds/weaponSFX/MediGun/reloadSlow.mp3", Sound.class),
+
+    SFX_GUN("sounds/weaponSFX/Gun/arSingleShot.mp3", Sound.class),
+    SFX_GUN_RELOAD("sounds/weaponSFX/Gun/reloadSlow.mp3", Sound.class),
+
+    SFX_BB("sounds/weaponSFX/BouncingBlade/BBsound.mp3", Sound.class),
+    SFX_BB_RELOAD("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
+
+    SFX_SHOTGUN("sounds/weaponSFX/Shotgun/Shotgun trimmed.wav", Sound.class),
     SFX_SHOTGUN_RELOAD("sounds/weaponSFX/Shotgun/Pump Shotgun-SoundBible.com-1653268682 (1).wav", Sound.class);
 	//Enum constructor and methods.
 	private String pathname;

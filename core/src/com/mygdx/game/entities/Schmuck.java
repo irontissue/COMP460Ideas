@@ -32,6 +32,9 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	//Counters that keep track of delay between action initiation + action execution and action execution + next action
 	public float shootCdCount = 0;
 	public float shootDelayCount = 0;
+
+	protected TextureRegion hp, hpMissing;
+	protected TextureRegion main;
 	
 	//Keeps track of a schmuck's sprite flashing after receiving damage.
 	public float flashingCount = 0;
@@ -79,6 +82,11 @@ public class Schmuck extends Entity implements Location<Vector2> {
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
 //		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
 		schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
+		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
+		this.hp = atlas.findRegion("UI_main_healthbar");
+		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
+				302, 132, 440, 77);
 //        hbWidth = (int) (t.getWidth()*.9f);
 //        hbHeight = (int) (t.getHeight()*.9f);
 //		if (state.playerNumber != null) {
@@ -94,6 +102,11 @@ public class Schmuck extends Entity implements Location<Vector2> {
         Texture t = comp460game.assetManager.get(AssetList.KENNEY_HITMAN.toString());
 //		Log.info("t.getWidth = " + t.getWidth() + ", t.getHeight = " + t.getHeight());
         schmuckSprite = new TextureRegion(t, 0, 0, t.getWidth(), t.getHeight());
+		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
+		this.hp = atlas.findRegion("UI_main_healthbar");
+		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
+				302, 132, 440, 77);
 //        hbWidth = (int) (t.getWidth()*.9f);
 //        hbHeight = (int) (t.getHeight()*.9f);
     }
@@ -108,6 +121,11 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.hbHeight = hbHeight;
 		this.spriteWidth = width;
 		this.spriteHeight = height;
+		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
+		this.hp = atlas.findRegion("UI_main_healthbar");
+		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
+				302, 132, 440, 77);
 	}
 
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
@@ -120,6 +138,11 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.hbHeight = hbHeight;
 		this.spriteWidth = width;
 		this.spriteHeight = height;
+		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
+		this.hp = atlas.findRegion("UI_main_healthbar");
+		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
+				302, 132, 440, 77);
 	}
 
 	/**
@@ -138,7 +161,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	 * This method contains some physics that constrains schmucks in addition to box2d stuff.
      * This also sends a message to clients (if in server mode) what the position of this schmuck is. Therefore,
      * be careful when overriding this method - make sure that only one position update is sent for this entity
-     * every server tick.
+     *
+	 *
 	 */
 	@Override
 	public void controller(float delta) {
@@ -204,8 +228,19 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		if (flashingCount > 0) {
 			batch.setColor(Color.RED);
 		}
+
+		//Calc the ratio needed to draw the bars
+		float hpRatio = bodyData.currentHp / bodyData.getMaxHp();
+
+		batch.draw(hp, body.getPosition().x * PPM - hbHeight * scale / 2,
+				body.getPosition().y * PPM - hbWidth * scale / 2,
+				hbWidth * scale * hpRatio, 30 * scale);
+
+		batch.draw(main, body.getPosition().x * PPM - hbHeight * scale / 2,
+				body.getPosition().y * PPM - hbWidth * scale / 2,
+				hbWidth * scale, 30 * scale);
 		
-		batch.draw(schmuckSprite, 
+		batch.draw(schmuckSprite,
 				body.getPosition().x * PPM - hbHeight * scale / 2, 
 				body.getPosition().y * PPM - hbWidth * scale / 2, 
 				hbHeight * scale / 2, hbWidth * scale / 2,

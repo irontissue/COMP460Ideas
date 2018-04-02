@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.mygdx.game.manager.AssetList;
 
 public class MusicPlayer {
 
@@ -21,9 +22,12 @@ public class MusicPlayer {
 	 public MusicPlayer() {
         trackListByName = new HashMap<String, String>(NUM_TRACKS);
         trackListByNumber = new HashMap<Integer, String>(NUM_TRACKS);
-        
-        trackListByName.put("bgm", "sounds/bgm/Overworld-Rough-Draft (1).mp3");
-        
+
+        trackListByName.put("victory", "Sounds/Kirby Victory.mp3");
+        trackListByName.put("defeat", "Sounds/Dark Souls Death.mp3");
+
+        trackListByName.put("bgm", AssetList.SFX_BGM.toString());
+
         int count = 0;
         for (String name : trackListByName.keySet()){
             trackListByNumber.put(count, trackListByName.get(name));

@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.audio.MusicPlayer;
 import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.manager.GameStateManager;
@@ -50,6 +51,8 @@ public class comp460game extends ApplicationAdapter {
 
     public static boolean serverMode;
 
+    public MusicPlayer musicPlayer;
+
     public comp460game(boolean serverMode) {
         this.serverMode = serverMode;
     }
@@ -64,6 +67,8 @@ public class comp460game extends ApplicationAdapter {
 
 		CONFIG_WIDTH = DEFAULT_WIDTH;
 		CONFIG_HEIGHT = DEFAULT_HEIGHT;
+
+		musicPlayer = new MusicPlayer();
 
 		batch = new SpriteBatch();
 
