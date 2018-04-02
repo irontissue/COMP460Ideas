@@ -51,7 +51,7 @@
    <properties>
     <property name="damage" type="float" value="1.2"/>
     <property name="startOn" type="bool" value="true"/>
-    <property name="triggeredId" value="poison1"/>
+    <property name="triggeredId" value="Poison1"/>
    </properties>
   </object>
   <object id="106" name="Spawn" type="Spawn" x="105.876" y="109.709" width="32" height="32">
