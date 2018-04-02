@@ -146,5 +146,10 @@
     <property name="equipId" type="int" value="9"/>
    </properties>
   </object>
+  <object id="32" name="Warp" type="Warp" x="520.973" y="204.614" width="44.0534" height="40.7724">
+   <properties>
+    <property name="Level" value="trustSample.tmx"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
