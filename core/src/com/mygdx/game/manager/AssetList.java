@@ -58,6 +58,7 @@ public enum AssetList {
 //    BOOMERANG("",Texture.class),
     MACHINE("sprites/weapon_silencer.png",Texture.class),
 
+    SFX_BGM("sounds/bgm/Overworld.mp3", Sound.class),
     SFX_BOOMERANG("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
 
     SFX_AR("sounds/weaponSFX/AssaultRifle/arSingleShot.mp3", Sound.class),
