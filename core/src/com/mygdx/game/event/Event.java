@@ -41,6 +41,9 @@ public class Event extends Entity {
     public int yOffset = 0;
     public static float scale = 1f;
 
+    float duration;
+    boolean temporary;
+    
 	//This is used by consumable events to avoid being activated multiple times before next engine tick.
 	protected boolean consumed = false;
 		
@@ -48,12 +51,36 @@ public class Event extends Entity {
 			int width, int height, int x, int y, boolean synced) {
 		super(state, world, camera, rays, width, height, x, y, synced);
 		this.name = name;
+		
+		this.temporary = false;
+		this.duration = 0;
 	}
 
 	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
 				 int width, int height, int x, int y, boolean synced, String uuid) {
 		super(state, world, camera, rays, width, height, x, y, synced, uuid);
 		this.name = name;
+		
+		this.temporary = false;
+		this.duration = 0;
+	}
+	
+	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
+			int width, int height, int x, int y, float duration, boolean synced) {
+		super(state, world, camera, rays, width, height, x, y, synced);
+		this.name = name;
+		
+		this.temporary = true;
+		this.duration = duration;
+	}
+
+	public Event(PlayState state, World world, OrthographicCamera camera, RayHandler rays, String name,
+				 int width, int height, int x, int y, float duration, boolean synced, String uuid) {
+		super(state, world, camera, rays, width, height, x, y, synced, uuid);
+		this.name = name;
+		
+		this.temporary = true;
+		this.duration = duration;
 	}
 	
 	@Override
@@ -66,6 +93,13 @@ public class Event extends Entity {
 		if (synced && comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), body.getPosition(),
 					body.getLinearVelocity(), body.getAngularVelocity(), body.getAngle()));
+		}
+		
+		if (temporary) {
+			duration -= delta;
+			if (duration <= 0) {
+				this.queueDeletion();
+			}
 		}
 	}
 

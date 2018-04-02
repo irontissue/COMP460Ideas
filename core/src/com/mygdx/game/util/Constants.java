@@ -44,6 +44,8 @@ public class Constants {
         public static final int ROCKET_LAUNCHER = 2;
         public static final int HEAL_GUN = 6;
         public static final int BOUNCING_BLADE = 7;
+        public static final int POISON_GUN = 8;
+        public static final int BEEHIVE = 9;
         public static final int BAD_GUN = 5;
     }
     
