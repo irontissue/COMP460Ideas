@@ -336,8 +336,17 @@ public class Player extends Schmuck {
 				hbHeight * scale / 2, hbWidth * scale / 2,
 				spriteWidth * scale, spriteHeight * scale, 1, 1, 
 				(float) Math.toDegrees(body.getAngle()));*/
-		
-		
+
+        //Calc the ratio needed to draw the bars
+        float hpRatio = bodyData.currentHp / bodyData.getMaxHp();
+
+        batch.draw(hp, body.getPosition().x * PPM - hbHeight * scale / 2,
+                body.getPosition().y * PPM - hbWidth * scale / 2,
+                hbWidth * scale * hpRatio, 30 * scale);
+
+        batch.draw(main, body.getPosition().x * PPM - hbHeight * scale / 2,
+                body.getPosition().y * PPM - hbWidth * scale / 2,
+                hbWidth * scale, 30 * scale);
 		
 		if (playerData.playerNumber == 1) {
 			batch.draw(groom, 
