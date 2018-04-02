@@ -31,7 +31,7 @@ public class PoisonGun extends RangedWeapon {
 	private final static int reloadAmount = 1;
 	private final static float baseDamage = 30.0f;
 	private final static float recoil = 0.0f;
-	private final static float knockback = 5.0f;
+	private final static float knockback = 1.0f;
 	private final static float projectileSpeed = 25.0f;
 	private final static int projectileWidth = 45;
 	private final static int projectileHeight = 45;

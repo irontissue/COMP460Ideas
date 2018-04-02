@@ -1,8 +1,13 @@
 package com.mygdx.game.event;
 
+import static com.mygdx.game.util.Constants.PPM;
+
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
@@ -72,8 +77,19 @@ public class LevelWarp extends Event {
 	}
 	
 	@Override
+	public void render(SpriteBatch batch) {
+        super.render(batch);
+        batch.setProjectionMatrix(state.hud.combined);
+        Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
+        camera.project(bodyScreenPosition);
+        comp460game.SYSTEM_FONT_UI.getData().setScale(0.4f);
+		comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
+        
+	}
+	
+	@Override
 	public String getText() {
-		return name + " (SPACE TO ACTIVATE)";
+		return " Level: " + level;
 	}
 
 }

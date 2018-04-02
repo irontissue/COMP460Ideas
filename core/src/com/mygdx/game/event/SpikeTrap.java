@@ -67,7 +67,7 @@ public class SpikeTrap extends Event {
 		};
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
-				(short) (Constants.Filters.BIT_PLAYER),
+				(short) (Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY),
 				(short) 0, true, eventData);
 	}
 }
