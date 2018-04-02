@@ -10,9 +10,11 @@ import com.mygdx.game.entities.Player;
 import com.mygdx.game.equipment.Equipment;
 import com.mygdx.game.equipment.ranged.Shotgun;
 import com.mygdx.game.equipment.ranged.AssaultRifle;
+import com.mygdx.game.equipment.ranged.Beehive;
 import com.mygdx.game.equipment.ranged.Boomerang;
 import com.mygdx.game.equipment.ranged.BouncingBlade;
 import com.mygdx.game.equipment.ranged.Gun;
+import com.mygdx.game.equipment.ranged.PoisonGun;
 import com.mygdx.game.equipment.ranged.RocketLauncher;
 import com.mygdx.game.event.userdata.InteractableEventData;
 import com.mygdx.game.manager.AssetList;
@@ -69,6 +71,12 @@ public class EquipPickup extends Event {
             case Constants.EquipIDs.BOUNCING_BLADE:
                 this.equip = new BouncingBlade(null);
                 break;
+            case Constants.EquipIDs.POISON_GUN:
+                this.equip = new PoisonGun(null);
+                break;
+            case Constants.EquipIDs.BEEHIVE:
+                this.equip = new Beehive(null);
+                break;
             default:
                 this.equip = new Gun(null);
                 break;
@@ -102,6 +110,14 @@ public class EquipPickup extends Event {
                 break;
             case Constants.EquipIDs.BOUNCING_BLADE:
                 eventSprite = atlas.findRegion("bouncing_blade");
+                specialScale = 1f;
+                break;
+            case Constants.EquipIDs.POISON_GUN:
+                eventSprite = atlas.findRegion("debris_c");
+                specialScale = 1f;
+                break;
+            case Constants.EquipIDs.BEEHIVE:
+                eventSprite = atlas.findRegion("bee");
                 specialScale = 1f;
                 break;
             default:
