@@ -43,6 +43,17 @@ public class PoisonVent extends Event {
 		this.on = startOn;
 	}
 	
+	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
+			int x, int y, float dps, boolean startOn, float duration, boolean synced) {
+		super(state, world, camera, rays, name, width, height, x, y, duration, synced);
+		this.dps = dps;
+		this.perp = state.worldDummy.getBodyData();
+		this.on = startOn;
+		if (comp460game.serverMode) {
+			comp460game.server.server.sendToAllTCP(new Packets.CreatePoisonVentMessage(x, y, width, height, dps, startOn, entityID.toString()));
+		}
+	}
+	
 	public void create() {
 
 		this.eventData = new EventData(world, this) {
@@ -53,7 +64,7 @@ public class PoisonVent extends Event {
 		};
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
-				(short) (Constants.Filters.BIT_PLAYER),
+				(short) (Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY),
 				(short) 0, true, eventData);
 	}
 	

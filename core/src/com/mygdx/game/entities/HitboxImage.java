@@ -25,7 +25,7 @@ import static com.mygdx.game.util.Constants.PPM;
 public class HitboxImage extends Hitbox {
 	public static final int ENTITY_TYPE = Constants.EntityTypes.HITBOX_IMAGE;
 	private TextureAtlas atlas;
-	private TextureRegion projectileSprite;
+	protected TextureRegion projectileSprite;
 	
 	/**
 	 * Same as normal hitbox 
