@@ -443,16 +443,21 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EventActivateMessage) {
-                    Packets.EventActivateMessage p = (Packets.EventActivateMessage) o;
+                    final Packets.EventActivateMessage p = (Packets.EventActivateMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
-                        Event activator = (Event) ps.getEntity(UUID.fromString(p.activatorID));
-                        if (activator == null) {
-                        	e.eventData.onActivate(null);
-                        } else if (e != null) {
-                            e.eventData.onActivate(activator.eventData);
-                        }
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                                Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                                Event activator = (Event) ps.getEntity(UUID.fromString(p.activatorID));
+                                if (activator == null) {
+                                    e.eventData.onActivate(null);
+                                } else if (e != null) {
+                                    e.eventData.onActivate(activator.eventData);
+                                }
+                            }
+                        });
                     }
                 }
 
@@ -481,16 +486,21 @@ public class KryoClient {
                 }
 
                 else if (o instanceof Packets.EventTouchMessage) {
-                    Packets.EventTouchMessage p = (Packets.EventTouchMessage) o;
+                    final Packets.EventTouchMessage p = (Packets.EventTouchMessage) o;
                     if (!myGame.getGsm().states.empty() && myGame.getGsm().states.peek() instanceof PlayState) {
-                        PlayState ps = (PlayState)myGame.getGsm().states.peek();
-                        Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
-                        Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                        if (ent != null && ent instanceof Player) {
-                            if (/*myGame.getGsm().playerNumber == p.playerNumber &&*/ e != null) {
-                                e.eventData.onTouch(((Player) ent).playerData);
+                        Gdx.app.postRunnable(new Runnable() {
+                            @Override
+                            public void run() {
+                                PlayState ps = (PlayState) myGame.getGsm().states.peek();
+                                Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
+                                Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                                if (ent != null && ent instanceof Player) {
+                                    if (/*myGame.getGsm().playerNumber == p.playerNumber &&*/ e != null) {
+                                        e.eventData.onTouch(((Player) ent).playerData);
+                                    }
+                                }
                             }
-                        }
+                        });
                     }
                 }
 

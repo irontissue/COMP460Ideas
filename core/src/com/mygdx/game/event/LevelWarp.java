@@ -64,7 +64,7 @@ public class LevelWarp extends Event {
 			
 			@Override
 			public void onInteract(Player p) {
-				Log.info("Interacted with level warp, level = " + level);
+				//Log.info("Interacted with level warp, level = " + level);
 				if (comp460game.serverMode) {
                     state.loadLevel("maps/" + level);
                 }

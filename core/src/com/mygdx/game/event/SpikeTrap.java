@@ -21,13 +21,16 @@ import com.mygdx.game.util.b2d.BodyBuilder;
 
 import box2dLight.RayHandler;
 
+import javax.jws.Oneway;
+
 import static com.mygdx.game.util.Constants.PPM;
 
 public class SpikeTrap extends Event {
 
 	private float dps;
 	private CharacterData perp;
-	private boolean isUp = false;
+	private float upTimer = 0;
+	private final float SPIKE_EFFECT_DURATION = 1f;
 
 	private static final String name = "Spike Trap";
 
@@ -55,25 +58,35 @@ public class SpikeTrap extends Event {
 		this.eventData = new EventData(world, this) {
 			@Override
 			public void onActivate(EventData activator) {
-				for (Entity entity : eventData.schmucks) {
-					if (entity instanceof Schmuck) {
-						((Schmuck)entity).getBodyData().receiveDamage(dps, new Vector2(0, 0), perp, true);
+				if (comp460game.serverMode) {
+					for (Entity entity : eventData.schmucks) {
+						if (entity instanceof Schmuck) {
+							((Schmuck) entity).getBodyData().receiveDamage(dps, new Vector2(0, 0), perp, true);
+						}
 					}
+					comp460game.server.server.sendToAllTCP(new Packets.EventActivateMessage(entityID.toString(), activator.getEvent().entityID.toString()));
 				}
-				if (isUp) {
-					eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_DOWN.toString()));
-					//System.out.println("spike down");
-				} else {
-					eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_UP.toString()));
-					//System.out.println("spike up");
-				}
-				isUp = !isUp;
+				eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_UP.toString()));
+				upTimer = SPIKE_EFFECT_DURATION;
 			}
 		};
 		
 		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 1, 0, true, true, Constants.Filters.BIT_SENSOR, 
 				(short) (Constants.Filters.BIT_PLAYER | Constants.Filters.BIT_ENEMY),
 				(short) 0, true, eventData);
+	}
+
+	@Override
+	public void controller(float delta) {
+		super.controller(delta);
+
+		if (upTimer > 0) {
+			upTimer -= delta;
+			if (upTimer <= 0) {
+				upTimer = 0;
+				eventSprite = new TextureRegion(new Texture(AssetList.SPIKE_DOWN.toString()));
+			}
+		}
 	}
 
 	@Override
