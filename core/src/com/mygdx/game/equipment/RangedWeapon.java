@@ -183,10 +183,52 @@ public class RangedWeapon extends Equipment {
 				reloading = false;
 			}
 
-			if (getEquipID() == Constants.EquipIDs.SHOTGUN) {
-                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
-                sound.play(1.0f);
+			switch(getEquipID()) {
+                case Constants.EquipIDs.GUN: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_GUN_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.SHOTGUN: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.ROCKET_LAUNCHER: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_RL_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.BOOMERANG: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_B_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.MACHINE: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_AR_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.BAD_GUN: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.HEAL_GUN: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_MED_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.BOUNCING_BLADE: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BB_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
             }
+//			if (getEquipID() == Constants.EquipIDs.SHOTGUN) {
+//                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+//                sound.play(1.0f);
+//            }
 		}
 	}
 
