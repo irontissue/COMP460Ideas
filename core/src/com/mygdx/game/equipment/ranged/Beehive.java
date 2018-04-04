@@ -137,16 +137,23 @@ public class Beehive extends RangedWeapon {
 						fixB.receiveDamage(baseDamage, hbox.getBody().getLinearVelocity().nor().scl(knockback), 
 								user.getBodyData(), true, DamageTypes.RANGED);
 						super.onHit(fixB);
-						int a = (int) (Math.random()*2);
-						if (fixB.getEntity() instanceof Player) {
-                            if (a == 1) {
+                        if (fixB.getEntity() instanceof Player) {
+                            Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
+                            sound.play(0.7f);
+                        } else {
                                 Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
-                                sound.play(0.8f);
-                            } else {
-                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
-                                sound.play(0.8f);
-                            }
+                                sound.play(0.2f);
                         }
+//						int a = (int) (Math.random()*2);
+//						if (fixB.getEntity() instanceof Player) {
+//                            if (a == 1) {
+//                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
+//                                sound.play(0.8f);
+//                            } else {
+//                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
+//                                sound.play(0.8f);
+//                            }
+//                        }
 					}
 				}
 			});
