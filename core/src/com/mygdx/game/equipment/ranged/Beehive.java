@@ -1,5 +1,7 @@
 package com.mygdx.game.equipment.ranged;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,15 +10,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.entities.Hitbox;
-import com.mygdx.game.entities.HitboxImage;
-import com.mygdx.game.entities.Schmuck;
-import com.mygdx.game.entities.SteeringHitbox;
+import com.mygdx.game.entities.*;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.equipment.RangedWeapon;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.util.Constants;
@@ -24,6 +24,7 @@ import com.mygdx.game.util.HitboxFactory;
 import static com.mygdx.game.util.Constants.PPM;
 
 import box2dLight.RayHandler;
+import com.mygdx.game.util.UserDataTypes;
 
 import java.util.UUID;
 import java.util.concurrent.ThreadLocalRandom;
@@ -136,9 +137,29 @@ public class Beehive extends RangedWeapon {
 						fixB.receiveDamage(baseDamage, hbox.getBody().getLinearVelocity().nor().scl(knockback), 
 								user.getBodyData(), true, DamageTypes.RANGED);
 						super.onHit(fixB);
+                        if (fixB.getEntity() instanceof Player) {
+                            Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
+                            sound.play(0.7f);
+                        } else {
+                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
+                                sound.play(0.2f);
+                        }
+//						int a = (int) (Math.random()*2);
+//						if (fixB.getEntity() instanceof Player) {
+//                            if (a == 1) {
+//                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
+//                                sound.play(0.8f);
+//                            } else {
+//                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
+//                                sound.play(0.8f);
+//                            }
+//                        }
 					}
 				}
-			});		
+			});
+
+			Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE.toString()));
+			sound.play(0.5f);
 
             Hitbox[] toReturn = {proj};
             return toReturn;
