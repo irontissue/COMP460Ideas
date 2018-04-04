@@ -62,6 +62,12 @@ public enum AssetList {
     SFX_BGM("sounds/bgm/Overworld.mp3", Sound.class),
     SFX_BOOMERANG("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
 
+    SFX_BEE("sounds/weaponSFX/Beehive/bees.wav", Sound.class),
+    SFX_POISON("sounds/weaponSFX/PoisonGun/steam.mp3", Sound.class),
+
+    SFX_BEE_YOW("sounds/weaponSFX/Beehive/yow.mp3", Sound.class),
+    SFX_BEE_GDI("sounds/weaponSFX/Beehive/goddamnit.wav", Sound.class),
+
     SFX_AR("sounds/weaponSFX/AssaultRifle/arSingleShot.mp3", Sound.class),
     SFX_AR_RELOAD("sounds/weaponSFX/AssaultRifle/reloadSlow.mp3", Sound.class),
 
