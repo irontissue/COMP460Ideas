@@ -80,7 +80,6 @@ public class Beehive extends RangedWeapon {
 				@Override
 				public void controller(float delta) {
 					super.controller(delta);
-					increaseAnimationTime(delta);
 					if (homing != null && homing.alive) {
 						if (behavior != null) {
 							behavior.calculateSteering(steeringOutput);
