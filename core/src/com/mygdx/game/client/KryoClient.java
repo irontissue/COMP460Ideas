@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
@@ -22,6 +23,7 @@ import com.mygdx.game.event.*;
 import com.mygdx.game.event.utility.Switch;
 import com.mygdx.game.event.utility.Target;
 import com.mygdx.game.event.utility.UIChanger;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.*;
 import com.mygdx.game.states.PlayState;
@@ -102,6 +104,12 @@ public class KryoClient {
                     Packets.ServerIDMessage p = (Packets.ServerIDMessage) o;
                     IDOnServer = p.IDOnServer;
                     myGame.getGsm().playerNumber = p.IDOnServer;
+                }
+
+                else if (o instanceof Packets.PlaySound) {
+                    Packets.PlaySound p = (Packets.PlaySound) o;
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(p.name));
+                    sound.play(p.volume);
                 }
 
                 else if (o instanceof Packets.LoadLevel) {

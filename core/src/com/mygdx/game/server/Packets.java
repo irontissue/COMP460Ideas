@@ -284,6 +284,16 @@ public class Packets {
         public int playerNumber;
     }
 
+    public static class PlaySound {
+        public PlaySound() {}
+        public PlaySound(String name, float volume) {
+            this.name = name;
+            this.volume = volume;
+        }
+        public String name;
+        public float volume;
+    }
+
     /**
      * If the adjustAmount is positive, it will increase the entity's HP by that amount.
      */
@@ -718,6 +728,7 @@ public class Packets {
         kryo.register(LoadLevel.class);
         kryo.register(CreateEquipPickupMessage.class);
         kryo.register(PlayerShoot.class);
+        kryo.register(PlaySound.class);
 
         kryo.register(EventInteractMessage.class);
         kryo.register(EventTouchMessage.class);
