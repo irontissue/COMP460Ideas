@@ -217,7 +217,7 @@ public class PlayState extends GameState implements InputProcessor {
 	        comp460game.server.server.sendToAllTCP(new Packets.LoadLevel(level));
         } else {
 	        gsm.removeState(PlayState.class);
-            gsm.addPlayState(level, player.playerData, null, TitleState.class);
+            gsm.addPlayState(level, player.playerData, player2.playerData, TitleState.class);
         }
 	}
 
