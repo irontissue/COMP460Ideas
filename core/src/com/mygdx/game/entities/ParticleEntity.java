@@ -6,8 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.UserData;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.UserDataTypes;
@@ -17,21 +20,41 @@ import box2dLight.RayHandler;
 
 public class ParticleEntity extends Entity {
     public static final int ENTITY_TYPE = Constants.EntityTypes.PARTICLE_ENTITY;
-	private ParticleEffect effect;
+	
+    private static TextureAtlas particleAtlas;
+    
+    private ParticleEffect effect;
 	private Entity attachedEntity;
-	private float lifespan;
-	private boolean despawn;
+	private float linger, interval, lifespan;
+	private boolean despawn, temp;
 	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-			float startX, float startY, ParticleEffect effect, float lifespan, boolean synced) {
+			float startX, float startY, String effect, float lifespan, boolean startOn, boolean synced) {
 		super(state, world, camera, rays, 0, 0, startX, startY, synced);
-		this.effect = effect;
+		
+		particleAtlas = comp460game.assetManager.get(AssetList.PARTICLE_ATLAS.toString());
+		
+		this.effect = new ParticleEffect();
+		this.effect.load(Gdx.files.internal(effect), particleAtlas);
+		
 		this.despawn = false;
+		temp = lifespan != 0;
 		this.lifespan = lifespan;
 		
-		effect.start();
+		if (startOn) {
+			this.effect.start();
+		} else {
+			this.effect.allowCompletion();
+		}
 	}
 
+	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
+			Entity entity, String effect, float linger, float lifespan, boolean startOn, boolean synced) {
+		this(state, world, camera, rays, 0, 0, effect, lifespan, startOn, synced);
+		this.attachedEntity = entity;
+		this.linger = linger;
+	}
+	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 						  float startX, float startY, ParticleEffect effect, float lifespan, boolean synced, String id) {
 		super(state, world, camera, rays, 0, 0, startX, startY, synced, id);
@@ -42,17 +65,6 @@ public class ParticleEntity extends Entity {
 		effect.start();
 	}
 	
-	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-			Entity entity, ParticleEffect effect, float lifespan, boolean synced) {
-		super(state, world, camera, rays, 0, 0, 0, 0, synced);
-		this.attachedEntity = entity;
-		this.effect = effect;
-		this.despawn = false;
-		this.lifespan = lifespan;
-		effect.start();
-
-	}
-
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 						  Entity entity, ParticleEffect effect, float lifespan, boolean synced, String id) {
 		super(state, world, camera, rays, 0, 0, 0, 0, synced, id);
@@ -66,22 +78,29 @@ public class ParticleEntity extends Entity {
 
 	@Override
 	public void create() {
-		this.userData = new UserData(world, UserDataTypes.FEET, this);
-		this.body = BodyBuilder.createBox(world, startX, startY, width, height, 1, 0, 0, false, true, Constants.Filters.BIT_PLAYER, 
-				(short) (Constants.Filters.BIT_WALL | Constants.Filters.BIT_SENSOR | Constants.Filters.BIT_PROJECTILE | Constants.Filters.BIT_ENEMY),
-				Constants.Filters.PLAYER_HITBOX, true, userData);
+	
 	}
 
 	@Override
 	public void controller(float delta) {
-		if (attachedEntity.alive) {
-			effect.setPosition(attachedEntity.getBody().getPosition().x * PPM, attachedEntity.getBody().getPosition().y * PPM);
-		} else {
-			despawn = true;
-			effect.allowCompletion();
+		if (attachedEntity != null) {
+			if (attachedEntity.alive) {
+				effect.setPosition(attachedEntity.getBody().getPosition().x * PPM, attachedEntity.getBody().getPosition().y * PPM);
+			} else {
+				despawn = true;
+				effect.allowCompletion();
+			}
 		}
 		
 		if (despawn) {
+			linger -= delta;
+			
+			if (linger <= 0) {
+				this.queueDeletion();
+			}
+		}
+		
+		if (temp) {
 			lifespan -= delta;
 			
 			if (lifespan <= 0) {
@@ -89,8 +108,31 @@ public class ParticleEntity extends Entity {
 			}
 		}
 		
+		if (interval > 0) {
+			interval -= delta;
+			
+			if (interval <= 0) {
+				effect.allowCompletion();
+			}
+		}
+		
 	}
 
+	public void turnOn() {
+		if (effect.isComplete()) {
+			effect.start();
+		}
+	}
+	
+	public void turnOff() {
+		effect.allowCompletion();
+	}
+
+	public void onForBurst(float duration) {
+		turnOn();
+		interval = duration;
+	}
+	
 	@Override
 	public void render(SpriteBatch batch) {
 		batch.setProjectionMatrix(state.sprite.combined);
@@ -103,4 +145,11 @@ public class ParticleEntity extends Entity {
 		super.dispose();
 	}
 
+	public ParticleEffect getEffect() {
+		return effect;
+	}
+
+	public void setEffect(ParticleEffect effect) {
+		this.effect = effect;
+	}
 }

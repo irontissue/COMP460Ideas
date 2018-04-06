@@ -57,6 +57,7 @@ public class BouncingBlade extends RangedWeapon {
 						fixB.receiveDamage(baseDamage, this.hbox.getBody().getLinearVelocity().nor().scl(knockback), 
 								user.getBodyData(), true, DamageTypes.TESTTYPE1);
 					}
+					hbox.particle.onForBurst(0.25f);
 				}
 			});
 

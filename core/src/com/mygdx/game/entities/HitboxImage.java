@@ -25,7 +25,7 @@ import static com.mygdx.game.util.Constants.PPM;
  */
 public class HitboxImage extends Hitbox {
 	public static final int ENTITY_TYPE = Constants.EntityTypes.HITBOX_IMAGE;
-	private TextureAtlas atlas;
+	private static TextureAtlas atlas;
 	protected Animation<TextureRegion> projectileSprite;
 	
 	/**
@@ -68,12 +68,14 @@ public class HitboxImage extends Hitbox {
 			
 		batch.setProjectionMatrix(state.sprite.combined);
 
-		batch.draw((TextureRegion)projectileSprite.getKeyFrame(animationTime, true), 
-				body.getPosition().x * PPM - width / 2, 
-				body.getPosition().y * PPM - height / 2, 
-				width / 2, height / 2,
-				width, height, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()) + 180);
+		if (projectileSprite != null) {
+			batch.draw((TextureRegion)projectileSprite.getKeyFrame(animationTime, true), 
+					body.getPosition().x * PPM - width / 2, 
+					body.getPosition().y * PPM - height / 2, 
+					width / 2, height / 2,
+					width, height, 1, 1, 
+					(float) Math.toDegrees(body.getAngle()) + 180);
+		}
 	}
 
 
