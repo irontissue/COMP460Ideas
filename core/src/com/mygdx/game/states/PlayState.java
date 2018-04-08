@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -37,6 +38,7 @@ import com.mygdx.game.entities.userdata.PlayerData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.Event;
 import com.mygdx.game.handlers.WorldContactListener;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.manager.GameStateManager.State;
 import com.mygdx.game.server.Packets;
@@ -133,6 +135,11 @@ public class PlayState extends GameState implements InputProcessor {
 	public PlayStateStage stage;
 	
 	public UILevel uiLevel;
+
+	public float fadeInitialDelay = 2.4f;
+	public float fadeLevel = 1f, fadeDelta = -0.015f;
+
+	private TextureRegion black;
 	
 	/**
 	 * Constructor is called upon playerNumber beginning a game.
@@ -143,6 +150,7 @@ public class PlayState extends GameState implements InputProcessor {
 		
 		//Initialize font and text camera for ui purposes.
         font = new BitmapFont();
+		black = new TextureRegion(new Texture(AssetList.BLACK.toString()));
         
         //Initialize box2d world and related stuff
 		world = new World(new Vector2(0, 0), false);
@@ -185,8 +193,8 @@ public class PlayState extends GameState implements InputProcessor {
         if (comp460game.serverMode) {
             comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER, true, 1));
             comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player2.entityID.toString(), 32,32, 100, 150, Constants.EntityTypes.PLAYER, true, 2));
-            Log.info("Server sending playerNumber UUID message: " + player.entityID.toString());
-            Log.info("Server sending playerNumber UUID message: " + player2.entityID.toString());
+            Log.info("Server sending player 1 UUID message: " + player.entityID.toString());
+            Log.info("Server sending player 2 UUID message: " + player2.entityID.toString());
         }
 		TiledObjectUtil.parseTiledObjectLayer(world, map.getLayers().get("collision-layer").getObjects());
 
@@ -334,6 +342,22 @@ public class PlayState extends GameState implements InputProcessor {
 		tmr.setView(camera);
 		batch.setProjectionMatrix(camera.combined);
 //		rays.setCombinedMatrix(camera.combined.cpy().scl(PPM));
+
+		if (fadeInitialDelay <= 0f) {
+			if (fadeLevel > 0f && fadeDelta < 0f) {
+				fadeLevel += fadeDelta;
+				if (fadeLevel < 0f) {
+					fadeLevel = 0f;
+				}
+			} else if (fadeLevel < 1f && fadeDelta > 0f) {
+				fadeLevel += fadeDelta;
+				if (fadeLevel > 1f) {
+					fadeLevel = 1f;
+				}
+			}
+		} else {
+			fadeInitialDelay -= delta;
+		}
 		
 		//process gameover
 		if (gameover) {
@@ -460,6 +484,11 @@ public class PlayState extends GameState implements InputProcessor {
 		player2.render(batch);
 		player.renderAboveShadow(batch);
 		player2.renderAboveShadow(batch);
+
+		batch.setProjectionMatrix(camera.combined);
+		batch.setColor(1f, 1f, 1f, fadeLevel);
+		batch.draw(black, -100, -100, 1000, 1000);
+
 		batch.end();
 	}	
 	

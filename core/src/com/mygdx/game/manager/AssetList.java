@@ -18,6 +18,7 @@ public enum AssetList {
     //The following sprite was acquired from:
     //https://opengameart.org/content/animated-top-down-survivor-player
 	GUN_DUDE_1("sprites/gun_dude.png", Texture.class),
+    BLACK("images/black.png", Texture.class),
 
 	KENNEY_HITMAN("sprites/Hitman 1/hitman1_gun.png", Texture.class),
 	BRIDE("sprites/bride.png", Texture.class),

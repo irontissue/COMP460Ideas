@@ -347,29 +347,54 @@ public class Player extends Schmuck {
         batch.draw(main, body.getPosition().x * PPM - hbHeight * scale / 2,
                 body.getPosition().y * PPM - hbWidth * scale / 2,
                 hbWidth * scale, 30 * scale);
-		
-		if (playerData.playerNumber == 1) {
-			batch.draw(groom, 
-					body.getPosition().x * PPM - hbHeight * scale / 2, 
-					body.getPosition().y * PPM - hbWidth * scale / 2, 
-					hbHeight * scale / 2, hbWidth * scale / 2,
-					spriteWidth * scale, spriteHeight * scale, 1, 1, 
-					(float) Math.toDegrees(body.getAngle()));
-		} else {
-			batch.draw(dress, 
-					body.getPosition().x * PPM - hbHeight * scale / 2, 
-					body.getPosition().y * PPM - hbWidth * scale / 2, 
-					hbHeight * scale / 2, hbWidth * scale / 2,
-					spriteWidth * scale, spriteHeight * scale, 1, 1, 
-					(float) Math.toDegrees(body.getAngle()));
-			
-			batch.draw(bride, 
-					body.getPosition().x * PPM - hbHeight * scale / 2, 
-					body.getPosition().y * PPM - hbWidth * scale / 2, 
-					hbHeight * scale / 2, hbWidth * scale / 2,
-					spriteWidth * scale, spriteHeight * scale, 1, 1, 
-					(float) Math.toDegrees(body.getAngle()));
-		}
+
+        if (state.gsm.playerNumber == 1) {
+            if (playerData.playerNumber == 1) {
+                batch.draw(groom,
+                        body.getPosition().x * PPM - hbHeight * scale / 2,
+                        body.getPosition().y * PPM - hbWidth * scale / 2,
+                        hbHeight * scale / 2, hbWidth * scale / 2,
+                        spriteWidth * scale, spriteHeight * scale, 1, 1,
+                        (float) Math.toDegrees(body.getAngle()));
+            } else {
+                batch.draw(dress,
+                        body.getPosition().x * PPM - hbHeight * scale / 2,
+                        body.getPosition().y * PPM - hbWidth * scale / 2,
+                        hbHeight * scale / 2, hbWidth * scale / 2,
+                        spriteWidth * scale, spriteHeight * scale, 1, 1,
+                        (float) Math.toDegrees(body.getAngle()));
+
+                batch.draw(bride,
+                        body.getPosition().x * PPM - hbHeight * scale / 2,
+                        body.getPosition().y * PPM - hbWidth * scale / 2,
+                        hbHeight * scale / 2, hbWidth * scale / 2,
+                        spriteWidth * scale, spriteHeight * scale, 1, 1,
+                        (float) Math.toDegrees(body.getAngle()));
+            }
+        } else {
+            if (playerData.playerNumber == 2) {
+                batch.draw(groom,
+                        body.getPosition().x * PPM - hbHeight * scale / 2,
+                        body.getPosition().y * PPM - hbWidth * scale / 2,
+                        hbHeight * scale / 2, hbWidth * scale / 2,
+                        spriteWidth * scale, spriteHeight * scale, 1, 1,
+                        (float) Math.toDegrees(body.getAngle()));
+            } else {
+                batch.draw(dress,
+                        body.getPosition().x * PPM - hbHeight * scale / 2,
+                        body.getPosition().y * PPM - hbWidth * scale / 2,
+                        hbHeight * scale / 2, hbWidth * scale / 2,
+                        spriteWidth * scale, spriteHeight * scale, 1, 1,
+                        (float) Math.toDegrees(body.getAngle()));
+
+                batch.draw(bride,
+                        body.getPosition().x * PPM - hbHeight * scale / 2,
+                        body.getPosition().y * PPM - hbWidth * scale / 2,
+                        hbHeight * scale / 2, hbWidth * scale / 2,
+                        spriteWidth * scale, spriteHeight * scale, 1, 1,
+                        (float) Math.toDegrees(body.getAngle()));
+            }
+        }
 		
 		batch.setColor(Color.WHITE);
 	}
