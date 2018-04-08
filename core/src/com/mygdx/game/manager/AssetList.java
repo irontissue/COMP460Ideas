@@ -53,6 +53,14 @@ public enum AssetList {
 	SPIKE_UP("sprites/SpikeUp.png", Texture.class),
     POISON_CLOUD("sprites/PoisonCloud.png", Texture.class),
 
+    PARTICLE_ATLAS("particle/particles.atlas", TextureAtlas.class),
+	BUBBLE_IMPACT("particle/bubble_impact.particle", null),
+	BUBBLE_TRAIL("particle/bubble_trail.particle", null),
+	SMOKE_PUFF("particle/smoke_puff.particle", null),
+	SPARK_TRAIL("particle/spark_trail.particle", null),
+	POISON("particle/poison.particle", null),
+	EVENT_HOLO("particle/event_holo.particle", null),
+	
     GUN("sprites/weapon_gun.png",Texture.class),
     SHOTGUN("sprites/weapon_machine.png",Texture.class),
 //    ROCKET("",Texture.class),

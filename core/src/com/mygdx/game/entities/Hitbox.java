@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.HitboxData;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
@@ -47,6 +48,8 @@ public class Hitbox extends Entity {
 	//This is the Character that created the hitbox
 	public Schmuck creator;
 	
+	public ParticleEntity particle;
+	
 	/**
 	 * This constructor is run whenever a hitbox is created. Usually by a schmuck using a weapon.
 	 * @param : pretty much the same as the fields above.
@@ -67,6 +70,7 @@ public class Hitbox extends Entity {
 //		if (!comp460game.serverMode) {
 //            comp460game.client.client.sendTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
 //        }
+		particle = new ParticleEntity(state, world, camera, rays, this, AssetList.SPARK_TRAIL.toString(), 1.0f, 0.0f, false, false);
 	}
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
@@ -86,6 +90,7 @@ public class Hitbox extends Entity {
         /*if (comp460game.serverMode) {
             comp460game.server.server.sendToAllTCP(new Packets.SyncHitbox(x, y, width, height, lifespan, dura, rest, startVelo, filter, sensor));
         }*/
+        particle = new ParticleEntity(state, world, camera, rays, this, AssetList.SPARK_TRAIL.toString(), 1.0f, 0.0f, false, false);
     }
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
@@ -100,6 +105,7 @@ public class Hitbox extends Entity {
 
         //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
         this.startVelo = new Vector2(startVelo);
+        particle = new ParticleEntity(state, world, camera, rays, this, AssetList.SPARK_TRAIL.toString(), 1.0f, 0.0f, false, false);
 	}
 
     public Hitbox(PlayState state, float x, float y, int width, int height, float lifespan, int dura, float rest,
@@ -115,6 +121,7 @@ public class Hitbox extends Entity {
 
         //Create a new vector to avoid issues with multi-projectile attacks using same velo for all projectiles.
         this.startVelo = new Vector2(startVelo);
+        particle = new ParticleEntity(state, world, camera, rays, this, AssetList.SPARK_TRAIL.toString(), 1.0f, 0.0f, false, false);
     }
 
 	/**

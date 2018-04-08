@@ -1,6 +1,7 @@
 package com.mygdx.game.entities;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,8 +25,8 @@ import static com.mygdx.game.util.Constants.PPM;
  */
 public class HitboxImage extends Hitbox {
 	public static final int ENTITY_TYPE = Constants.EntityTypes.HITBOX_IMAGE;
-	private TextureAtlas atlas;
-	protected TextureRegion projectileSprite;
+	private static TextureAtlas atlas;
+	protected Animation<TextureRegion> projectileSprite;
 	
 	/**
 	 * Same as normal hitbox 
@@ -47,7 +48,8 @@ public class HitboxImage extends Hitbox {
 					   String spriteId, boolean synced, String id, int playerDataNumber) {
 		super(state, x, y, width / 2, height / 2, lifespan, dura, rest, startVelo, filter, sensor, world, camera, rays, creator, synced, id);
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.PROJ_1_ATL.toString());
-		projectileSprite = atlas.findRegion(spriteId);
+//		projectileSprite = atlas.findRegion(spriteId);
+		projectileSprite = new Animation<TextureRegion>(0.05f, atlas.findRegions(spriteId));
 		if (comp460game.serverMode) {
 		    //Log.info("Sending new hitbox image sync, playerdatanumber = " + playerDataNumber);
             comp460game.server.server.sendToAllTCP(new Packets.CreateHitboxImage(x, y, width, height, lifespan, dura, rest,
@@ -56,24 +58,26 @@ public class HitboxImage extends Hitbox {
 	}
 	
 	@Override
+	public void controller(float delta) {
+		super.controller(delta);
+		increaseAnimationTime(delta);
+	}
+	
+	@Override
 	public void render(SpriteBatch batch) {
 			
 		batch.setProjectionMatrix(state.sprite.combined);
 
-		batch.draw(getProjectileSprite(), 
-				body.getPosition().x * PPM - width / 2, 
-				body.getPosition().y * PPM - height / 2, 
-				width / 2, height / 2,
-				width, height, 1, 1, 
-				(float) Math.toDegrees(body.getAngle()) + 180);
+		if (projectileSprite != null) {
+			batch.draw((TextureRegion)projectileSprite.getKeyFrame(animationTime, true), 
+					body.getPosition().x * PPM - width / 2, 
+					body.getPosition().y * PPM - height / 2, 
+					width / 2, height / 2,
+					width, height, 1, 1, 
+					(float) Math.toDegrees(body.getAngle()) + 180);
+		}
 	}
 
-	public TextureRegion getProjectileSprite() {
-		return projectileSprite;
-	}
 
-	public void setProjectileSprite(TextureRegion projectileSprite) {
-		this.projectileSprite = projectileSprite;
-	}	
 
 }
