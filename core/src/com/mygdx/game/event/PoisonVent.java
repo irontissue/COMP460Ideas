@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.ParticleEntity;
@@ -31,6 +32,8 @@ public class PoisonVent extends Event {
 	private CharacterData perp;
 	private boolean on;
 
+	private float currPoisonSpawnTimer = 0f, spawnTimerLimit;
+
 	private static final String name = "Poison";
 
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
@@ -42,7 +45,7 @@ public class PoisonVent extends Event {
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreatePoisonVentMessage(x, y, width, height, dps, startOn, entityID.toString()));
 		}
-		eventSprite = new TextureRegion(new Texture(AssetList.POISON_CLOUD.toString()));
+		spawnTimerLimit = 4096f/(width * height);
 	}
 
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height,
@@ -51,7 +54,8 @@ public class PoisonVent extends Event {
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 		this.on = startOn;
-		new ParticleEntity(state, world, camera, rays, this, AssetList.POISON.toString(), 1.0f, 0.0f, true, synced);
+		Log.info("poison vent width = "  + width + " height = " + height + ". Will spawn " + (4096f/(width * height)) + " pps.");
+		spawnTimerLimit = 4096f/(width * height);
 	}
 	
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
@@ -63,8 +67,7 @@ public class PoisonVent extends Event {
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreatePoisonVentMessage(x, y, width, height, dps, startOn, entityID.toString()));
 		}
-		
-		new ParticleEntity(state, world, camera, rays, this, AssetList.POISON.toString(), 1.0f, 0.0f, true, synced);
+		spawnTimerLimit = 4096f/(width * height);
 	}
 	
 	public void create() {
@@ -99,11 +102,20 @@ public class PoisonVent extends Event {
 					}
 				}
 			}
+			if (!comp460game.serverMode) {
+				currPoisonSpawnTimer += delta;
+				while (currPoisonSpawnTimer >= spawnTimerLimit) {
+					currPoisonSpawnTimer -= spawnTimerLimit;
+					int randX = (int) ((Math.random() * width * specialScale) - (width * specialScale / 2) + body.getPosition().x * PPM);
+					int randY = (int) ((Math.random() * height * specialScale) - (height * specialScale / 2) + body.getPosition().y * PPM);
+					new ParticleEntity(state, world, camera, rays, randX, randY, AssetList.POISON.toString(), 0.0f, 1.5f, true, false);
+				}
+			}
 		}
 		super.controller(delta);
 	}
 
-	@Override
+	/*@Override
 	public void render(SpriteBatch batch) {
 		if (eventSprite != null) {
 			batch.setProjectionMatrix(state.sprite.combined);
@@ -126,5 +138,5 @@ public class PoisonVent extends Event {
 			comp460game.SYSTEM_FONT_UI.getData().setScale(0.4f);
 			comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
 		}
-	}
+	}*/
 }

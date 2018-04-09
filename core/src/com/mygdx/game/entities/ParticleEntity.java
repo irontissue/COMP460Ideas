@@ -29,13 +29,14 @@ public class ParticleEntity extends Entity {
 	private boolean despawn, temp;
 	
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
-			float startX, float startY, String effect, float lifespan, boolean startOn, boolean synced) {
+			float startX, float startY, String effect, float linger, float lifespan, boolean startOn, boolean synced) {
 		super(state, world, camera, rays, 0, 0, startX, startY, synced);
 		
 		particleAtlas = comp460game.assetManager.get(AssetList.PARTICLE_ATLAS.toString());
 		
 		this.effect = new ParticleEffect();
 		this.effect.load(Gdx.files.internal(effect), particleAtlas);
+		this.linger = linger;
 		
 		this.despawn = false;
 		temp = lifespan != 0;
@@ -52,7 +53,7 @@ public class ParticleEntity extends Entity {
 
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
 			Entity entity, String effect, float linger, float lifespan, boolean startOn, boolean synced) {
-		this(state, world, camera, rays, 0, 0, effect, lifespan, startOn, synced);
+		this(state, world, camera, rays, 0, 0, effect, linger, lifespan, startOn, synced);
 		this.attachedEntity = entity;
 		this.linger = linger;
 	}
@@ -101,12 +102,13 @@ public class ParticleEntity extends Entity {
 				this.queueDeletion();
 			}
 		}
-		
+
 		if (temp) {
 			lifespan -= delta;
 			
 			if (lifespan <= 0) {
-				this.queueDeletion();
+				despawn = true;
+				effect.allowCompletion();
 			}
 		}
 		
@@ -138,7 +140,9 @@ public class ParticleEntity extends Entity {
 	@Override
 	public void render(SpriteBatch batch) {
 		batch.setProjectionMatrix(state.sprite.combined);
-		effect.draw(batch, Gdx.graphics.getDeltaTime());
+		if (effect != null) {
+			effect.draw(batch, Gdx.graphics.getDeltaTime());
+		}
 	}
 	
 	@Override

@@ -90,7 +90,7 @@ public class Event extends Entity {
 
 	@Override
 	public void controller(float delta) {
-		if (synced && comp460game.serverMode) {
+		if (synced && comp460game.serverMode && synced) {
 			comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(entityID.toString(), body.getPosition(),
 					body.getLinearVelocity(), body.getAngularVelocity(), body.getAngle()));
 		}
