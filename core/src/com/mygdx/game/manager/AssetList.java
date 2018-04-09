@@ -52,7 +52,6 @@ public enum AssetList {
     CURRENT("Images/RacingPack/PNG/Objects/arrow_yellow.png", Texture.class),
 	SPIKE_DOWN("sprites/SpikeDown.png", Texture.class),
 	SPIKE_UP("sprites/SpikeUp.png", Texture.class),
-    POISON_CLOUD("sprites/PoisonCloud.png", Texture.class),
 
     PARTICLE_ATLAS("particle/particles.atlas", TextureAtlas.class),
 	BUBBLE_IMPACT("particle/bubble_impact.particle", null),

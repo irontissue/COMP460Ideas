@@ -137,7 +137,7 @@ public class PlayState extends GameState implements InputProcessor {
 	
 	public UILevel uiLevel;
 
-	public float fadeInitialDelay = 2.4f;
+	public float fadeInitialDelay = 3.0f;
 	public float fadeLevel = 1f, fadeDelta = -0.015f;
 
 	private TextureRegion black;
@@ -459,9 +459,9 @@ public class PlayState extends GameState implements InputProcessor {
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
-		for (Entity schmuck : entities) {
-		    if (!(schmuck instanceof Player)) {
-                schmuck.render(batch);
+		for (Entity entity : entities) {
+		    if (!(entity instanceof Player)) {
+				entity.render(batch);
             }
 		}
 		batch.end();
@@ -487,9 +487,9 @@ public class PlayState extends GameState implements InputProcessor {
 		player.renderAboveShadow(batch);
 		player2.renderAboveShadow(batch);
 
-		batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(hud.combined);
 		batch.setColor(1f, 1f, 1f, fadeLevel);
-		batch.draw(black, -100, -100, 1000, 1000);
+		batch.draw(black, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 		batch.end();
 	}	
@@ -838,7 +838,7 @@ public class PlayState extends GameState implements InputProcessor {
             RangedWeapon rw = (RangedWeapon) player.playerData.getCurrentTool();
 
             Vector3 mousePosition = new Vector3(screenX, screenY, 0);
-    		camera.unproject(mousePosition);
+			camera.unproject(mousePosition);
 			comp460game.client.client.sendTCP(new Packets.MouseReposition(mousePosition.x, mousePosition.y,
 					comp460game.client.IDOnServer));
 			/*comp460game.client.client.sendTCP(new Packets.MousePressOrRelease(Input.Buttons.LEFT,
