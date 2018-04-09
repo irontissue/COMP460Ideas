@@ -294,8 +294,10 @@ public class PlayState extends GameState implements InputProcessor {
 		//All entities that are set to be added are added.
         while (!createList.isEmpty()) {
             Entity entity = createList.remove(0);
-            entities.add(entity);
-            entity.create();
+            if (entity != null) {
+				entities.add(entity);
+				entity.create();
+			}
         }
         /*for (Entity entity : createList) {
             entities.add(entity);

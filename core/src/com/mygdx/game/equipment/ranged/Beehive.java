@@ -140,11 +140,11 @@ public class Beehive extends RangedWeapon {
 						super.onHit(fixB);
                         if (comp460game.serverMode) {
                             if (fixB.getEntity() instanceof Player) {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.7f));
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_GDI.toString(), 0.7f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
 //                                sound.play(0.7f);
                             } else {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.2f));
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_YOW.toString(), 0.2f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
 //                                sound.play(0.2f);
                             }
