@@ -46,6 +46,8 @@ public class ParticleEntity extends Entity {
 		} else {
 			this.effect.allowCompletion();
 		}
+		
+		this.effect.setPosition(startX, startY);
 	}
 
 	public ParticleEntity(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
