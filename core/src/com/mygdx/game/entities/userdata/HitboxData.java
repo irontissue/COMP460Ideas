@@ -9,7 +9,7 @@ import com.mygdx.game.util.UserDataTypes;
 
 /**
  * This stat contains the information relevant to a particular Hitbox.
- * This class is usually extended as an anonymous inner class in each weapon's hitboxFactory where most of the projectile's
+ * This class is usually extended as an anonymous inner class in each weapon's hitboxFactory where   of the projectile's
  * states + effects are managed. This mostly contains the stats regarding the body and box2d physics
  * @author Zachary Tu
  *
