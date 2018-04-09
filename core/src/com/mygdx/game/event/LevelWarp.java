@@ -66,8 +66,19 @@ public class LevelWarp extends Event {
 			public void onInteract(Player p) {
 				//Log.info("Interacted with level warp, level = " + level);
 				if (comp460game.serverMode) {
-                    state.loadLevel("maps/" + level);
-                }
+					comp460game.server.server.sendToAllTCP(new Packets.EventInteractMessage(entityID.toString(),
+							p.entityID.toString(), p.playerData.playerNumber));
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					state.loadLevel("maps/" + level);
+                    //Log.info("Levelwarp id = " + entityID.toString());
+                } else {
+					//Log.info("setting fadedelta on client (levelwarp interacated)");
+					state.fadeDelta = 0.05f;
+				}
 			}
 		};
 		

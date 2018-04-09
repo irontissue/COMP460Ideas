@@ -278,6 +278,7 @@ public class KryoClient {
                             @Override
                             public void run() {
                                 new LevelWarp(ps, ps.getWorld(), ps.camera, ps.getRays(), p.width, p.height, p.x, p.y, p.level, false, p.entityID);
+                                //Log.info("LEVEL WARP CREATED ON CLIENT TO " + p.level + ", ENTITYID = " + p.entityID);
                             }
                         });
                     }
@@ -435,6 +436,9 @@ public class KryoClient {
                                 PlayState ps = (PlayState) myGame.getGsm().states.peek();
                                 Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                                 Entity ent = ps.getEntity(UUID.fromString(p.entityID));
+                                System.out.print("EVENT INTERACT ID = " + p.eventID);
+                                System.out.println(", TYPE: " + e.getClass());
+                                System.out.println("EVENT INTERACT ENTITY TYPE: " + ent.getClass());
                                 if (ent != null && ent instanceof Player) {
                                     if (e != null) {
                                         /*if (myGame.getGsm().playerNumber == p.playerNumber) {
