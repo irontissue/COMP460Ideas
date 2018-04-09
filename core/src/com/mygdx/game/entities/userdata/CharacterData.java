@@ -206,6 +206,7 @@ public class CharacterData extends UserData {
 		//Make shmuck flash upon receiving damage
 		if (damage > 0 && schmuck.flashingCount < -flashDuration) {
 			schmuck.flashingCount = flashDuration;
+			schmuck.impact.onForBurst(0.25f);
 		}
 				
 		float kbScale = 1;

@@ -56,8 +56,10 @@ public class Shotgun extends RangedWeapon {
 				
 				float newDegrees = (float) (startVelocity.angle() + (ThreadLocalRandom.current().nextInt(-spread, spread + 1)));
 				
+				Vector2 newVelocity = new Vector2(startVelocity);
+				
 				Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0,
-						startVelocity.setAngle(newDegrees), filter, true, world, camera, rays, user,
+						newVelocity.setAngle(newDegrees), filter, true, world, camera, rays, user,
 						"orb_yellow", false, bulletIDs == null ? null : bulletIDs[i], playerDataNumber);
 				madeHitboxes[i] = proj;
 				proj.setUserData(new HitboxData(state, world, proj) {

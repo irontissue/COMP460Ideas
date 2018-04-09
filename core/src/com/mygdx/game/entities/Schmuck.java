@@ -63,6 +63,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	private TextureAtlas atlas;
 	private TextureRegion schmuckSprite;
 	
+	public ParticleEntity impact;
+	
 	/**
 	 * This constructor is called when a Schmuck is made.
 	 * @param state: Current playState
@@ -92,6 +94,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 //		if (state.playerNumber != null) {
 //            state.playerNumber.getClient().client.sendTCP(new Packets.SyncCreateSchmuck(w,h,startX,startY,this.entityID));
 //        }
+		impact = new ParticleEntity(state, world, camera, rays, this, AssetList.IMPACT.toString(), 1.0f, 0.0f, false, synced);
 	}
 
     public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays, float w, float h,
@@ -109,6 +112,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 				302, 132, 440, 77);
 //        hbWidth = (int) (t.getWidth()*.9f);
 //        hbHeight = (int) (t.getHeight()*.9f);
+		impact = new ParticleEntity(state, world, camera, rays, this, AssetList.IMPACT.toString(), 1.0f, 0.0f, false, synced);
     }
 	
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
@@ -126,6 +130,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
 		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
 				302, 132, 440, 77);
+		
+		impact = new ParticleEntity(state, world, camera, rays, this, AssetList.IMPACT.toString(), 1.0f, 0.0f, false, synced);
 	}
 
 	public Schmuck(PlayState state, World world, OrthographicCamera camera, RayHandler rays,
@@ -143,6 +149,8 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
 		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
 				302, 132, 440, 77);
+		
+		impact = new ParticleEntity(state, world, camera, rays, this, AssetList.IMPACT.toString(), 1.0f, 0.0f, false, synced);
 	}
 
 	/**
