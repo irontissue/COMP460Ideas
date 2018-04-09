@@ -25,7 +25,7 @@ public class comp460game extends ApplicationAdapter {
 	
 	//The main camera scales to the viewport size scaled to this. Useful for zoom-in/out testing.
 	//TODO: replace this with a constant aspect ratio?
-	private final float SCALE = 0.65f;
+	public final static float SCALE = 0.65f;
 	
 	//Camera and Spritebatch. This is pretty standard stuff.
 	private OrthographicCamera camera, sprite, hud;

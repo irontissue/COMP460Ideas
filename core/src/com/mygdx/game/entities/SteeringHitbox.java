@@ -33,7 +33,7 @@ public class SteeringHitbox extends HitboxImage {
 				spriteId, true, id, playerDataNumber);
 		
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.PROJ_1_ATL.toString());
-		projectileSprite = new Animation<TextureRegion>(0.8f, atlas.findRegions(spriteId));
+		projectileSprite = new Animation<TextureRegion>(0.05f, atlas.findRegions(spriteId));
 		
 		this.maxLinearSpeed = maxLinSpd;
 		this.maxLinearAcceleration = maxLinAcc;

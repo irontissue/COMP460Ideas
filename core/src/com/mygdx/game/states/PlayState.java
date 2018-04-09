@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.actors.Text;
 import com.mygdx.game.actors.UILevel;
+import com.mygdx.game.actors.UIPardner;
 import com.mygdx.game.audio.MusicPlayer;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.HpBar;
@@ -238,6 +239,7 @@ public class PlayState extends GameState implements InputProcessor {
 		
 		stage.addActor(new UIPlay(comp460game.assetManager, this, player, player2));
 		stage.addActor(new UIReload(comp460game.assetManager, this, player, player2));
+		stage.addActor(new UIPardner(comp460game.assetManager, this, player));
 		stage.addActor(uiLevel);
 		
 		app.newMenu(stage);

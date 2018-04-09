@@ -39,10 +39,13 @@ public class HitboxData extends UserData {
 	public void onHit(UserData fixB) {
 		if (fixB == null) {
 			hbox.dura = 0;
+			hbox.particle.onForBurst(0.25f);
 		} else if (fixB.getType().equals(UserDataTypes.WALL)){
 			hbox.dura = 0;
+			hbox.particle.onForBurst(0.25f);
 		} else if (fixB.getType().equals(UserDataTypes.BODY)) {
 			hbox.dura--;
+			hbox.particle.onForBurst(0.25f);
 		}
 		if (hbox.dura <= 0) {
 			hbox.queueDeletion();

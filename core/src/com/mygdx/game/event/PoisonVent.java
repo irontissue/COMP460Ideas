@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.ParticleEntity;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.CharacterData;
 import com.mygdx.game.event.userdata.EventData;
@@ -50,7 +51,7 @@ public class PoisonVent extends Event {
 		this.dps = dps;
 		this.perp = state.worldDummy.getBodyData();
 		this.on = startOn;
-		eventSprite = new TextureRegion(new Texture(AssetList.POISON_CLOUD.toString()));
+		new ParticleEntity(state, world, camera, rays, this, AssetList.POISON.toString(), 1.0f, 0.0f, true, synced);
 	}
 	
 	public PoisonVent(PlayState state, World world, OrthographicCamera camera, RayHandler rays, int width, int height, 
@@ -62,6 +63,8 @@ public class PoisonVent extends Event {
 		if (comp460game.serverMode) {
 			comp460game.server.server.sendToAllTCP(new Packets.CreatePoisonVentMessage(x, y, width, height, dps, startOn, entityID.toString()));
 		}
+		
+		new ParticleEntity(state, world, camera, rays, this, AssetList.POISON.toString(), 1.0f, 0.0f, true, synced);
 	}
 	
 	public void create() {

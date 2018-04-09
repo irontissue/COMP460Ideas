@@ -49,7 +49,7 @@ public class BouncingBlade extends RangedWeapon {
 		public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
 				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
 
-			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 1.0f, startVelocity,
+			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 1.2f, startVelocity,
                     filter, false, world, camera, rays, user, "bouncing_blade", true, bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
 			
 			proj.setUserData(new HitboxData(state, world, proj) {
@@ -59,6 +59,7 @@ public class BouncingBlade extends RangedWeapon {
 						fixB.receiveDamage(baseDamage, this.hbox.getBody().getLinearVelocity().nor().scl(knockback), 
 								user.getBodyData(), true, DamageTypes.TESTTYPE1);
 					}
+					hbox.particle.onForBurst(0.25f);
 				}
 			});
 
