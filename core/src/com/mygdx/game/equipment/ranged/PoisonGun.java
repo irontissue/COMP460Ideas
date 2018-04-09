@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.HitboxImage;
 import com.mygdx.game.entities.Schmuck;
@@ -13,6 +14,7 @@ import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.event.PoisonVent;
 import com.mygdx.game.manager.AssetList;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.util.Constants;
@@ -77,8 +79,11 @@ public class PoisonGun extends RangedWeapon {
 						hbox.queueDeletion();
 					}
 
-                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_POISON.toString()));
-                    sound.play(0.7f);
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_POISON.toString(), 0.7f));
+                    }
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_POISON.toString()));
+//                    sound.play(0.7f);
 				}
 			});
 

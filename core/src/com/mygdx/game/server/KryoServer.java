@@ -18,11 +18,11 @@ import com.mygdx.game.states.TitleState;
 public class KryoServer {
 
 	int serverPort = 25565;
-	int players = 0;
+	boolean p1ReadyCheck = false, p2ReadyCheck = false;
 
 	//The POSITION in this array is the playerNumber number (i.e. playerNumber 1 vs playerNumber 2). The actual value stored in the array
     //is that playerNumber's connection ID.
-	public int[] playerIDs = {0,0};
+	public int[] playerIDs = {-1,-1};
 
 	public Server server;
 	GameStateManager gsm;
@@ -39,7 +39,10 @@ public class KryoServer {
 		server.addListener(new Listener() {
 			public void disconnected(Connection c) {
 				// This message should be sent when a playerNumber disconnects from the game
-                players = 0;
+                p1ReadyCheck = false;
+                p2ReadyCheck = false;
+                playerIDs[0] = -1;
+                playerIDs[1] = -1;
                 server.sendToAllExceptTCP(c.getID(), new Packets.DisconnectMessage());
                 Gdx.app.postRunnable(new Runnable() {
                      @Override
@@ -280,31 +283,47 @@ public class KryoServer {
                 }
 
 				else if (o instanceof Packets.ReadyToPlay) {
-					//Log.info("Server received ReadyToPlay");
+					//Log.info("Server received ReadyToPlay from connection id = " + c.getID());
 				    Packets.ReadyToPlay p = (Packets.ReadyToPlay) o;
-				    playerIDs[players] = c.getID();
-                    players += 1;
-					Log.info("Player " + c.getID() + " ready.");
-				    if (players == 2) {
-				        if (playerIDs[0] < playerIDs[1]) {
+				    if (c.getID() == playerIDs[0] || playerIDs[0] == -1) {
+				        p1ReadyCheck = true;
+				        playerIDs[0] = c.getID();
+                        Log.info("Player " + c.getID() + " ready.");
+                    } else if (c.getID() == playerIDs[1] || playerIDs[1] == -1) {
+				        p2ReadyCheck = true;
+                        playerIDs[1] = c.getID();
+                        Log.info("Player " + c.getID() + " ready.");
+                    }
+				    if (p1ReadyCheck && p2ReadyCheck) {
+//				        if (playerIDs[0] > playerIDs[1]) {
                             server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
                             server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
-                        } else {
-                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(2));
-                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(1));
-                            int temp = playerIDs[0];
-                            playerIDs[0] = playerIDs[1];
-                            playerIDs[1] = temp;
-                        }
-				        players = 0;
+                            Log.info("Sending playernumber = 1 to connectionID = " + playerIDs[0]);
+                            Log.info("Sending playernumber = 2 to connectionID = " + playerIDs[1]);
+//                        } else {
+//                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(2));
+//                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(1));
+//                            int temp = playerIDs[0];
+//                            playerIDs[0] = playerIDs[1];
+//                            playerIDs[1] = temp;
+//                        }
+				        p1ReadyCheck = false;
+				        p2ReadyCheck = false;
                     }
                 }
 
                 else if (o instanceof Packets.ClientLoadedPlayState) {
                     final Packets.ClientLoadedPlayState p = (Packets.ClientLoadedPlayState) o;
-                    Log.info("Server received ClientLoadedPlayState from player " + c.getID() + ". level = " + p.level);
-                    players += 1;
-                    if (players == 2) {
+                    if (c.getID() == playerIDs[0] || playerIDs[0] == -1) {
+                        p1ReadyCheck = true;
+                        playerIDs[0] = c.getID();
+                        Log.info("ClientLoadedPlayState (p1). CID = " + c.getID() + ". level = " + p.level);
+                    } else if (c.getID() == playerIDs[1] || playerIDs[1] == -1) {
+                        p2ReadyCheck = true;
+                        playerIDs[1] = c.getID();
+                        Log.info("ClientLoadedPlayState (p2). CID = " + c.getID() + ". level = " + p.level);
+                    }
+                    if (p1ReadyCheck && p2ReadyCheck) {
                         Gdx.app.postRunnable(new Runnable() {
                             public void run() {
                                 Log.info("Both clients loaded playstate. Adding new playstate.");
@@ -319,7 +338,8 @@ public class KryoServer {
                                 gsm.addPlayState(p.level, pd1, pd2, TitleState.class);
                             }
                         });
-                        players = 0;
+                        p1ReadyCheck = false;
+                        p2ReadyCheck = false;
                     }
                 }
 
