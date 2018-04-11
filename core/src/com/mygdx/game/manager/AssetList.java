@@ -69,10 +69,20 @@ public enum AssetList {
     MACHINE("sprites/weapon_silencer.png",Texture.class),
 
     SFX_BGM("sounds/bgm/Overworld.mp3", Sound.class),
-    SFX_BOOMERANG("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
+    SFX_BGM1("sounds/bgm/bensound-buddy.mp3", Sound.class),
+    SFX_BGM2("sounds/bgm/bensound-dance.mp3", Sound.class),
+    SFX_BGM3("sounds/bgm/bensound-goinghigher.mp3", Sound.class),
+    SFX_BGM4("sounds/bgm/bensound-thelounge.mp3", Sound.class),
+
+    SFX_BRIDE_OUCH("sounds/bride/femaleOuch.mp3", Sound.class),
+    SFX_GROOM_OUCH("sounds/groom/maleOuch.mp3", Sound.class),
+
+    SFX_BOOMERANG("sounds/weaponSFX/Boomerang/boomerangSoundTrimmed.wav", Sound.class),
+    SFX_BOOMERANG_WHACK("sounds/weaponSFX/Boomerang/whack.mp3", Sound.class),
 
     SFX_BEE("sounds/weaponSFX/Beehive/bees.wav", Sound.class),
     SFX_POISON("sounds/weaponSFX/PoisonGun/steam.mp3", Sound.class),
+    SFX_POISON_GUH("sounds/weaponSFX/PoisonGun/guh.mp3", Sound.class),
 
     SFX_BEE_YOW("sounds/weaponSFX/Beehive/yow.mp3", Sound.class),
     SFX_BEE_GDI("sounds/weaponSFX/Beehive/goddamnit.wav", Sound.class),
@@ -81,16 +91,19 @@ public enum AssetList {
     SFX_AR_RELOAD("sounds/weaponSFX/AssaultRifle/reloadSlow.mp3", Sound.class),
 
     SFX_RL("sounds/weaponSFX/RocketLauncher/rocketLaunchTrimmed.mp3", Sound.class),
-    SFX_RL_RELOAD("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
+    SFX_RL_BOOM("sounds/weaponSFX/RocketLauncher/boomTrimmed.mp3", Sound.class),
+    SFX_RL_RELOAD("sounds/weaponSFX/RocketLauncher/rocketReload.mp3", Sound.class),
 
     SFX_MED("sounds/weaponSFX/MediGun/mediShot.mp3", Sound.class),
     SFX_MED_RELOAD("sounds/weaponSFX/MediGun/reloadSlow.mp3", Sound.class),
+    SFX_MED_HEAL("sounds/weaponSFX/MediGun/healSound.mp3", Sound.class),
 
     SFX_GUN("sounds/weaponSFX/Gun/arSingleShot.mp3", Sound.class),
     SFX_GUN_RELOAD("sounds/weaponSFX/Gun/reloadSlow.mp3", Sound.class),
 
     SFX_BB("sounds/weaponSFX/BouncingBlade/BBsound.mp3", Sound.class),
     SFX_BB_RELOAD("sounds/weaponSFX/Boomerang/boomerangSound.wav", Sound.class),
+    SFX_BB_CUT("sounds/weaponSFX/BouncingBlade/cut.mp3", Sound.class),
 
     SFX_SHOTGUN("sounds/weaponSFX/Shotgun/Shotgun trimmed.wav", Sound.class),
     SFX_SHOTGUN_RELOAD("sounds/weaponSFX/Shotgun/Pump Shotgun-SoundBible.com-1653268682 (1).wav", Sound.class);

@@ -1,6 +1,7 @@
 package com.mygdx.game.server;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -23,6 +24,7 @@ public class KryoServer {
 	//The POSITION in this array is the playerNumber number (i.e. playerNumber 1 vs playerNumber 2). The actual value stored in the array
     //is that playerNumber's connection ID.
 	public int[] playerIDs = {-1,-1};
+	public UUID[] playerUUIDs = {null,null};
 
 	public Server server;
 	GameStateManager gsm;

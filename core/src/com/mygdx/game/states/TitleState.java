@@ -41,6 +41,7 @@ public class TitleState extends GameState {
 	@Override
 	public void show() {
 		if (!comp460game.serverMode) {
+            gsm.application().musicPlayer.playSong("title",0.1f);
 			stage = new Stage() {
 				{
                     final Table table = new Table();

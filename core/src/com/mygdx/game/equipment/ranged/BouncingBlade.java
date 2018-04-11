@@ -60,6 +60,9 @@ public class BouncingBlade extends RangedWeapon {
 								user.getBodyData(), true, DamageTypes.TESTTYPE1);
 					}
 					hbox.particle.onForBurst(0.25f);
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BB_CUT.toString(), 0.3f));
+                    }
 				}
 			});
 
