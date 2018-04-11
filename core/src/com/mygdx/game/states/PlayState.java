@@ -141,6 +141,9 @@ public class PlayState extends GameState implements InputProcessor {
 	public float fadeLevel = 1f, fadeDelta = -0.015f;
 
 	private TextureRegion black;
+
+	public UUID brideID;
+	public UUID groomID;
 	
 	/**
 	 * Constructor is called upon playerNumber beginning a game.
@@ -213,12 +216,17 @@ public class PlayState extends GameState implements InputProcessor {
 		if (!comp460game.serverMode) {
 		    Log.info("Client loaded playstate, level = " + level);
 		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
+            if ("maps/loadout.tmx".equals(level)) {
+                gsm.application().musicPlayer.playSong("loadout", 0.4f);
+            } else if ("maps/cooperation.tmx".equals(level)) {
+                gsm.application().musicPlayer.playSong("survival", 0.1f);
+            } else if ("maps/trustSample.tmx".equals(level)) {
+                gsm.application().musicPlayer.playSong("battle", 0.1f);
+            } else {
+            }
+//            gsm.application().musicPlayer.playSong("loadout",0.1f);
         }
-
         setInput();
-
-        MusicPlayer m = new MusicPlayer();
-        m.playSong("bgm",1.0f);
 	}
 	
 	public void loadLevel(String level) {
@@ -294,8 +302,10 @@ public class PlayState extends GameState implements InputProcessor {
 		//All entities that are set to be added are added.
         while (!createList.isEmpty()) {
             Entity entity = createList.remove(0);
-            entities.add(entity);
-            entity.create();
+            if (entity != null) {
+				entities.add(entity);
+				entity.create();
+			}
         }
         /*for (Entity entity : createList) {
             entities.add(entity);
@@ -403,7 +413,7 @@ public class PlayState extends GameState implements InputProcessor {
 			Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
 			victory.setScale(0.5f);
 			stage.addActor(victory);
-			gsm.application().musicPlayer.playSong("victory", 1.0f);
+			gsm.application().musicPlayer.playSong("victory", 0.3f);
 		} else {
 			if (comp460game.serverMode) {
 				comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
@@ -412,7 +422,7 @@ public class PlayState extends GameState implements InputProcessor {
 			Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
 			defeat.setScale(0.5f);
 			stage.addActor(defeat);
-			gsm.application().musicPlayer.playSong("defeat", 1.0f);
+			gsm.application().musicPlayer.playSong("defeat", 0.3f);
 		}
 		if (!comp460game.serverMode) {
 			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
@@ -686,9 +696,14 @@ public class PlayState extends GameState implements InputProcessor {
                 if (playerNumber == gsm.playerNumber) {
 					Log.info("MY PLAYER (P" + playerNumber + ") entityID assigned as: " + id);
 					player.entityID = entityID;
+					groomID = entityID;
+					comp460game.client.playerUUIDs[0] = entityID;
+
 				} else {
 					Log.info("OTHER PLAYER (P" + playerNumber + ") entityID assigned as: " + id);
                 	player2.entityID = entityID;
+                	brideID = entityID;
+                    comp460game.client.playerUUIDs[1] = entityID;
 				}
                 break;
             }

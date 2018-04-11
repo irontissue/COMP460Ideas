@@ -5,9 +5,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.HitboxImage;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.entities.userdata.UserData;
@@ -81,11 +83,24 @@ public class PoisonGun extends RangedWeapon {
 
                     if (comp460game.serverMode) {
                         comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_POISON.toString(), 0.7f));
+//					    if (fixB != null && fixB.getEntity() instanceof Player) {
+//                            Log.info("Poison damaged a player...");
+//					        if (fixB.getEntity().entityID == state.brideID) {
+//                                Log.info("Player was bride!");
+//                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BRIDE_OUCH.toString(), 0.7f));
+//                            } else if (fixB.getEntity().entityID == state.groomID) {
+//                                Log.info("Player was groom!");
+//                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_GROOM_OUCH.toString(), 0.7f));
+//                            }
+//                        } else {
+//                            comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_POISON.toString(), 0.7f));
+//                        }
                     }
 //                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_POISON.toString()));
 //                    sound.play(0.7f);
 				}
 			});
+
 
             Hitbox[] toReturn = {proj};
             return toReturn;

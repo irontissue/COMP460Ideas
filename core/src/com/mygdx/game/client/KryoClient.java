@@ -1,6 +1,8 @@
 package com.mygdx.game.client;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 
 import com.badlogic.gdx.Gdx;
@@ -45,6 +47,9 @@ public class KryoClient {
 
     public static final int timeout = 5000;
 
+    public LinkedList<Sound> last100;
+    public UUID[] playerUUIDs = {null,null};
+
     public KryoClient(comp460game myGame) {
         this.myGame = myGame;
 	}
@@ -57,6 +62,8 @@ public class KryoClient {
         client.start();
 
         registerPackets();
+
+        last100 = new LinkedList<Sound>();
 
         client.addListener(new Listener() {
 
@@ -110,6 +117,12 @@ public class KryoClient {
                     Packets.PlaySound p = (Packets.PlaySound) o;
                     Sound sound = Gdx.audio.newSound(Gdx.files.internal(p.name));
                     sound.play(p.volume);
+
+                    last100.add(sound);
+                    if (last100.size() > 25) {
+                        last100.get(0).dispose();
+                        last100.remove(0);
+                    }
                 }
 
                 else if (o instanceof Packets.LoadLevel) {

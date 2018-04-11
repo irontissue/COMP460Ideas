@@ -35,12 +35,12 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Beehive extends RangedWeapon {
 
 	private final static String name = "Beehive";
-	private final static int clipSize = 24;
+	private final static int clipSize = 6;
 	private final static float shootCd = 0.15f;
 	private final static float shootDelay = 0;
 	private final static float reloadTime = 1.75f;
 	private final static int reloadAmount = 24;
-	private final static float baseDamage = 12.0f;
+	private final static float baseDamage = 24.0f;
 	private final static float recoil = 0.0f;
 	private final static float knockback = 0.5f;
 	private final static float projectileSpeedStart = 3.0f;
@@ -88,6 +88,7 @@ public class Beehive extends RangedWeapon {
 				@Override
 				public void controller(float delta) {
 					super.controller(delta);
+					increaseAnimationTime(delta);
 					if (homing != null && homing.alive) {
 						if (behavior != null) {
 							behavior.calculateSteering(steeringOutput);
@@ -178,11 +179,11 @@ public class Beehive extends RangedWeapon {
 						super.onHit(fixB);
                         if (comp460game.serverMode) {
                             if (fixB.getEntity() instanceof Player) {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_GDI.toString(), 0.7f));
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_GDI.toString(), 0.1f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
 //                                sound.play(0.7f);
                             } else {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_YOW.toString(), 0.2f));
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_YOW.toString(), 0.1f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
 //                                sound.play(0.2f);
                             }
@@ -202,7 +203,7 @@ public class Beehive extends RangedWeapon {
 			});
 
 			if (comp460game.serverMode) {
-			    comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.5f));
+			    comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.1f));
 //                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE.toString()));
 //                sound.play(0.5f);
             }

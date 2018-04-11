@@ -26,7 +26,10 @@ public class MusicPlayer {
         trackListByName.put("victory", "Sounds/Kirby Victory.mp3");
         trackListByName.put("defeat", "Sounds/Dark Souls Death.mp3");
 
-        trackListByName.put("bgm", AssetList.SFX_BGM.toString());
+        trackListByName.put("title", AssetList.SFX_BGM1.toString());
+        trackListByName.put("survival", AssetList.SFX_BGM2.toString());
+        trackListByName.put("battle", AssetList.SFX_BGM3.toString());
+        trackListByName.put("loadout", AssetList.SFX_BGM4.toString());
 
         int count = 0;
         for (String name : trackListByName.keySet()){

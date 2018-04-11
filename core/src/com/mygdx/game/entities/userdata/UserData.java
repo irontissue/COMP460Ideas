@@ -2,7 +2,12 @@ package com.mygdx.game.entities.userdata;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Entity;
+import com.mygdx.game.entities.Player;
+import com.mygdx.game.manager.AssetList;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.util.UserDataTypes;
 
@@ -44,6 +49,16 @@ public class UserData {
 	 *TODO: include the source of damage
 	 */
 	public void receiveDamage(float basedamage, Vector2 knockback, CharacterData perp, Boolean procEffects, DamageTypes... tags) {
+
+		Log.info("Something damaged a player..." + entity.entityID.toString());
+		if (entity.entityID == comp460game.client.playerUUIDs[1]) {
+			Log.info("Player was bride!");
+			comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BRIDE_OUCH.toString(), 0.7f));
+		} else if (entity.entityID == comp460game.client.playerUUIDs[0]) {
+			Log.info("Player was groom!");
+			comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_GROOM_OUCH.toString(), 0.7f));
+		}
+
 		entity.push(knockback.x, knockback.y);
 	}
 	

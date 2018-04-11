@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Hitbox;
 import com.mygdx.game.entities.HitboxImage;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.entities.userdata.UserData;
@@ -63,6 +64,10 @@ public class Medigun extends RangedWeapon {
 						}
 					}
 					super.onHit(fixB);
+                    if (comp460game.serverMode && fixB!= null && fixB.getEntity() instanceof Schmuck) {
+                        comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_MED_HEAL.toString(), 0.4f));
+
+                    }
 				}
 			});
 
