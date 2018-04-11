@@ -47,8 +47,8 @@ public class PoisonGun extends RangedWeapon {
 	private final static int projDura = 1;
 
 	private final static int poisonRadius = 250;
-	private final static float poisonDamage = 50/60f;
-	private final static float poisonDuration = 6.0f;
+	private final static float poisonDamage = 40/60f;
+	private final static float poisonDuration = 5.0f;
 	
 	public static final int equipID = Constants.EquipIDs.POISON_GUN;
 
