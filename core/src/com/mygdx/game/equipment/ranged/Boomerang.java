@@ -28,7 +28,7 @@ import static com.mygdx.game.util.Constants.PPM;
 public class Boomerang extends RangedWeapon {
 
 	private final static String name = "Boomerang";
-	private final static int clipSize = 4;
+	private final static int clipSize = 1;
 	private final static float shootCd = 0.25f;
 	private final static float shootDelay = 0;
 	private final static float reloadTime = 0.75f;
@@ -86,6 +86,9 @@ public class Boomerang extends RangedWeapon {
 								user.getBodyData(), true, DamageTypes.TESTTYPE1);
 					}
 					super.onHit(fixB);
+                    if (comp460game.serverMode  && fixB!= null && fixB.getEntity() instanceof Schmuck) {
+                        comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BOOMERANG_WHACK.toString(), 0.7f));
+                    }
 				}
 			});
 

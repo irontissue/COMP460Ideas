@@ -195,8 +195,8 @@ public class RangedWeapon extends Equipment {
                     break;
                 }
                 case Constants.EquipIDs.ROCKET_LAUNCHER: {
-//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_RL_RELOAD.toString()));
-//                    sound.play(1.0f);
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_RL_RELOAD.toString()));
+                    sound.play(1.0f);
                     break;
                 }
                 case Constants.EquipIDs.BOOMERANG: {

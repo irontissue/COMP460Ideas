@@ -88,6 +88,7 @@ public class Beehive extends RangedWeapon {
 				@Override
 				public void controller(float delta) {
 					super.controller(delta);
+					increaseAnimationTime(delta);
 					if (homing != null && homing.alive) {
 						if (behavior != null) {
 							behavior.calculateSteering(steeringOutput);
@@ -177,14 +178,10 @@ public class Beehive extends RangedWeapon {
 								user.getBodyData(), true, DamageTypes.RANGED);
 						super.onHit(fixB);
                         if (comp460game.serverMode) {
-                            if (fixB.getEntity() instanceof Player) {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_GDI.toString(), 0.7f));
+                            if (fixB.getEntity() instanceof Schmuck) {
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_YOW.toString(), 0.1f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
 //                                sound.play(0.7f);
-                            } else {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_YOW.toString(), 0.2f));
-//                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
-//                                sound.play(0.2f);
                             }
                         }
 //						int a = (int) (Math.random()*2);
@@ -202,7 +199,7 @@ public class Beehive extends RangedWeapon {
 			});
 
 			if (comp460game.serverMode) {
-			    comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.5f));
+			    comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.1f));
 //                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE.toString()));
 //                sound.play(0.5f);
             }

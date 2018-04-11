@@ -93,7 +93,10 @@ public class RocketLauncher extends RangedWeapon {
 								world2, camera2, rays2, user, explosionRadius, explosionDamage, explosionKnockback, (short)0, playerDataNumber, false);
 						hbox.queueDeletion();
 					}
-					
+
+                    if (comp460game.serverMode) {
+                        comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_RL_BOOM.toString(), 0.5f));
+                    }
 				}
 			});
 
