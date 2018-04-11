@@ -1,20 +1,17 @@
 package com.mygdx.game.event;
 
-import static com.mygdx.game.util.Constants.PPM;
-
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
-import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.event.userdata.InteractableEventData;
 import com.mygdx.game.server.Packets;
 import com.mygdx.game.manager.AssetList;
+import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.b2d.BodyBuilder;
@@ -100,7 +97,9 @@ public class LevelWarp extends Event {
 	
 	@Override
 	public String getText() {
-		return " Level: " + level;
+		return " Level: " + GameStateManager.levelnames.getOrDefault(level, "");
 	}
+	
+	
 
 }

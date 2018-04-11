@@ -1,6 +1,6 @@
 package com.mygdx.game.manager;
 
-import java.util.Set;
+import java.util.HashMap;
 import java.util.Stack;
 
 import com.badlogic.gdx.Gdx;
@@ -8,12 +8,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import com.esotericsoftware.minlog.Log;
-import com.mygdx.game.client.KryoClient;
 import com.mygdx.game.comp460game;
-import com.mygdx.game.entities.Entity;
 import com.mygdx.game.entities.userdata.PlayerData;
-import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.*;
 
 /**
@@ -46,6 +42,8 @@ public class GameStateManager {
 		VICTORY
 	}
 	
+	public static HashMap<String, String> levelnames = new HashMap<String, String>();
+	
 	/**
 	 * Constructor called by the game upon initialization
 	 * @param hadalGame: instance of the current game.
@@ -66,6 +64,15 @@ public class GameStateManager {
 		this.skin.load(Gdx.files.internal("ui/uiskin.json"));
 		
 		this.patch = new NinePatchDrawable(((TextureAtlas) comp460game.assetManager.get(AssetList.UIPATCHATL.toString())).createPatch("UI_box_dialogue"));
+		
+		levelnames.put("kenney_map.tmx", "Kenney Map");
+		levelnames.put("trustSample.tmx", "Trust 1");
+		levelnames.put("map_1_460.tmx", "Tutorial 1");
+		levelnames.put("separateSpawn.tmx", "Independence 1");
+		levelnames.put("sportMap.tmx", "Sports 1");
+		levelnames.put("good_level.tmx", "Sandbox");
+		levelnames.put("cooperation.tmx", "Cooperation 1");
+		levelnames.put("loadout.tmx", "Loadout");
 	}
 	
 	/**

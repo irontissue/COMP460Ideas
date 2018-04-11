@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.physics.box2d.RayCastCallback;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.*;
@@ -79,7 +80,11 @@ public class Beehive extends RangedWeapon {
 					maxLinearSpeed, maxLinearAcceleration, maxAngularSpeed, maxAngularAcceleration, boundingRadius, decelerationRadius) {
 				
 				private Schmuck homing;
-
+				private Schmuck homeAttempt;
+				private Fixture closestFixture;
+				
+				private float shortestFraction = 1.0f;
+				
 				@Override
 				public void controller(float delta) {
 					super.controller(delta);
@@ -93,11 +98,44 @@ public class Beehive extends RangedWeapon {
 
 							@Override
 							public boolean reportFixture(Fixture fixture) {
-								if (fixture.getUserData() instanceof CharacterData) {
-									if (!(fixture.getUserData() instanceof PlayerData)) {
-										homing = (Schmuck) ((UserData)fixture.getUserData()).getEntity();
-										setTarget(homing);
-									}
+								if (fixture.getUserData() instanceof CharacterData && !(fixture.getUserData() instanceof PlayerData)) {
+									homeAttempt = ((CharacterData)fixture.getUserData()).getSchmuck();
+									shortestFraction = 1.0f;
+									
+								  	if (body.getPosition().x != homeAttempt.getPosition().x || 
+								  			body.getPosition().y != homeAttempt.getPosition().y) {
+										world.rayCast(new RayCastCallback() {
+
+											@Override
+											public float reportRayFixture(Fixture fixture, Vector2 point, Vector2 normal, float fraction) {
+												if (fixture.getUserData() == null) {
+													if (fraction < shortestFraction) {
+														shortestFraction = fraction;
+														closestFixture = fixture;
+														return fraction;
+													}
+												} else if (fixture.getUserData() instanceof CharacterData) {
+										//			if (((CharacterData)fixture.getUserData()).getSchmuck(). != filter) {
+														if (fraction < shortestFraction) {
+															shortestFraction = fraction;
+															closestFixture = fixture;
+															return fraction;
+														}
+										//			}
+												} 
+												return -1.0f;
+											}
+											
+										}, getBody().getPosition(), homeAttempt.getPosition());	
+										
+										if (closestFixture != null) {
+											if (closestFixture.getUserData() instanceof CharacterData) {
+	
+												homing = ((CharacterData)closestFixture.getUserData()).getSchmuck();
+												setTarget(homing);
+											}
+										}	
+									}		
 								}
 								return true;
 							}
@@ -140,11 +178,11 @@ public class Beehive extends RangedWeapon {
 						super.onHit(fixB);
                         if (comp460game.serverMode) {
                             if (fixB.getEntity() instanceof Player) {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.7f));
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_GDI.toString(), 0.7f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_GDI.toString()));
 //                                sound.play(0.7f);
                             } else {
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE.toString(), 0.2f));
+                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BEE_YOW.toString(), 0.2f));
 //                                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BEE_YOW.toString()));
 //                                sound.play(0.2f);
                             }
