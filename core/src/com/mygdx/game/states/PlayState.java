@@ -403,7 +403,7 @@ public class PlayState extends GameState implements InputProcessor {
 
 	}
 
-	private Actor back, readyToBack;
+	private Actor back, readyToBack, retry;
 	public void gameend() {
 		if (won) {
 			if (comp460game.serverMode) {
@@ -427,23 +427,37 @@ public class PlayState extends GameState implements InputProcessor {
 		if (!comp460game.serverMode) {
 			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
 			readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
+			retry = new Text(comp460game.assetManager, "CLICK HERE TO RETRY LEVEL", 300, 450, Color.WHITE);
 			readyToBack.setVisible(false);
 			back.setScale(0.5f);
 			readyToBack.setScale(0.5f);
+			retry.setScale(0.5f);
 			Gdx.input.setInputProcessor(stage);
 			back.addListener(new ClickListener() {
 
 				@Override
 				public void clicked(InputEvent e, float x, float y) {
 					back.setVisible(false);
+					retry.setVisible(false);
 					readyToBack.setVisible(true);
-					Log.info("yay");
-					comp460game.client.client.sendTCP(new Packets.ReadyToPlay());
+					comp460game.client.client.sendTCP(new Packets.ReadyToPlay(Packets.ReadyToPlay.LOADOUT));
+					//Gdx.input.setInputProcessor(player);
+				}
+			});
+			retry.addListener(new ClickListener() {
+
+				@Override
+				public void clicked(InputEvent e, float x, float y) {
+					back.setVisible(false);
+					retry.setVisible(false);
+					readyToBack.setVisible(true);
+					comp460game.client.client.sendTCP(new Packets.ReadyToPlay(Packets.ReadyToPlay.RETRY));
 					//Gdx.input.setInputProcessor(player);
 				}
 			});
 			stage.addActor(back);
 			stage.addActor(readyToBack);
+			stage.addActor(retry);
 		}
 		
 	}

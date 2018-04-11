@@ -106,8 +106,8 @@ public class PoisonVent extends Event {
 				currPoisonSpawnTimer += delta;
 				while (currPoisonSpawnTimer >= spawnTimerLimit) {
 					currPoisonSpawnTimer -= spawnTimerLimit;
-					int randX = (int) ((Math.random() * width * specialScale) - (width * specialScale / 2) + body.getPosition().x * PPM);
-					int randY = (int) ((Math.random() * height * specialScale) - (height * specialScale / 2) + body.getPosition().y * PPM);
+					int randX = (int) ((Math.random() * (width - 6) * specialScale) - (width * specialScale / 2) + body.getPosition().x * PPM);
+					int randY = (int) ((Math.random() * (height - 6) * specialScale) - (height * specialScale / 2) + body.getPosition().y * PPM);
 					new ParticleEntity(state, world, camera, rays, randX, randY, AssetList.POISON.toString(), 0.0f, 1.5f, true, false);
 				}
 			}

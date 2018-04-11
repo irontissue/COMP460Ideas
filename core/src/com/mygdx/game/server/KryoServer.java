@@ -287,7 +287,8 @@ public class KryoServer {
 				else if (o instanceof Packets.ReadyToPlay) {
 					//Log.info("Server received ReadyToPlay from connection id = " + c.getID());
 				    Packets.ReadyToPlay p = (Packets.ReadyToPlay) o;
-				    if (c.getID() == playerIDs[0] || playerIDs[0] == -1) {
+				    int selected = p.optionSelected;
+				    /*if (c.getID() == playerIDs[0] || playerIDs[0] == -1) {
 				        p1ReadyCheck = true;
 				        playerIDs[0] = c.getID();
                         Log.info("Player " + c.getID() + " ready.");
@@ -295,11 +296,11 @@ public class KryoServer {
 				        p2ReadyCheck = true;
                         playerIDs[1] = c.getID();
                         Log.info("Player " + c.getID() + " ready.");
-                    }
+                    }*/
 				    if (p1ReadyCheck && p2ReadyCheck) {
 //				        if (playerIDs[0] > playerIDs[1]) {
-                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1));
-                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2));
+                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1, null));
+                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2, null));
                             Log.info("Sending playernumber = 1 to connectionID = " + playerIDs[0]);
                             Log.info("Sending playernumber = 2 to connectionID = " + playerIDs[1]);
 //                        } else {
