@@ -82,18 +82,19 @@ public class PoisonGun extends RangedWeapon {
 					}
 
                     if (comp460game.serverMode) {
-					    if (fixB != null && fixB.getEntity() instanceof Player) {
-                            Log.info("Poison damaged a player...");
-					        if (fixB.getEntity().entityID == state.brideID) {
-                                Log.info("Player was bride!");
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BRIDE_OUCH.toString(), 0.7f));
-                            } else if (fixB.getEntity().entityID == state.groomID) {
-                                Log.info("Player was groom!");
-                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_GROOM_OUCH.toString(), 0.7f));
-                            }
-                        } else {
-                            comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_POISON.toString(), 0.7f));
-                        }
+                        comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_POISON.toString(), 0.7f));
+//					    if (fixB != null && fixB.getEntity() instanceof Player) {
+//                            Log.info("Poison damaged a player...");
+//					        if (fixB.getEntity().entityID == state.brideID) {
+//                                Log.info("Player was bride!");
+//                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_BRIDE_OUCH.toString(), 0.7f));
+//                            } else if (fixB.getEntity().entityID == state.groomID) {
+//                                Log.info("Player was groom!");
+//                                comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_GROOM_OUCH.toString(), 0.7f));
+//                            }
+//                        } else {
+//                            comp460game.server.server.sendToAllTCP(new Packets.PlaySound(AssetList.SFX_POISON.toString(), 0.7f));
+//                        }
                     }
 //                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_POISON.toString()));
 //                    sound.play(0.7f);
