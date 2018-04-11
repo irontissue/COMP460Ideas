@@ -276,6 +276,9 @@ public class Player extends Schmuck {
 
                 float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
 
+                /*float oldX = body.getPosition().x;
+                float oldY = body.getPosition().y;*/
+
                 Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
                 body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
 
@@ -291,6 +294,9 @@ public class Player extends Schmuck {
                 body.applyAngularImpulse(angularForce * (1 + bodyData.getBonusAngSpeed()), true);
 
                 desiredAngleVel = 0.0f;
+
+                /*mousePosX += (body.getPosition().x - oldX);
+                mousePosY += (body.getPosition().y - oldY);*/
             }
 
             if (synced) {
