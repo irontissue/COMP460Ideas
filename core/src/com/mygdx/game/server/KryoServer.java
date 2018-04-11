@@ -19,7 +19,9 @@ import com.mygdx.game.states.TitleState;
 public class KryoServer {
 
 	int serverPort = 25565;
-	boolean p1ReadyCheck = false, p2ReadyCheck = false;
+	private boolean p1ReadyCheck = false, p2ReadyCheck = false;
+	private int p1OptionSelected = -1, p2OptionSelected = -1;
+	public String currentMapName = "maps/loadout.tmx";
 
 	//The POSITION in this array is the playerNumber number (i.e. playerNumber 1 vs playerNumber 2). The actual value stored in the array
     //is that playerNumber's connection ID.
@@ -287,31 +289,29 @@ public class KryoServer {
 				else if (o instanceof Packets.ReadyToPlay) {
 					//Log.info("Server received ReadyToPlay from connection id = " + c.getID());
 				    Packets.ReadyToPlay p = (Packets.ReadyToPlay) o;
-				    int selected = p.optionSelected;
-				    /*if (c.getID() == playerIDs[0] || playerIDs[0] == -1) {
+				    if (c.getID() == playerIDs[0] || playerIDs[0] == -1) {
 				        p1ReadyCheck = true;
 				        playerIDs[0] = c.getID();
                         Log.info("Player " + c.getID() + " ready.");
+                        p1OptionSelected = p.optionSelected;
                     } else if (c.getID() == playerIDs[1] || playerIDs[1] == -1) {
 				        p2ReadyCheck = true;
                         playerIDs[1] = c.getID();
                         Log.info("Player " + c.getID() + " ready.");
-                    }*/
-				    if (p1ReadyCheck && p2ReadyCheck) {
-//				        if (playerIDs[0] > playerIDs[1]) {
-                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1, null));
-                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2, null));
-                            Log.info("Sending playernumber = 1 to connectionID = " + playerIDs[0]);
-                            Log.info("Sending playernumber = 2 to connectionID = " + playerIDs[1]);
-//                        } else {
-//                            server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(2));
-//                            server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(1));
-//                            int temp = playerIDs[0];
-//                            playerIDs[0] = playerIDs[1];
-//                            playerIDs[1] = temp;
-//                        }
+                        p2OptionSelected = p.optionSelected;
+                    }
+				    if (p1ReadyCheck && p2ReadyCheck && p1OptionSelected == p2OptionSelected) {
+				        if (p1OptionSelected == Packets.ReadyToPlay.LOADOUT) {
+				            currentMapName = "maps/loadout.tmx";
+                        }
+                        server.sendToTCP(playerIDs[0], new Packets.EnterPlayState(1, currentMapName));
+                        server.sendToTCP(playerIDs[1], new Packets.EnterPlayState(2, currentMapName));
+                        Log.info("Sending playernumber = 1 to connectionID = " + playerIDs[0]);
+                        Log.info("Sending playernumber = 2 to connectionID = " + playerIDs[1]);
 				        p1ReadyCheck = false;
 				        p2ReadyCheck = false;
+				        p1OptionSelected = -1;
+				        p2OptionSelected = -1;
                     }
                 }
 

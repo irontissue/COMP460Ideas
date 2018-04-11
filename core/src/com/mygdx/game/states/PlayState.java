@@ -6,6 +6,7 @@ import java.util.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -155,6 +156,10 @@ public class PlayState extends GameState implements InputProcessor {
 		//Initialize font and text camera for ui purposes.
         font = new BitmapFont();
 		black = new TextureRegion(new Texture(AssetList.BLACK.toString()));
+
+		if (comp460game.serverMode) {
+			comp460game.server.currentMapName = level;
+		}
         
         //Initialize box2d world and related stuff
 		world = new World(new Vector2(0, 0), false);
@@ -223,6 +228,7 @@ public class PlayState extends GameState implements InputProcessor {
             } else if ("maps/trustSample.tmx".equals(level)) {
                 gsm.application().musicPlayer.playSong("battle", 0.1f);
             } else {
+            	gsm.application().musicPlayer.playSong("loadout", 0.4f);
             }
 //            gsm.application().musicPlayer.playSong("loadout",0.1f);
         }
@@ -437,10 +443,14 @@ public class PlayState extends GameState implements InputProcessor {
 
 				@Override
 				public void clicked(InputEvent e, float x, float y) {
-					back.setVisible(false);
-					retry.setVisible(false);
-					readyToBack.setVisible(true);
+					//back.setVisible(false);
+					//retry.setVisible(false);
+					//readyToBack.setVisible(true);
+					Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+					sound.play(1.0f);
 					comp460game.client.client.sendTCP(new Packets.ReadyToPlay(Packets.ReadyToPlay.LOADOUT));
+					back.setColor(0, 255, 0, 1f);
+					retry.setColor(255, 255, 255, 1f);
 					//Gdx.input.setInputProcessor(player);
 				}
 			});
@@ -448,10 +458,14 @@ public class PlayState extends GameState implements InputProcessor {
 
 				@Override
 				public void clicked(InputEvent e, float x, float y) {
-					back.setVisible(false);
-					retry.setVisible(false);
-					readyToBack.setVisible(true);
+					//back.setVisible(false);
+					//retry.setVisible(false);
+					//readyToBack.setVisible(true);
+					Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+					sound.play(1.0f);
 					comp460game.client.client.sendTCP(new Packets.ReadyToPlay(Packets.ReadyToPlay.RETRY));
+					retry.setColor(0, 255, 0, 1f);
+					back.setColor(255, 255, 255, 1f);
 					//Gdx.input.setInputProcessor(player);
 				}
 			});
