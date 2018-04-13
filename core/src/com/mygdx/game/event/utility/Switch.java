@@ -1,5 +1,7 @@
 package com.mygdx.game.event.utility;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -54,6 +56,8 @@ public class Switch extends Event {
                     eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_OFF.toString()));
                     isOn = false;
                 }
+				Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+				sound.play(1.0f);
                 if (event.getConnectedEvent() != null) {
                     event.getConnectedEvent().eventData.onActivate(this);
                     if (comp460game.serverMode) {

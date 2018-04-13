@@ -115,7 +115,7 @@ public class TitleState extends GameState {
 
                             Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
                             sound.play(1.0f);
-                            
+
 							comp460game.client.init(false);
 
 							swap(table, disconnect, joinServerOption);
