@@ -42,7 +42,6 @@ public class TriggerSpawn extends Event {
 		this.limit = limit;
 		this.spawnX = x;
 		this.spawnY = y;
-		
 		this.spawns = new ArrayList<Schmuck>();
 	}
 	
@@ -62,7 +61,6 @@ public class TriggerSpawn extends Event {
 						
 						int randX = spawnX + (int)( (Math.random() - 0.5) * 100);
 						int randY = spawnY + (int)( (Math.random() - 0.5) * 100);
-						
 						switch(id) {
 						    case 0:
 						    	se = new StandardEnemy(state, world, camera, rays, 32, 32, randX, randY, true);
