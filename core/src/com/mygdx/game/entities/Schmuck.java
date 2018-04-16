@@ -33,7 +33,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 	public float shootCdCount = 0;
 	public float shootDelayCount = 0;
 
-	protected TextureRegion hp, hpMissing;
+	protected TextureRegion hp, hpMissing, hpBaddy;
 	protected TextureRegion main;
 	
 	//Keeps track of a schmuck's sprite flashing after receiving damage.
@@ -87,6 +87,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
 		this.hp = atlas.findRegion("UI_main_healthbar");
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.hpBaddy = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.HP_BADDY.toString()));
 		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
 				302, 132, 440, 77);
 //        hbWidth = (int) (t.getWidth()*.9f);
@@ -108,6 +109,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
 		this.hp = atlas.findRegion("UI_main_healthbar");
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.hpBaddy = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.HP_BADDY.toString()));
 		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
 				302, 132, 440, 77);
 //        hbWidth = (int) (t.getWidth()*.9f);
@@ -128,6 +130,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
 		this.hp = atlas.findRegion("UI_main_healthbar");
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.hpBaddy = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.HP_BADDY.toString()));
 		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
 				302, 132, 440, 77);
 		
@@ -147,6 +150,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		this.atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.UIATLAS.toString());
 		this.hp = atlas.findRegion("UI_main_healthbar");
 		this.hpMissing = atlas.findRegion("UI_main_healthmissing");
+		this.hpBaddy = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.HP_BADDY.toString()));
 		this.main = new TextureRegion((Texture)comp460game.assetManager.get(AssetList.UIMAIN.toString()),
 				302, 132, 440, 77);
 		
@@ -240,7 +244,7 @@ public class Schmuck extends Entity implements Location<Vector2> {
 		//Calc the ratio needed to draw the bars
 		float hpRatio = bodyData.currentHp / bodyData.getMaxHp();
 
-		batch.draw(hp, body.getPosition().x * PPM - hbHeight * scale / 2,
+		batch.draw(hpBaddy, body.getPosition().x * PPM - hbHeight * scale / 2,
 				body.getPosition().y * PPM - hbWidth * scale / 2,
 				hbWidth * scale * hpRatio, 30 * scale);
 

@@ -52,7 +52,7 @@ public class Player extends Schmuck {
     public boolean wPressed = false, aPressed = false, sPressed = false, dPressed = false, qPressed = false, ePressed = false;
     public boolean mousePressed = false;
     public boolean spacePressed = false;
-    public float mousePosX = -1, mousePosY = -1;
+    public float mousePosX = -1f, mousePosY = -1f;
 		
 	//user data
 	public PlayerData playerData;
@@ -276,9 +276,6 @@ public class Player extends Schmuck {
 
                 float newY = acceleration * desiredYVel + (1 - acceleration) * currentVel.y;
 
-                /*float oldX = body.getPosition().x;
-                float oldY = body.getPosition().y;*/
-
                 Vector2 force = new Vector2(newX - currentVel.x, newY - currentVel.y).scl(body.getMass());
                 body.applyLinearImpulse(force.scl((1 + bodyData.getBonusLinSpeed())), body.getWorldCenter(), true);
 
@@ -295,8 +292,6 @@ public class Player extends Schmuck {
 
                 desiredAngleVel = 0.0f;
 
-                /*mousePosX += (body.getPosition().x - oldX);
-                mousePosY += (body.getPosition().y - oldY);*/
             }
 
             if (synced) {

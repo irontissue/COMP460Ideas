@@ -158,7 +158,7 @@
   </object>
   <object id="32" name="Warp" type="Warp" x="712.973" y="204.614" width="44.0534" height="40.7724">
    <properties>
-    <property name="Level" value="trustSample.tmx"/>
+    <property name="Level" value="puzzle1.tmx"/>
    </properties>
   </object>
   <object id="39" name="Warp" type="Warp" x="330.435" y="779.768" width="45.3868" height="39.439">
