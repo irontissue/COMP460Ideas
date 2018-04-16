@@ -50,10 +50,10 @@ public class Switch extends Event {
 		this.eventData = new InteractableEventData(world, this) {
 			public void onInteract(Player p) {
 			    if (!isOn) {
-                    eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_ON.toString()));
+                    //eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_ON.toString()));
                     isOn = true;
                 } else {
-                    eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_OFF.toString()));
+                    //eventSprite = new TextureRegion(new Texture(AssetList.SWITCH_OFF.toString()));
                     isOn = false;
                 }
 				Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
