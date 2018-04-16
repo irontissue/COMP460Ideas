@@ -176,7 +176,7 @@ public class TiledObjectUtil {
     		if (object.getName().equals("Poison")) {
     			e = new PoisonVent(state, world, camera, rays, (int)rect.width, (int)rect.height, 
     					(int)(rect.x + rect.width / 2), (int)(rect.y + rect.height / 2),
-    					object.getProperties().get("damage", float.class), object.getProperties().get("startOn", true, boolean.class), false);
+    					object.getProperties().get("damage", float.class), object.getProperties().get("startOn", true, boolean.class), true);
     		}
     		if (object.getName().equals("Spike")) {
     			e = new SpikeTrap(state, world, camera, rays, (int)rect.width, (int)rect.height, 

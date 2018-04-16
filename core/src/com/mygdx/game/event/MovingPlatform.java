@@ -122,7 +122,6 @@ public class MovingPlatform extends Event {
 	public void render(SpriteBatch batch) {
         if (eventSprite != null) {
             batch.setProjectionMatrix(state.sprite.combined);
-            Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
             batch.draw(eventSprite,
                     body.getPosition().x * PPM - width*specialScale / 2,
                     body.getPosition().y * PPM - height*specialScale / 2,

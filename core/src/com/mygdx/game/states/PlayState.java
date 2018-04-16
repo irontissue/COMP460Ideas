@@ -70,6 +70,7 @@ public class PlayState extends GameState implements InputProcessor {
 	public Player player, player2;
 	
 	//These process and store the map parsed from the Tiled file.
+	private String level;
 	private TiledMap map;
 	OrthogonalTiledMapRenderer tmr;
 	
@@ -189,6 +190,7 @@ public class PlayState extends GameState implements InputProcessor {
 //        map = new TmxMapLoader().load("maps/map_2_460.tmx");
 //        map = new TmxMapLoader().load("maps/argh.tmx");
 //        map = new TmxMapLoader().load("maps/kenney_map.tmx");
+		this.level = level;
 		map = new TmxMapLoader().load(level);
 		
 		tmr = new OrthogonalTiledMapRenderer(map);
@@ -424,19 +426,37 @@ public class PlayState extends GameState implements InputProcessor {
 
 	private Actor back, readyToBack, retry;
 	public void gameend() {
-		if (won) {
-			if (comp460game.serverMode) {
-				comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
-			}
-//			gsm.addState(State.VICTORY, TitleState.class);
-			Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
-			victory.setScale(0.5f);
-			stage.addActor(victory);
-			gsm.application().musicPlayer.playSong("victory", 0.3f);
-		} else {
-			if (comp460game.serverMode) {
-				comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
-			}
+
+//		if (level == "maps/loadout.tmx") {
+//			System.out.println(player.alive + " " + player2.alive);
+//			if (!player.alive) {
+//				player = new Player(this, world, camera, rays, 100, 100, player.playerData, 1, true);
+//				
+//				if (comp460game.serverMode) {
+//		            comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player.entityID.toString(), 32,32, 100, 100, Constants.EntityTypes.PLAYER, true, 1));
+//				}
+//			}
+//			
+//			if (!player2.alive) {
+//				player2 = new Player(this, world, camera, rays, 100, 150, player2.playerData, 2, true);
+//				if (comp460game.serverMode) {
+//					comp460game.server.server.sendToAllTCP(new Packets.SyncCreateSchmuck(player2.entityID.toString(), 32,32, 100, 150, Constants.EntityTypes.PLAYER, true, 2));
+//				}
+//			}
+//		} else {
+			if (won) {
+				if (comp460game.serverMode) {
+					comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
+				}
+//				gsm.addState(State.VICTORY, TitleState.class);
+				Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
+				victory.setScale(0.5f);
+				stage.addActor(victory);
+				gsm.application().musicPlayer.playSong("victory", 0.3f);
+			} else {
+				if (comp460game.serverMode) {
+					comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+        }
 //			gsm.addState(State.GAMEOVER, TitleState.class);
 			Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
 			defeat.setScale(0.5f);
