@@ -87,7 +87,7 @@ public class ParticleEntity extends Entity {
 	@Override
 	public void controller(float delta) {
 		if (attachedEntity != null) {
-			if (attachedEntity.alive) {
+			if (attachedEntity.alive && attachedEntity.getBody() != null) {
 				effect.setPosition(attachedEntity.getBody().getPosition().x * PPM, attachedEntity.getBody().getPosition().y * PPM);
 			} else {
 				despawn = true;

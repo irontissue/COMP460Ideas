@@ -1,6 +1,7 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.client.KryoClient;
+import com.mygdx.game.manager.AssetList;
 import com.mygdx.game.manager.GameStateManager;
 import com.mygdx.game.comp460game;
 import com.mygdx.game.actors.Text;
@@ -96,7 +98,10 @@ public class TitleState extends GameState {
                             if (comp460game.client.client == null || !comp460game.client.client.isConnected()) return;
 
                             Log.info("Client successfully set");
-                            Packets.ReadyToPlay r2p = new Packets.ReadyToPlay();
+                            Packets.ReadyToPlay r2p = new Packets.ReadyToPlay(Packets.ReadyToPlay.LOADOUT);
+
+                            Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+                            sound.play(1.0f);
 
                             comp460game.client.client.sendTCP(r2p);
                             swap(table, waitingOnPlayer2, playOption);
@@ -107,21 +112,41 @@ public class TitleState extends GameState {
                     });
 					joinServerOption.addListener(new ClickListener() {
 						public void clicked(InputEvent e, float x, float y) {
+
+                            Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+                            sound.play(1.0f);
+
 							comp460game.client.init(false);
 
-							swap(table, disconnect, joinServerOption);
-							disconnect.setVisible(true);
-							joinServerOption.setVisible(false);
+                            try {
+                                Thread.sleep(600);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            if (comp460game.client.client.isConnected()) {
+                                swap(table, disconnect, joinServerOption);
+                                disconnect.setVisible(true);
+                                joinServerOption.setVisible(false);
+                            }
 						}
 					});
 					joinServerOption.setScale(0.5f);
 
                     disconnect.addListener(new ClickListener() {
                         public void clicked(InputEvent e, float x, float y) {
-                            comp460game.client.client.close();
+                            try {
+                                comp460game.client.client.close();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                             swap(table, joinServerOption, disconnect);
                             disconnect.setVisible(false);
                             joinServerOption.setVisible(true);
+
+                            Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+                            sound.play(1.0f);
+
                             if (isWaiting) {
                                 swap(table, playOption, waitingOnPlayer2);
                                 playOption.setVisible(true);

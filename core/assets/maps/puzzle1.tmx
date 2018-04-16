@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.1.4" orientation="orthogonal" renderorder="right-down" width="30" height="50" tilewidth="64" tileheight="64" infinite="0" nextobjectid="171">
+ <tileset firstgid="1" source="kenney_tileset.tsx"/>
+ <tileset firstgid="541" name="groundTransparent_white" tilewidth="64" tileheight="64" tilecount="208" columns="13">
+  <image source="../Images/SportsPack/Tilesheet/groundTransparent_white.png" width="832" height="1024"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="30" height="50">
+  <data encoding="csv">
+109,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,111,112,111,111,111,111,111,111,111,111,111,111,111,110,
+138,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,138,13,13,13,14,14,13,13,13,13,13,13,138,
+138,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,138,13,13,14,14,14,14,14,13,13,13,13,138,
+138,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,138,14,13,14,14,13,13,14,14,14,14,13,138,
+138,2,2,2,116,194,194,194,194,194,194,194,194,194,194,194,194,220,14,13,14,13,13,13,13,13,13,14,14,138,
+138,2,2,2,167,86,86,86,86,86,86,86,86,86,86,86,86,168,13,13,14,14,13,13,13,13,13,13,14,138,
+138,2,2,2,167,86,86,86,86,86,86,86,86,86,86,86,86,168,13,13,13,14,14,14,13,13,13,13,13,138,
+138,2,2,2,167,86,86,86,86,86,86,86,86,86,86,86,86,168,13,13,13,13,13,14,14,14,14,13,13,138,
+138,2,2,2,167,86,86,86,86,86,86,86,86,86,86,86,86,168,13,13,13,13,14,14,14,13,13,13,13,138,
+138,2,2,2,143,195,195,164,86,86,86,86,86,86,86,86,86,168,13,13,13,14,14,13,13,13,13,13,13,138,
+138,2,2,2,2,2,2,167,86,86,86,86,86,86,86,86,86,168,13,14,14,14,13,13,13,13,13,13,13,138,
+138,2,2,2,2,2,2,167,86,86,86,86,86,86,86,86,86,168,13,13,13,14,14,14,14,13,13,13,13,138,
+138,2,2,2,2,2,2,167,86,86,86,86,86,86,86,86,86,168,14,13,13,14,13,13,14,14,14,13,13,138,
+138,2,2,2,141,2,2,167,86,86,86,86,86,86,86,86,86,168,14,13,13,14,13,13,13,13,14,14,13,138,
+138,2,2,2,138,2,2,167,86,86,86,86,86,86,86,86,86,168,14,13,13,14,14,13,13,13,14,14,14,138,
+138,2,2,2,138,2,2,167,86,86,86,86,86,86,86,86,86,168,14,13,13,13,14,14,14,14,13,13,14,138,
+138,2,2,2,138,2,2,246,195,195,195,195,195,195,195,195,195,247,14,14,13,13,13,13,14,13,13,13,14,138,
+138,2,2,2,138,2,2,138,2,2,2,2,2,2,2,2,2,138,13,14,13,13,13,14,14,13,13,13,13,138,
+138,2,2,2,138,2,2,138,2,2,2,2,2,2,2,2,2,138,13,14,14,14,14,14,13,13,13,13,13,138,
+138,2,2,2,138,2,2,138,2,2,2,2,2,2,2,2,2,138,13,13,14,14,14,14,13,13,13,13,13,138,
+138,2,2,2,138,2,2,138,2,2,2,2,2,2,2,2,2,138,13,13,14,13,13,13,14,14,14,13,13,138,
+138,2,2,2,138,2,2,138,2,2,2,2,141,2,2,2,2,138,13,13,13,13,13,13,13,13,14,14,14,138,
+138,2,2,2,138,2,2,138,2,2,2,2,138,2,2,2,2,138,13,13,13,13,13,13,13,13,13,14,14,138,
+138,2,2,2,138,2,2,138,2,2,2,2,138,2,2,2,2,138,13,13,13,13,13,14,14,14,13,14,14,138,
+138,2,2,2,138,2,2,138,2,2,2,2,138,2,2,2,2,138,13,13,14,14,14,13,13,14,13,13,13,138,
+138,2,2,2,115,2,2,136,111,111,111,111,137,2,2,2,2,138,14,14,14,13,13,13,13,14,13,13,13,138,
+138,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,138,13,14,13,13,13,13,13,14,14,13,13,138,
+138,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,138,13,14,14,13,13,13,13,13,14,14,13,138,
+138,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,138,13,13,14,14,14,14,13,13,13,14,13,138,
+139,111,111,111,111,111,111,111,111,111,111,221,194,194,194,194,194,166,222,111,111,111,111,111,111,111,111,111,111,140,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,5,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,5,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,5,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,5,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,5,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,168,1,1,1,1,1,1,1,1,1,1,138,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,190,194,194,194,194,194,194,194,194,194,194,220,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,168,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,168,
+138,1,1,1,1,1,1,1,1,1,1,167,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,86,168,
+136,111,111,111,111,111,111,111,111,111,111,248,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,195,144
+</data>
+ </layer>
+ <objectgroup name="collision-layer">
+  <object id="62" x="64" y="1920">
+   <polyline points="0,0 0,1216 640,1216 640,0 0,0"/>
+  </object>
+  <object id="63" x="1216" y="1920">
+   <polyline points="0,0 0,960 640,960 640,0 0,0"/>
+  </object>
+  <object id="139" x="256" y="1664">
+   <polyline points="0,0 64,0 64,-832 0,-832 0,0"/>
+  </object>
+  <object id="168" x="64" y="64">
+   <polyline points="0,0 1024,0 1024,192 192,192 192,576 384,576 384,1600 768,1600 768,1280 704,1280 704,1536 448,1536 448,1024 1024,1024 1024,1792 0,1792 0,0"/>
+  </object>
+  <object id="169" x="1152" y="64">
+   <polyline points="0,0 704,0 704,1792 0,1792 0,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="event-layer">
+  <object id="5" name="Switch" type="Switch" x="128" y="1984" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="multi3"/>
+   </properties>
+  </object>
+  <object id="7" name="Switch" type="Switch" x="128" y="2240" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="multi2"/>
+   </properties>
+  </object>
+  <object id="8" name="Switch" type="Switch" x="128" y="2368" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="multi1"/>
+   </properties>
+  </object>
+  <object id="9" name="Switch" type="Switch" x="128" y="2496" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="multi4"/>
+   </properties>
+  </object>
+  <object id="11" name="Switch" type="Switch" x="128" y="2112" width="62" height="64">
+   <properties>
+    <property name="triggeringId" value="multi5"/>
+   </properties>
+  </object>
+  <object id="12" name="Platform" type="Platform" x="64" y="2880" width="640" height="64">
+   <properties>
+    <property name="speed" type="float" value="2.5"/>
+    <property name="triggeredId" value="door1"/>
+   </properties>
+  </object>
+  <object id="13" name="Redirecttrigger" type="Redirecttrigger" x="-64" y="2880" width="64" height="64">
+   <properties>
+    <property name="blameId" value="hinge1"/>
+    <property name="triggeredId" value="opendoor"/>
+    <property name="triggeringId" value="door1"/>
+   </properties>
+  </object>
+  <object id="15" name="Multitrigger" type="Multitrigger" x="768" y="1984" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multi1"/>
+    <property name="triggeringId" value="spawn1,cond1"/>
+   </properties>
+  </object>
+  <object id="16" name="Multitrigger" type="Multitrigger" x="768" y="2112" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multi2"/>
+    <property name="triggeringId" value="spawn2,cond2"/>
+   </properties>
+  </object>
+  <object id="17" name="Multitrigger" type="Multitrigger" x="768" y="2240" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multi3"/>
+    <property name="triggeringId" value="spawn3,cond3"/>
+   </properties>
+  </object>
+  <object id="18" name="Multitrigger" type="Multitrigger" x="768" y="2368" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multi4"/>
+    <property name="triggeringId" value="spawn4,cond4"/>
+   </properties>
+  </object>
+  <object id="19" name="Multitrigger" type="Multitrigger" x="768" y="2496" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multi5"/>
+    <property name="triggeringId" value="spawn5,cond5"/>
+   </properties>
+  </object>
+  <object id="23" name="TriggerSpawn" type="TriggerSpawn" x="1728" y="1984" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="spawn1"/>
+   </properties>
+  </object>
+  <object id="24" name="TriggerSpawn" type="TriggerSpawn" x="1728" y="2112" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="spawn2"/>
+   </properties>
+  </object>
+  <object id="25" name="TriggerSpawn" type="TriggerSpawn" x="1728" y="2240" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="spawn3"/>
+   </properties>
+  </object>
+  <object id="26" name="TriggerSpawn" type="TriggerSpawn" x="1728" y="2368" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="spawn4"/>
+   </properties>
+  </object>
+  <object id="27" name="TriggerSpawn" type="TriggerSpawn" x="1728" y="2496" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="spawn5"/>
+   </properties>
+  </object>
+  <object id="30" name="Victory" type="Victory" x="576" y="3008" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="victory"/>
+   </properties>
+  </object>
+  <object id="31" name="Sensor" type="Sensor" x="568.757" y="3001.05" width="78.1955" height="78.1955">
+   <properties>
+    <property name="oneTime" type="bool" value="true"/>
+    <property name="triggeringId" value="victory"/>
+   </properties>
+  </object>
+  <object id="32" name="Condtrigger" type="Condtrigger" x="896" y="1984" width="64" height="64">
+   <properties>
+    <property name="start" value="multiSetup1"/>
+    <property name="triggeredId" value="cond1"/>
+    <property name="triggeringId" value="multiSetup1"/>
+   </properties>
+  </object>
+  <object id="33" name="Condtrigger" type="Condtrigger" x="896" y="2112" width="64" height="64">
+   <properties>
+    <property name="start" value="multiReset"/>
+    <property name="triggeredId" value="cond2"/>
+    <property name="triggeringId" value="multiReset,multiSetup2"/>
+   </properties>
+  </object>
+  <object id="34" name="Condtrigger" type="Condtrigger" x="896" y="2240" width="64" height="64">
+   <properties>
+    <property name="start" value="multiReset"/>
+    <property name="triggeredId" value="cond3"/>
+    <property name="triggeringId" value="multiReset,multiSetup3"/>
+   </properties>
+  </object>
+  <object id="35" name="Condtrigger" type="Condtrigger" x="896" y="2368" width="64" height="64">
+   <properties>
+    <property name="start" value="multiReset"/>
+    <property name="triggeredId" value="cond4"/>
+    <property name="triggeringId" value="multiReset,multiSetup4"/>
+   </properties>
+  </object>
+  <object id="36" name="Condtrigger" type="Condtrigger" x="896" y="2496" width="64" height="64">
+   <properties>
+    <property name="start" value="multiReset"/>
+    <property name="triggeredId" value="cond5"/>
+    <property name="triggeringId" value="multiReset,opendoor"/>
+   </properties>
+  </object>
+  <object id="39" name="Alttrigger" type="Alttrigger" x="1152" y="1984" width="64" height="64">
+   <properties>
+    <property name="message" value="multiSetup2"/>
+    <property name="triggeredId" value="alt1"/>
+    <property name="triggeringId" value="cond2"/>
+   </properties>
+  </object>
+  <object id="40" name="Alttrigger" type="Alttrigger" x="1152" y="2112" width="64" height="64">
+   <properties>
+    <property name="message" value="multiSetup3"/>
+    <property name="triggeredId" value="alt2"/>
+    <property name="triggeringId" value="cond3"/>
+   </properties>
+  </object>
+  <object id="41" name="Alttrigger" type="Alttrigger" x="1152" y="2240" width="64" height="64">
+   <properties>
+    <property name="message" value="multiSetup4"/>
+    <property name="triggeredId" value="alt3"/>
+    <property name="triggeringId" value="cond4"/>
+   </properties>
+  </object>
+  <object id="42" name="Alttrigger" type="Alttrigger" x="1152" y="2368" width="64" height="64">
+   <properties>
+    <property name="message" value="opendoor"/>
+    <property name="triggeredId" value="alt4"/>
+    <property name="triggeringId" value="cond5"/>
+   </properties>
+  </object>
+  <object id="45" name="Multitrigger" type="Multitrigger" x="768" y="3072" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multiReset"/>
+    <property name="triggeringId" value="altReset2,altReset3,altReset4,altReset5,altReset6,altReset7"/>
+   </properties>
+  </object>
+  <object id="47" name="Alttrigger" type="Alttrigger" x="896" y="3072" width="32" height="32">
+   <properties>
+    <property name="message" value="multiReset"/>
+    <property name="triggeredId" value="altReset2"/>
+    <property name="triggeringId" value="cond2"/>
+   </properties>
+  </object>
+  <object id="48" name="Alttrigger" type="Alttrigger" x="928" y="3072" width="32" height="32">
+   <properties>
+    <property name="message" value="multiReset"/>
+    <property name="triggeredId" value="altReset3"/>
+    <property name="triggeringId" value="cond3"/>
+   </properties>
+  </object>
+  <object id="49" name="Alttrigger" type="Alttrigger" x="896" y="3104" width="32" height="32">
+   <properties>
+    <property name="message" value="multiReset"/>
+    <property name="triggeredId" value="altReset4"/>
+    <property name="triggeringId" value="cond4"/>
+   </properties>
+  </object>
+  <object id="50" name="Alttrigger" type="Alttrigger" x="928" y="3104" width="32" height="32">
+   <properties>
+    <property name="message" value="multiReset"/>
+    <property name="triggeredId" value="altReset5"/>
+    <property name="triggeringId" value="cond5"/>
+   </properties>
+  </object>
+  <object id="55" name="Multitrigger" type="Multitrigger" x="1024" y="1984" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multiSetup1"/>
+    <property name="triggeringId" value="alt1"/>
+   </properties>
+  </object>
+  <object id="56" name="Multitrigger" type="Multitrigger" x="1024" y="2112" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multiSetup2"/>
+    <property name="triggeringId" value="alt2,altReset2"/>
+   </properties>
+  </object>
+  <object id="57" name="Multitrigger" type="Multitrigger" x="1024" y="2240" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multiSetup3"/>
+    <property name="triggeringId" value="alt3,altReset3"/>
+   </properties>
+  </object>
+  <object id="58" name="Multitrigger" type="Multitrigger" x="1024" y="2368" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="multiSetup4"/>
+    <property name="triggeringId" value="alt4,altReset4"/>
+   </properties>
+  </object>
+  <object id="103" name="Poison" type="Poison" x="64" y="831.913" width="192" height="832">
+   <properties>
+    <property name="damage" type="float" value="1.2"/>
+    <property name="startOn" type="bool" value="true"/>
+    <property name="triggeredId" value="Poison1"/>
+   </properties>
+  </object>
+  <object id="104" name="Spawn" type="Spawn" x="105.876" y="109.622" width="32" height="32">
+   <properties>
+    <property name="id" type="int" value="0"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="105" name="Spawn" type="Spawn" x="172.294" y="111.697" width="32" height="32">
+   <properties>
+    <property name="id" type="int" value="-1"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="106" name="Switch" type="Switch" x="960" y="127.913" width="64" height="64">
+   <properties>
+    <property name="triggeringId" value="CondPoison"/>
+   </properties>
+  </object>
+  <object id="107" name="Door" type="Door" x="320" y="1343.91" width="128" height="64">
+   <properties>
+    <property name="triggeredId" value="Door1"/>
+   </properties>
+  </object>
+  <object id="108" name="Switch" type="Switch" x="352" y="1471.91" width="64" height="64">
+   <properties>
+    <property name="triggeringId" value="Door1"/>
+   </properties>
+  </object>
+  <object id="109" name="Condtrigger" type="Condtrigger" x="786.103" y="-354.093" width="64" height="64">
+   <properties>
+    <property name="start" value="MultiPoison"/>
+    <property name="triggeredId" value="CondPoison"/>
+    <property name="triggeringId" value="MultiPoison"/>
+   </properties>
+  </object>
+  <object id="110" name="Multitrigger" type="Multitrigger" x="914.103" y="-354.093" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="MultiPoison"/>
+    <property name="triggeringId" value="AltPoison,Poison1,Timer1"/>
+   </properties>
+  </object>
+  <object id="111" name="Alttrigger" type="Alttrigger" x="1042.1" y="-354.093" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="AltPoison"/>
+    <property name="triggeringId" value="CondPoison"/>
+   </properties>
+  </object>
+  <object id="112" name="Timer" type="Timer" x="933.103" y="-271.99" width="32" height="32">
+   <properties>
+    <property name="interval" type="float" value="5"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="startOn" type="bool" value="false"/>
+    <property name="triggeredId" value="Timer1"/>
+    <property name="triggeringId" value="MultiPoison2"/>
+   </properties>
+  </object>
+  <object id="113" name="Multitrigger" type="Multitrigger" x="914.103" y="-226.093" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="MultiPoison2"/>
+    <property name="triggeringId" value="AltPoison2,Poison1"/>
+   </properties>
+  </object>
+  <object id="114" name="Alttrigger" type="Alttrigger" x="914.103" y="-98.0933" width="64" height="64">
+   <properties>
+    <property name="message" value="MultiPoison"/>
+    <property name="triggeredId" value="AltPoison2"/>
+    <property name="triggeringId" value="CondPoison"/>
+   </properties>
+  </object>
+  <object id="115" name="Spawn" type="Spawn" x="640" y="1151.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="116" name="Spawn" type="Spawn" x="640" y="1279.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="117" name="Spawn" type="Spawn" x="768" y="1151.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="118" name="Spawn" type="Spawn" x="832" y="1215.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="119" name="Spawn" type="Spawn" x="768" y="1215.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="120" name="Spawn" type="Spawn" x="832" y="1151.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="121" name="Spawn" type="Spawn" x="896" y="1151.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="122" name="Spawn" type="Spawn" x="960" y="1215.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="123" name="Spawn" type="Spawn" x="896" y="1215.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="124" name="Spawn" type="Spawn" x="960" y="1151.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="125" name="Spawn" type="Spawn" x="896" y="1279.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="126" name="Spawn" type="Spawn" x="960" y="1343.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="127" name="Spawn" type="Spawn" x="896" y="1343.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="128" name="Spawn" type="Spawn" x="960" y="1279.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="129" name="Spawn" type="Spawn" x="896" y="1407.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="130" name="Spawn" type="Spawn" x="960" y="1471.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="131" name="Spawn" type="Spawn" x="896" y="1471.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="132" name="Spawn" type="Spawn" x="960" y="1407.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="133" name="Spawn" type="Spawn" x="576" y="1215.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="134" name="Spawn" type="Spawn" x="640" y="1279.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="135" name="Spawn" type="Spawn" x="576" y="1279.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="136" name="Spawn" type="Spawn" x="640" y="1215.91" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="interval" type="float" value="0.1"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="137" name="UsePortal" type="UsePortal" x="576" y="1471.91" width="64" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeredId" value="2"/>
+    <property name="triggeringId" value="1"/>
+   </properties>
+  </object>
+  <object id="140" name="UsePortal" type="UsePortal" x="1472" y="128" width="64" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeredId" value="1"/>
+    <property name="triggeringId" value="2"/>
+   </properties>
+  </object>
+  <object id="141" name="Sensor" type="Sensor" x="1152" y="768" width="704" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="true"/>
+    <property name="triggeringId" value="trapEnemies"/>
+   </properties>
+  </object>
+  <object id="145" name="TriggerSpawn" x="1280" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn1"/>
+   </properties>
+  </object>
+  <object id="146" name="Multitrigger" type="Multitrigger" x="1920" y="768" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="trapEnemies"/>
+    <property name="triggeringId" value="trapSpawn1,trapSpawn2,trapSpawn3,trapSpawn4,trapSpawn5,trapSpawn6,trapSpawn7"/>
+   </properties>
+  </object>
+  <object id="147" name="TriggerSpawn" x="1344" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn2"/>
+   </properties>
+  </object>
+  <object id="148" name="TriggerSpawn" x="1408" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn3"/>
+   </properties>
+  </object>
+  <object id="149" name="TriggerSpawn" x="1472" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn4"/>
+   </properties>
+  </object>
+  <object id="150" name="TriggerSpawn" x="1536" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn5"/>
+   </properties>
+  </object>
+  <object id="151" name="TriggerSpawn" x="1600" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn6"/>
+   </properties>
+  </object>
+  <object id="152" name="TriggerSpawn" x="1664" y="256" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trapSpawn7"/>
+   </properties>
+  </object>
+  <object id="153" name="Sensor" type="Sensor" x="1152" y="1088" width="704" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="true"/>
+    <property name="triggeringId" value="trapEnemies2"/>
+   </properties>
+  </object>
+  <object id="154" name="Multitrigger" type="Multitrigger" x="1920" y="1088" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="trapEnemies2"/>
+    <property name="triggeringId" value="trap2Spawn1,trap2Spawn2,trap2Spawn3,trap2Spawn4,trap2Spawn5,trap2Spawn6,trap2Spawn7"/>
+   </properties>
+  </object>
+  <object id="155" name="TriggerSpawn" x="1280" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn1"/>
+   </properties>
+  </object>
+  <object id="156" name="TriggerSpawn" x="1344" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn2"/>
+   </properties>
+  </object>
+  <object id="157" name="TriggerSpawn" x="1408" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn3"/>
+   </properties>
+  </object>
+  <object id="158" name="TriggerSpawn" x="1472" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn4"/>
+   </properties>
+  </object>
+  <object id="159" name="TriggerSpawn" x="1536" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn5"/>
+   </properties>
+  </object>
+  <object id="160" name="TriggerSpawn" x="1600" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn6"/>
+   </properties>
+  </object>
+  <object id="161" name="TriggerSpawn" x="1664" y="1472" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="2"/>
+    <property name="limit" type="int" value="1"/>
+    <property name="triggeredId" value="trap2Spawn7"/>
+   </properties>
+  </object>
+  <object id="162" name="UsePortal" type="UsePortal" x="1344" y="1728" width="64" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeredId" value="3"/>
+    <property name="triggeringId" value="4"/>
+   </properties>
+  </object>
+  <object id="163" name="UsePortal" type="UsePortal" x="1600" y="1728" width="64" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeredId" value="5"/>
+    <property name="triggeringId" value="6"/>
+   </properties>
+  </object>
+  <object id="164" name="UsePortal" type="UsePortal" x="576" y="1984" width="64" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeredId" value="4"/>
+    <property name="triggeringId" value="3"/>
+   </properties>
+  </object>
+  <object id="165" name="UsePortal" type="UsePortal" x="1280" y="1984" width="64" height="64">
+   <properties>
+    <property name="oneTime" type="bool" value="false"/>
+    <property name="triggeredId" value="6"/>
+    <property name="triggeringId" value="5"/>
+   </properties>
+  </object>
+  <object id="166" name="Text" type="Text" x="320" y="2112" width="320" height="640">
+   <properties>
+    <property name="text" value="One person has the switches, one person knows the order"/>
+   </properties>
+  </object>
+  <object id="167" name="Text" type="Text" x="1280" y="2112" width="320" height="640">
+   <properties>
+    <property name="text" value="One person knows the order, one person has the switches"/>
+   </properties>
+  </object>
+  <object id="170" name="Dummy" type="Dummy" x="-576" y="2880" width="64" height="64">
+   <properties>
+    <property name="triggeredId" value="hinge1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="on top layer" width="30" height="50">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,737,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,738,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,739,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,740,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,741,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+</map>

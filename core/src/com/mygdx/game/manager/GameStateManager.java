@@ -65,14 +65,16 @@ public class GameStateManager {
 		
 		this.patch = new NinePatchDrawable(((TextureAtlas) comp460game.assetManager.get(AssetList.UIPATCHATL.toString())).createPatch("UI_box_dialogue"));
 		
-		levelnames.put("kenney_map.tmx", "Kenney Map");
+		levelnames.put("kenney_map.tmx", "Battle 1");
 		levelnames.put("trustSample.tmx", "Trust 1");
 		levelnames.put("map_1_460.tmx", "Tutorial 1");
 		levelnames.put("separateSpawn.tmx", "Independence 1");
 		levelnames.put("sportMap.tmx", "Sports 1");
 		levelnames.put("good_level.tmx", "Sandbox");
 		levelnames.put("cooperation.tmx", "Cooperation 1");
+		levelnames.put("cooperation2.tmx", "Cooperation 2");
 		levelnames.put("loadout.tmx", "Loadout");
+		levelnames.put("puzzle1.tmx", "Puzzle 1");
 	}
 	
 	/**
@@ -88,19 +90,20 @@ public class GameStateManager {
 	 * @param delta: elapsed time in seconds since last engine tick.
 	 */
 	public void update(float delta) {
-		states.peek().update(delta);
+		if (!states.empty()) {
+			states.peek().update(delta);
 
-		//Any world sync things, even if we wanted to implement something syncing in the title screen, should ideally
-        //be done here.
-		if (states.peek() instanceof PlayState) {
-            //syncTimer += delta;
-            if (/*syncTimer > 0.5 && */comp460game.serverMode) {
-                PlayState ps = (PlayState) states.peek();
+			//Any world sync things, even if we wanted to implement something syncing in the title screen, should ideally
+			//be done here.
+			if (states.peek() instanceof PlayState) {
+				//syncTimer += delta;
+				if (/*syncTimer > 0.5 && */comp460game.serverMode) {
+					PlayState ps = (PlayState) states.peek();
 //                Log.info("Number of entities: " + ps.getEntities().size());
-				if (ps != null && ps.player != null && ps.player.getBody() != null) {
+					if (ps != null && ps.player != null && ps.player.getBody() != null) {
                     /*comp460game.server.server.sendToAllTCP(new Packets.SyncPlayState(ps.player.getBody().getPosition(),
                             ps.player.getBody().getAngle()));*/
-                }
+					}
 //                Entity[] entities = ps.getEntities().toArray(new Entity[0]);
 //                Entity x;
 //                for (int i = 0; i < entities.length; i++) {
@@ -108,9 +111,10 @@ public class GameStateManager {
 //                    comp460game.server.server.sendToAllTCP(new Packets.SyncEntity(x.entityID, x.getBody().getPosition(),
 //                            x.getBody().getLinearVelocity(), x.getBody().getAngularVelocity(), x.getBody().getAngle()));
 //				}
-                syncTimer = 0;
-            }
-        }
+					syncTimer = 0;
+				}
+			}
+		}
 	}
 	
 	/**
