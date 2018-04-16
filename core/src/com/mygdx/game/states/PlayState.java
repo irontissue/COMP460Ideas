@@ -6,6 +6,7 @@ import java.util.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -156,6 +157,10 @@ public class PlayState extends GameState implements InputProcessor {
 		//Initialize font and text camera for ui purposes.
         font = new BitmapFont();
 		black = new TextureRegion(new Texture(AssetList.BLACK.toString()));
+
+		if (comp460game.serverMode) {
+			comp460game.server.currentMapName = level;
+		}
         
         //Initialize box2d world and related stuff
 		world = new World(new Vector2(0, 0), false);
@@ -225,6 +230,7 @@ public class PlayState extends GameState implements InputProcessor {
             } else if ("maps/trustSample.tmx".equals(level)) {
                 gsm.application().musicPlayer.playSong("battle", 0.1f);
             } else {
+            	gsm.application().musicPlayer.playSong("loadout", 0.4f);
             }
 //            gsm.application().musicPlayer.playSong("loadout",0.1f);
         }
@@ -267,6 +273,13 @@ public class PlayState extends GameState implements InputProcessor {
 		
 		//The box2d world takes a step. This handles collisions + physics stuff. Maybe change delta to set framerate?
         updating = true;
+        float oldPos1x = -1, oldPos1y = -1, oldPos2x = -1, oldPos2y = -1;
+        if (comp460game.serverMode && player.body != null && player2.body != null) {
+        	oldPos1x = player.body.getPosition().x;
+			oldPos1y = player.body.getPosition().y;
+        	oldPos2x = player2.body.getPosition().x;
+			oldPos2y = player2.body.getPosition().y;
+		}
 		world.step(delta, 6, 2);
 
 		if (comp460game.serverMode) {
@@ -276,6 +289,12 @@ public class PlayState extends GameState implements InputProcessor {
 					graveyard.remove(i);
 					i--;
 				}
+			}
+			if (player.body != null && player2.body != null) {
+				player.mousePosX += (player.body.getPosition().x - oldPos1x) * PPM;
+				player.mousePosY += (player.body.getPosition().y - oldPos1y) * PPM;
+				player2.mousePosX += (player2.body.getPosition().x - oldPos2x) * PPM;
+				player2.mousePosY += (player2.body.getPosition().y - oldPos2y) * PPM;
 			}
 		}
 		
@@ -405,7 +424,7 @@ public class PlayState extends GameState implements InputProcessor {
 
 	}
 
-	private Actor back, readyToBack;
+	private Actor back, readyToBack, retry;
 	public void gameend() {
 
 //		if (level == "maps/loadout.tmx") {
@@ -437,37 +456,56 @@ public class PlayState extends GameState implements InputProcessor {
 			} else {
 				if (comp460game.serverMode) {
 					comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
+        }
+//			gsm.addState(State.GAMEOVER, TitleState.class);
+			Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
+			defeat.setScale(0.5f);
+			stage.addActor(defeat);
+			gsm.application().musicPlayer.playSong("defeat", 0.3f);
+		}
+		if (!comp460game.serverMode) {
+			back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
+			readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
+			retry = new Text(comp460game.assetManager, "CLICK HERE TO RETRY LEVEL", 300, 450, Color.WHITE);
+			readyToBack.setVisible(false);
+			back.setScale(0.5f);
+			readyToBack.setScale(0.5f);
+			retry.setScale(0.5f);
+			Gdx.input.setInputProcessor(stage);
+			back.addListener(new ClickListener() {
+
+				@Override
+				public void clicked(InputEvent e, float x, float y) {
+					//back.setVisible(false);
+					//retry.setVisible(false);
+					//readyToBack.setVisible(true);
+					Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+					sound.play(1.0f);
+					comp460game.client.client.sendTCP(new Packets.ReadyToPlay(Packets.ReadyToPlay.LOADOUT));
+					back.setColor(0, 255, 0, 1f);
+					retry.setColor(255, 255, 255, 1f);
+					//Gdx.input.setInputProcessor(player);
 				}
-//				gsm.addState(State.GAMEOVER, TitleState.class);
-				Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
-				defeat.setScale(0.5f);
-				stage.addActor(defeat);
-				gsm.application().musicPlayer.playSong("defeat", 0.3f);
-			}
-			if (!comp460game.serverMode) {
-				back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
-				readyToBack = new Text(comp460game.assetManager, "WAITING ON OTHER PLAYER...", 300, 400, Color.WHITE);
-				readyToBack.setVisible(false);
-				back.setScale(0.5f);
-				readyToBack.setScale(0.5f);
-				Gdx.input.setInputProcessor(stage);
-				back.addListener(new ClickListener() {
+			});
+			retry.addListener(new ClickListener() {
 
-					@Override
-					public void clicked(InputEvent e, float x, float y) {
-						back.setVisible(false);
-						readyToBack.setVisible(true);
-						Log.info("yay");
-						comp460game.client.client.sendTCP(new Packets.ReadyToPlay());
-						//Gdx.input.setInputProcessor(player);
-					}
-				});
-				stage.addActor(back);
-				stage.addActor(readyToBack);
-			}
-	//	}
-
-		
+				@Override
+				public void clicked(InputEvent e, float x, float y) {
+					//back.setVisible(false);
+					//retry.setVisible(false);
+					//readyToBack.setVisible(true);
+					Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_CLICK.toString()));
+					sound.play(1.0f);
+					comp460game.client.client.sendTCP(new Packets.ReadyToPlay(Packets.ReadyToPlay.RETRY));
+					retry.setColor(0, 255, 0, 1f);
+					back.setColor(255, 255, 255, 1f);
+					//Gdx.input.setInputProcessor(player);
+				}
+			});
+			stage.addActor(back);
+			stage.addActor(readyToBack);
+			stage.addActor(retry);
+		}
 		
 	}
 

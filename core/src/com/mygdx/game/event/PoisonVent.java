@@ -106,8 +106,8 @@ public class PoisonVent extends Event {
 				currPoisonSpawnTimer += delta;
 				while (currPoisonSpawnTimer >= spawnTimerLimit) {
 					currPoisonSpawnTimer -= spawnTimerLimit;
-					int randX = (int) ((Math.random() * width * specialScale) - (width * specialScale / 2) + body.getPosition().x * PPM);
-					int randY = (int) ((Math.random() * height * specialScale) - (height * specialScale / 2) + body.getPosition().y * PPM);
+					int randX = (int) ((Math.random() * (width - 6) * specialScale) - (width * specialScale / 2) + body.getPosition().x * PPM);
+					int randY = (int) ((Math.random() * (height - 6) * specialScale) - (height * specialScale / 2) + body.getPosition().y * PPM);
 					new ParticleEntity(state, world, camera, rays, randX, randY, AssetList.POISON.toString(), 0.0f, 1.5f, true, false);
 				}
 			}
@@ -115,9 +115,9 @@ public class PoisonVent extends Event {
 		super.controller(delta);
 	}
 
-	/*@Override
+	@Override
 	public void render(SpriteBatch batch) {
-		if (eventSprite != null) {
+		/*if (eventSprite != null) {
 			batch.setProjectionMatrix(state.sprite.combined);
 			Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
 
@@ -136,7 +136,7 @@ public class PoisonVent extends Event {
 			Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
 			camera.project(bodyScreenPosition);
 			comp460game.SYSTEM_FONT_UI.getData().setScale(0.4f);
-			comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
-		}
-	}*/
+			//comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
+		}*/
+	}
 }

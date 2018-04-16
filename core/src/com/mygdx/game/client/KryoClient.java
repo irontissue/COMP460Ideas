@@ -54,6 +54,11 @@ public class KryoClient {
         this.myGame = myGame;
 	}
 
+    /**
+     * Initializes the kryoclient.
+     * @param reconnect True if this is a reconnect attempt
+     * @return Returns true if successfully connected to the server, false otherwise.
+     */
 	public void init(boolean reconnect) {
         Kryo kryo = new Kryo();
         kryo.setReferences(true);
@@ -96,7 +101,7 @@ public class KryoClient {
                                 myGame.getGsm().playerNumber = PNUMBER;
                                 Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
                                 myGame.getGsm().removeState(PlayState.class);
-                                myGame.getGsm().addPlayState(null, p.playerData, p2.playerData, TitleState.class);
+                                myGame.getGsm().addPlayState(((Packets.EnterPlayState) o).mapName, p.playerData, p2.playerData, TitleState.class);
                             } else if (myGame.getGsm().states.peek() instanceof TitleState) {
                                 myGame.getGsm().playerNumber = PNUMBER;
                                 Log.info("Set playerNumber number to: " + myGame.getGsm().playerNumber);
@@ -449,9 +454,9 @@ public class KryoClient {
                                 PlayState ps = (PlayState) myGame.getGsm().states.peek();
                                 Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                                 Entity ent = ps.getEntity(UUID.fromString(p.entityID));
-                                System.out.print("EVENT INTERACT ID = " + p.eventID);
-                                System.out.println(", TYPE: " + e.getClass());
-                                System.out.println("EVENT INTERACT ENTITY TYPE: " + ent.getClass());
+                                //System.out.print("EVENT INTERACT ID = " + p.eventID);
+                                //System.out.println(", TYPE: " + e.getClass());
+                                //System.out.println("EVENT INTERACT ENTITY TYPE: " + ent.getClass());
                                 if (ent != null && ent instanceof Player) {
                                     if (e != null) {
                                         /*if (myGame.getGsm().playerNumber == p.playerNumber) {
@@ -748,7 +753,10 @@ public class KryoClient {
             // Request the user's name.
             input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to game server", JOptionPane.QUESTION_MESSAGE, null,
                     null, "Test");
-            if (input == null || input.trim().length() == 0) System.exit(1);
+            while (input == null || input.trim().length() == 0) {
+                input = (String) JOptionPane.showInputDialog(null, "Name can't be nothing. Try again:", "Connect to game server", JOptionPane.QUESTION_MESSAGE, null,
+                        null, "Test");
+            }
             name = input.trim();
         }
 
@@ -760,7 +768,7 @@ public class KryoClient {
                     // Server communication after connection can go here, or in Listener#connected().
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    System.exit(1);
+                    JOptionPane.showConfirmDialog(null, "Couldn't connect to server.", "Server connection issue", JOptionPane.OK_OPTION);
                 }
             }
         }.start();

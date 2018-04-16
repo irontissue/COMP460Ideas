@@ -131,7 +131,13 @@ public class Packets {
     }*/
 
 	public static class ReadyToPlay {
+	    public static final int RETRY = 0;
+        public static final int LOADOUT = 1;
 	    public ReadyToPlay() {}
+        public ReadyToPlay(int optionSelected) {
+	        this.optionSelected = optionSelected;
+        }
+        public int optionSelected;
     }
 
     public static class ClientLoadedPlayState {
@@ -144,10 +150,12 @@ public class Packets {
 
     public static class EnterPlayState {
         public EnterPlayState() {}
-        public EnterPlayState(int playerNumber) {
+        public EnterPlayState(int playerNumber, String mapName) {
             this.playerNumber = playerNumber;
+            this.mapName = mapName;
         }
         public int playerNumber;
+        public String mapName;
 	}
 
 	public static class ServerIDMessage {

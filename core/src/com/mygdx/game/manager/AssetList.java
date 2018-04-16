@@ -28,6 +28,7 @@ public enum AssetList {
 	
 	EMPTY_HEART("ui/heart_meter.png", Texture.class),
 	FULL_HEART("ui/heart_gauge.png", Texture.class),
+    HP_BADDY("Images/hpBaddy.png", Texture.class),
 	UIMAIN("ui/UI_main_overlay.png", Texture.class),
 	UI1("ui/UI.png", Texture.class),
 	UI2("ui/UI2.png", Texture.class),
@@ -106,7 +107,9 @@ public enum AssetList {
     SFX_BB_CUT("sounds/weaponSFX/BouncingBlade/cut.mp3", Sound.class),
 
     SFX_SHOTGUN("sounds/weaponSFX/Shotgun/Shotgun trimmed.wav", Sound.class),
-    SFX_SHOTGUN_RELOAD("sounds/weaponSFX/Shotgun/Pump Shotgun-SoundBible.com-1653268682 (1).wav", Sound.class);
+    SFX_SHOTGUN_RELOAD("sounds/weaponSFX/Shotgun/Pump Shotgun-SoundBible.com-1653268682 (1).wav", Sound.class),
+
+    SFX_CLICK("sounds/Click.mp3", Sound.class);
 	//Enum constructor and methods.
 	private String pathname;
     private Class<?> type;

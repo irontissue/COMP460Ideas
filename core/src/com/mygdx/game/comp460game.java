@@ -171,6 +171,9 @@ public class comp460game extends ApplicationAdapter {
 		client = new KryoClient(this);
 		if (reconnect) {
             client.init(true);
+            if (!client.client.isConnected()) {
+            	resetClient(false);
+			}
         }
 	}
 	
