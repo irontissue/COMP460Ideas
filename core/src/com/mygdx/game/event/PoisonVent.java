@@ -115,9 +115,9 @@ public class PoisonVent extends Event {
 		super.controller(delta);
 	}
 
-	/*@Override
+	@Override
 	public void render(SpriteBatch batch) {
-		if (eventSprite != null) {
+		/*if (eventSprite != null) {
 			batch.setProjectionMatrix(state.sprite.combined);
 			Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
 
@@ -136,7 +136,7 @@ public class PoisonVent extends Event {
 			Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
 			camera.project(bodyScreenPosition);
 			comp460game.SYSTEM_FONT_UI.getData().setScale(0.4f);
-			comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
-		}
-	}*/
+			//comp460game.SYSTEM_FONT_UI.draw(batch, getText(), bodyScreenPosition.x, bodyScreenPosition.y);
+		}*/
+	}
 }
