@@ -65,14 +65,16 @@ public class GameStateManager {
 		
 		this.patch = new NinePatchDrawable(((TextureAtlas) comp460game.assetManager.get(AssetList.UIPATCHATL.toString())).createPatch("UI_box_dialogue"));
 		
-		levelnames.put("kenney_map.tmx", "Kenney Map");
+		levelnames.put("kenney_map.tmx", "Battle 1");
 		levelnames.put("trustSample.tmx", "Trust 1");
 		levelnames.put("map_1_460.tmx", "Tutorial 1");
 		levelnames.put("separateSpawn.tmx", "Independence 1");
 		levelnames.put("sportMap.tmx", "Sports 1");
 		levelnames.put("good_level.tmx", "Sandbox");
 		levelnames.put("cooperation.tmx", "Cooperation 1");
+		levelnames.put("cooperation2.tmx", "Cooperation 2");
 		levelnames.put("loadout.tmx", "Loadout");
+		levelnames.put("puzzle1.tmx", "Puzzle 1");
 	}
 	
 	/**

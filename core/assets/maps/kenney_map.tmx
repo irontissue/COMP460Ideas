@@ -1014,6 +1014,7 @@
   </object>
   <object id="256" name="Sensor" type="Sensor" x="3042.97" y="2079.96" width="58.3643" height="60.553">
    <properties>
+    <property name="oneTime" type="bool" value="true"/>
     <property name="triggeringId" value="victory"/>
    </properties>
   </object>
