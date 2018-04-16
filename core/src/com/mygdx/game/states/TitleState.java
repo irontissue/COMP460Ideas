@@ -118,16 +118,28 @@ public class TitleState extends GameState {
 
 							comp460game.client.init(false);
 
-							swap(table, disconnect, joinServerOption);
-							disconnect.setVisible(true);
-							joinServerOption.setVisible(false);
+                            try {
+                                Thread.sleep(600);
+                            } catch (InterruptedException e1) {
+                                e1.printStackTrace();
+                            }
+
+                            if (comp460game.client.client.isConnected()) {
+                                swap(table, disconnect, joinServerOption);
+                                disconnect.setVisible(true);
+                                joinServerOption.setVisible(false);
+                            }
 						}
 					});
 					joinServerOption.setScale(0.5f);
 
                     disconnect.addListener(new ClickListener() {
                         public void clicked(InputEvent e, float x, float y) {
-                            comp460game.client.client.close();
+                            try {
+                                comp460game.client.client.close();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                             swap(table, joinServerOption, disconnect);
                             disconnect.setVisible(false);
                             joinServerOption.setVisible(true);

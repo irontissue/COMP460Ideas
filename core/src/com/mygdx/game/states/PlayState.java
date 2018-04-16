@@ -271,6 +271,13 @@ public class PlayState extends GameState implements InputProcessor {
 		
 		//The box2d world takes a step. This handles collisions + physics stuff. Maybe change delta to set framerate?
         updating = true;
+        float oldPos1x = -1, oldPos1y = -1, oldPos2x = -1, oldPos2y = -1;
+        if (comp460game.serverMode && player.body != null && player2.body != null) {
+        	oldPos1x = player.body.getPosition().x;
+			oldPos1y = player.body.getPosition().y;
+        	oldPos2x = player2.body.getPosition().x;
+			oldPos2y = player2.body.getPosition().y;
+		}
 		world.step(delta, 6, 2);
 
 		if (comp460game.serverMode) {
@@ -280,6 +287,12 @@ public class PlayState extends GameState implements InputProcessor {
 					graveyard.remove(i);
 					i--;
 				}
+			}
+			if (player.body != null && player2.body != null) {
+				player.mousePosX += (player.body.getPosition().x - oldPos1x) * PPM;
+				player.mousePosY += (player.body.getPosition().y - oldPos1y) * PPM;
+				player2.mousePosX += (player2.body.getPosition().x - oldPos2x) * PPM;
+				player2.mousePosY += (player2.body.getPosition().y - oldPos2y) * PPM;
 			}
 		}
 		

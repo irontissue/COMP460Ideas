@@ -84,7 +84,7 @@
     <property name="Level" value="map_1_460.tmx"/>
    </properties>
   </object>
-  <object id="20" name="Warp" type="Warp" x="455.973" y="777.614" width="44.0534" height="40.7724">
+  <object id="20" name="Warp" type="Warp" x="521.404" y="777.614" width="44.0534" height="40.7724">
    <properties>
     <property name="Level" value="sportMap.tmx"/>
    </properties>
@@ -109,7 +109,7 @@
     <property name="equipId" type="int" value="4"/>
    </properties>
   </object>
-  <object id="27" name="Warp" type="Warp" x="649.756" y="780.086" width="44.0534" height="40.7724">
+  <object id="27" name="Warp" type="Warp" x="714.278" y="909.13" width="44.0534" height="40.7724">
    <properties>
     <property name="Level" value="good_level.tmx"/>
    </properties>
@@ -146,12 +146,7 @@
     <property name="equipId" type="int" value="9"/>
    </properties>
   </object>
-  <object id="32" name="Warp" type="Warp" x="520.973" y="204.614" width="44.0534" height="40.7724">
-   <properties>
-    <property name="Level" value="trustSample.tmx"/>
-   </properties>
-  </object>
-  <object id="34" name="Warp" type="Warp" x="393.307" y="204.28" width="45.3868" height="39.439">
+  <object id="34" name="Warp" type="Warp" x="518.716" y="204.28" width="45.3868" height="39.439">
    <properties>
     <property name="Level" value="puzzle1.tmx"/>
    </properties>
