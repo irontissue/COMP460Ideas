@@ -367,7 +367,7 @@
   </object>
   <object id="59" name="Timer" type="Timer" x="3264" y="4672" width="64" height="64">
    <properties>
-    <property name="interval" type="float" value="10"/>
+    <property name="interval" type="float" value="60"/>
     <property name="limit" type="int" value="0"/>
     <property name="startOn" type="bool" value="false"/>
     <property name="triggeredId" value="onemintimer"/>

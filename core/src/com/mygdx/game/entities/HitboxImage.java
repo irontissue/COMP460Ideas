@@ -25,7 +25,7 @@ import static com.mygdx.game.util.Constants.PPM;
  */
 public class HitboxImage extends Hitbox {
 	public static final int ENTITY_TYPE = Constants.EntityTypes.HITBOX_IMAGE;
-	private static TextureAtlas atlas;
+	protected static TextureAtlas atlas;
 	protected Animation<TextureRegion> projectileSprite;
 	
 	/**
@@ -48,8 +48,16 @@ public class HitboxImage extends Hitbox {
 					   String spriteId, boolean synced, String id, int playerDataNumber) {
 		super(state, x, y, width / 2, height / 2, lifespan, dura, rest, startVelo, filter, sensor, world, camera, rays, creator, synced, id);
 		atlas = (TextureAtlas) comp460game.assetManager.get(AssetList.PROJ_1_ATL.toString());
-//		projectileSprite = atlas.findRegion(spriteId);
-		projectileSprite = new Animation<TextureRegion>(0.05f, atlas.findRegions(spriteId));
+
+		if (spriteId.equals("boom")) {
+			projectileSprite = new Animation<TextureRegion>(0.05f, 
+					((TextureAtlas) comp460game.assetManager.get(AssetList.BOOM_1_ATL.toString())).findRegions(spriteId));
+
+		} else {
+			projectileSprite = new Animation<TextureRegion>(0.05f, atlas.findRegions(spriteId));
+
+		}
+		
 		if (comp460game.serverMode) {
 		    //Log.info("Sending new hitbox image sync, playerdatanumber = " + playerDataNumber);
             comp460game.server.server.sendToAllTCP(new Packets.CreateHitboxImage(x, y, width, height, lifespan, dura, rest,

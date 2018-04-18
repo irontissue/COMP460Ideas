@@ -41,7 +41,7 @@ public class BouncingBlade extends RangedWeapon {
 	
 	private final static int projDura = 1;
 
-	public static final int equipID = Constants.EquipIDs.GUN;
+	public static final int equipID = Constants.EquipIDs.BOUNCING_BLADE;
 
 	private final static HitboxFactory onShoot = new HitboxFactory() {
 
