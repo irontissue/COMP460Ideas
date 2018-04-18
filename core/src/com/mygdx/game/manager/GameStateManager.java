@@ -121,8 +121,9 @@ public class GameStateManager {
 	 * Run every engine tick after updating. This will draw stuff and works pretty much like update.
 	 */
 	public void render() {
-		
-		states.peek().render();
+		if (!comp460game.serverMode) {
+			states.peek().render();
+		}
 	}
 	
 	/**

@@ -30,11 +30,11 @@ public class RocketLauncher extends RangedWeapon {
 
 	private final static String name = "Rocket Launcher";
 	private final static int clipSize = 4;
-	private final static float shootCd = 0.25f;
+	private final static float shootCd = 0.5f;
 	private final static float shootDelay = 0;
 	private final static float reloadTime = 0.4f;
 	private final static int reloadAmount = 1;
-	private final static float baseDamage = 30.0f;
+	private final static float baseDamage = 20.0f;
 	private final static float recoil = 1.5f;
 	private final static float knockback = 0.0f;
 	private final static float projectileSpeed = 30.0f;
@@ -44,9 +44,9 @@ public class RocketLauncher extends RangedWeapon {
 	
 	private final static int projDura = 1;
 	
-	private final static int explosionRadius = 300;
-	private final static float explosionDamage = 60.0f;
-	private final static float explosionKnockback = 3.0f;
+	private final static int explosionRadius = 400;
+	private final static float explosionDamage = 70.0f;
+	private final static float explosionKnockback = 2.0f;
 
 	public static final int equipID = Constants.EquipIDs.ROCKET_LAUNCHER;
 

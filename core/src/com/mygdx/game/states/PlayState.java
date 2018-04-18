@@ -521,7 +521,7 @@ public class PlayState extends GameState implements InputProcessor {
 		tmr.render();				
 
 		//Render debug lines for box2d objects.
-		b2dr.render(world, camera.combined.scl(PPM));
+		//b2dr.render(world, camera.combined.scl(PPM));
 		
 		
 		//Iterate through entities in the world to render
@@ -535,7 +535,7 @@ public class PlayState extends GameState implements InputProcessor {
 		}
 		batch.end();
 		
-		if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
+		//if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) { gsm.addState(State.MENU, PlayState.class); }
 		
 		updating = false;
 		

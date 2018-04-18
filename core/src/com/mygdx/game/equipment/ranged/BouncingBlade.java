@@ -37,7 +37,7 @@ public class BouncingBlade extends RangedWeapon {
 	private final static float projectileSpeed = 25.0f;
 	private final static int projectileWidth = 75;
 	private final static int projectileHeight = 75;
-	private final static float lifespan = 5.0f;
+	private final static float lifespan = 4.0f;
 	
 	private final static int projDura = 1;
 
@@ -49,7 +49,7 @@ public class BouncingBlade extends RangedWeapon {
 		public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
 				World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
 
-			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 1.2f, startVelocity,
+			Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 1.1f, startVelocity,
                     filter, false, world, camera, rays, user, "bouncing_blade", true, bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
 			
 			proj.setUserData(new HitboxData(state, world, proj) {
