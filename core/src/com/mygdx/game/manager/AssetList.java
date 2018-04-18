@@ -11,6 +11,8 @@ public enum AssetList {
 	
 	PROJ_1("sprites/projectiles.png", Texture.class),
 	PROJ_1_ATL("sprites/projectiles.atlas", TextureAtlas.class),
+	BOOM_1("sprites/boom.png", Texture.class),
+	BOOM_1_ATL("sprites/boom.atlas", TextureAtlas.class),
 	
 	FISH_1("sprites/Man Blue/manBlue_gun.png", Texture.class),
 	FISH_ATL("sprites/fish.atlas", TextureAtlas.class),
