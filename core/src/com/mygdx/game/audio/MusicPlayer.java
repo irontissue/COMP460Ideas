@@ -23,8 +23,8 @@ public class MusicPlayer {
         trackListByName = new HashMap<String, String>(NUM_TRACKS);
         trackListByNumber = new HashMap<Integer, String>(NUM_TRACKS);
 
-        trackListByName.put("victory", "sounds/Kirby Victory.mp3");
-        trackListByName.put("defeat", "sounds/Dark Souls Death.mp3");
+        trackListByName.put("victory", "sounds/victory.mp3");
+        trackListByName.put("defeat", "sounds/defeat.mp3");
 
         trackListByName.put("title", AssetList.SFX_BGM1.toString());
         trackListByName.put("survival", AssetList.SFX_BGM2.toString());
