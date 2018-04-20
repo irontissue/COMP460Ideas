@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.mygdx.game.manager.AssetList;
 
 public class MusicPlayer {
@@ -47,13 +48,17 @@ public class MusicPlayer {
 
 	    // Load and lay a non-tracklist song.
 	    public void playSong(String name, float volume, boolean looping){
-	        if (currentSong != null){
-	            currentSong.stop();
-	        }
-	        currentSong = Gdx.audio.newMusic(Gdx.files.internal(trackListByName.get(name)));
-	        currentSong.setLooping(looping);
-	        currentSong.setVolume(volume);
-	        currentSong.play();
+	 	try {
+			if (currentSong != null) {
+				currentSong.stop();
+			}
+			currentSong = Gdx.audio.newMusic(Gdx.files.internal(trackListByName.get(name)));
+			currentSong.setLooping(looping);
+			currentSong.setVolume(volume);
+			currentSong.play();
+		} catch(GdxRuntimeException e) {
+
+			}
 	    }
 
 	    // Play next song.
