@@ -121,12 +121,14 @@ public class KryoClient {
                 else if (o instanceof Packets.PlaySound) {
                     Packets.PlaySound p = (Packets.PlaySound) o;
                     Sound sound = Gdx.audio.newSound(Gdx.files.internal(p.name));
-                    sound.play(p.volume);
+                    if (sound != null) {
+                        sound.play(p.volume);
 
-                    last100.add(sound);
-                    if (last100.size() > 25) {
-                        last100.get(0).dispose();
-                        last100.remove(0);
+                        last100.add(sound);
+                        if (last100.size() > 25) {
+                            last100.get(0).dispose();
+                            last100.remove(0);
+                        }
                     }
                 }
 
