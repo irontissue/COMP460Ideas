@@ -749,8 +749,9 @@ public class KryoClient {
             // Request the host from the user.
             String input = (String) JOptionPane.showInputDialog(null, "Host:", "Connect to game server", JOptionPane.QUESTION_MESSAGE,
                     null, null, "localhost");
-            if (input == null || input.trim().length() == 0) System.exit(1);
-            hostIP = input.trim();
+            if (input != null) {
+                hostIP = input.trim();
+            }
 
             // Request the user's name.
             input = (String) JOptionPane.showInputDialog(null, "Name:", "Connect to game server", JOptionPane.QUESTION_MESSAGE, null,
@@ -770,7 +771,7 @@ public class KryoClient {
                     // Server communication after connection can go here, or in Listener#connected().
                 } catch (IOException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showConfirmDialog(null, "Couldn't connect to server.", "Server connection issue", JOptionPane.OK_OPTION);
+                    JOptionPane.showMessageDialog(null, "Couldn't connect to server.");
                 }
             }
         }.start();
