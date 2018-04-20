@@ -25,7 +25,7 @@ import box2dLight.RayHandler;
 
 public class Shotgun extends RangedWeapon {
 
-	private final static String name = "Another Gun";
+	private final static String name = "Shotgun";
 	private final static int clipSize = 2;
 	private final static float shootCd = 0.15f;
 	private final static float shootDelay = 0.0f;
