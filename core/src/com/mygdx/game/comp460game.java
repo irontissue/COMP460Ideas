@@ -167,11 +167,18 @@ public class comp460game extends ApplicationAdapter {
 	 * @param reconnect: If true, attempts to reconnect to the same server using the same credentials.
      */
 	public void resetClient(boolean reconnect) {
-	    client.client.close();
+		if (client.client != null) {
+			client.client.close();
+		}
 		client = new KryoClient(this);
 		if (reconnect) {
             client.init(true);
-            if (!client.client.isConnected()) {
+			try {
+				Thread.sleep(600);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			if (!client.client.isConnected()) {
             	resetClient(false);
 			}
         }

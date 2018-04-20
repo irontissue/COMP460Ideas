@@ -233,12 +233,14 @@ public class RangedWeapon extends Equipment {
 	}
 
 	public int getClipSize() {
-		
-		if (clipSize * user.getBodyData().getBonusClipSize() > 0 && clipSize * user.getBodyData().getBonusClipSize() < 1) {
-			return clipSize + 1;
-		} else {
-			return (int) (clipSize * (1 + user.getBodyData().getBonusClipSize()));
+		if (user.getBodyData() != null) {
+			if (clipSize * user.getBodyData().getBonusClipSize() > 0 && clipSize * user.getBodyData().getBonusClipSize() < 1) {
+				return clipSize + 1;
+			} else {
+				return (int) (clipSize * (1 + user.getBodyData().getBonusClipSize()));
+			}
 		}
+		return 0;
 	}
 
 	/**
