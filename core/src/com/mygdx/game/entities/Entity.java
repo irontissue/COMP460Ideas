@@ -182,16 +182,16 @@ public abstract class Entity implements Steerable<Vector2> {
 	 */
 	public void recoil(float x, float y, float power) {
 		
-		Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
-				
-		camera.project(bodyScreenPosition);
-		
-		float powerDiv = bodyScreenPosition.dst(x, y, 0) / power;
-		
-		float xImpulse = (bodyScreenPosition.x - x) / powerDiv;
-		float yImpulse = (bodyScreenPosition.y - y) / powerDiv;
-		
-		body.applyLinearImpulse(new Vector2(xImpulse, yImpulse), body.getWorldCenter(), true);
+//		Vector3 bodyScreenPosition = new Vector3(body.getPosition().x, body.getPosition().y, 0);
+//
+//		camera.project(bodyScreenPosition);
+//
+//		float powerDiv = bodyScreenPosition.dst(x, y, 0) / power;
+//
+//		float xImpulse = (bodyScreenPosition.x - x) / powerDiv;
+//		float yImpulse = (bodyScreenPosition.y - y) / powerDiv;
+//
+//		body.applyLinearImpulse(new Vector2(xImpulse, yImpulse), body.getWorldCenter(), true);
 	}
 	
 	public void push(float impulseX, float impulseY) {
