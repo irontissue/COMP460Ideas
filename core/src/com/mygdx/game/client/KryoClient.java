@@ -481,7 +481,7 @@ public class KryoClient {
                                 PlayState ps = (PlayState) myGame.getGsm().states.peek();
                                 Event e = (Event) ps.getEntity(UUID.fromString(p.eventID));
                                 Event activator = (Event) ps.getEntity(UUID.fromString(p.activatorID));
-                                if (activator == null) {
+                                if (activator == null && e != null) {
                                     e.eventData.onActivate(null);
                                 } else if (e != null) {
                                     e.eventData.onActivate(activator.eventData);
