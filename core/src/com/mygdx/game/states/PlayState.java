@@ -174,7 +174,7 @@ public class PlayState extends GameState implements InputProcessor {
         
         rays.setCombinedMatrix(camera);
 		b2dr = new Box2DDebugRenderer();
-//		b2dr.setDrawBodies(false);
+		b2dr.setDrawBodies(false);
 		
 		//Initialize sets to keep track of active entities
 		removeList = new ArrayList<Entity>();
@@ -224,13 +224,13 @@ public class PlayState extends GameState implements InputProcessor {
 		    Log.info("Client loaded playstate, level = " + level);
 		    comp460game.client.client.sendTCP(new Packets.ClientLoadedPlayState(level));
             if ("maps/loadout.tmx".equals(level)) {
-                gsm.application().musicPlayer.playSong("loadout", 0.4f);
+                gsm.application().musicPlayer.playSong("loadout", 0.4f, true);
             } else if ("maps/cooperation.tmx".equals(level)) {
-                gsm.application().musicPlayer.playSong("survival", 0.1f);
+                gsm.application().musicPlayer.playSong("survival", 0.1f, true);
             } else if ("maps/trustSample.tmx".equals(level)) {
-                gsm.application().musicPlayer.playSong("battle", 0.1f);
+                gsm.application().musicPlayer.playSong("battle", 0.1f, true);
             } else {
-            	gsm.application().musicPlayer.playSong("loadout", 0.4f);
+            	gsm.application().musicPlayer.playSong("loadout", 0.4f, true);
             }
 //            gsm.application().musicPlayer.playSong("loadout",0.1f);
         }
@@ -444,6 +444,13 @@ public class PlayState extends GameState implements InputProcessor {
 //				}
 //			}
 //		} else {
+			Actor overlay = new Image(new Texture("Images/Overlay.png"));
+			overlay.setWidth(780);
+			overlay.setHeight(320);
+
+			overlay.setPosition(150, 300);
+			overlay.setVisible(true);
+			stage.addActor(overlay);
 			if (won) {
 				if (comp460game.serverMode) {
 					comp460game.server.server.sendToAllTCP(new Packets.gameOver(true));
@@ -451,15 +458,15 @@ public class PlayState extends GameState implements InputProcessor {
 				Text victory = new Text(comp460game.assetManager, "VICTORY", 300, 500, Color.WHITE);
 				victory.setScale(0.5f);
 				stage.addActor(victory);
-				gsm.application().musicPlayer.playSong("victory", 0.3f);
+				gsm.application().musicPlayer.playSong("victory", 0.3f, false);
 			} else {
 				if (comp460game.serverMode) {
 					comp460game.server.server.sendToAllTCP(new Packets.gameOver(false));
 				}
-				Text defeat = new Text(comp460game.assetManager, "YOU DIED", 300, 500, Color.WHITE);
+				Text defeat = new Text(comp460game.assetManager, "LEVEL FAILED...", 300, 500, Color.WHITE);
 				defeat.setScale(0.5f);
 				stage.addActor(defeat);
-				gsm.application().musicPlayer.playSong("defeat", 0.3f);
+				gsm.application().musicPlayer.playSong("defeat", 0.3f, false);
 			}
 			if (!comp460game.serverMode) {
 				back = new Text(comp460game.assetManager, "CLICK HERE TO RETURN TO LOADOUT", 300, 400, Color.WHITE);
@@ -518,11 +525,10 @@ public class PlayState extends GameState implements InputProcessor {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		//Render Tiled Map + world
-		tmr.render();				
+		tmr.render();
 
 		//Render debug lines for box2d objects.
-		//b2dr.render(world, camera.combined.scl(PPM));
-		
+		b2dr.render(world, camera.combined.scl(PPM));
 		
 		//Iterate through entities in the world to render
 		batch.setProjectionMatrix(camera.combined);

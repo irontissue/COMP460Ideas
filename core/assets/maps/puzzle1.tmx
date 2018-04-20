@@ -347,26 +347,26 @@
     <property name="triggeringId" value="Door1"/>
    </properties>
   </object>
-  <object id="109" name="Condtrigger" type="Condtrigger" x="786.103" y="-354.093" width="64" height="64">
+  <object id="109" name="Condtrigger" type="Condtrigger" x="704" y="448" width="64" height="64">
    <properties>
     <property name="start" value="MultiPoison"/>
     <property name="triggeredId" value="CondPoison"/>
     <property name="triggeringId" value="MultiPoison"/>
    </properties>
   </object>
-  <object id="110" name="Multitrigger" type="Multitrigger" x="914.103" y="-354.093" width="64" height="64">
+  <object id="110" name="Multitrigger" type="Multitrigger" x="832" y="448" width="64" height="64">
    <properties>
     <property name="triggeredId" value="MultiPoison"/>
     <property name="triggeringId" value="AltPoison,Poison1,Timer1"/>
    </properties>
   </object>
-  <object id="111" name="Alttrigger" type="Alttrigger" x="1042.1" y="-354.093" width="64" height="64">
+  <object id="111" name="Alttrigger" type="Alttrigger" x="959.997" y="448" width="64" height="64">
    <properties>
     <property name="triggeredId" value="AltPoison"/>
     <property name="triggeringId" value="CondPoison"/>
    </properties>
   </object>
-  <object id="112" name="Timer" type="Timer" x="933.103" y="-271.99" width="32" height="32">
+  <object id="112" name="Timer" type="Timer" x="851" y="530.103" width="32" height="32">
    <properties>
     <property name="interval" type="float" value="5"/>
     <property name="limit" type="int" value="1"/>
@@ -375,13 +375,13 @@
     <property name="triggeringId" value="MultiPoison2"/>
    </properties>
   </object>
-  <object id="113" name="Multitrigger" type="Multitrigger" x="914.103" y="-226.093" width="64" height="64">
+  <object id="113" name="Multitrigger" type="Multitrigger" x="832" y="576" width="64" height="64">
    <properties>
     <property name="triggeredId" value="MultiPoison2"/>
     <property name="triggeringId" value="AltPoison2,Poison1"/>
    </properties>
   </object>
-  <object id="114" name="Alttrigger" type="Alttrigger" x="914.103" y="-98.0933" width="64" height="64">
+  <object id="114" name="Alttrigger" type="Alttrigger" x="832" y="704" width="64" height="64">
    <properties>
     <property name="message" value="MultiPoison"/>
     <property name="triggeredId" value="AltPoison2"/>

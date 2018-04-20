@@ -46,11 +46,12 @@ public class MusicPlayer {
 	    }
 
 	    // Load and lay a non-tracklist song.
-	    public void playSong(String name, float volume){
+	    public void playSong(String name, float volume, boolean looping){
 	        if (currentSong != null){
 	            currentSong.stop();
 	        }
 	        currentSong = Gdx.audio.newMusic(Gdx.files.internal(trackListByName.get(name)));
+	        currentSong.setLooping(looping);
 	        currentSong.setVolume(volume);
 	        currentSong.play();
 	    }
