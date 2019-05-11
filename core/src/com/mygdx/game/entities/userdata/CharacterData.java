@@ -5,7 +5,10 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.comp460game;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.status.DamageTypes;
 import com.mygdx.game.status.Status;
 import com.mygdx.game.util.UserDataTypes;
@@ -43,20 +46,23 @@ public class CharacterData extends UserData {
 	
 	public float[] baseStats;
 	public float[] buffedStats;	
-	
-	
+		
 	//Speed on ground
-	public float maxSpeed = 3.5f;
+	public float maxSpeed = 4.0f;
 	public float maxAngularSpeed = 1.5f;
 
 	//Hp and regen
-	public int maxHp = 100;
-	public float currentHp = 100;
+	public int maxHp = 250;
+	public float currentHp = maxHp;
 	public float hpRegen = 0.0f;
 	
 	public ArrayList<Status> statuses;
 	public ArrayList<Status> statusesChecked;
+
+	public int playerNumber = 0;
 	
+	private final static float flashDuration = 0.08f;
+
 	/**
 	 * This is created upon the create() method of any schmuck.
 	 * Character are the Body data type.
@@ -78,7 +84,12 @@ public class CharacterData extends UserData {
 		
 		calcStats();
 
-		currentHp = getMaxHp();
+//		currentHp = 100;
+		if (schmuck instanceof Player) {
+			currentHp = maxHp;
+		} else {
+			currentHp = maxHp;
+		}
 	}
 	
 	public float statusProcTime(int procTime, CharacterData schmuck, float amount, Status status, DamageTypes... tags) {
@@ -167,29 +178,53 @@ public class CharacterData extends UserData {
 		float damage = basedamage;
 		
 		damage -= basedamage * (getDamageReduc());
-		damage += basedamage * (perp.getDamageAmp());
-		
-		if (Arrays.asList(tags).contains(DamageTypes.RANGED)) {
-			damage *= (1 + perp.getBonusRangedDamage());
+		if (perp != null) {
+			damage += basedamage * (perp.getDamageAmp());
+
+			if (Arrays.asList(tags).contains(DamageTypes.RANGED)) {
+				damage *= (1 + perp.getBonusRangedDamage());
+			}
 		}
 		
 		if (procEffects) {
-			damage = perp.statusProcTime(1, perp, damage, null);
+			if (perp != null) {
+				damage = perp.statusProcTime(1, perp, damage, null);
+			}
 			damage = statusProcTime(2, this, damage, null);
 		}
 		
 		currentHp -= damage;
+		if (comp460game.serverMode) {
+			String attackerUUID = null;
+			if (perp != null) {
+				attackerUUID = perp.getEntity().entityID.toString();
+			}
+            comp460game.server.server.sendToAllTCP(new Packets.EntityTakeDamage(this.getEntity().entityID.toString(),
+                    damage, attackerUUID));
+        }
 		
+		//Make shmuck flash upon receiving damage
+		if (damage > 0 && schmuck.flashingCount < -flashDuration) {
+			schmuck.flashingCount = flashDuration;
+			schmuck.impact.onForBurst(0.25f);
+		}
+				
 		float kbScale = 1;
 		
 		kbScale -= getKnockbackReduc();
-		kbScale += perp.getKnockbackAmp();
+		if (perp != null) {
+			kbScale += perp.getKnockbackAmp();
+		}
 		
 		schmuck.getBody().applyLinearImpulse(knockback.scl(kbScale), schmuck.getBody().getWorldCenter(), true);
 		if (currentHp <= 0) {
 			currentHp = 0;
 			die(perp);
 		}
+		
+		if (currentHp > getMaxHp()) {
+            currentHp = getMaxHp();
+        }
 	}
 	
 	/**
@@ -197,20 +232,25 @@ public class CharacterData extends UserData {
 	 * @param heal: amount of Hp to regenerate
 	 */
 	public void regainHp(float heal) {
-		currentHp += heal;
-		if (currentHp >= getMaxHp()) {
-			currentHp = getMaxHp();
-		}
+        currentHp += heal;
+        if (currentHp > getMaxHp()) {
+            currentHp = getMaxHp();
+        }
+        if (comp460game.serverMode) {
+            comp460game.server.server.sendToAllTCP(new Packets.EntityAdjustHealth(getEntity().entityID.toString(), heal));
+        }
 	}
 	
 	/**
 	 * This method is called when the schmuck dies. Queue up to be deleted next engine tick.
 	 */
 	public void die(CharacterData perp) {
-		
-		perp.statusProcTime(4, perp, 0, null);
+
+		if (perp != null) {
+			perp.statusProcTime(4, perp, 0, null);
+		}
 		statusProcTime(5, this, 0, null);
-		
+//		currentHp = maxHp;
 		schmuck.queueDeletion();
 	}
 

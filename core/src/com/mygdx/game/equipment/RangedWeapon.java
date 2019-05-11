@@ -1,12 +1,22 @@
 package com.mygdx.game.equipment;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
+import com.mygdx.game.comp460game;
+import com.mygdx.game.entities.Hitbox;
+import com.mygdx.game.entities.Player;
 import com.mygdx.game.entities.Schmuck;
+import com.mygdx.game.entities.userdata.PlayerData;
+import com.mygdx.game.manager.AssetList;
+import com.mygdx.game.server.Packets;
 import com.mygdx.game.states.PlayState;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.HitboxFactory;
 import com.mygdx.game.util.SteeringUtil;
 
@@ -16,24 +26,25 @@ import box2dLight.RayHandler;
 
 import com.mygdx.game.entities.userdata.CharacterData;
 
+import java.util.UUID;
+
 /**
  * Ranged Weapons are weapons used by clicking somewhere on the screen to probably fire a projcetile or whatever in that direction.
  * Ranged weapons have a clip size and can be reloaded.
- * @author Zachary Tu
+ * @author Za chary Tu
  *
  */
 public class RangedWeapon extends Equipment {
 
 	public int clipSize;
 	public int clipLeft;
-	public float reloadTime;
 	public int reloadAmount;
 	public float recoil;
 	public float projectileSpeed;
 	public HitboxFactory onShoot;
 	
 	public Vector2 velo;
-	public int x, y;
+	public float x, y;
 	public short faction;
 
 	/**
@@ -42,7 +53,7 @@ public class RangedWeapon extends Equipment {
 	 * @param name: Name of the weapon
 	 * @param clipSize: Amount of times the weapon can be fired before reloading
 	 * @param reloadTime: The time in seconds it takes to reload this weapon once.
-	 * @param recoil: The amount of force pushing the player upon firing.
+	 * @param recoil: The amount of force pushing the playerNumber upon firing.
 	 * @param projectileSpeed: The initial velocity of hitboxes created by this weapon.
 	 * @param shootCd: The delay after using this tool before you can use a tool again.
 	 * @param shootDelay: The delay between pressing the button for this tool and it activating. 
@@ -66,14 +77,13 @@ public class RangedWeapon extends Equipment {
 	 * The weapon is not fired yet. Instead, a vector keeping track of the target is set.
 	 */
 	@Override
-	public void mouseClicked(float delta, PlayState state, CharacterData shooter, short faction, int x, int y, World world, OrthographicCamera camera, RayHandler rays) {
+	public void mouseClicked(float delta, PlayState state, CharacterData shooter, short faction, float x, float y, World world, OrthographicCamera camera, RayHandler rays) {
 		
 		//Convert screen coordinates into a starting velocity for the projectile.
 		Vector3 bodyScreenPosition = new Vector3(
 				shooter.getSchmuck().getBody().getPosition().x,
 				shooter.getSchmuck().getBody().getPosition().y, 0);
-		camera.project(bodyScreenPosition);
-		
+//		camera.project(bodyScreenPosition);
 		float powerDiv = bodyScreenPosition.dst(x, y, 0) / projectileSpeed;
 		
 		float xImpulse = -(bodyScreenPosition.x - x) / powerDiv;
@@ -91,9 +101,12 @@ public class RangedWeapon extends Equipment {
 	 * Here, the stored velo, recoil, filter are used to generate a projectile
 	 */
 	@Override
-	public void execute(PlayState state, CharacterData shooter, World world, OrthographicCamera camera, RayHandler rays) {
-		
-		//Check ckip size. empty clip = reload instead. This makes reloading automatic.
+	public String[] execute(PlayState state, CharacterData shooter, World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDS) {
+		if (shooter instanceof PlayerData) {
+			//Log.info("EXECUTE SERVER AHHHHHHHH - player " + ((PlayerData) shooter).playerNumber);
+		}
+		String[] returnIDS = null;
+		//Check clip size. empty clip = reload instead. This makes reloading automatic.
 		if (clipLeft > 0) {
 			
 			float bodyAngle = shooter.getEntity().getBody().getAngle() * MathUtils.radiansToDegrees;
@@ -104,21 +117,39 @@ public class RangedWeapon extends Equipment {
 	        
 //			if (distance <= 60) {
 				//Generate the hitbox(s). This method's return is unused, so it may not return a hitbox or whatever at all.
-				onShoot.makeHitbox(user, state, velo, 
+				//This code determines which player is shooting, if any at all.
+
+				Hitbox[] h = onShoot.makeHitbox(user, state, velo,
 						shooter.getSchmuck().getBody().getPosition().x * PPM, 
 						shooter.getSchmuck().getBody().getPosition().y * PPM, 
-						faction, world, camera, rays);
-				
+						faction, world, camera, rays, bulletIDS, shooter.playerNumber);
+				returnIDS = new String[h.length];
+				for (int i = 0; i < h.length; i++) {
+				    returnIDS[i] = h[i].entityID.toString();
+                }
 				clipLeft--;
+				if (comp460game.serverMode) {
+					comp460game.server.server.sendToAllTCP(new Packets.PlayerShoot(shooter.playerNumber));
+				}
 				
-				//If player fires in the middle of reloading, reset reload progress
+				//If playerNumber fires in the middle of reloading, reset reload progress
 				reloading = false;
 				reloadCd = reloadTime * (1 - shooter.getReloadRate());
 				
 				//process weapon recoil.
 				user.recoil(x, y, recoil * (1 + shooter.getBonusRecoil()));
 //			}
-		} 
+			checkReload();
+		}
+
+		return returnIDS;
+	}
+
+	/**
+	 * Checks if this weapon needs to reload, and starts the reload sequence. This is in a separate function
+	 * because KryoClient uses this exact same code, on receiving a CreateHitboxImage packet.
+	 */
+	public void checkReload() {
 		if (clipLeft <= 0) {
 			if (!reloading) {
 				reloading = true;
@@ -151,6 +182,53 @@ public class RangedWeapon extends Equipment {
 				clipLeft = getClipSize();
 				reloading = false;
 			}
+
+			switch(getEquipID()) {
+                case Constants.EquipIDs.GUN: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_GUN_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.SHOTGUN: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.ROCKET_LAUNCHER: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_RL_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.BOOMERANG: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_B_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.MACHINE: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_AR_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.BAD_GUN: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.HEAL_GUN: {
+                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_MED_RELOAD.toString()));
+                    sound.play(1.0f);
+                    break;
+                }
+                case Constants.EquipIDs.BOUNCING_BLADE: {
+//                    Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_BB_RELOAD.toString()));
+//                    sound.play(1.0f);
+                    break;
+                }
+            }
+//			if (getEquipID() == Constants.EquipIDs.SHOTGUN) {
+//                Sound sound = Gdx.audio.newSound(Gdx.files.internal(AssetList.SFX_SHOTGUN_RELOAD.toString()));
+//                sound.play(1.0f);
+//            }
 		}
 	}
 
@@ -169,9 +247,9 @@ public class RangedWeapon extends Equipment {
 	@Override
 	public String getText() {
 		if (reloading) {
-			return name + ": " + clipLeft + "/" + getClipSize() + " RELOADING";
+			return clipLeft + "/" + getClipSize() + " RELOADING";
 		} else {
-			return name + ": " + clipLeft + "/" + getClipSize();
+			return clipLeft + "/" + getClipSize();
 
 		}
 	}

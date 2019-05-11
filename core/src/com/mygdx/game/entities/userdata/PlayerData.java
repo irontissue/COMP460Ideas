@@ -1,18 +1,23 @@
 package com.mygdx.game.entities.userdata;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.esotericsoftware.minlog.Log;
 import com.mygdx.game.entities.Player;
 import com.mygdx.game.equipment.Equipment;
-import com.mygdx.game.equipment.ranged.AnotherGun;
+import com.mygdx.game.equipment.ranged.AssaultRifle;
+import com.mygdx.game.equipment.ranged.Shotgun;
 import com.mygdx.game.equipment.ranged.Gun;
+import com.mygdx.game.equipment.ranged.Medigun;
+import com.mygdx.game.equipment.ranged.RocketLauncher;
 
 public class PlayerData extends CharacterData {
 
-	public int itemSlots = 4;
-	public Equipment[] multitools;
-	public int currentSlot = 0;
-	public int lastSlot = 0;
-	public Equipment currentTool;
+	private int itemSlots = 4;
+    private Equipment[] multitools;
+
+    private int currentSlot = 0;
+    private int lastSlot = 0;
+    private Equipment currentTool;
 	
 	public Player player;
 	
@@ -21,8 +26,21 @@ public class PlayerData extends CharacterData {
 		this.player = body;
 		multitools = new Equipment[itemSlots];
 		multitools[0] = new Gun(body);
-		multitools[1] = new AnotherGun(body);
+		multitools[1] = new Medigun(body);
+//		multitools[2] = new RocketLauncher(body);
+//        multitools[3] = new AssaultRifle(body);
 		this.currentTool = multitools[currentSlot];
+	}
+	
+	public void copyData(PlayerData old) {
+		if (old.currentHp <= 0) {
+			currentHp = maxHp;
+		} else {
+			currentHp = old.currentHp;
+		}
+		currentHp = maxHp;
+		multitools = old.getMultitools();
+		//TODO: copy other things that will be carried over across levels. Statuses/Loadout
 	}
 
 	public void switchWeapon(int slot) {
@@ -45,7 +63,7 @@ public class PlayerData extends CharacterData {
 	}
 	
 	public Equipment pickup(Equipment equip) {
-		
+		Log.info("Picked up an equip");
 		for (int i = 0; i < itemSlots; i++) {
 			if (multitools[i] == null) {
 				multitools[i] = equip;
@@ -64,4 +82,30 @@ public class PlayerData extends CharacterData {
 		
 		return old;
 	}
+	
+	@Override
+	public void die(CharacterData perp) {
+		schmuck.getState().gameOver(false);
+		super.die(perp);
+	}
+
+    public int getItemSlots() {
+        return itemSlots;
+    }
+
+    public Equipment[] getMultitools() {
+        return multitools;
+    }
+
+    public int getCurrentSlot() {
+        return currentSlot;
+    }
+
+    public int getLastSlot() {
+        return lastSlot;
+    }
+
+    public Equipment getCurrentTool() {
+        return currentTool;
+    }
 }

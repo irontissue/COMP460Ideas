@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" tiledversion="1.0.3" orientation="orthogonal" renderorder="right-down" width="25" height="25" tilewidth="256" tileheight="256" nextobjectid="5">
+ <tileset firstgid="1" source="temp.tsx"/>
+ <layer name="Tile Layer 1" width="25" height="25">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjIJRMJgB30A7YBSMglEwKAEAQ0wADw==
+  </data>
+ </layer>
+ <objectgroup name="event-layer">
+  <object id="4" name="Spawn" type="Spawn" x="3264" y="3648" width="64" height="64">
+   <properties>
+    <property name="id" type="int" value="0"/>
+    <property name="interval" type="float" value="0"/>
+    <property name="limit" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup name="collision-layer"/>
+</map>

@@ -87,6 +87,10 @@ public class Text extends A460Actor{
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
+	public void setColor (float r, float g, float b, float a) {
+		color.set(r, g, b, a);
+	}
 	
 	public float getScale() {
 		return scale;

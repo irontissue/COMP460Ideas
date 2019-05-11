@@ -40,6 +40,11 @@ public class EventData extends UserData {
 		}
 	}
 
+	/**
+	 * The things to happen when this event is interacted with by the player (or in the future, perhaps any entity?)
+	 * @param p The player to interact with
+	 *
+	 */
 	public void onInteract(Player p) {
 		
 	}

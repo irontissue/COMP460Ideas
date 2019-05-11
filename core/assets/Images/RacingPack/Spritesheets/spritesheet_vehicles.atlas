@@ -1,0 +1,389 @@
+spritesheet_vehicles.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+car_black_1
+  rotate: false
+  xy: 0, 0
+  size: 71, 131
+  orig: 71, 131
+  offset: 0, 0
+  index: -1
+car_black_2
+  rotate: false
+  xy: 0, 133
+  size: 71, 116
+  orig: 71, 116
+  offset: 0, 0
+  index: -1
+car_black_3
+  rotate: false
+  xy: 290, 133
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_black_4
+  rotate: false
+  xy: 363, 0
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_black_5
+  rotate: false
+  xy: 434, 266
+  size: 70, 121
+  orig: 70, 121
+  offset: 0, 0
+  index: -1
+car_black_small_1
+  rotate: false
+  xy: 549, 0
+  size: 40, 70
+  orig: 40, 70
+  offset: 0, 0
+  index: -1
+car_black_small_2
+  rotate: false
+  xy: 552, 72
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1
+car_black_small_3
+  rotate: false
+  xy: 590, 208
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_black_small_4
+  rotate: false
+  xy: 590, 280
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_black_small_5
+  rotate: false
+  xy: 591, 0
+  size: 39, 65
+  orig: 39, 65
+  offset: 0, 0
+  index: -1
+car_blue_1
+  rotate: false
+  xy: 0, 251
+  size: 71, 131
+  orig: 71, 131
+  offset: 0, 0
+  index: -1
+car_blue_2
+  rotate: false
+  xy: 0, 384
+  size: 71, 116
+  orig: 71, 116
+  offset: 0, 0
+  index: -1
+car_blue_3
+  rotate: false
+  xy: 434, 133
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_blue_4
+  rotate: false
+  xy: 362, 133
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_blue_5
+  rotate: false
+  xy: 362, 389
+  size: 70, 121
+  orig: 70, 121
+  offset: 0, 0
+  index: -1
+car_blue_small_1
+  rotate: false
+  xy: 548, 307
+  size: 40, 70
+  orig: 40, 70
+  offset: 0, 0
+  index: -1
+car_blue_small_2
+  rotate: false
+  xy: 507, 64
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1
+car_blue_small_3
+  rotate: false
+  xy: 593, 136
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_blue_small_4
+  rotate: false
+  xy: 552, 136
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_blue_small_5
+  rotate: false
+  xy: 635, 67
+  size: 39, 65
+  orig: 39, 65
+  offset: 0, 0
+  index: -1
+car_green_1
+  rotate: false
+  xy: 73, 0
+  size: 71, 131
+  orig: 71, 131
+  offset: 0, 0
+  index: -1
+car_green_2
+  rotate: false
+  xy: 73, 133
+  size: 71, 116
+  orig: 71, 116
+  offset: 0, 0
+  index: -1
+car_green_3
+  rotate: false
+  xy: 219, 0
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_green_4
+  rotate: false
+  xy: 435, 0
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_green_5
+  rotate: false
+  xy: 362, 266
+  size: 70, 121
+  orig: 70, 121
+  offset: 0, 0
+  index: -1
+car_green_small_1
+  rotate: false
+  xy: 548, 235
+  size: 40, 70
+  orig: 40, 70
+  offset: 0, 0
+  index: -1
+car_green_small_2
+  rotate: false
+  xy: 507, 0
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1
+car_green_small_3
+  rotate: false
+  xy: 609, 352
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_green_small_4
+  rotate: false
+  xy: 631, 275
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_green_small_5
+  rotate: false
+  xy: 632, 0
+  size: 39, 65
+  orig: 39, 65
+  offset: 0, 0
+  index: -1
+car_red_1
+  rotate: false
+  xy: 73, 369
+  size: 71, 131
+  orig: 71, 131
+  offset: 0, 0
+  index: -1
+car_red_2
+  rotate: false
+  xy: 73, 251
+  size: 71, 116
+  orig: 71, 116
+  offset: 0, 0
+  index: -1
+car_red_3
+  rotate: false
+  xy: 291, 0
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_red_4
+  rotate: false
+  xy: 290, 266
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_red_5
+  rotate: false
+  xy: 218, 384
+  size: 70, 121
+  orig: 70, 121
+  offset: 0, 0
+  index: -1
+car_red_small_1
+  rotate: false
+  xy: 506, 235
+  size: 40, 70
+  orig: 40, 70
+  offset: 0, 0
+  index: -1
+car_red_small_2
+  rotate: false
+  xy: 526, 379
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1
+car_red_small_3
+  rotate: false
+  xy: 650, 347
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_red_small_4
+  rotate: false
+  xy: 634, 134
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_red_small_5
+  rotate: false
+  xy: 594, 67
+  size: 39, 65
+  orig: 39, 65
+  offset: 0, 0
+  index: -1
+car_yellow_1
+  rotate: false
+  xy: 146, 118
+  size: 71, 131
+  orig: 71, 131
+  offset: 0, 0
+  index: -1
+car_yellow_2
+  rotate: false
+  xy: 146, 0
+  size: 71, 116
+  orig: 71, 116
+  offset: 0, 0
+  index: -1
+car_yellow_3
+  rotate: false
+  xy: 146, 251
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_yellow_4
+  rotate: false
+  xy: 218, 251
+  size: 70, 131
+  orig: 70, 131
+  offset: 0, 0
+  index: -1
+car_yellow_5
+  rotate: false
+  xy: 146, 384
+  size: 70, 121
+  orig: 70, 121
+  offset: 0, 0
+  index: -1
+car_yellow_small_1
+  rotate: false
+  xy: 506, 307
+  size: 40, 70
+  orig: 40, 70
+  offset: 0, 0
+  index: -1
+car_yellow_small_2
+  rotate: false
+  xy: 526, 443
+  size: 40, 62
+  orig: 40, 62
+  offset: 0, 0
+  index: -1
+car_yellow_small_3
+  rotate: false
+  xy: 568, 379
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_yellow_small_4
+  rotate: false
+  xy: 609, 424
+  size: 39, 70
+  orig: 39, 70
+  offset: 0, 0
+  index: -1
+car_yellow_small_5
+  rotate: false
+  xy: 631, 208
+  size: 39, 65
+  orig: 39, 65
+  offset: 0, 0
+  index: -1
+motorcycle_black
+  rotate: false
+  xy: 434, 389
+  size: 44, 100
+  orig: 44, 100
+  offset: 0, 0
+  index: -1
+motorcycle_blue
+  rotate: false
+  xy: 506, 133
+  size: 44, 100
+  orig: 44, 100
+  offset: 0, 0
+  index: -1
+motorcycle_green
+  rotate: false
+  xy: 480, 389
+  size: 44, 100
+  orig: 44, 100
+  offset: 0, 0
+  index: -1
+motorcycle_red
+  rotate: false
+  xy: 290, 399
+  size: 44, 100
+  orig: 44, 100
+  offset: 0, 0
+  index: -1
+motorcycle_yellow
+  rotate: false
+  xy: 219, 133
+  size: 44, 100
+  orig: 44, 100
+  offset: 0, 0
+  index: -1

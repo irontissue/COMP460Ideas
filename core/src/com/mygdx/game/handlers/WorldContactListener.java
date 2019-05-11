@@ -4,6 +4,7 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.mygdx.game.comp460game;
 import com.mygdx.game.entities.userdata.HitboxData;
 import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.event.userdata.EventData;
@@ -26,7 +27,8 @@ public class WorldContactListener implements ContactListener {
 		if (fixA != null) {
 			fixA.setNumContacts(fixA.getNumContacts() + 1);
 			if (fixA.getType().equals(UserDataTypes.HITBOX)) {
-				((HitboxData) fixA).onHit(fixB);
+				if (comp460game.serverMode)
+				    ((HitboxData) fixA).onHit(fixB);
 			}
 			if (fixA.getType().equals(UserDataTypes.EVENT)) {
 				((EventData) fixA).onTouch(fixB);
@@ -36,7 +38,8 @@ public class WorldContactListener implements ContactListener {
 		if (fixB != null) {
 			fixB.setNumContacts(fixB.getNumContacts() + 1);
 			if (fixB.getType().equals(UserDataTypes.HITBOX)) {
-				((HitboxData) fixB).onHit(fixA);
+                if (comp460game.serverMode)
+                    ((HitboxData) fixB).onHit(fixA);
 			}
 			if (fixB.getType().equals(UserDataTypes.EVENT)) {
 				((EventData) fixB).onTouch(fixA);

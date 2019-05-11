@@ -11,6 +11,7 @@ import com.mygdx.game.entities.userdata.UserData;
 import com.mygdx.game.equipment.RangedWeapon;
 import com.mygdx.game.states.PlayState;
 import com.mygdx.game.status.DamageTypes;
+import com.mygdx.game.util.Constants;
 import com.mygdx.game.util.HitboxFactory;
 
 import box2dLight.RayHandler;
@@ -23,9 +24,9 @@ public class BadGun extends RangedWeapon {
     private final static float shootDelay = 0;
     private final static float reloadTime = 0.5f;
     private final static int reloadAmount = 6;
-    private final static float baseDamage = 1.0f;
+    private final static float baseDamage = 12.0f;
     private final static float recoil = 0.0f;
-    private final static float knockback = 15.5f;
+    private final static float knockback = 5.5f;
     private final static float projectileSpeed = 6.0f;
     private final static int projectileWidth = 22;
     private final static int projectileHeight = 22;
@@ -33,15 +34,16 @@ public class BadGun extends RangedWeapon {
 
     private final static int projDura = 1;
 
+    public static final int equipID = Constants.EquipIDs.BAD_GUN;
+
     private final static HitboxFactory onShoot = new HitboxFactory() {
 
         @Override
-        public Hitbox makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
-                                 World world, OrthographicCamera camera,
-                                 RayHandler rays) {
+        public Hitbox[] makeHitbox(final Schmuck user, PlayState state, Vector2 startVelocity, float x, float y, short filter,
+                                 World world, OrthographicCamera camera, RayHandler rays, String[] bulletIDs, int playerDataNumber) {
 
             Hitbox proj = new HitboxImage(state, x, y, projectileWidth, projectileHeight, lifespan, projDura, 0, startVelocity,
-                    filter, true, world, camera, rays, user, "orb_red");
+                    filter, true, world, camera, rays, user, "orb_red", false, bulletIDs == null ? null : bulletIDs[0], playerDataNumber);
 
             proj.setUserData(new HitboxData(state, world, proj) {
 
@@ -54,13 +56,15 @@ public class BadGun extends RangedWeapon {
                 }
             });
 
-            return null;
+            Hitbox[] toReturn = {proj};
+            return toReturn;
         }
 
     };
 
     public BadGun(Schmuck user) {
         super(user, name, clipSize, reloadTime, recoil, projectileSpeed, shootCd, shootDelay, reloadAmount, onShoot);
+        setEquipID(equipID);
     }
 
 }

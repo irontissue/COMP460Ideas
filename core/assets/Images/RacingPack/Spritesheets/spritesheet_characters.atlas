@@ -1,0 +1,123 @@
+spritesheet_characters.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+character_black_blue
+  rotate: false
+  xy: 0, 38
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_black_green
+  rotate: false
+  xy: 54, 76
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_black_red
+  rotate: false
+  xy: 0, 114
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_black_white
+  rotate: false
+  xy: 0, 152
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_blonde_blue
+  rotate: false
+  xy: 54, 190
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_blonde_green
+  rotate: false
+  xy: 54, 114
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_blonde_red
+  rotate: false
+  xy: 54, 152
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_blonde_white
+  rotate: false
+  xy: 0, 76
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_brown_blue
+  rotate: false
+  xy: 0, 0
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_brown_green
+  rotate: false
+  xy: 54, 38
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_brown_red
+  rotate: false
+  xy: 54, 0
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+character_brown_white
+  rotate: false
+  xy: 0, 190
+  size: 52, 36
+  orig: 52, 36
+  offset: 0, 0
+  index: -1
+racer_black
+  rotate: false
+  xy: 108, 0
+  size: 42, 51
+  orig: 42, 51
+  offset: 0, 0
+  index: -1
+racer_blue
+  rotate: false
+  xy: 108, 53
+  size: 42, 51
+  orig: 42, 51
+  offset: 0, 0
+  index: -1
+racer_green
+  rotate: false
+  xy: 108, 159
+  size: 42, 51
+  orig: 42, 51
+  offset: 0, 0
+  index: -1
+racer_red
+  rotate: false
+  xy: 152, 0
+  size: 42, 51
+  orig: 42, 51
+  offset: 0, 0
+  index: -1
+racer_yellow
+  rotate: false
+  xy: 108, 106
+  size: 42, 51
+  orig: 42, 51
+  offset: 0, 0
+  index: -1
